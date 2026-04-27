@@ -39,16 +39,13 @@
         <div class="add-all-dropdown" id="add-all-dropdown" hidden>
           <button onclick="dlAllIcs('google')" class="add-all-option">
             <span class="add-all-option-name">Google Calendar</span>
-            <span class="add-all-option-hint">Downloads .ics — import via Settings → Import</span>
+            <span class="add-all-option-hint">Opens each event in a new tab</span>
           </button>
           <button onclick="dlAllIcs('ics')" class="add-all-option">
             <span class="add-all-option-name">Apple / Outlook</span>
-            <span class="add-all-option-hint">Downloads .ics — opens automatically</span>
+            <span class="add-all-option-hint">Downloads .ics — opens your calendar app</span>
           </button>
         </div>
-        <p class="add-all-google-note" id="add-all-google-note" hidden>
-          File downloaded — in Google Calendar go to <strong>Settings → Import</strong> and select the file.
-        </p>
       </div>
     </div>
 
@@ -217,10 +214,8 @@ function toggleAddAll(e) {
   e.stopPropagation();
   var dd = document.getElementById('add-all-dropdown');
   var btn = document.getElementById('add-all-btn');
-  var note = document.getElementById('add-all-google-note');
   var open = !dd.hidden;
   dd.hidden = open;
-  note.hidden = true;
   btn.setAttribute('aria-expanded', !open);
   btn.textContent = open ? 'Add All Events \u25be' : 'Add All Events \u25b4';
 }
@@ -238,7 +233,16 @@ function dlAllIcs(type) {
   document.getElementById('add-all-dropdown').hidden = true;
   document.getElementById('add-all-btn').textContent = 'Add All Events \u25be';
   if (type === 'google') {
-    document.getElementById('add-all-google-note').hidden = false;
+    [
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Zoo+de+Mack+2026+%E2%80%94+The+Grateful+Team&dates=20260516/20260517&details=TGT+season+kickoff+ride.+~51+miles+across+the+top+of+the+Lower+Peninsula.&location=The+Highlands%2C+MI',
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=WAM+Training+Ride+%231+%E2%80%94+The+Grateful+Team&dates=20260621/20260622&details=TGT+group+training+ride.+Time+%26+distance+TBD.&location=Grand+Rapids%2C+MI',
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=WAM+Training+Ride+%232+%E2%80%94+The+Grateful+Team&dates=20260628/20260629&details=TGT+group+training+ride.+Time+%26+distance+TBD.&location=Grand+Rapids%2C+MI',
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=WAM+Training+Ride+%233+%E2%80%94+The+Grateful+Team&dates=20260705/20260706&details=TGT+group+training+ride.+Time+%26+distance+TBD.&location=Grand+Rapids%2C+MI',
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=WAM+Training+Ride+%234+%E2%80%94+The+Grateful+Team&dates=20260712/20260713&details=TGT+group+training+ride.+Time+%26+distance+TBD.&location=Grand+Rapids%2C+MI',
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=WAM+Training+Ride+%235+%E2%80%94+The+Grateful+Team&dates=20260719/20260720&details=Last+TGT+training+ride+before+WAM.+Time+%26+distance+TBD.&location=Grand+Rapids%2C+MI',
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wish-A-Mile+Bicycle+Tour+(WAM)+2026&dates=20260724/20260727&details=3+days%2C+300+miles+for+Make-A-Wish+Michigan.&location=Southwest+Michigan'
+    ].forEach(function(url) { window.open(url, '_blank'); });
+    return;
   }
   downloadIcsBlob('the-grateful-team-2026.ics', [
     makeVEvent('Zoo de Mack 2026 \u2014 The Grateful Team', '20260516', '20260517',
