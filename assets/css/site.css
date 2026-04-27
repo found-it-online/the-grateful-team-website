@@ -698,6 +698,32 @@ body {
 .event-card p { font-family: 'DM Sans', sans-serif; font-size: 17px; color: rgba(26,14,43,0.72); line-height: 1.65; margin: 0 0 18px; }
 .event-card .event-card-link { font-style: italic; font-size: 16px; color: var(--color-purple); text-decoration: none; }
 .event-card .event-card-link:hover { text-decoration: underline; }
+.event-card-cal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-cream-dark);
+}
+.cal-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
+  border: 1.5px solid;
+  background: transparent;
+}
+.cal-btn-google { border-color: var(--color-cerulean); color: var(--color-cerulean); }
+.cal-btn-google:hover { background: var(--color-cerulean); color: #fff; }
+.cal-btn-ics { border-color: var(--color-purple); color: var(--color-purple); }
+.cal-btn-ics:hover { background: var(--color-purple); color: #fff; }
 
 .event-coming-soon {
   background: var(--color-tile-cream);
