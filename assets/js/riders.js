@@ -54,9 +54,29 @@
 
         var prev = document.querySelector('.carousel-btn-prev');
         var next = document.querySelector('.carousel-btn-next');
-        var scrollAmt = 360;
-        if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -scrollAmt, behavior: 'smooth' }); });
-        if (next) next.addEventListener('click', function () { track.scrollBy({ left:  scrollAmt, behavior: 'smooth' }); });
+        var scrollAmt = 126; // one card width + gap
+
+        function scrollNext() {
+          var maxScroll = track.scrollWidth - track.clientWidth;
+          if (track.scrollLeft >= maxScroll - 2) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: scrollAmt, behavior: 'smooth' });
+          }
+        }
+
+        var autoTimer = setInterval(scrollNext, 2800);
+
+        // Pause on hover/touch, resume on leave
+        var carousel = track.closest('.riders-carousel');
+        if (carousel) {
+          carousel.addEventListener('mouseenter', function () { clearInterval(autoTimer); });
+          carousel.addEventListener('mouseleave', function () { autoTimer = setInterval(scrollNext, 2800); });
+          carousel.addEventListener('touchstart', function () { clearInterval(autoTimer); }, { passive: true });
+        }
+
+        if (prev) prev.addEventListener('click', function () { clearInterval(autoTimer); track.scrollBy({ left: -scrollAmt * 3, behavior: 'smooth' }); });
+        if (next) next.addEventListener('click', function () { clearInterval(autoTimer); track.scrollBy({ left:  scrollAmt * 3, behavior: 'smooth' }); });
       }
     })
     .catch(function () {});
