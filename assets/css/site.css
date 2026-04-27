@@ -1364,3 +1364,283 @@ body {
 @media (max-width: 480px) {
   #name-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   NAV — logo image + new link styles
+═══════════════════════════════════════════════════════ */
+.nav-brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.footer-brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.nav-merch-link {
+  color: var(--color-cream);
+  font-family: 'Josefin Slab', serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 150ms ease;
+}
+.nav-merch-link:hover { color: var(--color-gold); }
+.nav-cta-donate {
+  background: transparent;
+  color: var(--color-gold);
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 9px 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--color-gold);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
+  display: inline-block;
+}
+.nav-cta-donate:hover {
+  background: var(--color-gold);
+  color: var(--color-night);
+}
+.nav-drawer-cta-donate {
+  background: var(--color-purple);
+  border-top: 12px solid transparent;
+}
+
+/* ═══════════════════════════════════════════════════════
+   WISH KIDS — section on home page
+═══════════════════════════════════════════════════════ */
+.wish-cards-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 960px;
+  margin: 0 auto 40px;
+}
+@media (min-width: 768px) {
+  .wish-cards-row { grid-template-columns: repeat(3, 1fr); }
+}
+.wish-card {
+  background: rgba(245,237,214,0.08);
+  border: 1px solid rgba(201,148,58,0.30);
+  border-radius: 14px;
+  padding: 32px 24px;
+  text-align: center;
+}
+.wish-card-icon { font-size: 36px; margin: 0 0 14px; line-height: 1; }
+.wish-card h3 {
+  font-family: 'Abril Fatface', serif;
+  font-size: 1.375rem;
+  color: var(--color-cream);
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+.wish-card p {
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  color: rgba(245,237,214,0.72);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MERCH CALLOUT — home page section
+═══════════════════════════════════════════════════════ */
+.merch-callout-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPONSORS STRIP — home page
+═══════════════════════════════════════════════════════ */
+.sponsors-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 960px;
+  margin: 0 auto 36px;
+}
+.sponsor-pill {
+  background: rgba(201,148,58,0.10);
+  border: 1px solid rgba(201,148,58,0.28);
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-family: 'Josefin Slab', serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(245,237,214,0.75);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  display: inline-block;
+}
+.sponsor-pill:hover {
+  background: rgba(201,148,58,0.22);
+  color: var(--color-gold);
+  border-color: rgba(201,148,58,0.55);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SPONSORS PAGE — full grid
+═══════════════════════════════════════════════════════ */
+.sponsors-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  .sponsors-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 960px) {
+  .sponsors-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.sponsor-card {
+  background: var(--color-tile-cream);
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 14px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 3px 14px rgba(74,31,107,0.07);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.sponsor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(74,31,107,0.13);
+}
+.sponsor-card-tier {
+  font-family: 'Josefin Slab', serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gold);
+}
+.sponsor-card-name {
+  font-family: 'Abril Fatface', serif;
+  font-size: 1.25rem;
+  color: var(--color-night);
+  line-height: 1.15;
+  margin: 0;
+}
+.sponsor-card-desc {
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  color: rgba(26,14,43,0.65);
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+}
+.sponsor-card-link {
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-purple);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(74,31,107,0.35);
+  display: inline;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+.sponsor-card-link:hover { color: var(--color-orange); border-color: var(--color-orange); }
+
+/* ═══════════════════════════════════════════════════════
+   DONATE PAGE — CTA cards
+═══════════════════════════════════════════════════════ */
+.donate-cta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+@media (min-width: 600px) {
+  .donate-cta-grid { grid-template-columns: 1fr 1fr; }
+}
+.donate-cta-card {
+  background: var(--color-tile-cream);
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 16px;
+  padding: 40px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(74,31,107,0.08);
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.donate-cta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(74,31,107,0.14);
+}
+.donate-cta-card h3 {
+  font-family: 'Abril Fatface', serif;
+  font-size: 1.75rem;
+  color: var(--color-night);
+  margin: 0;
+  line-height: 1.1;
+}
+.donate-cta-card p {
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  color: rgba(26,14,43,0.68);
+  line-height: 1.6;
+  margin: 0;
+}
+.donate-impact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  .donate-impact-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.donate-impact-card {
+  background: rgba(245,237,214,0.08);
+  border: 1px solid rgba(201,148,58,0.25);
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+}
+.donate-impact-amount {
+  font-family: 'Abril Fatface', serif;
+  font-size: 2.25rem;
+  color: var(--color-gold);
+  line-height: 1;
+  margin: 0 0 10px;
+}
+.donate-impact-label {
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  color: rgba(245,237,214,0.78);
+  line-height: 1.5;
+  margin: 0;
+}
