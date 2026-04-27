@@ -1887,6 +1887,25 @@ button.btn-primary,
   display: block;
   flex-shrink: 0;
 }
+.rider-hidden { display: none !important; }
+.riders-show-more {
+  display: block;
+  margin: 20px auto 0;
+  padding: 11px 28px;
+  background: transparent;
+  border: 1.5px solid var(--color-night);
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-night);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+}
+.riders-show-more:hover {
+  background: var(--color-night);
+  color: var(--color-gold);
+}
 .rider-card-avatar-placeholder {
   background: var(--color-night);
   color: var(--color-gold);

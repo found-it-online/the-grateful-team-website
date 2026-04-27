@@ -35,4 +35,24 @@
       });
     })
     .catch(function () {});
+
+  // Mobile collapse — show 10, reveal rest on tap
+  var grid = document.querySelector('.riders-grid');
+  if (grid && window.innerWidth < 700) {
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.rider-card'));
+    var LIMIT = 10;
+    if (cards.length > LIMIT) {
+      cards.slice(LIMIT).forEach(function (c) { c.classList.add('rider-hidden'); });
+
+      var btn = document.createElement('button');
+      btn.className = 'riders-show-more';
+      btn.textContent = 'Show all ' + cards.length + ' riders';
+      grid.insertAdjacentElement('afterend', btn);
+
+      btn.addEventListener('click', function () {
+        cards.forEach(function (c) { c.classList.remove('rider-hidden'); });
+        btn.remove();
+      });
+    }
+  }
 })();
