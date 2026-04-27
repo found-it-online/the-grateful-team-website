@@ -86,6 +86,13 @@
     }
   }
 
+  function loadTicker() {
+    var s = document.createElement('script');
+    s.src = '/assets/js/activity-ticker.js';
+    s.defer = true;
+    document.head.appendChild(s);
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
     const navRoot = await inject(NAV_SLOT, '/partials/nav.html');
     await inject(FOOTER_SLOT, '/partials/footer.html');
@@ -94,5 +101,6 @@
       wireDropdowns(navRoot);
       wireDrawer(navRoot);
     }
+    loadTicker();
   });
 })();

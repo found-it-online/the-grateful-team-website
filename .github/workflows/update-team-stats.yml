@@ -1,12 +1,12 @@
-name: Update Team Fundraising Stats
+name: Update Team Stats & Activity Feed
 
 on:
   schedule:
     - cron: '0 14 * * *'   # Daily at 9am ET (14:00 UTC)
-  workflow_dispatch:         # Allow manual trigger from GitHub UI
+  workflow_dispatch:         # Allow manual trigger from GitHub Actions tab
 
 jobs:
-  update-stats:
+  update:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -14,29 +14,76 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch DonorDrive stats
+      - name: Fetch and save DonorDrive data
         run: |
-          RESPONSE=$(curl -s -H "Accept: application/json" \
-            https://makeawishmichigan.donordrive.com/api/teams/5450)
+          curl -sf -H "Accept: application/json" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450" \
+            -o /tmp/team.json
 
-          python3 -c "
-import sys, json
+          curl -sf -H "Accept: application/json" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=20&orderBy=createdDateUTC&desc=true" \
+            -o /tmp/donations.json
+
+          curl -sf -H "Accept: application/json" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/participants?limit=51&orderBy=createdDateUTC&desc=true" \
+            -o /tmp/participants.json
+
+          python3 - <<'PYEOF'
+import json
 from datetime import datetime, timezone
 
-data = json.loads('''$RESPONSE''')
+now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+with open('/tmp/team.json')         as f: team         = json.load(f)
+with open('/tmp/donations.json')    as f: raw_donations = json.load(f)
+with open('/tmp/participants.json') as f: raw_parts     = json.load(f)
+
+# ── team-stats.json ──────────────────────────────────────────────────
 stats = {
-    'sumDonations': data['sumDonations'],
-    'fundraisingGoal': data['fundraisingGoal'],
-    'numParticipants': data['numParticipants'],
-    'updatedAt': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    'sumDonations':    team.get('sumDonations', 0),
+    'fundraisingGoal': team.get('fundraisingGoal', 115000),
+    'numParticipants': team.get('numParticipants', 0),
+    'updatedAt': now,
 }
-print(json.dumps(stats, indent=2))
-" > assets/data/team-stats.json
+with open('assets/data/team-stats.json', 'w') as f:
+    json.dump(stats, f, indent=2)
+
+# ── activity-feed.json ───────────────────────────────────────────────
+donations = [
+    {
+        'displayName':     d.get('displayName', 'A supporter'),
+        'amount':          d.get('amount', 0),
+        'recipientName':   d.get('recipientName', ''),
+        'donorIsRecipient':d.get('donorIsRecipient', False),
+        'isRegFee':        d.get('isRegFee', False),
+        'createdDateUTC':  d.get('createdDateUTC', now),
+    }
+    for d in raw_donations
+]
+
+participants = [
+    {
+        'displayName':    p.get('displayName', ''),
+        'createdDateUTC': p.get('createdDateUTC', now),
+    }
+    for p in raw_parts
+]
+
+feed = {
+    'updatedAt':    now,
+    'donations':    donations,
+    'participants': participants,
+}
+with open('assets/data/activity-feed.json', 'w') as f:
+    json.dump(feed, f, indent=2)
+
+print('Done: ' + str(len(donations)) + ' donations, ' + str(len(participants)) + ' riders')
+PYEOF
 
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/team-stats.json
-          git diff --cached --quiet || git commit -m "chore: update team fundraising stats [skip ci]"
+          git add assets/data/team-stats.json assets/data/activity-feed.json
+          git diff --cached --quiet || git commit -m "chore: update team stats and activity feed [skip ci]"
           git push
