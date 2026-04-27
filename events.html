@@ -27,6 +27,14 @@
 <section class="section-cream">
   <div class="section-inner">
 
+    <div class="add-all-banner">
+      <div>
+        <p class="add-all-label">2026 Season</p>
+        <p class="add-all-title">Save every TGT event to your calendar at once.</p>
+      </div>
+      <button onclick="dlAllIcs()" class="add-all-btn">Add All Events</button>
+    </div>
+
     <h2 class="section-h3" style="margin-top:0;">Zoo de Mack 2026 — our season kickoff.</h2>
     <div class="event-card">
       <span class="event-card-date">Saturday, May 16, 2026</span>
@@ -149,29 +157,69 @@
 
 <script src="/assets/js/nav.js" defer></script>
 <script>
-function dlIcs(num, dateStart, dateEnd) {
-  var title = 'WAM Training Ride #' + num + ' \u2014 The Grateful Team';
-  var ics = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'PRODID:-//The Grateful Team//EN',
+function makeVEvent(summary, dateStart, dateEnd, location, description) {
+  return [
     'BEGIN:VEVENT',
     'DTSTART;VALUE=DATE:' + dateStart,
     'DTEND;VALUE=DATE:' + dateEnd,
-    'SUMMARY:' + title,
-    'LOCATION:Grand Rapids\\, MI',
-    'DESCRIPTION:TGT group training ride. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.',
-    'END:VEVENT',
-    'END:VCALENDAR'
+    'SUMMARY:' + summary,
+    'LOCATION:' + location,
+    'DESCRIPTION:' + description,
+    'END:VEVENT'
   ].join('\r\n');
+}
+
+function downloadIcsBlob(filename, vevents) {
+  var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//The Grateful Team//EN']
+    .concat(vevents)
+    .concat(['END:VCALENDAR'])
+    .join('\r\n');
   var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'wam-training-ride-' + num + '.ics';
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(a.href);
+}
+
+function dlIcs(num, dateStart, dateEnd) {
+  downloadIcsBlob(
+    'wam-training-ride-' + num + '.ics',
+    [makeVEvent(
+      'WAM Training Ride #' + num + ' \u2014 The Grateful Team',
+      dateStart, dateEnd,
+      'Grand Rapids\\, MI',
+      'TGT group training ride. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.'
+    )]
+  );
+}
+
+function dlAllIcs() {
+  downloadIcsBlob('the-grateful-team-2026.ics', [
+    makeVEvent('Zoo de Mack 2026 \u2014 The Grateful Team', '20260516', '20260517',
+      'The Highlands\\, MI',
+      'TGT season kickoff ride: ~51 miles across the top of the Lower Peninsula to Mackinaw City.'),
+    makeVEvent('WAM Training Ride #1 \u2014 The Grateful Team', '20260621', '20260622',
+      'Grand Rapids\\, MI',
+      'TGT group training ride. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.'),
+    makeVEvent('WAM Training Ride #2 \u2014 The Grateful Team', '20260628', '20260629',
+      'Grand Rapids\\, MI',
+      'TGT group training ride. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.'),
+    makeVEvent('WAM Training Ride #3 \u2014 The Grateful Team', '20260705', '20260706',
+      'Grand Rapids\\, MI',
+      'TGT group training ride. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.'),
+    makeVEvent('WAM Training Ride #4 \u2014 The Grateful Team', '20260712', '20260713',
+      'Grand Rapids\\, MI',
+      'TGT group training ride. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.'),
+    makeVEvent('WAM Training Ride #5 \u2014 The Grateful Team', '20260719', '20260720',
+      'Grand Rapids\\, MI',
+      'Last TGT training ride before WAM. Time & distance TBD \u2014 check thegratefulteam.com/events for updates.'),
+    makeVEvent('Wish-A-Mile Bicycle Tour (WAM) 2026', '20260724', '20260727',
+      'Southwest Michigan',
+      '3 days\\, 300 miles for Make-A-Wish Michigan. The whole reason we ride. wish.org/michigan')
+  ]);
 }
 </script>
 </body>
