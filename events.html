@@ -32,7 +32,22 @@
         <p class="add-all-label">2026 Season</p>
         <p class="add-all-title">Save every TGT event to your calendar at once.</p>
       </div>
-      <button onclick="dlAllIcs()" class="add-all-btn">Add All Events</button>
+      <div class="add-all-wrap">
+        <button onclick="toggleAddAll(event)" class="add-all-btn" id="add-all-btn" aria-expanded="false">Add All Events ▾</button>
+        <div class="add-all-dropdown" id="add-all-dropdown" hidden>
+          <button onclick="dlAllIcs('google')" class="add-all-option">
+            <span class="add-all-option-name">Google Calendar</span>
+            <span class="add-all-option-hint">Downloads .ics — import via Settings → Import</span>
+          </button>
+          <button onclick="dlAllIcs('ics')" class="add-all-option">
+            <span class="add-all-option-name">Apple / Outlook</span>
+            <span class="add-all-option-hint">Downloads .ics — opens automatically</span>
+          </button>
+        </div>
+        <p class="add-all-google-note" id="add-all-google-note" hidden>
+          File downloaded — in Google Calendar go to <strong>Settings → Import</strong> and select the file.
+        </p>
+      </div>
     </div>
 
     <h2 class="section-h3" style="margin-top:0;">Zoo de Mack 2026 — our season kickoff.</h2>
@@ -196,7 +211,33 @@ function dlIcs(num, dateStart, dateEnd) {
   );
 }
 
-function dlAllIcs() {
+function toggleAddAll(e) {
+  e.stopPropagation();
+  var dd = document.getElementById('add-all-dropdown');
+  var btn = document.getElementById('add-all-btn');
+  var note = document.getElementById('add-all-google-note');
+  var open = !dd.hidden;
+  dd.hidden = open;
+  note.hidden = true;
+  btn.setAttribute('aria-expanded', !open);
+  btn.textContent = open ? 'Add All Events \u25be' : 'Add All Events \u25b4';
+}
+document.addEventListener('click', function() {
+  var dd = document.getElementById('add-all-dropdown');
+  var btn = document.getElementById('add-all-btn');
+  if (dd && !dd.hidden) {
+    dd.hidden = true;
+    btn.setAttribute('aria-expanded', false);
+    btn.textContent = 'Add All Events \u25be';
+  }
+});
+
+function dlAllIcs(type) {
+  document.getElementById('add-all-dropdown').hidden = true;
+  document.getElementById('add-all-btn').textContent = 'Add All Events \u25be';
+  if (type === 'google') {
+    document.getElementById('add-all-google-note').hidden = false;
+  }
   downloadIcsBlob('the-grateful-team-2026.ics', [
     makeVEvent('Zoo de Mack 2026 \u2014 The Grateful Team', '20260516', '20260517',
       'The Highlands\\, MI',
