@@ -1885,6 +1885,17 @@ button.btn-primary,
   border: 2px solid var(--color-gold);
   margin-bottom: 6px;
   display: block;
+  flex-shrink: 0;
+}
+.rider-card-avatar-placeholder {
+  background: var(--color-night);
+  color: var(--color-gold);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .rider-card:hover {
   transform: translateY(-2px);
