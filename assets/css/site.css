@@ -470,6 +470,14 @@ body {
 }
 .packing-col-must h3 { color: var(--color-red); }
 .packing-col-lux  h3 { color: var(--color-purple); }
+.packing-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(26,14,43,0.55);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
 .packing-list {
   list-style: none;
   margin: 0;
