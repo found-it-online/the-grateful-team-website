@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grateful Team — Ride for Something Real</title>
+  <meta name="description" content="The Grateful Team is a Grand Rapids charity cycling team raising funds for Make-A-Wish Michigan. All ages, all fitness levels — just show up.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --color-night:        #1A0E2B;
+      --color-night-mid:    #2D1550;
+      --color-purple:       #4A1F6B;
+      --color-purple-light: #6B3A8E;
+      --color-orange:       #D45F1A;
+      --color-orange-dark:  #A8480E;
+      --color-red:          #8B2232;
+      --color-gold:         #C9943A;
+      --color-gold-light:   #E0B454;
+      --color-blue:         #4A8FAB;
+      --color-cream:        #F5EDD6;
+      --color-cream-dark:   #E8D9B8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--color-night);
+      color: var(--color-cream);
+      margin: 0;
+    }
+
+    .font-headline { font-family: 'Abril Fatface', serif; }
+    .font-slab     { font-family: 'Josefin Slab', serif; }
+    .font-body     { font-family: 'Lato', sans-serif; }
+
+    /* ── Progress bars ── */
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: rgba(245,237,214,0.10);
+      border-radius: 999px;
+      overflow: visible;
+      position: relative;
+    }
+    .progress-fill {
+      height: 10px;
+      border-radius: 999px;
+      max-width: 100%;
+      transition: width 1s ease;
+    }
+
+    @keyframes pulse-bar {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 0.85; }
+    }
+    .progress-pulse {
+      animation: pulse-bar 1.4s ease-in-out infinite;
+    }
+
+    /* ── Scroll bounce ── */
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(8px); }
+    }
+    .scroll-bounce { animation: bounce-down 1.2s ease-in-out infinite; }
+
+    /* ── Section divider motif ── */
+    .divider-motif {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 0;
+    }
+    .divider-motif::before,
+    .divider-motif::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(201,148,58,0.3);
+      max-width: 80px;
+    }
+
+    /* ── Form inputs ── */
+    .form-input {
+      width: 100%;
+      background: var(--color-night-mid);
+      border: 1.5px solid var(--color-purple);
+      border-radius: 4px;
+      padding: 14px 16px;
+      font-family: 'Lato', sans-serif;
+      font-size: 16px;
+      color: var(--color-cream);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+      outline: none;
+    }
+    .form-input::placeholder { color: rgba(245,237,214,0.35); }
+    .form-input:focus {
+      border-color: var(--color-gold);
+      box-shadow: 0 0 0 3px rgba(201,148,58,0.18);
+    }
+
+    .form-label {
+      display: block;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-gold);
+      margin-bottom: 6px;
+    }
+
+    /* ── Button base ── */
+    .btn-primary {
+      background: var(--color-orange);
+      color: var(--color-cream);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 16px 40px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: background 150ms ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--color-orange-dark); }
+
+    .btn-ghost-gold {
+      background: transparent;
+      color: var(--color-gold);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 14.5px 40px;
+      border-radius: 4px;
+      border: 1.5px solid var(--color-gold);
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-ghost-gold:hover {
+      background: var(--color-gold);
+      color: var(--color-night);
+    }
+
+    .btn-ghost-dark {
+      background: transparent;
+      color: var(--color-night);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 14px 32px;
+      border-radius: 4px;
+      border: 2px solid var(--color-night);
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-ghost-dark:hover {
+      background: var(--color-night);
+      color: var(--color-cream);
+    }
+
+    /* ── Card ── */
+    .season-card {
+      background: var(--color-night-mid);
+      border-radius: 8px;
+      border: 1px solid rgba(74,31,107,0.6);
+      padding: 28px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    /* ── Pill badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .badge-gold    { background: var(--color-gold); color: var(--color-night); }
+    .badge-outline { background: transparent; border: 1px solid var(--color-gold); color: var(--color-gold); }
+
+    /* ── Mini stat pill ── */
+    .mini-stat {
+      background: rgba(245,237,214,0.06);
+      border: 1px solid rgba(245,237,214,0.1);
+      border-radius: 6px;
+      padding: 12px 16px;
+      flex: 1;
+    }
+    .mini-stat-value {
+      font-family: 'Abril Fatface', serif;
+      font-size: 22px;
+      color: var(--color-cream);
+      line-height: 1;
+    }
+    .mini-stat-label {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(245,237,214,0.45);
+      margin-top: 2px;
+    }
+
+    /* ── Eyebrow ── */
+    .eyebrow {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Confirmation message ── */
+    #confirm-message { display: none; }
+    #confirm-message.show {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Instagram placeholder grid ── */
+    .ig-placeholder {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .ig-tile {
+      aspect-ratio: 1;
+      background: rgba(74,31,107,0.5);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      transition: transform 200ms ease;
+    }
+    .ig-tile:hover { transform: scale(1.02); }
+
+    @media (max-width: 640px) {
+      .ig-placeholder { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 1: HERO
+════════════════════════════════════════════════════════ -->
+<section
+  style="
+    min-height: 100svh;
+    background: radial-gradient(ellipse at center, #2D1550 0%, #1A0E2B 70%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px 80px;
+    position: relative;
+  "
+>
+  <!-- Logo -->
+  <img
+    src="../../assets/logos/tgt-logo-1x1.png"
+    alt="The Grateful Team"
+    style="width:80px; height:80px; object-fit:contain; margin-bottom:32px; filter:brightness(0) invert(1);"
+  >
+
+  <!-- Headline -->
+  <h1 class="font-headline" style="
+    font-size: clamp(2.75rem, 8vw, 5rem);
+    color: var(--color-cream);
+    line-height: 1.05;
+    max-width: 720px;
+    margin: 0 0 20px;
+  ">
+    Ride for Something Real.
+  </h1>
+
+  <!-- Subheadline -->
+  <p class="font-slab" style="
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    font-weight: 700;
+    color: var(--color-gold);
+    letter-spacing: 0.02em;
+    margin: 0 0 24px;
+  ">
+    50 riders. One mission. Zero prerequisites.
+  </p>
+
+  <!-- Body -->
+  <p class="font-body" style="
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: rgba(245,237,214,0.80);
+    line-height: 1.65;
+    max-width: 560px;
+    margin: 0 0 40px;
+  ">
+    The Grateful Team rides for children fighting critical illnesses through Make-A-Wish.
+    Cyclists of every age and fitness level — united by bikes, music, and doing something that matters.
+  </p>
+
+  <!-- CTAs -->
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px;">
+    <a href="#join" class="btn-primary">Join the Team</a>
+    <a href="#" class="btn-ghost-gold">Ride with us on Strava →</a>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="scroll-bounce" style="
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-gold);
+  ">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Scroll down">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     DIVIDER — lightning bolt
+════════════════════════════════════════════════════════ -->
+<div style="background:var(--color-cream); padding: 20px 24px;">
+  <div class="divider-motif" style="max-width:1200px; margin:0 auto;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#C9943A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="13 2 7 11 11 11 7 18"></polyline>
+    </svg>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 2: MISSION + FUNDRAISING
+════════════════════════════════════════════════════════ -->
+<section style="background:var(--color-cream); padding: clamp(48px,8vw,80px) 24px;">
+  <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:48px;">
+
+    <!-- Left — Mission -->
+    <div style="max-width:560px;">
+      <p class="eyebrow" style="color:var(--color-red); margin:0 0 16px;">Our Mission</p>
+      <h2 class="font-headline" style="
+        font-size: clamp(2.25rem, 5vw, 3rem);
+        color: var(--color-night);
+        line-height: 1.05;
+        margin: 0 0 24px;
+      ">
+        We ride for kids who need a miracle.
+      </h2>
+      <p class="font-body" style="
+        font-size: 18px;
+        color: rgba(26,14,43,0.78);
+        line-height: 1.65;
+        margin: 0 0 24px;
+      ">
+        TGT raises funds for children fighting critical illnesses through Make-A-Wish.
+        We're an eclectic community of riders — all ages, all backgrounds — united by bikes,
+        music, and a shared love of doing something meaningful.
+      </p>
+      <p class="font-slab" style="
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(139,34,50,0.80);
+        margin: 0;
+      ">
+        ⭐ Proud fundraising team for Make-A-Wish Michigan
+      </p>
+    </div>
+
+    <!-- Right — Goal Card -->
+    <div style="
+      background: var(--color-purple);
+      border-radius: 8px;
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 440px;
+    ">
+      <p class="eyebrow" style="color:var(--color-gold); margin:0 0 12px;">2026 Fundraising Goal</p>
+      <p class="font-headline" style="
+        font-size: clamp(3rem, 6vw, 4rem);
+        color: var(--color-cream);
+        line-height: 1;
+        margin: 0;
+      ">$115,000</p>
+      <div style="width:48px; height:2px; background:var(--color-gold); margin:20px auto;"></div>
+      <p class="font-body" style="
+        font-size: 16px;
+        color: rgba(245,237,214,0.75);
+        margin: 0;
+      ">All proceeds benefit Make-A-Wish Michigan</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    #mission-grid {
+      grid-template-columns: 3fr 2fr !important;
+      align-items: center;
+    }
+  }
+</style>
+<script>
+  document.querySelector('section:nth-of-type(2) > div').id = 'mission-grid';
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 3: AWARDS & MILESTONES — SEASON REPORT
+════════════════════════════════════════════════════════ -->
+<section style="background:var(--color-night); padding: clamp(56px,8vw,80px) 24px;">
+  <div style="max-width:1200px; margin:0 auto;">
+
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:40px;">
+      <p class="eyebrow" style="color:var(--color-gold); margin:0 0 12px;">By the Numbers</p>
+      <h2 class="font-headline" style="
+        font-size: clamp(2.25rem, 5vw, 3rem);
+        color: var(--color-cream);
+        line-height: 1.05;
+        margin: 0 0 16px;
+      ">Season Report.</h2>
+      <p class="font-body" style="
+        font-size: 18px;
+        color: rgba(245,237,214,0.65);
+        margin: 0 auto;
+        max-width: 520px;
+      ">We set our sights higher each season — and then we beat them.</p>
+    </div>
+
+    <!-- All-Time Totals Strip -->
+    <div style="
+      background: var(--color-purple);
+      border-radius: 8px;
+      padding: 28px 40px;
+      max-width: 960px;
+      margin: 0 auto 48px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    " id="totals-strip">
+      <!-- stat 1 -->
+      <div style="text-align:center;">
+        <div class="font-headline" style="font-size:clamp(1.75rem,4vw,2.25rem); color:var(--color-cream); line-height:1;">$265,287</div>
+        <div class="font-slab" style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-gold); margin-top:4px;">3 Completed Seasons</div>
+      </div>
+      <!-- stat 2 -->
+      <div style="text-align:center;">
+        <div class="font-headline" style="font-size:clamp(1.75rem,4vw,2.25rem); color:var(--color-cream); line-height:1;">49 Riders</div>
+        <div class="font-slab" style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-gold); margin-top:4px;">2026 Season</div>
+      </div>
+      <!-- stat 3 -->
+      <div style="text-align:center;">
+        <div class="font-headline" style="font-size:clamp(1.75rem,4vw,2.25rem); color:var(--color-cream); line-height:1;">2 Awards</div>
+        <div class="font-slab" style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-gold); margin-top:4px;">WAM Large Team Division</div>
+      </div>
+      <!-- stat 4 -->
+      <div style="text-align:center;">
+        <div class="font-headline" style="font-size:clamp(1.75rem,4vw,2.25rem); color:var(--color-cream); line-height:1;">3 Complete</div>
+        <div class="font-slab" style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-gold); margin-top:4px;">+ 1 In Progress</div>
+      </div>
+    </div>
+
+    <!-- Season Cards Grid -->
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    " id="cards-grid">
+
+      <!-- ── CARD: 2023 ── -->
+      <div class="season-card" style="border-top: 4px solid #8B2232;">
+        <p class="font-slab" style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#8B2232; margin:0 0 16px;">Season 2023 · Year One</p>
+
+        <div class="font-headline" style="font-size:clamp(2.25rem,5vw,2.75rem); color:var(--color-cream); line-height:1; margin:0;">$34,648</div>
+        <div class="font-slab" style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(245,237,214,0.50); margin:4px 0 20px;">Raised</div>
+
+        <div class="progress-track">
+          <div class="progress-fill" style="width:99%; background:#8B2232;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span class="font-body" style="font-size:13px; color:rgba(245,237,214,0.45);">Goal: $35,000</span>
+          <!-- no badge for year one short -->
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <div class="mini-stat">
+            <div class="mini-stat-value">12</div>
+            <div class="mini-stat-label">Riders</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-value">Year One</div>
+            <div class="mini-stat-label">First season</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD: 2024 ── -->
+      <div class="season-card" style="border-top: 4px solid #4A8FAB;">
+        <p class="font-slab" style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#4A8FAB; margin:0 0 16px;">Season 2024 · Breakout Year</p>
+
+        <div class="font-headline" style="font-size:clamp(2.25rem,5vw,2.75rem); color:var(--color-cream); line-height:1; margin:0;">$115,027</div>
+        <div class="font-slab" style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(245,237,214,0.50); margin:4px 0 20px;">Raised</div>
+
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="progress-track" style="flex:1;">
+            <div class="progress-fill" style="width:100%; background:#4A8FAB;"></div>
+          </div>
+          <span class="font-slab" style="font-size:11px; font-weight:700; background:#4A8FAB; color:var(--color-night); padding:3px 8px; border-radius:999px; white-space:nowrap;">+15%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span class="font-body" style="font-size:13px; color:rgba(245,237,214,0.45);">Goal: $100,000</span>
+          <span class="badge badge-gold">New Record</span>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <div class="mini-stat">
+            <div class="mini-stat-value">42</div>
+            <div class="mini-stat-label">Riders</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-value">+$80K</div>
+            <div class="mini-stat-label">From 2023</div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(245,237,214,0.08); margin:20px 0 16px;"></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9943A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span class="font-body" style="font-size:14px; color:rgba(245,237,214,0.80);">Top Fundraising Team — Large Division</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9943A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            <span class="font-body" style="font-size:14px; color:rgba(245,237,214,0.80);">Spirit of the WAM Award</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CARD: 2025 ── -->
+      <div class="season-card" style="border-top: 4px solid #C9943A;">
+        <p class="font-slab" style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#C9943A; margin:0 0 16px;">Season 2025 · Back to Back</p>
+
+        <div class="font-headline" style="font-size:clamp(2.25rem,5vw,2.75rem); color:var(--color-cream); line-height:1; margin:0;">$115,612</div>
+        <div class="font-slab" style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:rgba(245,237,214,0.50); margin:4px 0 20px;">Raised</div>
+
+        <div class="progress-track">
+          <div class="progress-fill" style="width:100%; background:#C9943A;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span class="font-body" style="font-size:13px; color:rgba(245,237,214,0.45);">Goal: $115,000</span>
+          <span class="badge badge-outline">Goal Met</span>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <div class="mini-stat">
+            <div class="mini-stat-value">41</div>
+            <div class="mini-stat-label">Riders</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-value">+$585</div>
+            <div class="mini-stat-label">From 2024</div>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(245,237,214,0.08); margin:20px 0 16px;"></div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9943A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="font-body" style="font-size:14px; color:rgba(245,237,214,0.80);">Top Fundraising Team — Large Division</span>
+        </div>
+      </div>
+
+      <!-- ── CARD: 2026 ── -->
+      <div class="season-card" style="border-top: 4px solid #D45F1A;">
+        <p class="font-slab" style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#D45F1A; margin:0 0 16px;">Season 2026 · In Progress</p>
+
+        <div class="font-headline" style="font-size:clamp(2.25rem,5vw,2.75rem); color:rgba(245,237,214,0.30); line-height:1; margin:0;">—</div>
+        <div class="font-body" style="font-style:italic; font-size:15px; color:rgba(245,237,214,0.45); margin:6px 0 20px;">Season underway</div>
+
+        <div class="progress-track">
+          <div class="progress-fill progress-pulse" style="width:20%; background:#D45F1A;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span class="font-body" style="font-size:13px; color:rgba(245,237,214,0.45);">Goal: $115,000</span>
+          <span class="font-body" style="font-style:italic; font-size:13px; color:#D45F1A;">Ride in Progress</span>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <div class="mini-stat">
+            <div class="mini-stat-value">49</div>
+            <div class="mini-stat-label">Riders</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-value">+8</div>
+            <div class="mini-stat-label">From 2025</div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;">
+          <a href="#join" class="font-body" style="font-style:italic; font-size:14px; color:var(--color-gold); text-decoration:none;">
+            Want to be in this report? Join the team →
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </div>
+</section>
+
+<style>
+  @media (min-width: 640px) {
+    #totals-strip { grid-template-columns: repeat(4, 1fr) !important; }
+    #cards-grid   { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+</style>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     DIVIDER — bicycle wheel
+════════════════════════════════════════════════════════ -->
+<div style="background:var(--color-cream); padding:20px 24px;">
+  <div class="divider-motif" style="max-width:1200px; margin:0 auto;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9943A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="2"/>
+      <line x1="12" y1="2" x2="12" y2="10"/>
+      <line x1="12" y1="14" x2="12" y2="22"/>
+      <line x1="2" y1="12" x2="10" y2="12"/>
+      <line x1="14" y1="12" x2="22" y2="12"/>
+    </svg>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 4: GROUP RIDES & TRAINING EVENTS
+════════════════════════════════════════════════════════ -->
+<section style="background: linear-gradient(135deg, #8B2232 0%, #D45F1A 100%); padding: clamp(48px,8vw,80px) 24px;">
+  <div style="max-width:1200px; margin:0 auto; text-align:center;">
+
+    <p class="eyebrow" style="color:rgba(245,237,214,0.75); margin:0 0 12px;">Ride With Us</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(2.25rem, 5vw, 3rem);
+      color: var(--color-cream);
+      line-height: 1.05;
+      margin: 0 0 40px;
+    ">First group ride: Zoo de Mack.</h2>
+
+    <!-- Event Card -->
+    <div style="
+      background: var(--color-cream);
+      border-radius: 8px;
+      padding: 40px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: left;
+      box-shadow: 0 8px 32px rgba(26,14,43,0.25);
+    ">
+      <!-- Date badge -->
+      <span style="
+        display: inline-block;
+        background: var(--color-night);
+        color: var(--color-gold);
+        font-family: 'Josefin Slab', serif;
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 6px 16px;
+        border-radius: 999px;
+      ">May 16, 2026</span>
+
+      <h3 class="font-headline" style="font-size:2rem; color:var(--color-night); margin:16px 0 24px; line-height:1.1;">Zoo de Mack 2026</h3>
+
+      <!-- Details -->
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
+        <div style="display:flex; align-items:flex-start; gap:12px;">
+          <span style="font-size:20px; line-height:1.3;" aria-hidden="true">📍</span>
+          <span class="font-body" style="font-size:16px; color:rgba(26,14,43,0.78); line-height:1.4;">Mackinaw City → The Highlands, Northern Michigan Lower Peninsula</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:20px;" aria-hidden="true">🚲</span>
+          <span class="font-body" style="font-size:16px; color:rgba(26,14,43,0.78);">~51 miles, point-to-point</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:20px;" aria-hidden="true">🎉</span>
+          <span class="font-body" style="font-size:16px; color:rgba(26,14,43,0.78);">Finish line fiesta 2–6 PM · Mackinac Island evening</span>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--color-cream-dark); margin:0 0 24px;"></div>
+
+      <p class="font-body" style="font-size:18px; color:rgba(26,14,43,0.72); line-height:1.65; margin:0 0 20px;">
+        Whether you're a seasoned rider or just getting back on the bike — this is how the season starts.
+        Point A to Point B through northern Michigan, the whole team alongside you.
+      </p>
+
+      <a href="#join" class="font-body" style="font-style:italic; font-size:16px; color:var(--color-purple); text-decoration:none;">
+        Join the team to ride with us →
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 5: JOIN THE TEAM
+════════════════════════════════════════════════════════ -->
+<section id="join" style="background:var(--color-night); padding: clamp(64px,10vw,96px) 24px;">
+  <div style="max-width:560px; margin:0 auto; text-align:center;">
+
+    <p class="eyebrow" style="color:var(--color-gold); margin:0 0 12px;">Become a Member</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(2.25rem, 5vw, 3rem);
+      color: var(--color-cream);
+      line-height: 1.05;
+      margin: 0 0 16px;
+    ">Ready to ride for something real?</h2>
+    <p class="font-body" style="
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: rgba(245,237,214,0.72);
+      line-height: 1.65;
+      margin: 0 0 40px;
+    ">
+      Drop us your info and we'll reach out to get you on the roster.
+      All ages, all fitness levels — just show up.
+    </p>
+
+    <!-- Form -->
+    <form id="join-form" style="text-align:left;" onsubmit="handleSubmit(event)">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;" id="name-grid">
+        <div>
+          <label class="form-label" for="first-name">First Name</label>
+          <input class="form-input" type="text" id="first-name" name="first_name" placeholder="Luis" required>
+        </div>
+        <div>
+          <label class="form-label" for="last-name">Last Name</label>
+          <input class="form-input" type="text" id="last-name" name="last_name" placeholder="Vecchio" required>
+        </div>
+      </div>
+      <div style="margin-bottom:24px;">
+        <label class="form-label" for="email">Email Address</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <button type="submit" id="submit-btn" class="btn-primary" style="width:100%; padding:18px; border-radius:4px; font-size:18px;">
+        Join the Team
+      </button>
+    </form>
+
+    <!-- Confirmation (hidden until submit) -->
+    <div id="confirm-message" role="status">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-label="Success" style="margin-bottom:16px;">
+        <circle cx="24" cy="24" r="22" stroke="#C9943A" stroke-width="2.5"/>
+        <polyline points="14 24 21 31 34 17" stroke="#C9943A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="font-headline" style="font-size:2.5rem; color:var(--color-cream); margin:0 0 12px;">You're in!</p>
+      <p class="font-body" style="font-size:18px; color:rgba(245,237,214,0.72); line-height:1.65; margin:0;">
+        Check your email — we'll be in touch with everything you need to ride with us.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @media (max-width: 480px) {
+    #name-grid { grid-template-columns: 1fr !important; }
+  }
+</style>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Joining...';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    btn.style.cursor = 'not-allowed';
+    // Simulate async (real version hits Cloudflare Worker)
+    setTimeout(() => {
+      document.getElementById('join-form').style.display = 'none';
+      document.getElementById('confirm-message').classList.add('show');
+    }, 1200);
+  }
+</script>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     DIVIDER — rose
+════════════════════════════════════════════════════════ -->
+<div style="background:var(--color-cream); padding:20px 24px;">
+  <div class="divider-motif" style="max-width:1200px; margin:0 auto;">
+    <span style="font-size:16px;" aria-hidden="true">🌹</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 6: CURRENT TEAM MEMBERS
+════════════════════════════════════════════════════════ -->
+<section style="background:var(--color-cream); padding: clamp(40px,6vw,56px) 24px;">
+  <div style="max-width:480px; margin:0 auto; text-align:center;">
+    <p class="font-slab" style="
+      font-size:13px; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.1em;
+      color:var(--color-red); margin:0 0 12px;
+    ">Already on the team?</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(1.625rem, 4vw, 2rem);
+      color: var(--color-night);
+      line-height: 1.1;
+      margin: 0 0 24px;
+    ">Everything you need is in the team Drive.</h2>
+    <a href="#" class="btn-ghost-dark">
+      <!-- Drive icon -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+      </svg>
+      Open Team Resources
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 7: INSTAGRAM FEED
+════════════════════════════════════════════════════════ -->
+<section style="background:var(--color-night-mid); padding: clamp(56px,8vw,80px) 24px;">
+  <div style="max-width:1200px; margin:0 auto; text-align:center;">
+
+    <p class="eyebrow" style="color:var(--color-gold); margin:0 0 12px;">The Team in Action</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(2.25rem, 5vw, 3rem);
+      color: var(--color-cream);
+      line-height: 1.05;
+      margin: 0 0 12px;
+    ">Follow Along</h2>
+    <a href="https://instagram.com/the_grateful_team" class="font-body" style="
+      font-size:18px; color:var(--color-blue); text-decoration:none;
+      display:inline-block; margin-bottom:40px;
+    ">@the_grateful_team</a>
+
+    <!-- Placeholder Instagram grid (swap for Behold.so embed when live) -->
+    <div class="ig-placeholder" style="margin-bottom:32px;">
+      <div class="ig-tile">🚲</div>
+      <div class="ig-tile">⭐</div>
+      <div class="ig-tile">🎶</div>
+      <div class="ig-tile">🏅</div>
+      <div class="ig-tile">🌄</div>
+      <div class="ig-tile">🎉</div>
+      <div class="ig-tile">🚴</div>
+      <div class="ig-tile">💛</div>
+      <div class="ig-tile">🌹</div>
+    </div>
+    <p class="font-body" style="font-size:13px; color:rgba(245,237,214,0.35); margin:0 0 24px; font-style:italic;">
+      [ Behold.so Instagram embed — live when account confirmed public ]
+    </p>
+
+    <a href="https://instagram.com/the_grateful_team" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--color-gold);
+      color: var(--color-gold);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 12px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 150ms ease, color 150ms ease;
+    "
+    onmouseover="this.style.background='#C9943A'; this.style.color='#1A0E2B';"
+    onmouseout="this.style.background='transparent'; this.style.color='#C9943A';"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+      Follow on Instagram
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 8: FOOTER
+════════════════════════════════════════════════════════ -->
+<footer style="background:#0F0820; padding: 48px 24px;">
+  <div style="border-top:1px solid rgba(74,31,107,0.4); max-width:1200px; margin:0 auto; padding-top:48px;">
+    <div style="
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+    " id="footer-grid">
+
+      <!-- Col 1: Logo -->
+      <div>
+        <img
+          src="../../assets/logos/tgt-logo-1x1.png"
+          alt="The Grateful Team"
+          style="height:48px; width:auto; filter:brightness(0) invert(1); margin-bottom:8px;"
+        >
+        <p class="font-body" style="font-size:14px; color:rgba(245,237,214,0.45); margin:0;">
+          Riding for Make-A-Wish since 2023.
+        </p>
+      </div>
+
+      <!-- Col 2: Social -->
+      <div>
+        <p class="font-slab" style="
+          font-size:13px; font-weight:700;
+          text-transform:uppercase; letter-spacing:0.1em;
+          color:var(--color-gold); margin:0 0 12px;
+        ">Find Us</p>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:10px;">
+          <a href="https://instagram.com/the_grateful_team" style="display:flex; align-items:center; gap:8px; color:rgba(245,237,214,0.60); text-decoration:none; font-size:14px; transition:color 150ms;" onmouseover="this.style.color='#C9943A'" onmouseout="this.style.color='rgba(245,237,214,0.60)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            Instagram
+          </a>
+          <a href="#" style="display:flex; align-items:center; gap:8px; color:rgba(245,237,214,0.60); text-decoration:none; font-size:14px; transition:color 150ms;" onmouseover="this.style.color='#C9943A'" onmouseout="this.style.color='rgba(245,237,214,0.60)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+          <a href="#" style="display:flex; align-items:center; gap:8px; color:rgba(245,237,214,0.60); text-decoration:none; font-size:14px; transition:color 150ms;" onmouseover="this.style.color='#C9943A'" onmouseout="this.style.color='rgba(245,237,214,0.60)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Strava"><path d="M10.4 5L8 10.8h3.6L10.4 5z"/><path d="M13.6 10.8L16 5l-2.4 5.8H13.6z"/><path d="M13.6 10.8l-1.6 3.4-1.6-3.4"/><path d="M15.2 14.2L16 16l-1.6-1.8"/><path d="M8.8 14.2L8 16l1.6-1.8"/></svg>
+            Strava Club
+          </a>
+        </div>
+      </div>
+
+      <!-- Col 3: Copyright -->
+      <div style="display:flex; flex-direction:column; justify-content:flex-end;">
+        <p class="font-body" style="font-size:13px; color:rgba(245,237,214,0.35); margin:0 0 4px;">
+          © 2026 The Grateful Team. All rights reserved.
+        </p>
+        <p class="font-body" style="font-size:12px; color:rgba(245,237,214,0.25); margin:0;">
+          Built with ♥ by Lauren Milligan
+        </p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+<style>
+  @media (min-width: 768px) {
+    #footer-grid {
+      grid-template-columns: 1fr 1fr 1fr !important;
+      text-align: left !important;
+      align-items: start;
+    }
+    #footer-grid > div:nth-child(2) > div {
+      align-items: flex-start !important;
+    }
+  }
+</style>
+
+</body>
+</html>
