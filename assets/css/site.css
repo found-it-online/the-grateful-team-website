@@ -1870,10 +1870,21 @@ button.btn-primary,
   padding: 14px 16px 12px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 4px;
   text-decoration: none;
   transition: transform 150ms ease, box-shadow 150ms ease;
   color: inherit;
+}
+.rider-card-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-gold);
+  margin-bottom: 6px;
+  display: block;
 }
 .rider-card:hover {
   transform: translateY(-2px);

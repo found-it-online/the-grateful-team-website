@@ -25,7 +25,7 @@ jobs:
             -o /tmp/donations.json
 
           curl -sf -H "Accept: application/json" \
-            "https://makeawishmichigan.donordrive.com/api/teams/5450/participants?limit=51&orderBy=createdDateUTC&desc=true" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/participants?limit=60&orderBy=displayName" \
             -o /tmp/participants.json
 
           python3 - <<'PYEOF'
@@ -77,13 +77,25 @@ feed = {
 with open('assets/data/activity-feed.json', 'w') as f:
     json.dump(feed, f, indent=2)
 
-print('Done: ' + str(len(donations)) + ' donations, ' + str(len(participants)) + ' riders')
+# ── participants.json (avatars for member cards) ──────────────────────
+avatar_data = [
+    {
+        'participantID':       p.get('participantID'),
+        'displayName':         p.get('displayName', ''),
+        'avatarImageURL':      p.get('avatarImageURL') if p.get('isCustomAvatarImage') else None,
+    }
+    for p in raw_parts
+]
+with open('assets/data/participants.json', 'w') as f:
+    json.dump(avatar_data, f, indent=2)
+
+print('Done: ' + str(len(donations)) + ' donations, ' + str(len(raw_parts)) + ' riders')
 PYEOF
 
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/team-stats.json assets/data/activity-feed.json
+          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json
           git diff --cached --quiet || git commit -m "chore: update team stats and activity feed [skip ci]"
           git push
