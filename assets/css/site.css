@@ -4,35 +4,47 @@
 ═══════════════════════════════════════════════════════ */
 
 :root {
-  --color-night:        #1A0E2B;
-  --color-night-deep:   #0F0820;
-  --color-night-mid:    #2D1550;
-  --color-purple:       #4A1F6B;
-  --color-purple-light: #6B3A8E;
-  --color-orange:       #D45F1A;
-  --color-orange-dark:  #A8480E;
-  --color-red:          #8B2232;
-  --color-gold:         #C9943A;
-  --color-gold-light:   #E0B454;
-  --color-blue:         #4A8FAB;
-  --color-cream:        #F5EDD6;
-  --color-cream-dark:   #E8D9B8;
-  --color-tile-cream:   #FBF6E4;
+  /* ── Brand dark backgrounds ── */
+  --color-night:        #1e0a19;  /* Coffee Bean */
+  --color-night-deep:   #140912;
+  --color-night-mid:    #2d1245;
+  /* ── Brand purples ── */
+  --color-purple:       #5a1e8a;
+  --color-purple-light: #7b3bb1;  /* logo lightning bolt */
+  /* ── Warm accent (secondary) ── */
+  --color-orange:       #e8621a;
+  --color-orange-dark:  #c04e12;
+  --color-red:          #9b2535;
+  /* ── Lemon — primary highlight/CTA ── */
+  --color-gold:         #f9f108;  /* Lemon */
+  --color-gold-light:   #fbf855;
+  --color-gold-readable:#7a7100;
+  /* ── Cerulean — secondary accent & links ── */
+  --color-blue:         #04b2ca;  /* Cerulean */
+  --color-cerulean:     #04b2ca;
+  --color-cerulean-dark:#0390a5;
+  /* ── Pacifika olive ── */
+  --color-pacifika:     #796f1e;
+  /* ── Light backgrounds ── */
+  --color-cream:        #faf6e8;
+  --color-cream-dark:   #ede6cc;
+  --color-tile-cream:   #fdf9ef;
   --nav-height:         64px;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   background: var(--color-night);
   color: var(--color-cream);
   margin: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 .font-headline { font-family: 'Abril Fatface', serif; }
 .font-slab     { font-family: 'Josefin Slab', serif; }
-.font-body     { font-family: 'Lato', sans-serif; }
+.font-body     { font-family: 'DM Sans', sans-serif; }
 
 /* ── Eyebrow ── */
 .eyebrow {
@@ -108,18 +120,18 @@ body {
 .nav-links {
   display: none;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .nav-links a {
-  color: var(--color-cream);
-  font-family: 'Josefin Slab', serif;
-  font-weight: 700;
+  color: rgba(250,246,232,0.88);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-decoration: none;
   padding: 8px 0;
   border-bottom: 2px solid transparent;
@@ -138,12 +150,12 @@ body {
 .nav-dropdown-toggle {
   background: none;
   border: none;
-  color: var(--color-cream);
-  font-family: 'Josefin Slab', serif;
-  font-weight: 700;
+  color: rgba(250,246,232,0.88);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
   font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   cursor: pointer;
   padding: 8px 0;
   display: inline-flex;
@@ -197,19 +209,28 @@ body {
 
 /* Join CTA in nav */
 .nav-cta {
-  background: var(--color-orange);
-  color: var(--color-cream);
-  font-family: 'Lato', sans-serif;
+  background: var(--color-gold);
+  color: var(--color-night);
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 4px;
+  border: 1.5px solid transparent;
   text-decoration: none;
   transition: background 150ms ease;
+  white-space: nowrap;
+  line-height: 1.4;
 }
-.nav-cta:hover { background: var(--color-orange-dark); }
+.nav-cta:hover { background: var(--color-gold-light); }
+.nav-links a.nav-cta,
+.nav-links a.nav-cta:hover,
+.nav-links a.nav-cta:focus-visible {
+  color: var(--color-night);
+  border-bottom-color: transparent;
+}
 
 /* Mobile hamburger */
 .nav-toggle {
@@ -278,12 +299,25 @@ body {
   border-bottom: 1px solid rgba(201,148,58,0.12);
 }
 .nav-drawer-sublist li { padding: 10px 0; }
-.nav-drawer-sublist a { font-size: 16px; letter-spacing: 0.06em; }
+.nav-drawer-sublist a {
+  color: rgba(250,246,232,0.86);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  display: block;
+}
+.nav-drawer-sublist a:hover,
+.nav-drawer-sublist a:focus-visible,
+.nav-drawer-sublist a[aria-current="page"] {
+  color: var(--color-gold-light);
+}
 .nav-drawer-cta {
   display: block;
-  background: var(--color-orange);
-  color: var(--color-cream);
-  font-family: 'Lato', sans-serif;
+  background: var(--color-gold);
+  color: var(--color-night);
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 16px;
   text-transform: uppercase;
@@ -322,7 +356,7 @@ body {
   margin: 12px 0 16px;
 }
 .page-hero p {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(1rem, 2vw, 1.25rem);
   color: rgba(245,237,214,0.78);
   line-height: 1.6;
@@ -439,7 +473,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 16px;
   color: rgba(26,14,43,0.82);
   padding: 7px 0;
@@ -529,14 +563,14 @@ body {
   letter-spacing: 0.06em;
 }
 .gear-pick-blurb {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   line-height: 1.6;
   color: rgba(26,14,43,0.72);
   margin: 0 0 12px;
 }
 .gear-pick-link {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: var(--color-purple);
@@ -591,7 +625,7 @@ body {
 .faq-item[open] summary::after { content: '−'; }
 .faq-answer {
   padding: 0 22px 22px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 16px;
   line-height: 1.65;
   color: rgba(26,14,43,0.78);
@@ -640,14 +674,14 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 16px;
   color: rgba(26,14,43,0.78);
   line-height: 1.4;
 }
 .event-card-meta-row .icon { font-size: 20px; }
 .event-card-divider { border-top: 1px solid var(--color-cream-dark); margin: 0 0 24px; }
-.event-card p { font-family: 'Lato', sans-serif; font-size: 17px; color: rgba(26,14,43,0.72); line-height: 1.65; margin: 0 0 18px; }
+.event-card p { font-family: 'DM Sans', sans-serif; font-size: 17px; color: rgba(26,14,43,0.72); line-height: 1.65; margin: 0 0 18px; }
 .event-card .event-card-link { font-style: italic; font-size: 16px; color: var(--color-purple); text-decoration: none; }
 .event-card .event-card-link:hover { text-decoration: underline; }
 
@@ -659,7 +693,7 @@ body {
   max-width: 720px;
   margin: 0 auto 24px;
   text-align: center;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   color: rgba(26,14,43,0.65);
 }
 .event-coming-soon h3 {
@@ -713,7 +747,7 @@ body {
   margin: 0;
 }
 .member-tile p {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   color: rgba(26,14,43,0.65);
   margin: 0;
@@ -829,28 +863,38 @@ body {
    BUTTONS
 ═══════════════════════════════════════════════════════ */
 .btn-primary {
-  background: var(--color-orange);
-  color: var(--color-cream);
-  font-family: 'Lato', sans-serif;
+  background: var(--color-gold);
+  color: var(--color-night);
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 17px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 16px 36px;
   border-radius: 4px;
   border: none;
   cursor: pointer;
-  transition: background 150ms ease;
+  transition: background 150ms ease, box-shadow 150ms ease;
   text-decoration: none;
   display: inline-block;
   text-align: center;
 }
-.btn-primary:hover { background: var(--color-orange-dark); }
+.btn-primary:hover {
+  background: var(--color-gold-light);
+  box-shadow: 0 4px 16px rgba(249,241,8,0.35);
+}
+a.btn-primary,
+a.btn-primary:visited,
+button.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  color: var(--color-night);
+}
 
 .btn-ghost-cream {
   background: transparent;
   color: var(--color-cream);
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 18px;
   text-transform: uppercase;
@@ -872,7 +916,7 @@ body {
 .btn-ghost-gold {
   background: transparent;
   color: var(--color-gold);
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 16px;
   text-transform: uppercase;
@@ -895,7 +939,7 @@ body {
 .btn-ghost-dark {
   background: transparent;
   color: var(--color-night);
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 16px;
   text-transform: uppercase;
@@ -1010,6 +1054,7 @@ body {
 }
 .award-badge-gold {
   background: linear-gradient(180deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+  color: var(--color-night);
 }
 .award-badge-purple {
   background: linear-gradient(180deg, var(--color-purple-light) 0%, var(--color-purple) 100%);
@@ -1028,7 +1073,7 @@ body {
   border: 1.5px dashed var(--color-cream-dark);
   border-radius: 8px;
   padding: 14px 16px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-style: italic;
   font-size: 13.5px;
   color: rgba(26,14,43,0.50);
@@ -1042,7 +1087,7 @@ body {
   line-height: 1;
 }
 .stat-amount-label {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   color: rgba(26,14,43,0.55);
   margin-left: 6px;
@@ -1075,7 +1120,7 @@ body {
   justify-content: space-between;
   align-items: baseline;
   margin-top: 8px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 13px;
 }
 .goal-row .goal-label { color: rgba(26,14,43,0.55); }
@@ -1086,7 +1131,7 @@ body {
 
 .rider-line {
   margin-top: 18px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14.5px;
   color: rgba(26,14,43,0.72);
   display: flex;
@@ -1097,7 +1142,7 @@ body {
 
 .join-cta-inline {
   margin-top: 14px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-style: italic;
   font-size: 14px;
   color: var(--color-red);
@@ -1151,7 +1196,7 @@ body {
   border: 1.5px solid var(--color-cream);
   border-radius: 4px;
   padding: 14px 16px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 16px;
   color: var(--color-night);
   transition: border-color 150ms ease, box-shadow 150ms ease;
@@ -1159,8 +1204,8 @@ body {
 }
 .form-input::placeholder { color: rgba(26,14,43,0.40); }
 .form-input:focus {
-  border-color: var(--color-orange);
-  box-shadow: 0 0 0 3px rgba(212,95,26,0.25);
+  border-color: var(--color-cerulean);
+  box-shadow: 0 0 0 3px rgba(4,178,202,0.25);
 }
 
 .form-label {
@@ -1300,7 +1345,7 @@ body {
 .footer-col li { margin: 0 0 10px; }
 .footer-col a {
   color: rgba(245,237,214,0.65);
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14.5px;
   text-decoration: none;
   transition: color 150ms ease;
@@ -1325,7 +1370,7 @@ body {
   font-size: 18px;
 }
 .footer-tagline {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   color: rgba(245,237,214,0.45);
   margin: 0 0 16px;
@@ -1340,7 +1385,7 @@ body {
   gap: 4px;
 }
 .footer-bottom p {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   color: rgba(245,237,214,0.35);
   margin: 0;
@@ -1400,25 +1445,38 @@ body {
 .nav-merch-link:hover { color: var(--color-gold); }
 .nav-cta-donate {
   background: transparent;
-  color: var(--color-gold);
-  font-family: 'Lato', sans-serif;
+  color: var(--color-cerulean);
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 9px 18px;
   border-radius: 4px;
-  border: 1.5px solid var(--color-gold);
+  border: 1.5px solid var(--color-cerulean);
   text-decoration: none;
   transition: background 150ms ease, color 150ms ease;
   display: inline-block;
+  white-space: nowrap;
+  line-height: 1.4;
 }
 .nav-cta-donate:hover {
-  background: var(--color-gold);
-  color: var(--color-night);
+  background: var(--color-cerulean);
+  color: #fff;
+}
+.nav-links a.nav-cta-donate {
+  color: var(--color-cerulean);
+  border-bottom-color: transparent;
+}
+.nav-links a.nav-cta-donate:hover,
+.nav-links a.nav-cta-donate:focus-visible {
+  background: var(--color-cerulean);
+  color: #fff;
+  border-bottom-color: transparent;
 }
 .nav-drawer-cta-donate {
-  background: var(--color-purple);
+  background: var(--color-cerulean);
+  color: #fff;
   border-top: 12px solid transparent;
 }
 
@@ -1451,7 +1509,7 @@ body {
   line-height: 1.2;
 }
 .wish-card p {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   color: rgba(245,237,214,0.72);
   line-height: 1.6;
@@ -1550,7 +1608,7 @@ body {
   margin: 0;
 }
 .sponsor-card-desc {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   color: rgba(26,14,43,0.65);
   line-height: 1.55;
@@ -1558,7 +1616,7 @@ body {
   flex: 1;
 }
 .sponsor-card-link {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   font-weight: 700;
   color: var(--color-purple);
@@ -1568,6 +1626,68 @@ body {
   transition: color 150ms ease, border-color 150ms ease;
 }
 .sponsor-card-link:hover { color: var(--color-orange); border-color: var(--color-orange); }
+
+/* ═══════════════════════════════════════════════════════
+   RIDERS GRID
+═══════════════════════════════════════════════════════ */
+.riders-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (min-width: 560px) {
+  .riders-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 900px) {
+  .riders-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1100px) {
+  .riders-grid { grid-template-columns: repeat(5, 1fr); }
+}
+.rider-card {
+  background: var(--color-tile-cream);
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 8px;
+  padding: 14px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  color: inherit;
+}
+.rider-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74,31,107,0.12);
+}
+.rider-card-name {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-night);
+  margin: 0;
+  line-height: 1.3;
+}
+.rider-card-amount {
+  font-family: 'Josefin Slab', serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--color-purple);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.rider-card-cta {
+  font-size: 11px;
+  color: var(--color-cerulean);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+.rider-card:hover .rider-card-cta { text-decoration: underline; }
 
 /* ═══════════════════════════════════════════════════════
    DONATE PAGE — CTA cards
@@ -1607,7 +1727,7 @@ body {
   line-height: 1.1;
 }
 .donate-cta-card p {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   color: rgba(26,14,43,0.68);
   line-height: 1.6;
@@ -1638,7 +1758,7 @@ body {
   margin: 0 0 10px;
 }
 .donate-impact-label {
-  font-family: 'Lato', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
   color: rgba(245,237,214,0.78);
   line-height: 1.5;

@@ -1,0 +1,42 @@
+name: Update Team Fundraising Stats
+
+on:
+  schedule:
+    - cron: '0 14 * * *'   # Daily at 9am ET (14:00 UTC)
+  workflow_dispatch:         # Allow manual trigger from GitHub UI
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch DonorDrive stats
+        run: |
+          RESPONSE=$(curl -s -H "Accept: application/json" \
+            https://makeawishmichigan.donordrive.com/api/teams/5450)
+
+          python3 -c "
+import sys, json
+from datetime import datetime, timezone
+
+data = json.loads('''$RESPONSE''')
+stats = {
+    'sumDonations': data['sumDonations'],
+    'fundraisingGoal': data['fundraisingGoal'],
+    'numParticipants': data['numParticipants'],
+    'updatedAt': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+}
+print(json.dumps(stats, indent=2))
+" > assets/data/team-stats.json
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/team-stats.json
+          git diff --cached --quiet || git commit -m "chore: update team fundraising stats [skip ci]"
+          git push
