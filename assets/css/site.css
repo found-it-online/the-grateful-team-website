@@ -1709,7 +1709,7 @@ button.btn-primary,
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-gold);
+  color: var(--color-gold-readable);
 }
 .sponsor-card-name {
   font-family: 'Abril Fatface', serif;
