@@ -230,6 +230,12 @@ body {
 .nav-links a.nav-cta:focus-visible {
   color: var(--color-night);
   border-bottom-color: transparent;
+  padding: 9px 18px;
+}
+.nav-links a.nav-cta-donate,
+.nav-links a.nav-cta-donate:hover,
+.nav-links a.nav-cta-donate:focus-visible {
+  padding: 9px 18px;
 }
 
 /* Mobile hamburger */
@@ -990,12 +996,117 @@ button.btn-primary,
   margin-top: 6px;
 }
 
-.cards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  max-width: 960px;
+/* ── Season Timeline ── */
+.seasons-timeline {
+  position: relative;
+  max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  /* vertical spine */
+  padding-left: 56px;
+}
+.seasons-timeline::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 12px;
+  bottom: 12px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-cream-dark), rgba(237,230,204,0.3));
+  z-index: 0;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 28px;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.tl-marker {
+  position: absolute;
+  left: -56px;
+  top: 8px;
+  width: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  z-index: 1;
+}
+.tl-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-tile-cream);
+  border: 3px solid var(--tl-color, var(--color-red));
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px var(--color-cream);
+}
+.tl-year {
+  font-family: 'Josefin Slab', serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tl-color, var(--color-red));
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  margin: 0;
+  line-height: 1;
+}
+/* Horizontal desktop timeline */
+@media (min-width: 900px) {
+  .seasons-timeline {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    padding-left: 0;
+    padding-top: 72px;
+  }
+  .seasons-timeline::before {
+    left: 10px;
+    right: 10px;
+    top: 33px;
+    bottom: auto;
+    height: 2px;
+    width: auto;
+    background: linear-gradient(to right, var(--color-cream-dark), rgba(237,230,204,0.3));
+  }
+  .timeline-item {
+    flex: 1;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .tl-marker {
+    position: absolute;
+    top: -72px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 6px;
+  }
+  .tl-year {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 20px;
+    font-family: 'Abril Fatface', serif;
+    color: var(--color-night);
+    letter-spacing: 0;
+  }
+  .tl-year-sub {
+    font-family: 'Josefin Slab', serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--tl-color, var(--color-orange));
+    display: block;
+    text-align: center;
+    margin-top: 2px;
+  }
 }
 
 .season-card {
@@ -1466,13 +1577,13 @@ button.btn-primary,
 }
 .nav-links a.nav-cta-donate {
   color: var(--color-cerulean);
-  border-bottom-color: transparent;
+  border-bottom: 1.5px solid var(--color-cerulean);
 }
 .nav-links a.nav-cta-donate:hover,
 .nav-links a.nav-cta-donate:focus-visible {
   background: var(--color-cerulean);
   color: #fff;
-  border-bottom-color: transparent;
+  border-bottom: 1.5px solid var(--color-cerulean);
 }
 .nav-drawer-cta-donate {
   background: var(--color-cerulean);

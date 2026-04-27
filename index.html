@@ -180,161 +180,147 @@
       </div>
     </div>
 
-    <!-- Season Cards Grid (2x2) -->
-    <div class="cards-grid">
+    <!-- Season Timeline -->
+    <div class="seasons-timeline">
 
       <!-- ── 2023 ── -->
-      <div class="season-card">
-        <div class="season-card-accent" style="background:var(--color-red);"></div>
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-red);">Season 2023</p>
-
-          <div class="award-placeholder">
-            Year One — laying the foundation.
+      <div class="timeline-item" style="--tl-color:var(--color-red)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2023</p>
+        </div>
+        <div class="season-card">
+          <div class="season-card-accent" style="background:var(--color-red);"></div>
+          <div class="season-card-body">
+            <div class="award-placeholder">Year One — laying the foundation.</div>
+            <div style="display:flex; align-items:baseline;">
+              <span class="stat-amount">$34,648</span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill" style="width:99%; background:var(--color-red);"></div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: $35,000</span>
+              <span class="pct-label" style="color:var(--color-red);">99%</span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>12 riders</div>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount">$34,648</span>
-            <span class="stat-amount-label">raised</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill" style="width:99%; background:var(--color-red);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $35,000</span>
-            <span class="pct-label" style="color:var(--color-red);">99%</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>12 riders</div>
         </div>
       </div>
 
-      <!-- ── 2024 ── (Crushed It sticker) -->
-      <div class="season-card">
-        <div class="season-card-accent" style="background:var(--color-blue);"></div>
-
-        <!-- Sticker -->
-        <div class="sticker" aria-label="Crushed the goal">
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="13 2 7 11 11 11 7 18"></polyline>
-          </svg>
-          Crushed<br>It!
+      <!-- ── 2024 ── -->
+      <div class="timeline-item" style="--tl-color:var(--color-blue)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2024</p>
         </div>
-
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-blue);">Season 2024</p>
-
-          <!-- AWARDS HERO ROW -->
-          <div class="award-row">
-            <div class="award-badge-wrap">
-              <div class="award-badge award-badge-gold" aria-hidden="true">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                  <path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/>
-                </svg>
+        <div class="season-card">
+          <div class="season-card-accent" style="background:var(--color-blue);"></div>
+          <div class="sticker" aria-label="Crushed the goal">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 2 7 11 11 11 7 18"></polyline></svg>
+            Crushed<br>It!
+          </div>
+          <div class="season-card-body">
+            <div class="award-row">
+              <div class="award-badge-wrap">
+                <div class="award-badge award-badge-gold" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/></svg>
+                </div>
+                <div class="award-caption">Top Team — Large Div</div>
               </div>
-              <div class="award-caption">Top Team — Large Div</div>
-            </div>
-            <div class="award-badge-wrap">
-              <div class="award-badge award-badge-purple" aria-hidden="true">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                  <path d="M12 2l2.39 6.96L22 9.27l-5.91 4.51L18.18 22 12 17.77 5.82 22l2.09-8.22L2 9.27l7.61-.31L12 2z"/>
-                </svg>
+              <div class="award-badge-wrap">
+                <div class="award-badge award-badge-purple" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 2l2.39 6.96L22 9.27l-5.91 4.51L18.18 22 12 17.77 5.82 22l2.09-8.22L2 9.27l7.61-.31L12 2z"/></svg>
+                </div>
+                <div class="award-caption">Spirit of WAM</div>
               </div>
-              <div class="award-caption">Spirit of WAM</div>
             </div>
+            <div style="display:flex; align-items:baseline;">
+              <span class="stat-amount">$115,027</span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill" style="width:100%; background:var(--color-blue);"></div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: $100,000</span>
+              <span class="pct-label" style="color:var(--color-blue);">115%</span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>42 riders</div>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount">$115,027</span>
-            <span class="stat-amount-label">raised</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill" style="width:100%; background:var(--color-blue);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $100,000</span>
-            <span class="pct-label" style="color:var(--color-blue);">115%</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>42 riders</div>
         </div>
       </div>
 
-      <!-- ── 2025 ── (Goal Met sticker) -->
-      <div class="season-card">
-        <div class="season-card-accent" style="background:var(--color-gold);"></div>
-
-        <div class="sticker sticker-purple" aria-label="Goal met">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          Goal<br>Met!
+      <!-- ── 2025 ── -->
+      <div class="timeline-item" style="--tl-color:var(--color-gold)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2025</p>
         </div>
-
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-gold-readable);">Season 2025</p>
-
-          <!-- AWARDS HERO ROW -->
-          <div class="award-row">
-            <div class="award-badge-wrap">
-              <div class="award-badge award-badge-gold" aria-hidden="true">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                  <path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/>
-                </svg>
+        <div class="season-card">
+          <div class="season-card-accent" style="background:var(--color-gold);"></div>
+          <div class="sticker sticker-purple" aria-label="Goal met">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Goal<br>Met!
+          </div>
+          <div class="season-card-body">
+            <div class="award-row">
+              <div class="award-badge-wrap">
+                <div class="award-badge award-badge-gold" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/></svg>
+                </div>
+                <div class="award-caption">Top Team — Large Div</div>
               </div>
-              <div class="award-caption">Top Team — Large Div</div>
             </div>
+            <div style="display:flex; align-items:baseline;">
+              <span class="stat-amount">$115,612</span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill" style="width:100%; background:var(--color-gold);"></div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: $115,000</span>
+              <span class="pct-label" style="color:var(--color-gold-readable);">100%</span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>41 riders</div>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount">$115,612</span>
-            <span class="stat-amount-label">raised</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill" style="width:100%; background:var(--color-gold);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $115,000</span>
-            <span class="pct-label" style="color:var(--color-gold-readable);">100%</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>41 riders</div>
         </div>
       </div>
 
       <!-- ── 2026 (in progress) ── -->
-      <div class="season-card in-progress-ring">
-        <div class="season-card-accent" style="background:var(--color-orange);"></div>
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-orange);">Season 2026 · In Progress</p>
-
-          <div class="award-placeholder">
-            Awards announced after the season.
+      <div class="timeline-item" style="--tl-color:var(--color-orange)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2026<span class="tl-year-sub">In Progress</span></p>
+        </div>
+        <div class="season-card in-progress-ring">
+          <div class="season-card-accent" style="background:var(--color-orange);"></div>
+          <div class="season-card-body">
+            <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+              <span class="stat-amount"><span data-team-stat="raised">$11,884</span></span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill lp-pulse"
+                data-team-progress
+                style="width:10%; background:var(--color-orange);"
+                role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+              </div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: <span data-team-stat="goal">$115,000</span></span>
+              <span class="pct-label" style="color:var(--color-orange);"><span data-team-stat="percent">10%</span></span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span><span data-team-stat="riders">51</span> riders</div>
+            <a href="/donate.html" class="join-cta-inline">Help us reach $115K →</a>
+            <p style="margin-top:8px; font-size:11px; color:rgba(26,14,43,0.35);">Updated daily</p>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount stat-amount-empty">—</span>
-            <span class="stat-amount-label" style="font-style:italic;">season in progress</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill lp-pulse" style="width:22%; background:var(--color-orange);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $115,000</span>
-            <span class="pct-label" style="color:var(--color-orange); font-style:italic;">underway</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>49 riders <span style="color:rgba(26,14,43,0.45); font-size:13px;">(+8 from 2025)</span></div>
-
-          <a href="#join" class="join-cta-inline">Want to be in this report? Join the team →</a>
         </div>
       </div>
 
-    </div><!-- /cards-grid -->
+    </div><!-- /seasons-timeline -->
   </div>
 </section>
 
@@ -772,6 +758,7 @@
 <div id="footer-slot"></div>
 
 <script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/team-stats.js" defer></script>
 
 
 </body>
