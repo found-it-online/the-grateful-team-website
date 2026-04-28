@@ -240,6 +240,33 @@
       0%, 100% { background-position: 0% 0%; opacity: 0.7; }
       50% { background-position: 100% 100%; opacity: 1; }
     }
+    /* Mouse-reactive shimmer spotlight */
+    .tcard-front::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: radial-gradient(
+        circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+        rgba(255,255,255,0.12) 0%,
+        rgba(249,241,8,0.07) 20%,
+        transparent 55%
+      );
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .tcard-wrap:hover:not(.flipped) .tcard-front::after { opacity: 1; }
+    [data-tier="legend"] .tcard-front::after {
+      background: radial-gradient(
+        circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+        rgba(255,255,255,0.18) 0%,
+        rgba(249,241,8,0.14) 20%,
+        rgba(232,98,26,0.06) 40%,
+        transparent 60%
+      );
+    }
 
     /* Card top bar */
     .tcard-topbar {
@@ -439,6 +466,74 @@
     }
     [data-tier="legend"] .tcard-stamp { color: rgba(249,241,8,0.5); }
 
+    /* Fun fact callout */
+    .tcard-funfact {
+      background: rgba(90,30,138,0.06);
+      border-left: 2.5px solid var(--color-purple);
+      border-radius: 0 6px 6px 0;
+      padding: 6px 8px;
+      margin-bottom: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10.5px;
+      color: rgba(26,14,43,0.7);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .tcard-funfact-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-purple);
+      font-style: normal;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Share button */
+    .tcard-share-btn {
+      background: rgba(26,14,43,0.06);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 9px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 150ms;
+      flex-shrink: 0;
+    }
+    .tcard-share-btn:hover { background: rgba(26,14,43,0.12); }
+
+    /* Discovered counter bar */
+    .discovered-bar {
+      background: rgba(250,246,232,0.04);
+      border-bottom: 1px solid rgba(201,148,58,0.1);
+      padding: 8px 24px;
+      text-align: center;
+      font-family: 'Josefin Slab', serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.3);
+    }
+    .discovered-bar .disc-count { color: var(--color-gold); }
+
+    /* Confetti particles */
+    .confetti-particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: confetti-fly 0.9s ease-out forwards;
+    }
+    @keyframes confetti-fly {
+      0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) rotate(var(--dr)) scale(0.3); opacity: 0; }
+    }
+
     /* CARD BACK */
     .tcard-back {
       background: linear-gradient(170deg, #faf6e8 0%, #f0e9d0 100%);
@@ -446,7 +541,24 @@
       display: flex;
       flex-direction: column;
       padding: 16px;
+      position: relative;
+      overflow: hidden;
     }
+    /* Watermark rose on back */
+    .tcard-back::before {
+      content: '🌹';
+      position: absolute;
+      right: -8px;
+      bottom: 30px;
+      font-size: 80px;
+      opacity: 0.055;
+      pointer-events: none;
+      filter: grayscale(1);
+      transform: rotate(-15deg);
+      z-index: 0;
+    }
+    [data-tier="legend"] .tcard-back::before { content: '⭐'; opacity: 0.07; }
+    [data-tier="rookie"] .tcard-back::before { content: '🌱'; opacity: 0.07; }
     .tcard-back-header {
       display: flex;
       align-items: center;
@@ -609,6 +721,11 @@
   <span class="roster-marquee-track">
     ⚡ FROM SPOKE TO HOPE &nbsp;·&nbsp; 🐻 WAM 300 MILES &nbsp;·&nbsp; 🌹 MAKE-A-WISH MICHIGAN &nbsp;·&nbsp; ⚡ 51 RIDERS ONE MISSION &nbsp;·&nbsp; 🎵 THE GRATEFUL TEAM &nbsp;·&nbsp; 💙 GRANTING WISHES &nbsp;·&nbsp; ⚡ FROM SPOKE TO HOPE &nbsp;·&nbsp; 🐻 WAM 300 MILES &nbsp;·&nbsp; 🌹 MAKE-A-WISH MICHIGAN &nbsp;·&nbsp; ⚡ 51 RIDERS ONE MISSION &nbsp;·&nbsp; 🎵 THE GRATEFUL TEAM &nbsp;·&nbsp; 💙 GRANTING WISHES &nbsp;·&nbsp;
   </span>
+</div>
+
+<!-- DISCOVERED BAR -->
+<div class="discovered-bar" id="discoveredBar" style="display:none;">
+  <span class="disc-count" id="discCount">0</span> / 51 riders discovered — flip a card to learn their story
 </div>
 
 <!-- FILTER CONTROLS -->
@@ -1437,17 +1554,23 @@ function renderCard(r, index) {
 
       <!-- BACK -->
       <div class="tcard-back">
-        <div class="tcard-back-header">
+        <div class="tcard-back-header" style="position:relative;z-index:1;">
           <div class="tcard-back-title">${r.nickname}<br><span style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(26,14,43,0.5);font-weight:500;">${r.name}</span></div>
           <div class="tcard-back-wam">WAM Year${r.years > 1 ? 's' : ''}<br>${r.years}</div>
         </div>
 
-        <p class="tcard-back-bio">${r.bio}</p>
+        <div class="tcard-funfact" style="position:relative;z-index:1;">
+          <span class="tcard-funfact-label">⚡ Fun Fact</span>
+          ${r.funFact}
+        </div>
 
-        <div class="tcard-back-badges">${badgeHTML}</div>
+        <p class="tcard-back-bio" style="position:relative;z-index:1;">${r.bio}</p>
 
-        <div class="tcard-back-footer">
-          <a class="tcard-donate-btn" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Donate →</a>
+        <div class="tcard-back-badges" style="position:relative;z-index:1;">${badgeHTML}</div>
+
+        <div class="tcard-back-footer" style="position:relative;z-index:1;">
+          <a class="tcard-donate-btn" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💙 Donate</a>
+          <button class="tcard-share-btn" onclick="shareCard(event, '${r.name}', '${r.nickname}')" title="Share this card">🔗</button>
           <span class="tcard-back-num">🎵 ${r.song}</span>
         </div>
       </div>
@@ -1473,26 +1596,106 @@ function renderAll(filter, query) {
 
   grid.innerHTML = filtered.map((r, i) => renderCard(r, RIDERS.indexOf(r))).join('');
 
-  // Wire flip
+  // Wire flip + tilt + shimmer
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
-    card.addEventListener('click', () => {
+    const inner = card.querySelector('.tcard-inner');
+
+    card.addEventListener('click', e => {
+      const wasFlipped = card.classList.contains('flipped');
       card.classList.toggle('flipped');
       inner.style.transform = '';
+
+      // Discovered counter
+      const id = card.dataset.id;
+      const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
+      if (!seen[id]) {
+        seen[id] = true;
+        localStorage.setItem('tgt-seen', JSON.stringify(seen));
+        updateDiscoveredBar(seen);
+      }
+
+      // Confetti burst for Legends on first flip to back
+      if (!wasFlipped && card.dataset.tier === 'legend') {
+        burstConfetti(e.clientX || card.getBoundingClientRect().left + 120, e.clientY || card.getBoundingClientRect().top + 190);
+      }
     });
 
-    // Tilt effect
-    const inner = card.querySelector('.tcard-inner');
+    // Tilt + mouse-reactive shimmer
     card.addEventListener('mousemove', e => {
       if (card.classList.contains('flipped')) return;
       const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const nx = (e.clientX - rect.left) / rect.width;
+      const ny = (e.clientY - rect.top) / rect.height;
+      const x = nx - 0.5;
+      const y = ny - 0.5;
       inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
+      card.style.setProperty('--mx', nx.toFixed(3));
+      card.style.setProperty('--my', ny.toFixed(3));
     });
     card.addEventListener('mouseleave', () => {
       inner.style.transform = '';
     });
   });
+}
+
+/* ══════════════════════════════════════
+   CONFETTI
+══════════════════════════════════════ */
+function burstConfetti(cx, cy) {
+  const colors = ['#f9f108','#5a1e8a','#e8621a','#04b2ca','#ffffff','#ff69b4'];
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-particle';
+    const angle = (i / 14) * 360 + Math.random() * 30;
+    const dist = 60 + Math.random() * 80;
+    const rad = angle * Math.PI / 180;
+    el.style.cssText = `
+      left:${cx}px; top:${cy}px;
+      background:${colors[i % colors.length]};
+      --dx:${Math.cos(rad) * dist}px;
+      --dy:${Math.sin(rad) * dist - 30}px;
+      --dr:${Math.random() * 540 - 270}deg;
+      width:${6 + Math.random() * 6}px;
+      height:${4 + Math.random() * 5}px;
+      border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 950);
+  }
+}
+
+/* ══════════════════════════════════════
+   SHARE CARD
+══════════════════════════════════════ */
+function shareCard(e, name, nickname) {
+  e.stopPropagation();
+  const text = `${nickname} (${name}) — a Wish Hero riding 300 miles for Make-A-Wish Michigan with The Grateful Team 🚲💙`;
+  const url = window.location.href.split('#')[0];
+  if (navigator.share) {
+    navigator.share({ title: `TGT Rider Card: ${nickname}`, text, url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+      const btn = e.currentTarget;
+      const orig = btn.textContent;
+      btn.textContent = '✓';
+      setTimeout(() => { btn.textContent = orig; }, 1500);
+    }).catch(() => {});
+  }
+}
+
+/* ══════════════════════════════════════
+   DISCOVERED COUNTER
+══════════════════════════════════════ */
+function updateDiscoveredBar(seen) {
+  const count = Object.keys(seen).length;
+  const bar = document.getElementById('discoveredBar');
+  const num = document.getElementById('discCount');
+  if (!bar || !num) return;
+  bar.style.display = 'block';
+  num.textContent = count;
+  if (count === 51) {
+    bar.innerHTML = '🎉 You\'ve discovered all <span class="disc-count">51</span> riders. True Grateful Team status. 🌹';
+  }
 }
 
 /* ══════════════════════════════════════
@@ -1516,6 +1719,12 @@ document.getElementById('rosterSearch').addEventListener('input', e => {
 });
 
 renderAll('all', '');
+
+// Restore discovered counter from localStorage
+(function() {
+  const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
+  if (Object.keys(seen).length > 0) updateDiscoveredBar(seen);
+})();
 
 // Load real photos and fundraising data from DonorDrive (single fetch)
 fetch('/assets/data/participants.json')
