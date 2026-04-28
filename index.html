@@ -6,9 +6,11 @@
   <title>The Grateful Team — Ride for Something Real</title>
   <meta name="description" content="The Grateful Team is a Grand Rapids charity cycling team raising funds for Make-A-Wish Michigan. All ages, all fitness levels — just show up.">
 
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/assets/css/site.css">
 </head>
@@ -37,7 +39,7 @@
       <p class="hero-subhead">~50 riders, all ages, all paces — one big mission for Make-A-Wish Michigan.</p>
       <div class="hero-cta-row">
         <a href="#join" class="btn-primary">Join the Team</a>
-        <a href="/members.html" class="btn-ghost-cream">Find Team Member Resources</a>
+        <a href="/donate.html" class="btn-ghost-cream">Donate to the Team</a>
       </div>
     </div>
   </div>
@@ -48,7 +50,7 @@
     <p class="hero-subhead">~50 riders, all ages, all paces — one big mission for Make-A-Wish Michigan.</p>
     <div class="hero-cta-row">
       <a href="#join" class="btn-primary" style="width:100%;">Join the Team</a>
-      <a href="/members.html" class="btn-ghost-cream" style="width:100%;">Find Team Member Resources</a>
+      <a href="/donate.html" class="btn-ghost-cream" style="width:100%;">Donate to the Team</a>
     </div>
   </div>
 
@@ -134,7 +136,7 @@
 ════════════════════════════════════════════════════════ -->
 <div style="background:var(--color-cream); padding: 8px 24px 24px;">
   <div class="divider-motif" style="max-width:1200px; margin:0 auto;">
-    <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="#C9943A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="#04b2ca" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <polyline points="13 2 7 11 11 11 7 18"></polyline>
     </svg>
   </div>
@@ -180,161 +182,147 @@
       </div>
     </div>
 
-    <!-- Season Cards Grid (2x2) -->
-    <div class="cards-grid">
+    <!-- Season Timeline -->
+    <div class="seasons-timeline">
 
       <!-- ── 2023 ── -->
-      <div class="season-card">
-        <div class="season-card-accent" style="background:var(--color-red);"></div>
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-red);">Season 2023</p>
-
-          <div class="award-placeholder">
-            Year One — laying the foundation.
+      <div class="timeline-item" style="--tl-color:var(--color-purple)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2023</p>
+        </div>
+        <div class="season-card">
+          <div class="season-card-accent" style="background:var(--color-purple);"></div>
+          <div class="season-card-body">
+            <div class="award-placeholder">Year One — laying the foundation.</div>
+            <div style="display:flex; align-items:baseline;">
+              <span class="stat-amount">$34,648</span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill" style="width:99%; background:var(--color-purple);"></div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: $35,000</span>
+              <span class="pct-label" style="color:var(--color-purple);">99%</span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>12 riders</div>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount">$34,648</span>
-            <span class="stat-amount-label">raised</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill" style="width:99%; background:var(--color-red);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $35,000</span>
-            <span class="pct-label" style="color:var(--color-red);">99%</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>12 riders</div>
         </div>
       </div>
 
-      <!-- ── 2024 ── (Crushed It sticker) -->
-      <div class="season-card">
-        <div class="season-card-accent" style="background:var(--color-blue);"></div>
-
-        <!-- Sticker -->
-        <div class="sticker" aria-label="Crushed the goal">
-          <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="13 2 7 11 11 11 7 18"></polyline>
-          </svg>
-          Crushed<br>It!
+      <!-- ── 2024 ── -->
+      <div class="timeline-item" style="--tl-color:var(--color-blue)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2024</p>
         </div>
-
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-blue);">Season 2024</p>
-
-          <!-- AWARDS HERO ROW -->
-          <div class="award-row">
-            <div class="award-badge-wrap">
-              <div class="award-badge award-badge-gold" aria-hidden="true">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                  <path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/>
-                </svg>
+        <div class="season-card">
+          <div class="season-card-accent" style="background:var(--color-blue);"></div>
+          <div class="sticker" aria-label="Crushed the goal">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 2 7 11 11 11 7 18"></polyline></svg>
+            Crushed<br>It!
+          </div>
+          <div class="season-card-body">
+            <div class="award-row">
+              <div class="award-badge-wrap">
+                <div class="award-badge award-badge-gold" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/></svg>
+                </div>
+                <div class="award-caption">Top Team — Large Div</div>
               </div>
-              <div class="award-caption">Top Team — Large Div</div>
-            </div>
-            <div class="award-badge-wrap">
-              <div class="award-badge award-badge-purple" aria-hidden="true">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                  <path d="M12 2l2.39 6.96L22 9.27l-5.91 4.51L18.18 22 12 17.77 5.82 22l2.09-8.22L2 9.27l7.61-.31L12 2z"/>
-                </svg>
+              <div class="award-badge-wrap">
+                <div class="award-badge award-badge-purple" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 2l2.39 6.96L22 9.27l-5.91 4.51L18.18 22 12 17.77 5.82 22l2.09-8.22L2 9.27l7.61-.31L12 2z"/></svg>
+                </div>
+                <div class="award-caption">Spirit of WAM</div>
               </div>
-              <div class="award-caption">Spirit of WAM</div>
             </div>
+            <div style="display:flex; align-items:baseline;">
+              <span class="stat-amount">$115,027</span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill" style="width:100%; background:var(--color-blue);"></div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: $100,000</span>
+              <span class="pct-label" style="color:var(--color-blue);">115%</span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>42 riders</div>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount">$115,027</span>
-            <span class="stat-amount-label">raised</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill" style="width:100%; background:var(--color-blue);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $100,000</span>
-            <span class="pct-label" style="color:var(--color-blue);">115%</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>42 riders</div>
         </div>
       </div>
 
-      <!-- ── 2025 ── (Goal Met sticker) -->
-      <div class="season-card">
-        <div class="season-card-accent" style="background:var(--color-gold);"></div>
-
-        <div class="sticker sticker-purple" aria-label="Goal met">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          Goal<br>Met!
+      <!-- ── 2025 ── -->
+      <div class="timeline-item" style="--tl-color:var(--color-gold)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2025</p>
         </div>
-
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-gold);">Season 2025</p>
-
-          <!-- AWARDS HERO ROW -->
-          <div class="award-row">
-            <div class="award-badge-wrap">
-              <div class="award-badge award-badge-gold" aria-hidden="true">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
-                  <path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/>
-                </svg>
+        <div class="season-card">
+          <div class="season-card-accent" style="background:var(--color-gold);"></div>
+          <div class="sticker sticker-purple" aria-label="Goal met">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Goal<br>Met!
+          </div>
+          <div class="season-card-body">
+            <div class="award-row">
+              <div class="award-badge-wrap">
+                <div class="award-badge award-badge-gold" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M7 2v2H3v3a5 5 0 0 0 5 5h.5a4.5 4.5 0 0 0 3 3.92V18H8v2h8v-2h-3.5v-2.08A4.5 4.5 0 0 0 15.5 12H16a5 5 0 0 0 5-5V4h-4V2H7zm0 4V4h10v2h2v1a3 3 0 0 1-3 3h-1V6H8v4H7a3 3 0 0 1-3-3V6h3z"/></svg>
+                </div>
+                <div class="award-caption">Top Team — Large Div</div>
               </div>
-              <div class="award-caption">Top Team — Large Div</div>
             </div>
+            <div style="display:flex; align-items:baseline;">
+              <span class="stat-amount">$115,612</span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill" style="width:100%; background:var(--color-gold);"></div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: $115,000</span>
+              <span class="pct-label" style="color:var(--color-gold-readable);">100%</span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>41 riders</div>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount">$115,612</span>
-            <span class="stat-amount-label">raised</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill" style="width:100%; background:var(--color-gold);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $115,000</span>
-            <span class="pct-label" style="color:var(--color-gold);">100%</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>41 riders</div>
         </div>
       </div>
 
       <!-- ── 2026 (in progress) ── -->
-      <div class="season-card in-progress-ring">
-        <div class="season-card-accent" style="background:var(--color-orange);"></div>
-        <div class="season-card-body">
-          <p class="season-eyebrow" style="color:var(--color-orange);">Season 2026 · In Progress</p>
-
-          <div class="award-placeholder">
-            Awards announced after the season.
+      <div class="timeline-item" style="--tl-color:var(--color-purple-light)">
+        <div class="tl-marker">
+          <div class="tl-dot"></div>
+          <p class="tl-year">2026<span class="tl-year-sub">In Progress</span></p>
+        </div>
+        <div class="season-card in-progress-ring">
+          <div class="season-card-accent" style="background:var(--color-purple-light);"></div>
+          <div class="season-card-body">
+            <div style="display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;">
+              <span class="stat-amount"><span data-team-stat="raised">$11,884</span></span>
+              <span class="stat-amount-label">raised</span>
+            </div>
+            <div class="lp-track">
+              <div class="lp-fill lp-pulse"
+                data-team-progress
+                style="width:10%; background:var(--color-purple-light);"
+                role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="10">
+              </div>
+            </div>
+            <div class="goal-row">
+              <span class="goal-label">Goal: <span data-team-stat="goal">$115,000</span></span>
+              <span class="pct-label" style="color:var(--color-purple-light);"><span data-team-stat="percent">10%</span></span>
+            </div>
+            <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span><span data-team-stat="riders">51</span> riders</div>
+            <a href="/donate.html" class="join-cta-inline">Help us reach $115K →</a>
+            <p style="margin-top:8px; font-size:11px; color:rgba(26,14,43,0.35);">Updated daily</p>
           </div>
-
-          <div style="display:flex; align-items:baseline;">
-            <span class="stat-amount stat-amount-empty">—</span>
-            <span class="stat-amount-label" style="font-style:italic;">season in progress</span>
-          </div>
-
-          <div class="lp-track">
-            <div class="lp-fill lp-pulse" style="width:22%; background:var(--color-orange);"></div>
-          </div>
-          <div class="goal-row">
-            <span class="goal-label">Goal: $115,000</span>
-            <span class="pct-label" style="color:var(--color-orange); font-style:italic;">underway</span>
-          </div>
-
-          <div class="rider-line"><span class="ride-emoji" aria-hidden="true">🚲</span>49 riders <span style="color:rgba(26,14,43,0.45); font-size:13px;">(+8 from 2025)</span></div>
-
-          <a href="#join" class="join-cta-inline">Want to be in this report? Join the team →</a>
         </div>
       </div>
 
-    </div><!-- /cards-grid -->
+    </div><!-- /seasons-timeline -->
   </div>
 </section>
 
@@ -344,7 +332,7 @@
 ════════════════════════════════════════════════════════ -->
 <div style="background:var(--color-cream); padding:0 24px 24px;">
   <div class="divider-motif" style="max-width:1200px; margin:0 auto;">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9943A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#04b2ca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="10"/>
       <circle cx="12" cy="12" r="2"/>
       <line x1="12" y1="2" x2="12" y2="10"/>
@@ -354,6 +342,84 @@
     </svg>
   </div>
 </div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 3.5: KIDS WE RIDE FOR
+════════════════════════════════════════════════════════ -->
+<section style="background:var(--color-purple); padding: clamp(64px,10vw,96px) 24px;">
+  <div style="max-width:1200px; margin:0 auto; text-align:center;">
+
+    <p class="eyebrow" style="color:var(--color-gold); margin:0 0 12px;">Why We Ride</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(2.25rem, 5vw, 3rem);
+      color: var(--color-cream);
+      line-height: 1.05;
+      margin: 0 0 16px;
+    ">Every mile is for a kid.</h2>
+    <p class="font-body" style="
+      font-size: 18px;
+      color: rgba(245,237,214,0.82);
+      line-height: 1.65;
+      max-width: 640px;
+      margin: 0 auto 48px;
+    ">
+      Make-A-Wish Michigan grants life-changing wishes to kids fighting critical illnesses.
+      When Wish kids line the road into Marshall at the finish line — cheering riders in after 300 miles —
+      that's the moment nobody forgets. That's the whole reason.
+    </p>
+
+    <div class="wish-cards-row">
+      <div class="wish-card">
+        <div class="wish-card-icon">⭐</div>
+        <h3>We ride for Kai</h3>
+        <p>A kid whose wish came true because our team showed up, raised the money, and pedaled every mile.</p>
+      </div>
+      <div class="wish-card">
+        <div class="wish-card-icon">⭐</div>
+        <h3>We ride for Jeremiah</h3>
+        <p>A kid whose wish came true because our team showed up, raised the money, and pedaled every mile.</p>
+      </div>
+      <div class="wish-card">
+        <div class="wish-card-icon">⭐</div>
+        <h3>We ride for all of them</h3>
+        <p>Since 2023, we've raised $265,287 for Make-A-Wish Michigan. That's real wishes, for real kids, across the state.</p>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+      <a href="/donate.html" class="btn-primary">Help Grant a Wish →</a>
+      <a href="https://wish.org/michigan" target="_blank" rel="noopener" class="btn-ghost-cream">Learn About Make-A-Wish Michigan</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: TEAM CAROUSEL
+════════════════════════════════════════════════════════ -->
+<section class="section-cream">
+  <div class="section-inner" style="text-align:center;">
+
+    <p class="eyebrow" style="color:var(--color-red); margin:0 0 10px;">The Riders</p>
+    <h2 class="font-headline" style="font-size:clamp(2rem,4.5vw,2.75rem); color:var(--color-night); line-height:1.1; margin:0 0 12px;">
+      51 riders. One mission.
+    </h2>
+    <p class="font-body" style="font-size:16px; color:rgba(26,14,43,0.65); max-width:520px; margin:0 auto 40px; line-height:1.6;">
+      Every rider earns their spot by raising a minimum of $1,200 for Make-A-Wish Michigan.
+    </p>
+
+    <div class="riders-carousel">
+      <button class="carousel-btn carousel-btn-prev" aria-label="Scroll left">&#8249;</button>
+      <div class="riders-carousel-track" id="riders-carousel-track"></div>
+      <button class="carousel-btn carousel-btn-next" aria-label="Scroll right">&#8250;</button>
+    </div>
+
+    <a href="/members.html" class="btn-ghost-dark" style="margin-top:36px; display:inline-block;">Meet the Full Team →</a>
+
+  </div>
+</section>
 
 
 <!-- ═══════════════════════════════════════════════════════
@@ -403,8 +469,8 @@
     <!-- Confirmation (hidden until submit) -->
     <div id="confirm-message" role="status">
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-label="Success" style="margin-bottom:16px;">
-        <circle cx="24" cy="24" r="22" stroke="#C9943A" stroke-width="2.5"/>
-        <polyline points="14 24 21 31 34 17" stroke="#C9943A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="24" cy="24" r="22" stroke="#04b2ca" stroke-width="2.5"/>
+        <polyline points="14 24 21 31 34 17" stroke="#04b2ca" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <p class="font-headline" style="font-size:2.5rem; color:var(--color-cream); margin:0 0 12px;">You're in!</p>
       <p class="font-body" style="font-size:18px; color:rgba(245,237,214,0.78); line-height:1.65; margin:0;">
@@ -434,7 +500,7 @@
 <!-- ═══════════════════════════════════════════════════════
      SECTION 5: GROUP RIDES (now BELOW Join)
 ════════════════════════════════════════════════════════ -->
-<section style="background: linear-gradient(135deg, #8B2232 0%, #D45F1A 100%); padding: clamp(48px,8vw,80px) 24px;">
+<section style="background: linear-gradient(135deg, #5a1e8a 0%, #04b2ca 100%); padding: clamp(48px,8vw,80px) 24px;">
   <div style="max-width:1200px; margin:0 auto; text-align:center;">
 
     <p class="eyebrow" style="color:rgba(245,237,214,0.85); margin:0 0 12px;">Ride With Us</p>
@@ -503,7 +569,7 @@
         <a href="#join" class="font-body" style="font-style:italic; font-size:16px; color:var(--color-purple); text-decoration:none;">
           Join the team to ride with us →
         </a>
-        <a href="/events.html" class="font-body" style="font-size:16px; color:var(--color-night); text-decoration:underline;">
+        <a href="/events.html" class="font-body" style="font-style:italic; font-size:16px; color:var(--color-purple); text-decoration:none;">
           See full event calendar →
         </a>
       </div>
@@ -542,6 +608,32 @@
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
       </svg>
       Open Team Resources
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 6.5: MERCH CALLOUT
+════════════════════════════════════════════════════════ -->
+<section style="background: linear-gradient(135deg, var(--color-night-mid) 0%, var(--color-purple) 100%); padding: clamp(56px,8vw,80px) 24px;">
+  <div class="merch-callout-inner">
+    <p class="eyebrow" style="color:var(--color-gold); margin:0;">Gear Up</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(2.25rem, 5vw, 3rem);
+      color: var(--color-cream);
+      line-height: 1.05;
+      margin: 0;
+    ">Rep the team.</h2>
+    <p class="font-body" style="
+      font-size: 17px;
+      color: rgba(245,237,214,0.80);
+      line-height: 1.6;
+      max-width: 440px;
+      margin: 0;
+    ">TGT merch — hats, tees, kits and more. Look the part. Show the world what you ride for.</p>
+    <a href="https://merch.thegratefulteam.com" target="_blank" rel="noopener" class="btn-primary" style="margin-top:8px;">
+      Shop the Merch Store ↗
     </a>
   </div>
 </section>
@@ -654,9 +746,48 @@
 </section>
 
 
+<!-- ═══════════════════════════════════════════════════════
+     SECTION 9: SPONSORS & SUPPORTERS
+════════════════════════════════════════════════════════ -->
+<section style="background:var(--color-night-deep); padding: clamp(56px,8vw,80px) 24px;">
+  <div style="max-width:1200px; margin:0 auto; text-align:center;">
+
+    <p class="eyebrow" style="color:var(--color-gold); margin:0 0 10px;">Powered By</p>
+    <h2 class="font-headline" style="
+      font-size: clamp(1.875rem, 4vw, 2.5rem);
+      color: var(--color-cream);
+      line-height: 1.05;
+      margin: 0 0 36px;
+    ">Our Sponsors &amp; Supporters.</h2>
+
+    <div class="sponsors-strip">
+      <span class="sponsor-pill">Smith Optics</span>
+      <span class="sponsor-pill">Freewheeler Bike Shop</span>
+      <span class="sponsor-pill">Schmidt Family of Companies</span>
+      <span class="sponsor-pill">Schmidt Community Fund</span>
+      <span class="sponsor-pill">DornerWorks</span>
+      <span class="sponsor-pill">The Daniel &amp; Henry Co.</span>
+      <span class="sponsor-pill">Miller Johnson</span>
+      <span class="sponsor-pill">BW Manufacturing</span>
+      <span class="sponsor-pill">4 Flutes Machining</span>
+      <span class="sponsor-pill">Irie Kitchen</span>
+      <span class="sponsor-pill">Queen Meg Willit</span>
+      <span class="sponsor-pill">Fire Findings</span>
+    </div>
+
+    <a href="/sponsors.html" class="btn-ghost-gold">
+      Meet Our Sponsors →
+    </a>
+
+  </div>
+</section>
+
+
 <div id="footer-slot"></div>
 
 <script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/team-stats.js" defer></script>
+<script src="/assets/js/riders.js" defer></script>
 
 
 </body>
