@@ -1475,7 +1475,10 @@ function renderAll(filter, query) {
 
   // Wire flip
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
-    card.addEventListener('click', () => card.classList.toggle('flipped'));
+    card.addEventListener('click', () => {
+      card.classList.toggle('flipped');
+      inner.style.transform = '';
+    });
 
     // Tilt effect
     const inner = card.querySelector('.tcard-inner');
@@ -1487,9 +1490,7 @@ function renderAll(filter, query) {
       inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
     });
     card.addEventListener('mouseleave', () => {
-      if (!card.classList.contains('flipped')) {
-        inner.style.transform = '';
-      }
+      inner.style.transform = '';
     });
   });
 }
@@ -1515,6 +1516,59 @@ document.getElementById('rosterSearch').addEventListener('input', e => {
 });
 
 renderAll('all', '');
+
+// Load real photos and fundraising data from DonorDrive (single fetch)
+fetch('/assets/data/participants.json')
+  .then(r => r.json())
+  .then(parts => {
+    const photoMap = {};
+    const fundMap = {};
+    parts.forEach(p => {
+      const key = p.displayName.toLowerCase();
+      if (p.avatarImageURL) photoMap[key] = p.avatarImageURL;
+      fundMap[key] = p;
+    });
+
+    document.querySelectorAll('.tcard-wrap').forEach(wrap => {
+      const riderId = parseInt(wrap.dataset.id);
+      const rider = RIDERS.find(r => r.id === riderId);
+      if (!rider) return;
+      const key = rider.name.toLowerCase();
+
+      // Inject real photo
+      const url = photoMap[key];
+      if (url) {
+        const avatarEl = wrap.querySelector('.tcard-avatar');
+        if (avatarEl) {
+          avatarEl.innerHTML = `<img src="${url}" alt="${rider.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+        }
+      }
+
+      // Inject fundraising progress bar above bio
+      const data = fundMap[key];
+      if (!data || !data.sumDonations) return;
+      const raised = data.sumDonations;
+      const goal = data.fundraisingGoal || 1200;
+      const pct = Math.min(100, Math.round((raised / goal) * 100));
+      const donors = data.numDonations || 0;
+      const bio = wrap.querySelector('.tcard-back-bio');
+      if (!bio) return;
+      const div = document.createElement('div');
+      div.style.cssText = 'margin-bottom:8px;';
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+          <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
+          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${raised.toLocaleString()}</span>
+        </div>
+        <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
+          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;transition:width .8s ease;"></div>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
+      `;
+      bio.parentNode.insertBefore(div, bio);
+    });
+  })
+  .catch(() => {}); // graceful fallback
 </script>
 </body>
 </html>
