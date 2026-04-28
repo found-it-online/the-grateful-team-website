@@ -656,6 +656,41 @@
     /* Hover tilt effect */
     .tcard-wrap { transition: transform 0.1s ease; }
 
+    /* Card entrance animation */
+    @keyframes card-enter {
+      from { opacity: 0; transform: translateY(18px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .tcard-wrap {
+      animation: card-enter 0.35s ease both;
+    }
+    .tcard-wrap:nth-child(1)  { animation-delay: 0.00s; }
+    .tcard-wrap:nth-child(2)  { animation-delay: 0.03s; }
+    .tcard-wrap:nth-child(3)  { animation-delay: 0.06s; }
+    .tcard-wrap:nth-child(4)  { animation-delay: 0.09s; }
+    .tcard-wrap:nth-child(5)  { animation-delay: 0.12s; }
+    .tcard-wrap:nth-child(6)  { animation-delay: 0.15s; }
+    .tcard-wrap:nth-child(7)  { animation-delay: 0.18s; }
+    .tcard-wrap:nth-child(8)  { animation-delay: 0.21s; }
+    .tcard-wrap:nth-child(n+9) { animation-delay: 0.24s; }
+
+    /* Front fundraising badge */
+    .tcard-raised {
+      font-family: 'Josefin Slab', serif;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,232,0.45);
+      text-align: center;
+      margin: -6px 0 6px;
+    }
+    .tcard-raised span {
+      color: var(--color-gold);
+      font-size: 11px;
+    }
+    [data-tier="legend"] .tcard-raised span { text-shadow: 0 0 8px rgba(249,241,8,0.4); }
+
     /* Empty state */
     .roster-empty {
       text-align: center;
@@ -697,7 +732,7 @@
     <p>Every rider earns their spot. Every dollar grants a wish. These are the Wish Heroes — 51 riders who show up every year to do something ridiculous and beautiful for kids who need a miracle.</p>
     <div class="roster-hero-stats">
       <div class="roster-hero-stat">
-        <span class="roster-hero-stat-num">51</span>
+        <span class="roster-hero-stat-num" id="stat-riders">51</span>
         <span class="roster-hero-stat-label">Riders</span>
       </div>
       <div class="roster-hero-stat">
@@ -705,12 +740,12 @@
         <span class="roster-hero-stat-label">Miles · 3 Days</span>
       </div>
       <div class="roster-hero-stat">
-        <span class="roster-hero-stat-num">$114k</span>
-        <span class="roster-hero-stat-label">Raised in 2024</span>
+        <span class="roster-hero-stat-num" id="stat-raised">$12k</span>
+        <span class="roster-hero-stat-label">Raised So Far</span>
       </div>
       <div class="roster-hero-stat">
-        <span class="roster-hero-stat-num">11</span>
-        <span class="roster-hero-stat-label">Wishes Granted</span>
+        <span class="roster-hero-stat-num">$115k</span>
+        <span class="roster-hero-stat-label">2026 Goal</span>
       </div>
     </div>
   </div>
@@ -1753,24 +1788,35 @@ fetch('/assets/data/participants.json')
         }
       }
 
-      // Inject fundraising progress bar above bio
+      // Inject fundraising on card FRONT (below name) and card BACK
       const data = fundMap[key];
-      if (!data || !data.sumDonations) return;
+      if (!data || !(data.sumDonations > 0)) return;
       const raised = data.sumDonations;
       const goal = data.fundraisingGoal || 1200;
       const pct = Math.min(100, Math.round((raised / goal) * 100));
       const donors = data.numDonations || 0;
+
+      // Front: small raised badge below name
+      const nameEl = wrap.querySelector('.tcard-name');
+      if (nameEl) {
+        const frontBadge = document.createElement('div');
+        frontBadge.className = 'tcard-raised';
+        frontBadge.innerHTML = `💰 <span>$${Math.round(raised).toLocaleString()}</span> raised`;
+        nameEl.parentNode.insertBefore(frontBadge, nameEl.nextSibling);
+      }
+
+      // Back: fundraising bar above bio
       const bio = wrap.querySelector('.tcard-back-bio');
       if (!bio) return;
       const div = document.createElement('div');
-      div.style.cssText = 'margin-bottom:8px;';
+      div.style.cssText = 'margin-bottom:8px;position:relative;z-index:1;';
       div.innerHTML = `
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
           <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
-          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${raised.toLocaleString()}</span>
+          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${Math.round(raised).toLocaleString()}</span>
         </div>
         <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
-          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;transition:width .8s ease;"></div>
+          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;"></div>
         </div>
         <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
       `;
@@ -1778,6 +1824,20 @@ fetch('/assets/data/participants.json')
     });
   })
   .catch(() => {}); // graceful fallback
+
+// Fetch live team totals for hero stats
+fetch('/assets/data/team-stats.json')
+  .then(r => r.json())
+  .then(s => {
+    const raisedEl = document.getElementById('stat-raised');
+    const ridersEl = document.getElementById('stat-riders');
+    if (raisedEl && s.sumDonations) {
+      const k = s.sumDonations >= 1000 ? '$' + (s.sumDonations / 1000).toFixed(1) + 'k' : '$' + Math.round(s.sumDonations);
+      raisedEl.textContent = k;
+    }
+    if (ridersEl && s.numParticipants) ridersEl.textContent = s.numParticipants;
+  })
+  .catch(() => {});
 </script>
 </body>
 </html>
