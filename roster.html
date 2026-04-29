@@ -1251,17 +1251,24 @@
     }
     .card-modal-close:hover { background: rgba(250,246,232,0.18); color:#fff; }
     @media (max-width: 780px) {
-      .card-modal-overlay { padding: 20px 12px; }
-      .card-modal-inner { flex-direction: column; align-items: center; gap: 20px; }
-      .card-modal-card-slot .tcard-wrap { width: 300px !important; height: 428px !important; }
-      .card-modal-card-slot .tcard-stat-label { font-size: 8px !important; width: 68px !important; }
-      .card-modal-panel { width: 100%; max-width: 420px; }
-    }
-    @media (max-width: 400px) {
-      .card-modal-card-slot .tcard-wrap { width: 280px !important; height: 400px !important; }
-      .card-modal-inner { gap: 14px; }
-      .modal-rider-nickname { font-size: 1.4rem; }
-      .modal-stat-label { font-size: 10px; width: 100px; }
+      /* Full-screen sheet: hide card, panel takes full width */
+      .card-modal-overlay {
+        padding: 0; align-items: flex-end; justify-content: center;
+      }
+      .card-modal-inner {
+        flex-direction: column; gap: 0;
+        width: 100%; max-width: 100%; margin: 0;
+        background: #100824; border-radius: 20px 20px 0 0;
+        max-height: 92vh; overflow-y: auto;
+      }
+      .card-modal-card-slot { display: none; }
+      .card-modal-panel {
+        width: 100%; padding: 52px 20px 40px; box-sizing: border-box;
+      }
+      .modal-rider-nickname { font-size: 1.6rem; }
+      .modal-stat-label { font-size: 10.5px; width: 108px; }
+      .modal-stat-val { font-size: 15px; width: 34px; }
+      .card-modal-close { top: 14px; right: 16px; }
     }
   </style>
 </head>
