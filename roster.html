@@ -3183,14 +3183,11 @@ function openModal(riderId, triggerEvent) {
     <div class="share-generator">
       <h4>One-Click Share Generator</h4>
       <div class="share-grid">
-        <button type="button" class="share-link" onclick="shareStoryWithCardImage(${rider.id}, '${donorHref}', '${storyCopySafe}');">🖼️ Copy Story + Card Image</button>
-        <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'instagram');">📸 Instagram Story</button>
-        <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'facebook');">📘 Facebook Story</button>
         <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'x');">𝕏 X</button>
         <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'facebook');">📘 Facebook</button>
         <a class="share-link" href="sms:?&body=${shareCombinedEnc}" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">💬 iMessage</a>
       </div>
-      <p class="share-generator-note">Use Copy Story + Card Image for the best Story workflow: it copies rider text and captures the card image. Story buttons share rider bio + stats + donation link via your phone's share sheet.</p>
+      <p class="share-generator-note">Use X, Facebook, or iMessage to share this rider quickly with a prefilled draft and donation link.</p>
     </div>
   `;
 
