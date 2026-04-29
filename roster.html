@@ -1830,6 +1830,52 @@
   </div>
 </section>
 
+<section id="team-resources" style="background:var(--color-night);padding:clamp(48px,7vw,72px) 24px;border-top:1px solid rgba(201,148,58,0.16);">
+  <div class="section-inner">
+    <div style="text-align:center;max-width:700px;margin:0 auto 30px;">
+      <p class="eyebrow" style="color:var(--color-gold);margin:0 0 10px;">Current Team Members</p>
+      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.9rem,4vw,2.5rem);color:var(--color-cream);line-height:1.1;margin:0 0 12px;">Team Resources</h2>
+    </div>
+
+    <div class="member-tiles">
+      <a class="member-tile" href="#" target="_blank" rel="noopener" data-needs-luis-url="drive">
+        <div class="member-tile-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3>Team Google Drive</h3>
+        <p>Schedules, fundraising templates, route files, photos. The whole team brain.</p>
+      </a>
+
+      <a class="member-tile" href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener">
+        <div class="member-tile-icon member-tile-icon-strava" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/>
+          </svg>
+        </div>
+        <h3>TGT Strava Club</h3>
+        <p>See who's riding, post your miles, find someone for a Saturday spin.</p>
+      </a>
+    </div>
+
+    <div style="margin-top:40px;max-width:760px;margin-left:auto;margin-right:auto;">
+      <h2 class="section-h3" style="margin-top:0;color:var(--color-cream);">Need something else?</h2>
+      <ul class="prose" style="color:rgba(250,246,232,0.82);">
+        <li>Lost the group chat invite? Text Luis: (616) 366-3725.</li>
+        <li>Need a fundraising email template? It's in the Drive under <code>fundraising/</code>.</li>
+        <li>Want to lead a training ride? Same — drop a message in the group chat or email Luis.</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:28px;padding:24px;background:rgba(250,246,232,0.06);border-left:4px solid var(--color-gold);border-radius:4px;max-width:760px;margin-left:auto;margin-right:auto;">
+      <p class="font-body" style="font-size:15px;color:rgba(250,246,232,0.84);margin:0;line-height:1.6;">
+        <strong>New to the team?</strong> The drive link is for current TGT riders only. <a href="/#join" style="color:var(--color-gold);font-weight:700;">Join the team</a> first and we'll send you access.
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- CARD MODAL -->
 <div id="cardModal" class="card-modal-overlay" style="display:none;" onclick="closeModal()">
   <button class="card-modal-close" onclick="closeModal()" aria-label="Close">✕</button>
@@ -3082,8 +3128,6 @@ function openModal(riderId, triggerEvent) {
   if (challengeState.rookieShares >= 1 && riderTier === 'rookie') modalCampaignBadges.push('🌟 First-Time Donor Champion');
   const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
   const sharePack = getSharePack(rider, donorHref, cs);
-  const shareTextEnc = encodeURIComponent(sharePack.text);
-  const shareUrlEnc = encodeURIComponent(sharePack.url);
   const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
   const storyCopySafe = sharePack.storyText.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
@@ -3142,7 +3186,8 @@ function openModal(riderId, triggerEvent) {
         <button type="button" class="share-link" onclick="shareStoryWithCardImage(${rider.id}, '${donorHref}', '${storyCopySafe}');">🖼️ Copy Story + Card Image</button>
         <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'instagram');">📸 Instagram Story</button>
         <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'facebook');">📘 Facebook Story</button>
-        <a class="share-link" href="https://twitter.com/intent/tweet?text=${shareCombinedEnc}" target="_blank" rel="noopener" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">𝕏 X</a>
+        <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'x');">𝕏 X</button>
+        <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'facebook');">📘 Facebook</button>
         <a class="share-link" href="sms:?&body=${shareCombinedEnc}" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">💬 iMessage</a>
       </div>
       <p class="share-generator-note">Use Copy Story + Card Image for the best Story workflow: it copies rider text and captures the card image. Story buttons share rider bio + stats + donation link via your phone's share sheet.</p>
@@ -3259,6 +3304,14 @@ function copyShareText(text, url) {
   navigator.clipboard.writeText(value).catch(() => {});
 }
 
+function isUnsupportedSocialShareContext() {
+  const host = (window.location.hostname || '').toLowerCase();
+  const href = (window.location.href || '').toLowerCase();
+  const isLocal = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local');
+  const isNetlifyAdmin = href.indexOf('app.netlify.com/projects/') !== -1;
+  return isLocal || isNetlifyAdmin;
+}
+
 let _shareToastTimer = null;
 function showShareToast(message) {
   let el = document.getElementById('shareToast');
@@ -3298,6 +3351,32 @@ function showShareToast(message) {
     el.style.opacity = '0';
     el.style.transform = 'translateX(-50%) translateY(16px)';
   }, 2600);
+}
+
+function openSocialDraft(riderId, donorHref, network) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const sharePack = getSharePack(rider, donorHref, computeStats(rider, _fundMap));
+  if (isUnsupportedSocialShareContext()) {
+    copyShareText(sharePack.storyText, donorHref);
+    showShareToast('Cannot open social sharer from localhost/admin page. Story text copied instead.');
+    return;
+  }
+  const onDone = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  const encoded = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
+  const targetUrl = network === 'facebook'
+    ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(sharePack.url)}&quote=${encodeURIComponent(sharePack.text)}`
+    : `https://twitter.com/intent/tweet?text=${encoded}`;
+  const opened = window.open(targetUrl, '_blank', 'noopener');
+  if (!opened) {
+    copyShareText(sharePack.storyText, donorHref);
+    showShareToast('Popup blocked. Story text copied so you can paste and share manually.');
+    return;
+  }
+  onDone();
 }
 
 let _html2canvasLoaderPromise = null;
