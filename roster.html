@@ -961,6 +961,35 @@
     }
     [data-tier="legend"] .tcard-raised span { text-shadow: 0 0 8px rgba(249,241,8,0.4); }
 
+    /* ══ QUICK DONATE HOVER BUTTON ══ */
+    .tcard-hover-donate {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      background: var(--color-cerulean);
+      color: var(--color-night);
+      font-family: 'Josefin Slab', serif;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 7px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      z-index: 20;
+      box-shadow: 0 4px 14px rgba(4,178,202,0.5);
+      pointer-events: none;
+    }
+    .tcard-wrap:hover:not(.flipped) .tcard-hover-donate {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
     /* Empty state */
     .roster-empty {
       text-align: center;
@@ -1153,6 +1182,10 @@
         <span class="roster-hero-stat-num">$115k</span>
         <span class="roster-hero-stat-label">2026 Goal</span>
       </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">15,300</span>
+        <span class="roster-hero-stat-label">Collective Miles</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1190,6 +1223,7 @@
     <button class="filter-btn" data-filter="veteran">🔥 Veterans</button>
     <button class="filter-btn" data-filter="rider">🚴 Riders</button>
     <button class="filter-btn" data-filter="rookie">🌱 Rookies</button>
+    <button class="filter-btn" id="sortRaisedBtn" onclick="toggleSortByRaised(this)" title="Sort cards by amount raised">📊 Sort: Default</button>
     <button class="filter-btn" id="randomRiderBtn" onclick="openRandomRider()" title="Open a random rider card" style="background:rgba(249,241,8,0.07);border-color:rgba(249,241,8,0.25);color:rgba(249,241,8,0.7);">🎲 Surprise Me</button>
     <input class="roster-search" type="search" placeholder="Search riders…" id="rosterSearch" autocomplete="off">
   </div>
@@ -2051,6 +2085,7 @@ function renderCard(r, index) {
 
         <div class="tcard-stamp">⚡ Wish Hero · TGT · WAM ⚡</div>
         <div class="tcard-flip-hint">tap to flip →</div>
+        <a class="tcard-hover-donate" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💙 Donate to ${r.name.split(' ')[0]}</a>
       </div>
 
       <!-- BACK -->
@@ -2080,15 +2115,33 @@ function renderCard(r, index) {
   </div>`;
 }
 
+let _sortByRaised = false;
+
+function toggleSortByRaised(btn) {
+  _sortByRaised = !_sortByRaised;
+  btn.classList.toggle('active', _sortByRaised);
+  btn.textContent = _sortByRaised ? '📊 Sort: Raised ↓' : '📊 Sort: Default';
+  renderAll(currentFilter, currentQuery);
+}
+
 function renderAll(filter, query) {
   const grid = document.getElementById('rosterGrid');
   const q = (query || '').toLowerCase().trim();
 
-  const filtered = RIDERS.filter(r => {
+  let filtered = RIDERS.filter(r => {
     const matchesTier = filter === 'all' || r.tier === filter;
     const matchesQuery = !q || r.name.toLowerCase().includes(q) || r.nickname.toLowerCase().includes(q);
     return matchesTier && matchesQuery;
   });
+
+  // Sort by raised if active and fund data is loaded
+  if (_sortByRaised && Object.keys(_fundMap).length) {
+    filtered = [...filtered].sort((a, b) => {
+      const aRaised = (_fundMap[a.name.toLowerCase()] || {}).sumDonations || 0;
+      const bRaised = (_fundMap[b.name.toLowerCase()] || {}).sumDonations || 0;
+      return bRaised - aRaised;
+    });
+  }
 
   if (filtered.length === 0) {
     grid.innerHTML = '<div class="roster-empty">No riders found. Try a different search.</div>';
@@ -2304,9 +2357,9 @@ function updateDiscoveredBar(seen) {
 let currentFilter = 'all';
 let currentQuery = '';
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
     renderAll(currentFilter, currentQuery);
@@ -2387,6 +2440,9 @@ fetch('/assets/data/participants.json')
       `;
       bio.parentNode.insertBefore(div, bio);
     });
+
+    // If sort-by-raised is active, re-render now that we have fund data
+    if (_sortByRaised) renderAll(currentFilter, currentQuery);
   })
   .catch(() => {}); // graceful fallback
 
