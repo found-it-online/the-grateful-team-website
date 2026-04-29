@@ -363,13 +363,14 @@
     }
     .tcard-stat-label {
       font-family: 'Josefin Slab', serif;
-      font-size: 8.5px;
+      font-size: 7.5px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: rgba(250,246,232,0.4);
-      width: 36px;
+      letter-spacing: 0.06em;
+      color: rgba(250,246,232,0.5);
+      width: 66px;
       flex-shrink: 0;
+      white-space: nowrap;
     }
     .tcard-stat-bar {
       flex: 1;
@@ -399,8 +400,8 @@
 
     /* Song */
     .tcard-song {
-      margin-top: auto;
-      padding: 8px 0 4px;
+      margin-top: 6px;
+      padding: 6px 0 4px;
       font-family: 'Josefin Slab', serif;
       font-size: 9px;
       font-weight: 600;
@@ -1023,12 +1024,12 @@
       position: fixed; inset: 0;
       background: rgba(8,3,18,0.94);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      z-index: 600; display: flex; align-items: center; justify-content: center;
-      padding: 20px; animation: fade-in 0.2s ease; overflow-y: auto;
+      z-index: 600; display: flex; align-items: flex-start; justify-content: center;
+      padding: 32px 20px; animation: fade-in 0.2s ease; overflow-y: auto;
     }
     @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
     .card-modal-inner {
-      display: flex; gap: 36px; align-items: flex-start;
+      display: flex; gap: 28px; align-items: flex-start;
       max-width: 1080px; width: 100%; position: relative; margin: auto;
       animation: modal-rise 0.3s cubic-bezier(0.34,1.56,0.64,1);
     }
@@ -1043,18 +1044,14 @@
     .card-modal-card-slot .tcard-nickname { font-size: 1.35rem !important; }
     .card-modal-card-slot .tcard-name     { font-size: 14px !important; }
     .card-modal-card-slot .tcard-avatar   { width: 96px !important; height: 96px !important; font-size: 32px !important; }
-    .card-modal-card-slot .tcard-stat-label { font-size: 10.5px !important; }
-    .card-modal-card-slot .tcard-stat-num   { font-size: 11.5px !important; }
+    .card-modal-card-slot .tcard-stat-label { font-size: 9px !important; width: 76px !important; letter-spacing: 0.05em !important; }
+    .card-modal-card-slot .tcard-stat-num   { font-size: 11px !important; }
     .card-modal-card-slot .tcard-stat-bar   { height: 7px !important; }
     .card-modal-card-slot .tcard-stats { gap: 8px !important; margin: 8px 0 10px !important; }
-    .card-modal-card-slot .tcard-song { font-size: 11.5px !important; margin-bottom: 6px !important; }
+    .card-modal-card-slot .tcard-song { font-size: 12px !important; margin-top: 6px !important; }
     .card-modal-panel {
-      flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px;
-      max-height: 575px; overflow-y: auto;
-      scrollbar-width: thin; scrollbar-color: rgba(249,241,8,0.2) transparent;
+      flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px;
     }
-    .card-modal-panel::-webkit-scrollbar { width: 4px; }
-    .card-modal-panel::-webkit-scrollbar-thumb { background: rgba(249,241,8,0.2); border-radius: 2px; }
     .modal-rider-header { border-bottom: 1px solid rgba(201,148,58,0.15); padding-bottom: 12px; }
     .modal-rider-nickname {
       font-family: 'Abril Fatface', serif;
@@ -1063,7 +1060,7 @@
     }
     .modal-rider-name {
       font-family: 'DM Sans', sans-serif; font-size: 15px;
-      color: var(--color-cream); font-weight: 500; margin-bottom: 8px;
+      color: var(--color-cream); font-weight: 500; margin-bottom: 5px;
     }
     .modal-rider-meta {
       font-family: 'Josefin Slab', serif; font-size: 10px; font-weight: 700;
@@ -1082,7 +1079,7 @@
       from { box-shadow: 0 0 6px rgba(249,241,8,0.4); }
       to   { box-shadow: 0 0 18px rgba(249,241,8,0.9); }
     }
-    .modal-stats-section { display: flex; flex-direction: column; gap: 11px; }
+    .modal-stats-section { display: flex; flex-direction: column; gap: 9px; }
     .modal-stats-heading, .modal-badges-heading {
       font-family: 'Josefin Slab', serif; font-size: 9px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.14em;
@@ -1116,7 +1113,7 @@
       background: rgba(250,246,232,0.06); border: 1px solid rgba(250,246,232,0.12);
       border-radius: 20px; padding: 5px 13px; color: rgba(250,246,232,0.75); white-space: nowrap;
     }
-    .modal-funfact { background: rgba(249,241,8,0.05); border-left: 3px solid var(--color-gold); border-radius: 0 8px 8px 0; padding: 10px 14px; }
+    .modal-funfact { background: rgba(249,241,8,0.05); border-left: 3px solid var(--color-gold); border-radius: 0 8px 8px 0; padding: 8px 12px; }
     .modal-funfact-label {
       font-family: 'Josefin Slab', serif; font-size: 9px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-gold);
@@ -2370,7 +2367,6 @@ function openModal(riderId, triggerEvent) {
     </div>
     <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
     <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
-    <p class="card-modal-hint">Click the card to flip it · ESC to close</p>
   `;
 
   // Animate stat bars after paint
