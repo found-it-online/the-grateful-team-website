@@ -370,6 +370,7 @@
       color: var(--color-cream);
       line-height: 1.15;
       margin: 0 0 4px;
+      font-style: italic;
     }
     [data-tier="legend"] .tcard-nickname { color: var(--color-gold); }
     .tcard-name {
@@ -671,6 +672,56 @@
       letter-spacing: 0.06em;
       white-space: nowrap;
     }
+    /* Injected DonorDrive “raised” block (grid + modal back) */
+    .tcard-back-raised {
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .tcard-back-raised-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 4px;
+      min-width: 0;
+    }
+    .tcard-back-raised-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(26, 14, 43, 0.5);
+      flex-shrink: 0;
+    }
+    .tcard-back-raised-amt {
+      font-family: 'Abril Fatface', serif;
+      font-size: 13px;
+      color: var(--color-purple);
+      text-align: right;
+      min-width: 0;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .tcard-back-raised-track {
+      height: 5px;
+      background: rgba(26, 14, 43, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+    .tcard-back-raised-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-purple), var(--color-purple-light));
+      border-radius: 3px;
+    }
+    .tcard-back-raised-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      color: rgba(26, 14, 43, 0.4);
+      line-height: 1.35;
+    }
     /* Hover tilt effect */
     .tcard-wrap { transition: transform 0.1s ease; }
 
@@ -867,11 +918,13 @@
 
       /* Cards: fluid sizing across phone widths */
       .tcard-wrap {
-        width: min(100%, 360px);
+        width: min(100%, 352px);
+        max-width: 352px;
         aspect-ratio: 5 / 7;
         height: auto;
         min-height: 360px;
         margin: 0 auto;
+        justify-self: center;
       }
       .tcard-topbar { padding: 10px 14px 8px !important; }
       .tcard-num { font-size: 11px !important; }
@@ -932,10 +985,98 @@
       .roster-grid-wrap { padding: 16px 12px; }
       .roster-grid { max-width: 100%; }
       .tcard-wrap {
-        width: min(100%, 332px);
+        width: min(100%, 324px);
+        max-width: 324px;
         min-height: 360px;
       }
       .tcard-raised-hero-amt { font-size: 1.4rem !important; }
+    }
+
+    /* Tablet / small desktop: larger roster cards (not modal — see 781px block) */
+    @media (min-width: 641px) {
+      .roster-grid {
+        grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+        gap: 28px;
+      }
+      .tcard-wrap {
+        height: 452px;
+      }
+      .tcard-edition { font-size: 10px; margin-bottom: 9px; }
+      .tcard-num { font-size: 11px; }
+      .tcard-tier-badge { font-size: 10px; padding: 4px 9px; }
+      .tcard-avatar-area { padding: 10px 0 12px; }
+      .tcard-avatar { width: 96px; height: 96px; font-size: 28px; }
+      .tcard-nickname { font-size: clamp(1.32rem, 2vw, 1.55rem); }
+      .tcard-name { font-size: 12.5px; margin-bottom: 11px; }
+      .tcard-body { padding: 0 15px; }
+      .tcard-stat-label { font-size: 8.75px; width: 72px; letter-spacing: 0.07em; }
+      .tcard-stat-num { font-size: 9px; width: 26px; }
+      .tcard-stat-bar { height: 6px; }
+      .tcard-stat-row { margin-bottom: 5px; }
+      .tcard-song { font-size: 10px; margin-top: 7px; }
+      .tcard-song span { font-size: 11.5px; }
+      .tcard-badge { width: 24px; height: 24px; font-size: 12px; }
+      .tcard-stamp { font-size: 9px; letter-spacing: 0.16em; }
+      .tcard-raised-hero { padding: 8px 14px 18px; min-height: 58px; }
+      .tcard-raised-hero-amt { font-size: 2.2rem; }
+      .tcard-raised-hero-label { font-size: 9px; margin-top: 4px; }
+      .tcard-back { padding: 18px; }
+      .tcard-back-title { font-size: 1.12rem; }
+      .tcard-back-wam { font-size: 10px; }
+      .tcard-funfact { font-size: 11.5px; padding: 8px 10px; }
+      .tcard-funfact-label { font-size: 9px; }
+      .tcard-back-bio { font-size: 13px; line-height: 1.58; -webkit-line-clamp: 7; }
+      .tcard-back-badge { font-size: 9.5px; padding: 4px 9px; }
+      .tcard-donate-btn { font-size: 11px; padding: 9px 12px; }
+      .tcard-share-btn { font-size: 14px; padding: 9px 10px; }
+      .tcard-back-num { font-size: 10px; }
+      .tcard-back-raised-label { font-size: 9.5px; }
+      .tcard-back-raised-amt { font-size: 15px; }
+      .tcard-back-raised-track { height: 6px; }
+      .tcard-back-raised-meta { font-size: 10px; }
+    }
+
+    /* Desktop modal (split from roster so we do not fight max-width 780 modal rules on phones) */
+    @media (min-width: 781px) {
+      .card-modal-card-slot .tcard-nickname { font-size: 1.52rem !important; }
+      .card-modal-card-slot .tcard-name { font-size: 15px !important; }
+      .card-modal-card-slot .tcard-avatar { width: 118px !important; height: 118px !important; font-size: 36px !important; }
+      .card-modal-card-slot .tcard-stat-label { font-size: 10px !important; width: 82px !important; }
+      .card-modal-card-slot .tcard-stat-num { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-stat-bar { height: 8px !important; }
+      .card-modal-card-slot .tcard-song { font-size: 13px !important; }
+      .card-modal-card-slot .tcard-edition { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-num { font-size: 11px !important; }
+      .card-modal-card-slot .tcard-tier-badge { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-raised-hero-amt { font-size: 2.35rem !important; }
+      .card-modal-card-slot .tcard-raised-hero-label { font-size: 9.5px !important; }
+      .card-modal-card-slot .tcard-stamp { font-size: 9px !important; }
+      .card-modal-card-slot .tcard-back-title { font-size: 1.22rem !important; }
+      .card-modal-card-slot .tcard-back-wam { font-size: 10.5px !important; }
+      .card-modal-card-slot .tcard-funfact { font-size: 13px !important; }
+      .card-modal-card-slot .tcard-funfact-label { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-back-bio { font-size: 15px !important; line-height: 1.62 !important; }
+      .card-modal-card-slot .tcard-back-badge { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-donate-btn { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-back-num { font-size: 10.5px !important; }
+
+      .modal-rider-nickname { font-size: clamp(1.65rem, 3vw, 2.15rem); }
+      .modal-rider-name { font-size: 16px; }
+      .modal-rider-meta { font-size: 11px; }
+      .modal-wish-granter-badge { font-size: 10px; padding: 4px 11px; }
+      .modal-stats-heading, .modal-badges-heading { font-size: 10px; }
+      .modal-stat-label { font-size: 12.5px; width: 128px; }
+      .modal-stat-val { font-size: 18px; width: 40px; }
+      .modal-stat-track { height: 12px; }
+      .modal-stat-boost { font-size: 16px; }
+      .modal-badge-pill { font-size: 14px; padding: 6px 14px; }
+      .modal-funfact-label { font-size: 10px; }
+      .modal-funfact p { font-size: 14px; line-height: 1.52; }
+      .card-modal-song-name { font-size: 1.22rem; }
+      .card-modal-song-by { font-size: 12px; }
+      .modal-play-btn { font-size: 11px; padding: 8px 14px; }
+      .card-modal-donate-link { font-size: 13px; padding: 14px; }
+      #modalPanel button[onclick^="challengeRider"] { font-size: 11px !important; padding: 11px !important; }
     }
 
     /* Card entrance animation */
@@ -1068,19 +1209,22 @@
 
     .tcard-raised-hero {
       text-align: center;
-      padding: 4px 14px 2px;
-      min-height: 52px;
+      padding: 6px 14px 16px;
+      min-height: 56px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     .tcard-raised-hero-amt {
       font-family: 'Abril Fatface', serif;
       font-size: 2rem;
-      line-height: 1;
+      line-height: 1.12;
       color: var(--color-gold);
       letter-spacing: -0.01em;
+      display: block;
+      padding-bottom: 1px;
     }
     [data-tier="legend"] .tcard-raised-hero-amt { text-shadow: 0 0 16px rgba(249,241,8,0.5); }
     [data-tier="veteran"] .tcard-raised-hero-amt { color: var(--color-purple-light); }
@@ -1183,6 +1327,54 @@
     .card-modal-card-slot .tcard-stat-bar   { height: 7px !important; }
     .card-modal-card-slot .tcard-stats { gap: 8px !important; margin: 8px 0 10px !important; }
     .card-modal-card-slot .tcard-song { font-size: 12px !important; margin-top: 6px !important; }
+
+    /* Modal: full back face — no fixed card height / inner scroll when flipped */
+    .card-modal-card-slot .tcard-back-bio {
+      display: block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: unset !important;
+      overflow: visible !important;
+      flex: 0 1 auto !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped {
+      aspect-ratio: unset !important;
+      height: auto !important;
+      min-height: 575px;
+      max-height: none !important;
+      overflow: visible;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      height: auto !important;
+      min-height: 0;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-front,
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-back {
+      grid-area: 1 / 1;
+      position: relative !important;
+      inset: auto !important;
+      width: 100%;
+      height: auto !important;
+      align-self: start;
+      overflow: visible !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-front {
+      visibility: hidden;
+      pointer-events: none;
+      opacity: 0;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-back {
+      z-index: 1;
+    }
+
     .card-modal-panel {
       flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px;
     }
@@ -1191,6 +1383,7 @@
       font-family: 'Abril Fatface', serif;
       font-size: clamp(1.5rem, 3vw, 2rem);
       color: var(--color-gold); line-height: 1; margin-bottom: 5px;
+      font-style: italic;
     }
     .modal-rider-name {
       font-family: 'DM Sans', sans-serif; font-size: 15px;
@@ -1281,26 +1474,77 @@
       color: rgba(250,246,232,0.25); text-align: center; margin: 0;
     }
     .card-modal-close {
-      position: fixed; top: 18px; right: 22px; width: 40px; height: 40px;
-      background: rgba(250,246,232,0.08); border: 1px solid rgba(250,246,232,0.18);
-      border-radius: 50%; color: rgba(250,246,232,0.8); font-size: 16px;
-      cursor: pointer; z-index: 10; transition: background 150ms;
+      position: fixed;
+      top: max(12px, env(safe-area-inset-top, 0px));
+      right: max(16px, env(safe-area-inset-right, 0px));
+      width: 44px; height: 44px;
+      background: rgba(16, 8, 36, 0.92);
+      border: 1px solid rgba(250,246,232,0.35);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+      transition: background 150ms, border-color 150ms;
       display: flex; align-items: center; justify-content: center;
     }
-    .card-modal-close:hover { background: rgba(250,246,232,0.18); color:#fff; }
+    .card-modal-close:hover { background: rgba(40, 22, 58, 0.98); border-color: rgba(250,246,232,0.55); color: #fff; }
+
+    /* Share CTA sits in flow between card + panel (not fixed — avoids overlapping the card) */
+    .card-modal-left-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .modal-share-rail {
+      width: 100%;
+      max-width: 410px;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 4px 16px 10px;
+      display: none;
+    }
+    .modal-share-rail.show {
+      display: block;
+    }
+    .modal-share-btn {
+      border: 1px solid rgba(4,178,202,0.45);
+      background: rgba(4,178,202,0.16);
+      color: var(--color-cream);
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 22px;
+      padding: 10px 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 100%;
+    }
     @media (max-width: 780px) {
       /* Full-screen sheet: keep card visible above details */
       .card-modal-overlay {
-        padding: 0; align-items: flex-end; justify-content: center;
+        padding: 10px 0 24px; align-items: flex-start; justify-content: center;
         width: 100vw;
         max-width: 100vw;
         overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .card-modal-inner {
         display: block;
         width: 100vw; min-width: 100vw; max-width: 100vw; margin: 0;
         background: #100824; border-radius: 20px 20px 0 0;
-        max-height: 92vh; overflow-y: auto; overflow-x: hidden;
+        max-height: none; overflow: visible;
+        overflow-anchor: none;
+        /* Reserve space so the fixed close control does not sit on top of the card */
+        padding-top: 52px;
       }
       .card-modal-card-slot {
         display: flex;
@@ -1310,12 +1554,13 @@
         padding: 18px 14px 8px;
         overflow-x: hidden;
         flex-shrink: 0;
+        position: static;
       }
       .card-modal-card-slot .tcard-wrap {
         width: min(100%, 360px) !important;
         aspect-ratio: 5 / 7;
         height: auto !important;
-        max-height: 70vh;
+        max-height: 58vh;
         min-height: 0;
       }
       .card-modal-card-slot .tcard-topbar { padding: 10px 14px 8px !important; }
@@ -1339,7 +1584,7 @@
       .card-modal-card-slot .tcard-back-wam { font-size: 12px !important; }
       .card-modal-card-slot .tcard-funfact { padding: 11px 12px !important; font-size: 14px !important; line-height: 1.6 !important; }
       .card-modal-card-slot .tcard-funfact-label { font-size: 11px !important; }
-      .card-modal-card-slot .tcard-back-bio { font-size: 14.5px !important; line-height: 1.65 !important; -webkit-line-clamp: 8; }
+      .card-modal-card-slot .tcard-back-bio { font-size: 14.5px !important; line-height: 1.65 !important; }
       .card-modal-card-slot .tcard-back-badge { font-size: 11.5px !important; padding: 6px 11px !important; }
       .card-modal-card-slot .tcard-donate-btn { font-size: 12.5px !important; padding: 11px 13px !important; }
       .card-modal-card-slot .tcard-share-btn { font-size: 16px !important; padding: 10px 11px !important; }
@@ -1356,7 +1601,26 @@
       .modal-rider-nickname { font-size: 1.6rem; }
       .modal-stat-label { font-size: 10.5px; width: 108px; }
       .modal-stat-val { font-size: 15px; width: 34px; }
-      .card-modal-close { top: 14px; right: 16px; }
+      .card-modal-close {
+        top: max(10px, env(safe-area-inset-top, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px));
+      }
+      .modal-share-rail {
+        max-width: 360px;
+        padding: 8px 16px 14px;
+        display: block;
+        min-height: 46px;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 140ms ease;
+      }
+      .modal-share-rail.show {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-share-btn { font-size: 10px; padding: 9px 14px; }
     }
   </style>
 </head>
@@ -1473,7 +1737,12 @@
 <div id="cardModal" class="card-modal-overlay" style="display:none;" onclick="closeModal()">
   <button class="card-modal-close" onclick="closeModal()" aria-label="Close">✕</button>
   <div class="card-modal-inner" onclick="event.stopPropagation()">
-    <div class="card-modal-card-slot" id="modalCardSlot"></div>
+    <div class="card-modal-left-stack">
+      <div class="card-modal-card-slot" id="modalCardSlot"></div>
+      <div id="modalShareRail" class="modal-share-rail" aria-hidden="true">
+        <button id="cardShareFab" type="button" class="modal-share-btn" aria-label="Share this rider card">💬 Share Card</button>
+      </div>
+    </div>
     <div class="card-modal-panel" id="modalPanel"></div>
   </div>
 </div>
@@ -1563,7 +1832,7 @@ const RIDERS = [
     nickname: "Ben-Dana",
     donorSlug: "4940",
     tier: "veteran",
-    years: 3,
+    years: 1,
     song: "Truckin'",
     initials: "BK",
     bio: "Ben-Dana. A compound identity for a compound personality. Ben Kulczewski defies single-word categorization — he's the kind of rider who shows up to San Francisco and still reps TGT, the kind of teammate who's always in motion and somehow always present. Ben-Dana contains multitudes. Ben-Dana keeps Truckin'. Don't try to put Ben-Dana in a box. The box can't keep up.",
@@ -1577,7 +1846,7 @@ const RIDERS = [
     nickname: "The Torchbearer",
     donorSlug: "CalebAgar",
     tier: "rider",
-    years: 2,
+    years: 1,
     song: "He's Gone",
     initials: "CA",
     bio: "Three seasons ago his dad Jason dove headfirst into TGT — not because someone asked him, but because that's how Jason did everything. When TGT lost Jason to pancreatic cancer, the team lost a quiet, unglamorous force who showed up without being asked and made everything an adventure. Now Caleb carries the torch. He shows up every year and rides with something extra in the tank. This one's for you, Jason.",
@@ -1602,14 +1871,14 @@ const RIDERS = [
   {
     id: 9,
     name: "Jackson Maitner",
-    nickname: "The Road Scholar",
+    nickname: "Jaxon",
     donorSlug: "4941",
     tier: "rider",
-    years: 2,
-    song: "Eyes of the World",
+    years: 3,
+    song: "Althea",
     initials: "JM",
-    bio: "The Road Scholar. Rider, thinker, and one of those people who shows up to every group ride with way more questions than they started with — and way more miles in the legs by the end. Doesn't just ride the road, reads it. Has a gift for seeing what matters and a motor that keeps going well past the point where most people would've pulled over. Eyes wide open, all the way to the finish.",
-    funFact: "You're reading his website right now. The meta is not lost on him.",
+    bio: "Jaxon. Yes, with an X. Fast letter, fast rider. Shows up on a black Raleigh with carbon aero handlebars that gets enough compliments to derail a pre-ride briefing. There is also ongoing in-house debate about whether Luis wishes he had this bike. No official statement has been issued. Until then, the rumors stand.",
+    funFact: "Rents Luis's house while Luis lives in Chicago, so rides often start and end at the same place. Totally normal. Do not worry about it.",
     badges: ["📚 Road Scholar", "🔍 Eyes Open", "🚴 Solid Legs", "💙 Mission Believer"],
     stats: { spirit: 8, grit: 8 },
   },
@@ -1633,11 +1902,11 @@ const RIDERS = [
     nickname: "Lax-Bro",
     donorSlug: "4853",
     tier: "rider",
-    years: 2,
+    years: 1,
     song: "Sugar Magnolia",
     initials: "NM",
-    bio: "Lax-Bro. The lacrosse-to-cycling pipeline is real and Nicholas Milanowski is proof. He brings an athlete's mentality, a lax bro's effortless confidence, and a Milanowski's competitive instinct to every ride. Brother to Nate (D1), which means this family is not here to mess around. Lax-Bro glides — smooth on the bike, smooth in conversation, and somehow always looks like he just came from the crease.",
-    funFact: "Part of the Milanowski sibling duo. The lax-to-cycling crossover works better than anyone expected.",
+    bio: "Lax-Bro. The lacrosse-to-cycling pipeline is real and Nicholas Milanowski is proof. He brings an athlete's mentality, a lax bro's effortless confidence, and a Milanowski's competitive instinct to every ride. Also: there is persistent paddock gossip that Nick and Teodoro might ride a tandem bike if someone throws $100 in the jar. Is it true? Ask them directly. We are merely journalists.",
+    funFact: "Rumor mill says a Nick + Teodoro tandem appears for a $100 donation. Confirmations pending. Cameras ready.",
     badges: ["👬 Sibling Duo", "🎶 Smooth Rider", "💰 Fundraiser", "🌈 Good Vibes"],
     stats: { spirit: 9, grit: 8 },
   },
@@ -1661,7 +1930,7 @@ const RIDERS = [
     nickname: "Stan the Man",
     donorSlug: "5121",
     tier: "rookie",
-    years: 1,
+    years: 2,
     song: "Dark Star",
     initials: "SK",
     bio: "Stan the Man. Simple, iconic, earned. Behind the most magnificently unspellable last name on the roster is a rider who is anything but complicated — Stan shows up, Stan goes hard, Stan is a blast to be around. There's something cosmically right about riding 300 miles next to someone named Stanislaw Krzyzanowski. Autocorrect has given up. The man himself has not.",
@@ -1692,8 +1961,8 @@ const RIDERS = [
     years: 1,
     song: "Bertha",
     initials: "RG",
-    bio: "I Am Groot. Not just Groot — the full declaration. Robert Grooters doesn't half-commit to an identity. Big presence, quiet strength, and a last name that is literally a Marvel character. The full phrase matters: I. Am. Groot. Said with conviction on every climb, in every headwind, at every mile marker past 200. First WAM. Full send. We are all, in some small way, Groot.",
-    funFact: "Grooters → Groot → I Am Groot. The evolution was inevitable and correct.",
+    bio: "I Am Groot. Not just Groot — the full declaration. Robert Grooters doesn't half-commit to an identity. Big presence, quiet strength, and a last name that is literally a Marvel character. He also goes by Kyle, which raises an excellent and unresolved question: how many names does this guy actually have? However many it is, he answers all of them while still turning the pedals.",
+    funFact: "Robert. Groot. Kyle. I Am Groot. At this point we're just collecting aliases and calling it branding.",
     badges: ["🌱 WAM Rookie", "🌳 Groot Energy", "💪 Strong Debut", "🤝 Team Player"],
     stats: { spirit: 8, grit: 7 },
   },
@@ -1717,7 +1986,7 @@ const RIDERS = [
     nickname: "Sticks",
     donorSlug: "4963",
     tier: "rider",
-    years: 2,
+    years: 1,
     song: "Row Jimmy",
     initials: "LS",
     bio: "Sticks. The rhythm section of TGT. Lauren Sytsma keeps the beat — steady, consistent, and the thing that holds everything together when the road gets chaotic. Every great band needs a drummer. Every great ride needs a Sticks. Composed. Capable. The kind of rider who makes it look effortless when it absolutely isn't. Great presence in the pace line. Even better at the post-ride celebration.",
@@ -1759,7 +2028,7 @@ const RIDERS = [
     nickname: "Nananana! Batman!",
     donorSlug: "4830",
     tier: "veteran",
-    years: 3,
+    years: 2,
     song: "Estimated Prophet",
     initials: "NK",
     bio: "Nananana! Batman! The full thing. Every syllable. Nakayla Kosmerick arrives at every ride like a superhero who doesn't need an origin story — just shows up, handles business, and disappears into the night. Three years of WAM and still swooping in when the team needs a lift. The cape is invisible but the impact is not. Nananana! Batman!",
@@ -1787,11 +2056,11 @@ const RIDERS = [
     nickname: "Spicy Salsa",
     donorSlug: "4820",
     tier: "veteran",
-    years: 3,
+    years: 2,
     song: "Dire Wolf",
     initials: "LM",
-    bio: "Spicy Salsa. Don't let the name fool you into thinking it's mild — Spicy Salsa brings heat. Lisa Marsh has been one of TGT's earliest riders (lowest DonorDrive number doesn't lie) and three years in she's only getting spicier. The kind of team member who makes everything better just by being in the mix. Veteran presence, serious flavor, and a kick that sneaks up on you at mile 200.",
-    funFact: "One of the earliest DonorDrive registrations on the team. OG with a spicy finish.",
+    bio: "Spicy Salsa. Lisa Marsh rides one of the coolest bikes on the entire roster — her Salsa is all personality and all business, just like her. She brings that same style to every WAM weekend: calm, fun, and quietly fast when it matters. If you see the Salsa rolling by, you're looking at one of the most unmistakable setups in TGT.",
+    funFact: "Her signature Salsa bike is a team favorite — equal parts cool, capable, and unmistakably Lisa.",
     badges: ["👑 OG Rider", "🏅 Founding Energy", "💙 Team Pillar", "🌿 Grounded"],
     stats: { spirit: 8, grit: 8 },
   },
@@ -1801,7 +2070,7 @@ const RIDERS = [
     nickname: "Kickstand",
     donorSlug: "5075",
     tier: "rider",
-    years: 2,
+    years: 3,
     song: "Touch of Grey",
     initials: "TR",
     bio: "Kickstand. The thing that holds the whole bike up when everything stops. Taylor Robson is the support structure — when the group needs steadying, when the morale dips, when someone needs a reason to keep going, Kickstand is there. Reliable, load-bearing, and criminally underrated in the grand scheme of cycling mechanics. Every team needs a Kickstand. TGT has a great one.",
@@ -1815,7 +2084,7 @@ const RIDERS = [
     nickname: "Muscles",
     donorSlug: "Cameron-McGill-2026",
     tier: "rider",
-    years: 2,
+    years: 1,
     song: "Franklin's Tower",
     initials: "CM",
     bio: "Muscles. Cameron McGill earned this one the old-fashioned way — by having them and using them. The kind of rider who doesn't need to talk about doing work because the work is self-evident. Muscles in the legs, muscles in the fundraising numbers, muscles in the team culture. When Muscles shows up, the pace goes up. That's just physics.",
@@ -1860,8 +2129,8 @@ const RIDERS = [
     years: 2,
     song: "Stella Blue",
     initials: "KS",
-    bio: "Staff. As in: essential personnel. Kiersten Schulte shows up with the organizational energy of someone who has a clipboard and a plan — and TGT runs better because of it. Not glamorous work. Absolutely necessary work. Staff doesn't do it for the credit. Staff does it because someone has to and Staff is always that someone. Every team at every level runs on people like this.",
-    funFact: "The backbone every operation needs. Staff keeps TGT from descending into beautiful chaos.",
+    bio: "Staff. And we mean that literally — Kiersten Schulte is Make-A-Wish staff and a Grateful Team rider, living both sides of the mission at the same time. She helps make wishes happen behind the scenes and then lines up to ride for those same kids on the road. It's a rare kind of full-circle commitment, and TGT is better because she brings both perspectives to the team.",
+    funFact: "She serves as Make-A-Wish staff member and WAM rider — mission at work and mission on the bike.",
     badges: ["🧭 The Compass", "🌟 Directional Energy", "💙 Consistent", "🚴 Steady"],
     stats: { spirit: 8, grit: 8 },
   },
@@ -1885,7 +2154,7 @@ const RIDERS = [
     nickname: "AK-47",
     donorSlug: "4854",
     tier: "veteran",
-    years: 3,
+    years: 1,
     song: "Uncle John's Band",
     initials: "AK",
     bio: "AK-47. Initials that hit hard and a rider who backs it up. Andrew Kennedy has been a fixture in TGT long enough to know the rhythm — early registration, solid training, serious fundraising, full send on race day. The kind of veteran who makes rookies think it looks easy. It is not easy. Andrew just makes it look that way.",
@@ -1913,7 +2182,7 @@ const RIDERS = [
     nickname: "Hollandaise",
     donorSlug: "4880",
     tier: "veteran",
-    years: 3,
+    years: 1,
     song: "Sugaree",
     initials: "CM",
     bio: "Hollandaise. Rich, smooth, and makes everything it touches better. Cami Mastenbrook is the secret sauce of TGT — the element that elevates the whole dish. Three years in and still pouring generously at every ride, every event, every group chat check-in. Hollandaise doesn't show up halfway. Hollandaise shows up fully emulsified and ready to go.",
@@ -1930,9 +2199,9 @@ const RIDERS = [
     years: 3,
     song: "Fire on the Mountain",
     initials: "CC",
-    bio: "Apollo. God of the sun, music, and going really fast. Cole Christians brings divine energy to every ride — blazing, luminous, and operating at a frequency most mortals can't quite reach. Three years of WAM and the fire is still burning bright. Apollo doesn't chase the sun. Apollo is the sun. Get your sunglasses.",
-    funFact: "Apollo — sun god energy on a bike. Three WAM years of blazing the trail.",
-    badges: ["🚂 Cole Train", "💪 Power Output", "🔥 Year 3 Fire", "⚡ No Brakes"],
+    bio: "Apollo. Not just the myth — the space program. Cole Christians carries that name because his grandfather, Al Worden, flew on Apollo 15, performed the first deep-space spacewalk, and helped pilot the mission with the lunar rover. That's probably why Cole rides the way he does: curious, composed, and built for distance. Bonus detail: he does it on a Litespeed titanium bike, which feels very Apollo-coded.",
+    funFact: "His grandfather Al Worden flew on Apollo 15 and performed the first deep-space spacewalk. Cole rides a Litespeed titanium bike.",
+    badges: ["🚀 Apollo Legacy", "🌕 Lunar Rover Mission", "🛰️ Spacewalk Bloodline", "⚙️ Titanium Litespeed"],
     stats: { spirit: 8, grit: 9 },
   },
   {
@@ -1955,7 +2224,7 @@ const RIDERS = [
     nickname: "Gummies",
     donorSlug: "4883",
     tier: "veteran",
-    years: 3,
+    years: 2,
     song: "Passenger",
     initials: "DD",
     bio: "Gummies. Soft on the outside, impossible to get rid of, and absolutely essential to any long-distance effort. David Dirksen is TGT's Gummies — the thing everyone reaches for at mile 150 when the energy is low and the road is long. Sweet, reliable, and there when you need him. Three years of WAM and Gummies has never run out.",
@@ -1969,7 +2238,7 @@ const RIDERS = [
     nickname: "The Rookie",
     donorSlug: "5131",
     tier: "rookie",
-    years: 1,
+    years: 4,
     song: "Wharf Rat",
     initials: "EL",
     bio: "The Rookie. Eli Luke wears it with honor — because being the rookie means you still have everything ahead of you. First WAM, first 300 miles, first time crossing that finish line and realizing this is something you'll do every year for the rest of your life. The Rookie is exactly where you want to be: at the beginning of something great, with the whole road in front of you.",
@@ -2053,7 +2322,7 @@ const RIDERS = [
     nickname: "Art Van",
     donorSlug: "5120",
     tier: "rookie",
-    years: 1,
+    years: 4,
     song: "Samson and Delilah",
     initials: "JS",
     bio: "Art Van. Michigan's legendary furniture king — and now Jeffrey Steigerwald's eternal nickname. There's something poetic about a Michigan guy on a Michigan charity ride carrying the name of Michigan's most beloved furniture empire. Art Van believed in quality, comfort, and showing up for the Midwest. So does Jeffrey. First WAM. Great bones. Will hold up.",
@@ -2081,7 +2350,7 @@ const RIDERS = [
     nickname: "Faster than Luis",
     donorSlug: "5055",
     tier: "rider",
-    years: 2,
+    years: 3,
     song: "Dancin' in the Streets",
     initials: "JB",
     bio: "Faster than Luis. High praise. The ultimate benchmark. Luis Vecchio — El Capitan, founder, the guy whose phone number is on the website — is the standard. Jessica Barr clears it. That's the whole bio. If you need more convincing, just try to keep up. Two years of WAM and the gap is not closing in Luis's favor. Respect.",
@@ -2123,7 +2392,7 @@ const RIDERS = [
     nickname: "Wall Street",
     donorSlug: "5082",
     tier: "rider",
-    years: 2,
+    years: 1,
     song: "Althea",
     initials: "NC",
     bio: "Wall Street. Nick Carlisle moves through a pace line the way money moves through markets — efficiently, confidently, and always looking for the best position. Wall Street doesn't panic in downturns. Wall Street doesn't flinch at volatility. Wall Street has a plan at mile 5 and the same plan at mile 295. Two years of WAM, strong returns, diversified effort.",
@@ -2151,7 +2420,7 @@ const RIDERS = [
     nickname: "Little Charlie Minion",
     donorSlug: "4953",
     tier: "veteran",
-    years: 3,
+    years: 1,
     song: "Cumberland Blues",
     initials: "RK",
     bio: "Little Charlie Minion. A name that arrives with its own energy and demands zero further context. Ross Kraft has been doing the work for three WAM years — the loyal, tireless, surprisingly effective work of someone who shows up, executes the mission, and makes it look kind of fun. Little Charlie Minion does not ask questions. Little Charlie Minion delivers.",
@@ -2182,8 +2451,8 @@ const RIDERS = [
     years: 1,
     song: "El Paso",
     initials: "TV",
-    bio: "The Deckhand. El Capitan (Luis) runs the boat — The Deckhand keeps it moving. Teodoro Vecchio arrives in the Vecchio tradition: ready to work, no drama, hands on deck. While El Capitan is giving orders from the helm, The Deckhand is already doing the thing that needed doing. Every good captain needs a great deckhand. The Vecchio boat has both.",
-    funFact: "The Vecchio name is TGT royalty. Teodoro arrives to continue the legacy.",
+    bio: "The Deckhand. El Capitan (Luis) runs the boat — The Deckhand keeps it moving. Teodoro Vecchio arrives in the Vecchio tradition: ready to work, no drama, hands on deck. There is now active rumor-season chatter that Teodoro and Nick Milanowski will show up on a tandem if someone drops a $100 donation. Confirmed? Not by us. Plausible? Absolutely. Worth testing? Extremely.",
+    funFact: "If the $100 tandem rumor is real, Teodoro and Nick owe the people a debut ride. We support this initiative.",
     badges: ["🌱 WAM Rookie", "👨‍👦 Vecchio Legacy", "⚡ From Spoke to Hope", "🚀 Big Future"],
     stats: { spirit: 8, grit: 7 },
   },
@@ -2205,48 +2474,77 @@ const RIDERS = [
 
 /* ══════════════════════════════════════
    COMPUTED STATS — Fundraising/Experience/Spirit/Grit
-   Fundraising: from live donation data (1-10 scale by $ amount)
-   Experience:  from years ridden (1-10 scale)
-   Spirit:      manual per rider
-   Grit:        manual per rider
-   Wish Granter boost: +1 to Fundraising if at/above goal (capped 10)
+   Fundraising: % of rider goal → /10 (e.g. $1k of $2k = 5/10; at or above goal = 10/10)
+   Experience:  1 point per WAM year (years), max 10
+   Spirit:      fixed 5/10 for everyone (placeholder until we measure it)
+   Grit:        starts 5/10; sharing this rider’s card from the site adds “grit points” in
+                this browser only (50 share actions → 10/10) — honor system, not global metrics
+   Wish Granter: badge when raised ≥ goal (no longer changes the fundraising score)
 ══════════════════════════════════════ */
+const STATS_SPIRIT_BASE = 5;
+/** Share taps from this browser toward max grit (per rider, localStorage). */
+const GRIT_SHARE_INCREMENTS_TOTAL = 50;
+
+function tgtShareStorageKey(id) {
+  return `tgt-share-v1:${id}`;
+}
+
+function tgtGetShareCount(riderId) {
+  try {
+    return Math.max(0, parseInt(localStorage.getItem(tgtShareStorageKey(riderId)), 10) || 0);
+  } catch (e) {
+    return 0;
+  }
+}
+
+function gritFromShareTaps(riderId) {
+  const n = Math.min(tgtGetShareCount(riderId), GRIT_SHARE_INCREMENTS_TOTAL);
+  const extra = Math.min(5, (n / GRIT_SHARE_INCREMENTS_TOTAL) * 5);
+  return Math.min(10, Math.round(STATS_SPIRIT_BASE + extra));
+}
+
+function tgtRecordRiderShare(riderId) {
+  if (riderId === undefined || riderId === null) return;
+  try {
+    const k = tgtShareStorageKey(riderId);
+    const n = parseInt(localStorage.getItem(k), 10) || 0;
+    localStorage.setItem(k, String(n + 1));
+  } catch (e) {}
+  queueMicrotask(() => {
+    if (typeof renderAll === 'function') {
+      renderAll(typeof currentFilter !== 'undefined' ? currentFilter : 'all', typeof currentQuery !== 'undefined' ? currentQuery : '');
+    }
+    const modal = document.getElementById('cardModal');
+    if (modal && modal.style.display === 'flex') {
+      const slot = document.querySelector('#modalCardSlot .tcard-wrap[data-id]');
+      const openId = slot ? parseInt(slot.dataset.id, 10) : 0;
+      if (openId && typeof openModal === 'function') openModal(openId);
+    }
+  });
+}
+
 function computeStats(rider, fundMap) {
   const key = rider.name.toLowerCase();
   const data = fundMap ? (fundMap[key] || null) : null;
+  const defaultGoal = 1200;
+  const computedTier = getComputedTier(rider);
 
-  // Fundraising (1-10 by dollar amount raised)
   let fundraising;
-  if (data && data.sumDonations > 0) {
-    const amt = data.sumDonations;
-    if      (amt >= 20000) fundraising = 10;
-    else if (amt >= 12000) fundraising = 9;
-    else if (amt >= 7000)  fundraising = 8;
-    else if (amt >= 4000)  fundraising = 7;
-    else if (amt >= 2500)  fundraising = 6;
-    else if (amt >= 1500)  fundraising = 5;
-    else if (amt >= 900)   fundraising = 4;
-    else if (amt >= 400)   fundraising = 3;
-    else if (amt >= 100)   fundraising = 2;
-    else                   fundraising = 1;
+  if (data && typeof data.sumDonations === 'number') {
+    const goal = Math.max(data.fundraisingGoal || defaultGoal, 1);
+    const pct = Math.min(1, data.sumDonations / goal);
+    fundraising = Math.min(10, Math.max(0, Math.round(pct * 10)));
   } else {
-    // Tier-based estimate before data loads
-    fundraising = rider.tier === 'legend' ? 8 : rider.tier === 'veteran' ? 6 : rider.tier === 'rider' ? 4 : 2;
+    fundraising = computedTier === 'legend' ? 8 : computedTier === 'veteran' ? 6 : computedTier === 'rider' ? 4 : 2;
   }
 
-  // Experience (years ridden → 1-10)
-  const expMap = {1:2, 2:4, 3:6, 4:8, 5:9, 6:10};
-  const experience = expMap[Math.min(6, rider.years)] || 2;
+  const experience = Math.min(10, Math.max(0, Math.round(Number(rider.years) || 0)));
+  const spirit = STATS_SPIRIT_BASE;
+  const grit = gritFromShareTaps(rider.id);
 
-  // Spirit + Grit (manual values from rider data)
-  const spirit = rider.stats.spirit || 5;
-  const grit   = rider.stats.grit   || 5;
+  const isWishGranter = !!(data && data.sumDonations >= (data.fundraisingGoal || defaultGoal));
 
-  // Wish Granter boost: if raised >= goal, +1 to fundraising (cap 10)
-  const isWishGranter = data && data.sumDonations >= (data.fundraisingGoal || 1200);
-  const fundraisingFinal = isWishGranter ? Math.min(10, fundraising + 1) : fundraising;
-
-  return { fundraising: fundraisingFinal, experience, spirit, grit, isWishGranter };
+  return { fundraising, experience, spirit, grit, isWishGranter };
 }
 
 /* ══════════════════════════════════════
@@ -2259,6 +2557,16 @@ const TIER_LABELS = {
   rookie: "Rookie",
 };
 
+const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3 };
+
+function getComputedTier(rider) {
+  if (rider.tier === 'legend') return 'legend';
+  const years = Number(rider.years) || 0;
+  if (years >= 3) return 'veteran';
+  if (years === 2) return 'rider';
+  return 'rookie';
+}
+
 /* ══════════════════════════════════════
    RENDER CARDS
 ══════════════════════════════════════ */
@@ -2267,6 +2575,7 @@ function statBar(val) {
 }
 
 function renderCard(r, index) {
+  const tier = getComputedTier(r);
   const donorHref = r.donorSlug.startsWith('http')
     ? r.donorSlug
     : `https://makeawishmichigan.donordrive.com/participants/${r.donorSlug}`;
@@ -2281,14 +2590,14 @@ function renderCard(r, index) {
   const total = RIDERS.length;
 
   return `
-  <div class="tcard-wrap" data-tier="${r.tier}" data-name="${r.name.toLowerCase()}" data-id="${r.id}">
+  <div class="tcard-wrap" data-tier="${tier}" data-name="${r.name.toLowerCase()}" data-id="${r.id}">
     <div class="tcard-inner">
 
       <!-- FRONT -->
       <div class="tcard-front">
         <div class="tcard-topbar">
           <span class="tcard-num">#${num}/${total}</span>
-          <span class="tcard-tier-badge">${TIER_LABELS[r.tier]}</span>
+          <span class="tcard-tier-badge">${TIER_LABELS[tier]}</span>
         </div>
         <div class="tcard-edition">2026 Edition</div>
         <div class="tcard-tap-top">Tap to Flip →</div>
@@ -2298,7 +2607,7 @@ function renderCard(r, index) {
         </div>
 
         <div class="tcard-body">
-          <div class="tcard-nickname">${r.nickname}</div>
+          <div class="tcard-nickname">"${r.nickname}"</div>
           <div class="tcard-name">${r.name}</div>
 
           <div class="tcard-stats" data-rider-id="${r.id}">
@@ -2339,7 +2648,7 @@ function renderCard(r, index) {
       <!-- BACK -->
       <div class="tcard-back">
         <div class="tcard-back-header" style="position:relative;z-index:1;">
-          <div class="tcard-back-title">${r.nickname}<br><span style="font-family:'DM Sans',sans-serif;font-size:13.5px;color:rgba(26,14,43,0.5);font-weight:500;">${r.name}</span></div>
+          <div class="tcard-back-title"><span style="font-style:italic;">"${r.nickname}"</span><br><span style="font-family:'DM Sans',sans-serif;font-size:13.5px;color:rgba(26,14,43,0.5);font-weight:500;">${r.name}</span></div>
           <div class="tcard-back-wam">WAM Year${r.years > 1 ? 's' : ''}<br>${r.years}</div>
         </div>
 
@@ -2354,7 +2663,7 @@ function renderCard(r, index) {
 
         <div class="tcard-back-footer" style="position:relative;z-index:1;">
           <a class="tcard-donate-btn" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💙 Donate</a>
-          <button class="tcard-share-btn" onclick="shareCard(event, '${r.name}', '${r.nickname}')" title="Share this card">🔗</button>
+          <button class="tcard-share-btn" onclick="shareCard(event, ${r.id})" title="Share this rider (counts toward Grit for you on this device)">🔗</button>
           <span class="tcard-back-num">🎵 ${r.song}</span>
         </div>
       </div>
@@ -2377,7 +2686,7 @@ function renderAll(filter, query) {
   const q = (query || '').toLowerCase().trim();
 
   let filtered = RIDERS.filter(r => {
-    const matchesTier = filter === 'all' || r.tier === filter;
+    const matchesTier = filter === 'all' || getComputedTier(r) === filter;
     const matchesQuery = !q || r.name.toLowerCase().includes(q) || r.nickname.toLowerCase().includes(q);
     return matchesTier && matchesQuery;
   });
@@ -2389,6 +2698,13 @@ function renderAll(filter, query) {
       const bRaised = (_fundMap[b.name.toLowerCase()] || {}).sumDonations || 0;
       return bRaised - aRaised;
     });
+  } else {
+    // Default ordering requested: Legend -> Veteran -> Rider -> Rookie
+    filtered = [...filtered].sort((a, b) => {
+      const tierDiff = (TIER_ORDER[getComputedTier(a)] ?? 99) - (TIER_ORDER[getComputedTier(b)] ?? 99);
+      if (tierDiff !== 0) return tierDiff;
+      return a.name.localeCompare(b.name);
+    });
   }
 
   if (filtered.length === 0) {
@@ -2396,7 +2712,7 @@ function renderAll(filter, query) {
     return;
   }
 
-  grid.innerHTML = filtered.map((r, i) => renderCard(r, RIDERS.indexOf(r))).join('');
+  grid.innerHTML = filtered.map((r, i) => renderCard(r, i)).join('');
 
   // Wire grid cards: click = open modal; tilt + shimmer stay
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
@@ -2427,6 +2743,29 @@ function renderAll(filter, query) {
 const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 let _photoMap = {};
 let _fundMap  = {};
+let _modalScrollHandler = null;
+
+function shareRiderCard(rider) {
+  if (!rider) return;
+  const donorHref = rider.donorSlug.startsWith('http')
+    ? rider.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}`;
+  const text = `Can you support ${rider.nickname} (${rider.name}) and help grant wishes through Make-A-Wish Michigan? Donate here: ${donorHref}`;
+  const onShared = () => tgtRecordRiderShare(rider.id);
+  if (navigator.share) {
+    navigator.share({
+      title: `Support ${rider.nickname}`,
+      text,
+      url: donorHref
+    }).then(onShared).catch(() => {});
+    return;
+  }
+  tgtRecordRiderShare(rider.id);
+  const smsBody = encodeURIComponent(text);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const smsUrl = isIOS ? `sms:&body=${smsBody}` : `sms:?body=${smsBody}`;
+  window.location.href = smsUrl;
+}
 
 function openModal(riderId, triggerEvent) {
   const rider = RIDERS.find(r => r.id === riderId);
@@ -2443,6 +2782,31 @@ function openModal(riderId, triggerEvent) {
   const modalCard  = slot.querySelector('.tcard-wrap');
   const modalInner = slot.querySelector('.tcard-inner');
   modalCard.classList.add('modal-open-view');
+  modalCard.classList.add('flipped');
+  const modalEl = document.getElementById('cardModal');
+  const shareFab = document.getElementById('cardShareFab');
+  const shareRail = document.getElementById('modalShareRail');
+
+  function syncShareFab() {
+    if (!modalEl) return;
+    const scrolled = modalEl.scrollTop > 60;
+    const flipped = modalCard.classList.contains('flipped');
+    const on = scrolled && !flipped;
+    if (shareRail) {
+      shareRail.classList.toggle('show', on);
+      shareRail.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+  }
+
+  if (shareFab) {
+    shareFab.onclick = (e) => {
+      e.stopPropagation();
+      shareRiderCard(rider);
+    };
+  }
+  if (modalEl && _modalScrollHandler) modalEl.removeEventListener('scroll', _modalScrollHandler);
+  _modalScrollHandler = syncShareFab;
+  if (modalEl) modalEl.addEventListener('scroll', _modalScrollHandler, { passive: true });
 
   // Wire flip inside modal (+ confetti + discovered)
   modalCard.addEventListener('click', e => {
@@ -2450,6 +2814,21 @@ function openModal(riderId, triggerEvent) {
     const wasFlipped = modalCard.classList.contains('flipped');
     modalCard.classList.toggle('flipped');
     modalInner.style.transform = '';
+
+    /* Back → front: card height drops a lot while scroll position stays put, so only a sliver of
+       the face stays visible with a huge gap. Reset modal scroll once layout has settled. */
+    if (wasFlipped && modalEl) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          modalEl.scrollTop = 0;
+          const cardSlot = document.getElementById('modalCardSlot');
+          if (cardSlot) cardSlot.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
+          syncShareFab();
+        });
+      });
+    } else {
+      syncShareFab();
+    }
 
     // Discovered counter
     const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
@@ -2500,23 +2879,22 @@ function openModal(riderId, triggerEvent) {
     const bio = modalCard.querySelector('.tcard-back-bio');
     if (bio) {
       const div = document.createElement('div');
-      div.style.cssText = 'margin-bottom:8px;position:relative;z-index:1;';
+      div.className = 'tcard-back-raised';
       div.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-          <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
-          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${Math.round(raised).toLocaleString()}</span>
+        <div class="tcard-back-raised-top">
+          <span class="tcard-back-raised-label">Raised</span>
+          <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
         </div>
-        <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
-          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;"></div>
-        </div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>`;
+        <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
+        <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>`;
       bio.parentNode.insertBefore(div, bio);
     }
   }
 
   // Build panel with full rider profile
   const cs = computeStats(rider, _fundMap);
-  const tierLabel = { legend:'Legend',veteran:'Veteran',rider:'Rider',rookie:'Rookie' }[rider.tier] || rider.tier;
+  const riderTier = getComputedTier(rider);
+  const tierLabel = TIER_LABELS[riderTier] || riderTier;
   const wishBadge = cs.isWishGranter ? '<span class="modal-wish-granter-badge">⚡ Wish Granter</span>' : '';
   const badgesHTML = rider.badges.map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
 
@@ -2535,7 +2913,7 @@ function openModal(riderId, triggerEvent) {
 
   document.getElementById('modalPanel').innerHTML = `
     <div class="modal-rider-header">
-      <div class="modal-rider-nickname">${rider.nickname}</div>
+      <div class="modal-rider-nickname">"${rider.nickname}"</div>
       <div class="modal-rider-name">${rider.name}</div>
       <div class="modal-rider-meta">
         <span>${tierLabel} · ${rider.years} WAM Year${rider.years !== 1 ? 's' : ''}</span>
@@ -2579,10 +2957,22 @@ function openModal(riderId, triggerEvent) {
 
   document.getElementById('cardModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  if (modalEl) modalEl.scrollTop = 0;
+  syncShareFab();
 }
 
 function closeModal() {
-  document.getElementById('cardModal').style.display = 'none';
+  const modalEl = document.getElementById('cardModal');
+  const shareRail = document.getElementById('modalShareRail');
+  if (modalEl && _modalScrollHandler) {
+    modalEl.removeEventListener('scroll', _modalScrollHandler);
+    _modalScrollHandler = null;
+  }
+  if (shareRail) {
+    shareRail.classList.remove('show');
+    shareRail.setAttribute('aria-hidden', 'true');
+  }
+  modalEl.style.display = 'none';
   document.body.style.overflow = '';
 }
 
@@ -2617,14 +3007,19 @@ function burstConfetti(cx, cy) {
 /* ══════════════════════════════════════
    SHARE CARD
 ══════════════════════════════════════ */
-function shareCard(e, name, nickname) {
+function shareCard(e, riderId) {
   e.stopPropagation();
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const { name, nickname } = rider;
   const text = `${nickname} (${name}) — a Wish Hero riding 300 miles for Make-A-Wish Michigan with The Grateful Team 🚲💙`;
   const url = window.location.href.split('#')[0];
+  const onDone = () => tgtRecordRiderShare(riderId);
   if (navigator.share) {
-    navigator.share({ title: `TGT Rider Card: ${nickname}`, text, url }).catch(() => {});
+    navigator.share({ title: `TGT Rider Card: ${nickname}`, text, url }).then(onDone).catch(() => {});
   } else {
     navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+      onDone();
       const btn = e.currentTarget;
       const orig = btn.textContent;
       btn.textContent = '✓';
@@ -2699,6 +3094,9 @@ fetchParticipantsLiveFirst()
     const photoMap = _photoMap;
     const fundMap  = _fundMap;
 
+    /* Re-render the full grid so all four stat bars match live goal/raised (not only after opening a card). */
+    renderAll(currentFilter, currentQuery);
+
     document.querySelectorAll('.tcard-wrap').forEach(wrap => {
       const riderId = parseInt(wrap.dataset.id);
       const rider = RIDERS.find(r => r.id === riderId);
@@ -2732,22 +3130,17 @@ fetchParticipantsLiveFirst()
       const bio = wrap.querySelector('.tcard-back-bio');
       if (!bio || raised <= 0) return;
       const div = document.createElement('div');
-      div.style.cssText = 'margin-bottom:8px;position:relative;z-index:1;';
+      div.className = 'tcard-back-raised';
       div.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-          <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
-          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${Math.round(raised).toLocaleString()}</span>
+        <div class="tcard-back-raised-top">
+          <span class="tcard-back-raised-label">Raised</span>
+          <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
         </div>
-        <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
-          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;"></div>
-        </div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
+        <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
+        <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
       `;
       bio.parentNode.insertBefore(div, bio);
     });
-
-    // If sort-by-raised is active, re-render now that we have fund data
-    if (_sortByRaised) renderAll(currentFilter, currentQuery);
   })
   .catch(() => {}); // graceful fallback
 
