@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grateful Roster — Rider Trading Cards</title>
+  <meta name="description" content="51 riders. Every one a Wish Hero. Meet the people who ride 300 miles for Make-A-Wish Michigan.">
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    /* ══════════════════════════════════════
+       ROSTER PAGE — TRADING CARD STYLES
+    ══════════════════════════════════════ */
+
+    /* Hero */
+    .roster-hero {
+      background: var(--color-night-deep);
+      padding: clamp(56px, 10vw, 96px) 24px clamp(40px, 8vw, 72px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .roster-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 50%, rgba(90,30,138,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(4,178,202,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .roster-hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+    .roster-hero h1 {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      color: var(--color-gold);
+      margin: 0 0 16px;
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(249,241,8,0.3);
+    }
+    .roster-hero p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: rgba(250,246,232,0.75);
+      line-height: 1.65;
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+    .roster-hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: clamp(20px, 4vw, 48px);
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .roster-hero-stat { text-align: center; }
+    .roster-hero-stat-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--color-gold);
+      display: block;
+      line-height: 1;
+    }
+    .roster-hero-stat-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.5);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* Scrolling marquee */
+    .roster-marquee {
+      background: var(--color-gold);
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .roster-marquee-track {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-night);
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Controls */
+    .roster-controls {
+      background: var(--color-night);
+      padding: 20px 24px;
+      position: sticky;
+      top: 64px;
+      z-index: 40;
+      border-bottom: 1px solid rgba(201,148,58,0.15);
+    }
+    .roster-controls-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(250,246,232,0.2);
+      background: transparent;
+      color: rgba(250,246,232,0.6);
+      cursor: pointer;
+      transition: all 150ms ease;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { border-color: rgba(249,241,8,0.5); color: var(--color-gold); }
+    .filter-btn.active { background: var(--color-gold); color: var(--color-night); border-color: var(--color-gold); }
+    .roster-search {
+      margin-left: auto;
+      background: rgba(250,246,232,0.08);
+      border: 1.5px solid rgba(250,246,232,0.15);
+      border-radius: 20px;
+      padding: 7px 16px;
+      color: var(--color-cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      width: 180px;
+      outline: none;
+      transition: border-color 150ms ease, width 200ms ease;
+    }
+    .roster-search:focus { border-color: rgba(249,241,8,0.4); width: 220px; }
+    .roster-search::placeholder { color: rgba(250,246,232,0.35); }
+
+    /* Card grid */
+    .roster-grid-wrap {
+      background: var(--color-night);
+      padding: clamp(32px, 5vw, 56px) 24px;
+      min-height: 400px;
+    }
+    .roster-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    /* THE CARD */
+    .tcard-wrap {
+      perspective: 1200px;
+      height: 380px;
+      cursor: pointer;
+    }
+    .tcard-wrap.hidden { display: none; }
+    .tcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+      border-radius: 14px;
+    }
+    .tcard-wrap.flipped .tcard-inner { transform: rotateY(180deg); }
+    .tcard-front, .tcard-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+    }
+
+    /* Tier colors */
+    .tcard-wrap[data-tier="legend"] .tcard-front { border: 2.5px solid var(--color-gold); }
+    .tcard-wrap[data-tier="veteran"] .tcard-front { border: 2.5px solid var(--color-purple-light); }
+    .tcard-wrap[data-tier="rider"] .tcard-front { border: 2.5px solid var(--color-cerulean); }
+    .tcard-wrap[data-tier="rookie"] .tcard-front { border: 2.5px solid rgba(250,246,232,0.3); }
+    .tcard-back { border: 2px solid rgba(201,148,58,0.2); }
+
+    /* Card front */
+    .tcard-front {
+      background: linear-gradient(160deg, #1a0826 0%, #0e0618 60%, #150a22 100%);
+      display: flex;
+      flex-direction: column;
+    }
+    /* Holographic shimmer layer */
+    .tcard-front::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(249,241,8,0.04) 20%,
+        rgba(90,30,138,0.06) 40%,
+        rgba(4,178,202,0.05) 60%,
+        transparent 80%
+      );
+      background-size: 300% 300%;
+      animation: holo-drift 6s ease infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes holo-drift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .tcard-wrap[data-tier="legend"] .tcard-front::before {
+      background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(249,241,8,0.12) 20%,
+        rgba(232,98,26,0.08) 40%,
+        rgba(249,241,8,0.10) 60%,
+        rgba(4,178,202,0.06) 80%,
+        transparent 100%
+      );
+      background-size: 300% 300%;
+      animation: holo-legend 4s ease infinite;
+    }
+    @keyframes holo-legend {
+      0%, 100% { background-position: 0% 0%; opacity: 0.7; }
+      50% { background-position: 100% 100%; opacity: 1; }
+    }
+
+    /* Card top bar */
+    .tcard-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .tcard-num {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.35);
+    }
+    .tcard-tier-badge {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    [data-tier="legend"] .tcard-tier-badge { background: var(--color-gold); color: var(--color-night); }
+    [data-tier="veteran"] .tcard-tier-badge { background: var(--color-purple-light); color: #fff; }
+    [data-tier="rider"] .tcard-tier-badge { background: var(--color-cerulean); color: var(--color-night); }
+    [data-tier="rookie"] .tcard-tier-badge { background: rgba(250,246,232,0.15); color: rgba(250,246,232,0.7); }
+
+    /* Avatar ring */
+    .tcard-avatar-area {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0 10px;
+      position: relative;
+      z-index: 2;
+    }
+    .tcard-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Abril Fatface', serif;
+      font-size: 26px;
+      color: var(--color-night);
+      position: relative;
+      flex-shrink: 0;
+    }
+    [data-tier="legend"] .tcard-avatar { background: linear-gradient(135deg, var(--color-gold) 0%, #e8a500 100%); box-shadow: 0 0 20px rgba(249,241,8,0.4); }
+    [data-tier="veteran"] .tcard-avatar { background: linear-gradient(135deg, var(--color-purple-light) 0%, var(--color-purple) 100%); color: #fff; box-shadow: 0 0 16px rgba(123,59,177,0.4); }
+    [data-tier="rider"] .tcard-avatar { background: linear-gradient(135deg, var(--color-cerulean) 0%, #0390a5 100%); box-shadow: 0 0 16px rgba(4,178,202,0.3); }
+    [data-tier="rookie"] .tcard-avatar { background: rgba(250,246,232,0.12); color: var(--color-cream); border: 2px solid rgba(250,246,232,0.2); }
+
+    /* Card body text */
+    .tcard-body {
+      padding: 0 14px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tcard-nickname {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      color: var(--color-cream);
+      line-height: 1.15;
+      margin: 0 0 4px;
+    }
+    [data-tier="legend"] .tcard-nickname { color: var(--color-gold); }
+    .tcard-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(250,246,232,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 12px;
+    }
+
+    /* Stats */
+    .tcard-stats { margin: 0 0 10px; }
+    .tcard-stat-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+    .tcard-stat-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,232,0.4);
+      width: 36px;
+      flex-shrink: 0;
+    }
+    .tcard-stat-bar {
+      flex: 1;
+      height: 5px;
+      background: rgba(250,246,232,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .tcard-stat-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [data-tier="legend"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-orange) 0%, var(--color-gold) 100%); }
+    [data-tier="veteran"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-purple) 0%, var(--color-purple-light) 100%); }
+    [data-tier="rider"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-cerulean-dark) 0%, var(--color-cerulean) 100%); }
+    [data-tier="rookie"] .tcard-stat-fill { background: rgba(250,246,232,0.3); }
+    .tcard-stat-num {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8px;
+      font-weight: 700;
+      color: rgba(250,246,232,0.35);
+      width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Song */
+    .tcard-song {
+      margin-top: auto;
+      padding: 8px 0 4px;
+      font-family: 'Josefin Slab', serif;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,232,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .tcard-song span { color: rgba(250,246,232,0.55); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 10px; }
+
+    /* Badges row */
+    .tcard-badges {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 0 10px;
+    }
+    .tcard-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(250,246,232,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      position: relative;
+      cursor: default;
+    }
+    .tcard-badge[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-night);
+      border: 1px solid rgba(201,148,58,0.3);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: var(--color-cream);
+      white-space: nowrap;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* WISH HERO stamp */
+    .tcard-stamp {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(249,241,8,0.25);
+      text-align: center;
+      padding: 0 0 10px;
+      position: relative;
+      z-index: 2;
+    }
+    [data-tier="legend"] .tcard-stamp { color: rgba(249,241,8,0.5); }
+
+    /* CARD BACK */
+    .tcard-back {
+      background: linear-gradient(170deg, #faf6e8 0%, #f0e9d0 100%);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
+    .tcard-back-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(26,14,43,0.12);
+    }
+    .tcard-back-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: 0.95rem;
+      color: var(--color-night);
+      line-height: 1.2;
+    }
+    .tcard-back-wam {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-purple);
+      text-align: right;
+    }
+    .tcard-back-bio {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11.5px;
+      color: rgba(26,14,43,0.8);
+      line-height: 1.6;
+      flex: 1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
+    }
+    .tcard-back-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 10px 0 8px;
+    }
+    .tcard-back-badge {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 7px;
+      border-radius: 10px;
+      background: rgba(26,14,43,0.07);
+      color: rgba(26,14,43,0.6);
+    }
+    .tcard-back-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(26,14,43,0.1);
+    }
+    .tcard-donate-btn {
+      flex: 1;
+      background: var(--color-purple);
+      color: #fff;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 150ms;
+    }
+    .tcard-donate-btn:hover { background: var(--color-purple-light); }
+    .tcard-back-num {
+      font-family: 'Josefin Slab', serif;
+      font-size: 9px;
+      color: rgba(26,14,43,0.3);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    /* flip hint */
+    .tcard-flip-hint {
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      color: rgba(250,246,232,0.25);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Hover tilt effect */
+    .tcard-wrap { transition: transform 0.1s ease; }
+
+    /* Empty state */
+    .roster-empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: rgba(250,246,232,0.4);
+      font-family: 'DM Sans', sans-serif;
+      grid-column: 1 / -1;
+    }
+
+    /* Section label */
+    .tier-section-label {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0;
+    }
+    .tier-section-label span {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(250,246,232,0.35);
+      white-space: nowrap;
+    }
+    .tier-section-line { flex: 1; height: 1px; background: rgba(201,148,58,0.15); }
+  </style>
+</head>
+
+<body>
+<div id="nav-slot"></div>
+
+<!-- HERO -->
+<section class="roster-hero">
+  <div class="roster-hero-inner">
+    <p class="eyebrow" style="color:var(--color-gold);margin:0 0 14px;">The Grateful Team · Make-A-Wish Michigan</p>
+    <h1>The Grateful<br>Roster</h1>
+    <p>Every rider earns their spot. Every dollar grants a wish. These are the Wish Heroes — 51 riders who show up every year to do something ridiculous and beautiful for kids who need a miracle.</p>
+    <div class="roster-hero-stats">
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">51</span>
+        <span class="roster-hero-stat-label">Riders</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">300</span>
+        <span class="roster-hero-stat-label">Miles · 3 Days</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">$114k</span>
+        <span class="roster-hero-stat-label">Raised in 2024</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">11</span>
+        <span class="roster-hero-stat-label">Wishes Granted</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="roster-marquee">
+  <span class="roster-marquee-track">
+    ⚡ FROM SPOKE TO HOPE &nbsp;·&nbsp; 🐻 WAM 300 MILES &nbsp;·&nbsp; 🌹 MAKE-A-WISH MICHIGAN &nbsp;·&nbsp; ⚡ 51 RIDERS ONE MISSION &nbsp;·&nbsp; 🎵 THE GRATEFUL TEAM &nbsp;·&nbsp; 💙 GRANTING WISHES &nbsp;·&nbsp; ⚡ FROM SPOKE TO HOPE &nbsp;·&nbsp; 🐻 WAM 300 MILES &nbsp;·&nbsp; 🌹 MAKE-A-WISH MICHIGAN &nbsp;·&nbsp; ⚡ 51 RIDERS ONE MISSION &nbsp;·&nbsp; 🎵 THE GRATEFUL TEAM &nbsp;·&nbsp; 💙 GRANTING WISHES &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- FILTER CONTROLS -->
+<div class="roster-controls">
+  <div class="roster-controls-inner">
+    <button class="filter-btn active" data-filter="all">All Riders</button>
+    <button class="filter-btn" data-filter="legend">⭐ Legends</button>
+    <button class="filter-btn" data-filter="veteran">🔥 Veterans</button>
+    <button class="filter-btn" data-filter="rider">🚴 Riders</button>
+    <button class="filter-btn" data-filter="rookie">🌱 Rookies</button>
+    <input class="roster-search" type="search" placeholder="Search riders…" id="rosterSearch" autocomplete="off">
+  </div>
+</div>
+
+<!-- CARD GRID -->
+<div class="roster-grid-wrap">
+  <div class="roster-grid" id="rosterGrid"></div>
+</div>
+
+<div id="footer-slot"></div>
+
+<script src="/assets/js/nav.js" defer></script>
+<script>
+/* ══════════════════════════════════════
+   RIDER DATA
+══════════════════════════════════════ */
+const RIDERS = [
+  {
+    id: 1,
+    name: "Brad Johnson",
+    nickname: "The Grateful Elder",
+    donorSlug: "4849",
+    tier: "legend",
+    years: 5,
+    song: "Friend of the Devil",
+    initials: "BJ",
+    bio: "The one we all measure ourselves against. Before Brad came along, there was a benchmark. Then Brad showed up and reset the entire scale. Five years in and somehow still getting faster, still raising more. The Grateful Elder doesn't just ride — he sets the standard. If TGT had a Mount Rushmore, Brad's face is carved deepest. Grateful for everything. Owes no one anything. Gives it all anyway.",
+    funFact: "Referenced by the Instagram as the new gold standard of TGT riding — the rider Lauren Milligan was once measured against.",
+    badges: ["👑 Team Legend", "⚡ Pace Setter", "🏔️ Climber", "💰 Fundraising Force"],
+    stats: { watts: 10, heart: 9, vibe: 9, grit: 10 },
+  },
+  {
+    id: 2,
+    name: "Lauren Milligan",
+    nickname: "The Wattage Cottage",
+    donorSlug: "4906",
+    tier: "legend",
+    years: 4,
+    song: "The Music Never Stopped",
+    initials: "LM",
+    bio: "Spelled like the boys name. One of the best. The Wattage Cottage. The one — until Brad came around — that we would all measure a rider's strength against. Lauren is on his way to being as great at fundraising as he is at riding. It was Lauren who gave Luis his first bike tool and if we go all the way back, this is all his fault. Someone to always rely on. Good heart and a great teammate. His favorite Dead song is always changing. Whatever one is feeling the bluesiest.",
+    funFact: "Gave Luis his first bike tool. If you trace it all back — this guy is why TGT exists.",
+    badges: ["⚡ Watt Machine", "🔧 Wrench Gifter", "🌹 Heart of the Team", "🎵 Dead Head"],
+    stats: { watts: 9, heart: 8, vibe: 8, grit: 9 },
+  },
+  {
+    id: 3,
+    name: "Luis Vecchio",
+    nickname: "The Spoke Father",
+    donorSlug: "4818",
+    tier: "legend",
+    years: 5,
+    song: "The Other One",
+    initials: "LV",
+    bio: "The Spoke Father. The one who saw a group of people who liked bikes and music and thought — yeah, let's ride 300 miles for some kids. He was right. He's always right. If you need something — a training ride, a fundraising tip, a reason to get out of bed at 6am — text Luis. He'll pick up. Built this team from the ground up with nothing but a bike, a vision, and an absolutely irresponsible amount of optimism.",
+    funFact: "His phone number is publicly listed on the TGT website. He answers.",
+    badges: ["👑 Founder Energy", "📱 Always Available", "🌹 The Connector", "🚀 Mission Driver"],
+    stats: { watts: 7, heart: 10, vibe: 10, grit: 9 },
+  },
+  {
+    id: 4,
+    name: "Jason Winchell",
+    nickname: "The Beacon",
+    donorSlug: "4956",
+    tier: "legend",
+    years: 4,
+    song: "Ripple",
+    initials: "JW",
+    bio: "Some people ride for a cause. Jason rides for a person — his son Jeremiah, a wish kid who left a mark on everyone he touched. Jason shows up every year not just to pedal but to carry something sacred across the finish line. He leads by example, quietly and completely. If you're having a hard day on the road, find Jason — he'll remind you exactly why you're out there.",
+    funFact: "His son Jeremiah was a Make-A-Wish kid. The team rides with Jeremiah's spirit on every tour.",
+    badges: ["💙 Wish Family", "🕊️ Riding for Jeremiah", "🌹 Heart of Gold", "🏁 Always Finishes"],
+    stats: { watts: 8, heart: 10, vibe: 9, grit: 10 },
+  },
+  {
+    id: 5,
+    name: "Charlie Wondergem",
+    nickname: "The Bear Hug",
+    donorSlug: "4888",
+    tier: "veteran",
+    years: 3,
+    song: "Brokedown Palace",
+    initials: "CW",
+    bio: "Charlie carries his brother Billy everywhere he rides. Billy Wondergem — brilliant young scientist, hockey player, aspiring pediatric oncologist — left behind a legacy that Charlie keeps alive through the Billy Bear Hug Foundation, which has delivered stuffed animals to hundreds of kids facing hardship. That's who Charlie is: someone who turns grief into gifts. One of the warmest riders on the team and that's saying something.",
+    funFact: "Founded the Billy Bear Hug Foundation in memory of his brother Billy. TGT showed up for the Teddy Bear Toss at GR Griffins for this cause.",
+    badges: ["🧸 Billy Bear Hug", "💙 Wish Heart", "🌹 Team Soul", "🤘 OG Rider"],
+    stats: { watts: 7, heart: 10, vibe: 9, grit: 8 },
+  },
+  {
+    id: 6,
+    name: "Benjamin Kulczewski",
+    nickname: "The Golden Gate",
+    donorSlug: "4940",
+    tier: "veteran",
+    years: 3,
+    song: "Truckin'",
+    initials: "BK",
+    bio: "If this team had a frequent flyer program, Ben would have status. The dude literally went to San Francisco and sent greetings back to Bobby — because that's just Ben. Always moving, always exploring, always showing up where you least expect him. The Golden Gate. West Michigan's bridge to everywhere else. Fundraiser, adventurer, and one of those guys who makes every group ride feel like a field trip.",
+    funFact: "Made it all the way to the Golden Gate Bridge and still repped TGT the whole time.",
+    badges: ["✈️ World Traveler", "🌉 Golden Gate", "🚴 Adventure Rider", "💰 Fundraiser"],
+    stats: { watts: 7, heart: 8, vibe: 9, grit: 8 },
+  },
+  {
+    id: 7,
+    name: "Caleb Agar",
+    nickname: "The Torchbearer",
+    donorSlug: "CalebAgar",
+    tier: "rider",
+    years: 2,
+    song: "He's Gone",
+    initials: "CA",
+    bio: "Three seasons ago his dad Jason dove headfirst into TGT — not because someone asked him, but because that's how Jason did everything. When TGT lost Jason to pancreatic cancer, the team lost a quiet, unglamorous force who showed up without being asked and made everything an adventure. Now Caleb carries the torch. He shows up every year and rides with something extra in the tank. This one's for you, Jason.",
+    funFact: "Rides in honor of his father Jason Agar, who passed from pancreatic cancer and was a beloved TGT founding member.",
+    badges: ["🕯️ Torchbearer", "💙 In Memory of Jason", "🌹 Family First", "🤘 All Heart"],
+    stats: { watts: 7, heart: 10, vibe: 8, grit: 10 },
+  },
+  {
+    id: 8,
+    name: "Lauren Froman",
+    nickname: "Lo-Fro",
+    donorSlug: "4821",
+    tier: "veteran",
+    years: 3,
+    song: "Shakedown Street",
+    initials: "LF",
+    bio: "Lo-Fro. The fire starter. One of the earliest believers — someone who was all in before 'all in' was even on the table. If this team has an igniter, it's Lauren Froman. The kind of teammate who makes you want to train harder just because of how they show up. Good vibes, serious legs, and a commitment to the mission that doesn't waver. Lo-Fro doesn't make excuses. Lo-Fro makes miles.",
+    funFact: "Instagram handle @lofro54. Credited in the team's early posts for 'igniting the fire' of TGT.",
+    badges: ["🔥 Fire Starter", "🤘 OG Supporter", "🚴 Training Grinder", "💛 All In"],
+    stats: { watts: 8, heart: 9, vibe: 9, grit: 8 },
+  },
+  {
+    id: 9,
+    name: "Jackson Maitner",
+    nickname: "The Road Scholar",
+    donorSlug: "4941",
+    tier: "rider",
+    years: 2,
+    song: "Eyes of the World",
+    initials: "JM",
+    bio: "The Road Scholar. Rider, thinker, and one of those people who shows up to every group ride with way more questions than they started with — and way more miles in the legs by the end. Doesn't just ride the road, reads it. Has a gift for seeing what matters and a motor that keeps going well past the point where most people would've pulled over. Eyes wide open, all the way to the finish.",
+    funFact: "You're reading his website right now. The meta is not lost on him.",
+    badges: ["📚 Road Scholar", "🔍 Eyes Open", "🚴 Solid Legs", "💙 Mission Believer"],
+    stats: { watts: 7, heart: 8, vibe: 8, grit: 8 },
+  },
+  {
+    id: 10,
+    name: "Nate Milanowski",
+    nickname: "Nate the Great",
+    donorSlug: "4946",
+    tier: "rider",
+    years: 2,
+    song: "Casey Jones",
+    initials: "NM",
+    bio: "Nate the Great. The name says it. Doesn't overthink it — just shows up, grinds it out, and somehow makes the suffering look optional. The kind of rider who turns a hill into a conversation starter and a headwind into a personal challenge. High motor. Good wheel to follow. Better human.",
+    funFact: "One half of the legendary Milanowski duo — the other half being brother Nicholas.",
+    badges: ["💪 High Motor", "🏔️ Hill Goat", "🤝 Great Teammate", "🚴 Always Shows Up"],
+    stats: { watts: 8, heart: 7, vibe: 8, grit: 9 },
+  },
+  {
+    id: 11,
+    name: "Nicholas Milanowski",
+    nickname: "The Other Nate",
+    donorSlug: "4853",
+    tier: "rider",
+    years: 2,
+    song: "Sugar Magnolia",
+    initials: "NM",
+    bio: "Brother to Nate. Peer to legends. Nicholas brings his own flavor to every ride — and yes, having the same last name as the guy listed one card over makes roll call interesting. If you're calling out Milanowski on the road, you better specify. This one keeps up just fine on his own. Smooth rider, solid fundraiser, and genuinely a delight to have in the group.",
+    funFact: "Part of the Milanowski sibling tandem. Twice the Milanowskis, double the watts.",
+    badges: ["👬 Sibling Duo", "🎶 Smooth Rider", "💰 Fundraiser", "🌈 Good Vibes"],
+    stats: { watts: 7, heart: 7, vibe: 9, grit: 8 },
+  },
+  {
+    id: 12,
+    name: "Ally Austin",
+    nickname: "All-In Ally",
+    donorSlug: "4841",
+    tier: "veteran",
+    years: 3,
+    song: "Scarlet Begonias",
+    initials: "AA",
+    bio: "Ally doesn't do halfway. All-In Ally is exactly what it sounds like: someone who commits so fully to the mission, the training, and the team that it makes the rest of us reassess our life choices. The Grateful Girlies wouldn't be the Grateful Girlies without this energy. Shows up. Stays up. Raises up.",
+    funFact: "A cornerstone of the Grateful Girlies crew — the women's faction of TGT that is absolutely not to be underestimated.",
+    badges: ["💪 All In", "🌸 Grateful Girlie", "🔥 Committed", "💙 Mission First"],
+    stats: { watts: 7, heart: 9, vibe: 9, grit: 8 },
+  },
+  {
+    id: 13,
+    name: "Stanislaw Krzyzanowski",
+    nickname: "The Dark Star",
+    donorSlug: "5121",
+    tier: "rookie",
+    years: 1,
+    song: "Dark Star",
+    initials: "SK",
+    bio: "The name alone deserves a trading card. Stan K. — a name so powerful autocorrect gives up, a rider who doesn't. The Dark Star. New to the WAM, already making an impression. There's something about riding 300 miles next to someone named Stanislaw Krzyzanowski that just feels like the universe is speaking to you. He's a blast. Go ride with him.",
+    funFact: "His last name has caused at least one group chat phone to autocorrect into complete gibberish. Worth it.",
+    badges: ["⭐ Dark Star", "🌱 WAM Rookie", "💪 Strong Debut", "🤣 Best Name Award"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 7 },
+  },
+  {
+    id: 14,
+    name: "Mary Tabanguil",
+    nickname: "The Heart",
+    donorSlug: "Mary-T",
+    tier: "rider",
+    years: 2,
+    song: "Althea",
+    initials: "MT",
+    bio: "Mary is the soul in the room. The Heart. When the ride gets hard and the miles pile up, some people dig into fitness and some dig into something else entirely — Mary digs into why. And the why is always crystal clear for her. That clarity carries people further than watts ever could. The kind of rider who makes the whole team feel the mission.",
+    funFact: "Brings a unique warmth to every event that somehow makes the hard miles easier.",
+    badges: ["❤️ Heart of It All", "💙 Why We Ride", "🌹 Soul Rider", "🙏 Mission Driven"],
+    stats: { watts: 6, heart: 10, vibe: 9, grit: 8 },
+  },
+  {
+    id: 15,
+    name: "Robert Grooters",
+    nickname: "Groot",
+    donorSlug: "5129",
+    tier: "rookie",
+    years: 1,
+    song: "Bertha",
+    initials: "RG",
+    bio: "Groot. It writes itself. Big presence, quiet strength, and a last name that doubles as a Marvel character. We are Groot. Specifically, we are Groot on a bike, riding 300 miles for kids who need a wish. New to the WAM and already fitting right in — which is exactly what Groot does.",
+    funFact: "The nickname chose itself. No notes.",
+    badges: ["🌱 WAM Rookie", "🌳 Groot Energy", "💪 Strong Debut", "🤝 Team Player"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 7 },
+  },
+  {
+    id: 16,
+    name: "Anthony Lazzaro",
+    nickname: "The Laz",
+    donorSlug: "4851",
+    tier: "veteran",
+    years: 3,
+    song: "St. Stephen",
+    initials: "AL",
+    bio: "The Laz. Dependable, focused, and the kind of rider who quietly racks up miles while everyone else is still talking about racking up miles. A veteran presence on the team who brings consistency to every ride. If you're building a long-day breakaway group and you want someone who will actually be there at mile 80, call The Laz.",
+    funFact: "Has the quiet confidence of someone who has definitely done this before.",
+    badges: ["🏅 Veteran Rider", "🔒 Reliable", "🚴 Miles Banker", "💪 Steady Wheels"],
+    stats: { watts: 8, heart: 7, vibe: 7, grit: 9 },
+  },
+  {
+    id: 17,
+    name: "Lauren Sytsma",
+    nickname: "L-Syte",
+    donorSlug: "4963",
+    tier: "rider",
+    years: 2,
+    song: "Row Jimmy",
+    initials: "LS",
+    bio: "L-Syte. Composed. Capable. The kind of rider who looks effortless even when it absolutely isn't — which is the highest compliment in cycling. Lauren Sytsma shows up ready and leaves having earned it. A great presence in any pace line and an even better presence at the post-ride celebration.",
+    funFact: "Makes hard riding look easy. This is either talent, training, or both. Probably both.",
+    badges: ["😎 Cool Under Pressure", "🚴 Clean Form", "💙 Team Supporter", "🎉 Post-Ride MVP"],
+    stats: { watts: 7, heart: 8, vibe: 8, grit: 7 },
+  },
+  {
+    id: 18,
+    name: "Robert Schilling",
+    nickname: "Bob the Builder",
+    donorSlug: "Bob-Schilling-Make_a_Wish_page",
+    tier: "veteran",
+    years: 3,
+    song: "Box of Rain",
+    initials: "RS",
+    bio: "Bob the Builder. Can we fix it? Yes we can — and yes he will. The kind of person who shows up early, stays late, and does the work no one talks about but everyone benefits from. Bob builds things: endurance, fundraising totals, team culture. You can always count on him to show up and put in.",
+    funFact: "The kind of teammate who makes every group ride run smoother just by being there.",
+    badges: ["🔨 Builder Mentality", "⏰ Early Arrival", "💰 Fundraiser", "🤝 Reliable Wheel"],
+    stats: { watts: 7, heart: 8, vibe: 8, grit: 8 },
+  },
+  {
+    id: 19,
+    name: "Sarah Joos",
+    nickname: "The Juicer",
+    donorSlug: "5174",
+    tier: "rookie",
+    years: 1,
+    song: "Women Are Smarter",
+    initials: "SJ",
+    bio: "The Juicer — as in, she extracts every last drop out of every training ride, every fundraising ask, and every moment on the road. Brand new to the WAM and already squeezing maximum value out of every mile. Watch out for this one. She's going to make some veterans very nervous in very short order.",
+    funFact: "Rookie year, full send. That's the vibe.",
+    badges: ["🌱 WAM Rookie", "💥 Full Send", "💰 Fundraiser", "👀 One to Watch"],
+    stats: { watts: 7, heart: 8, vibe: 8, grit: 8 },
+  },
+  {
+    id: 20,
+    name: "Nakayla Kosmerick",
+    nickname: "NK",
+    donorSlug: "4830",
+    tier: "veteran",
+    years: 3,
+    song: "Estimated Prophet",
+    initials: "NK",
+    bio: "NK. Initials that hit like a jersey number — immediately recognizable, instantly respected. Nakayla brings an energy to the team that's hard to define but easy to feel: the kind of presence that lifts a group ride from a workout into something memorable. Three years in and the ceiling is still nowhere in sight.",
+    funFact: "The kind of nickname that just sticks. No explanation needed.",
+    badges: ["🌟 Team Spark", "🔥 Consistent Energy", "💪 Year Over Year", "💙 All Heart"],
+    stats: { watts: 7, heart: 8, vibe: 9, grit: 8 },
+  },
+  {
+    id: 21,
+    name: "Nate Conroy",
+    nickname: "The Conqueror",
+    donorSlug: "4978",
+    tier: "rider",
+    years: 2,
+    song: "Going Down the Road Feeling Bad",
+    initials: "NC",
+    bio: "The Conqueror. The name alone tells you what you're dealing with. Nate Conroy doesn't negotiate with hills — he just takes them. Doesn't check the weather forecast — just shows up and handles it. The kind of rider who makes the word 'can't' feel like a personal challenge. Going down the road? Nate's already at the top.",
+    funFact: "Has a personal vendetta against any hill that dares to have a grade above 5%.",
+    badges: ["⚔️ Conqueror", "🏔️ Hill Slayer", "💪 Road Warrior", "🤘 Never Quits"],
+    stats: { watts: 8, heart: 7, vibe: 8, grit: 9 },
+  },
+  {
+    id: 22,
+    name: "Lisa Marsh",
+    nickname: "The Marsh Queen",
+    donorSlug: "4820",
+    tier: "veteran",
+    years: 3,
+    song: "Dire Wolf",
+    initials: "LM",
+    bio: "The Marsh Queen. One of the earliest registered riders in TGT history — the low DonorDrive number doesn't lie. Lisa has been here since the beginning, building the foundation that makes this team what it is. Veteran presence, grounded energy, and the kind of quiet leadership that holds groups together when things get hard.",
+    funFact: "One of the earliest DonorDrive registrations on the team — a real OG.",
+    badges: ["👑 OG Rider", "🏅 Founding Energy", "💙 Team Pillar", "🌿 Grounded"],
+    stats: { watts: 7, heart: 9, vibe: 8, grit: 8 },
+  },
+  {
+    id: 23,
+    name: "Taylor Robson",
+    nickname: "T-Rob",
+    donorSlug: "5075",
+    tier: "rider",
+    years: 2,
+    song: "Touch of Grey",
+    initials: "TR",
+    bio: "T-Rob. Short, crisp, and to the point — which is exactly how Taylor rides. No wasted motion, no wasted energy, no wasted words. Gets in the pace line, does the work, gets out. Classic. The kind of rider you want at the front when things need to get serious and at the campfire when things need to get fun.",
+    funFact: "Nickname is so clean it might as well come on the jersey.",
+    badges: ["🎯 Efficient", "🔄 Pace Line Pro", "🤝 Team Rider", "🎉 Campfire Presence"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 7 },
+  },
+  {
+    id: 24,
+    name: "Cameron McGill",
+    nickname: "Cam Jam",
+    donorSlug: "Cameron-McGill-2026",
+    tier: "rider",
+    years: 2,
+    song: "Franklin's Tower",
+    initials: "CM",
+    bio: "Cam Jam. Could mean Cameron, could mean the cycling gear part, almost certainly means both. Either way, Cameron McGill makes things work — on the road, in the fundraising, in the group chat. The kind of rider who just fits. Slots into any pace, any conversation, any ride. Easy to ride with. Easy to root for.",
+    funFact: "The dual-meaning nickname came naturally. Cam Jam works on every level.",
+    badges: ["🎸 Cam Jam", "🔧 Mechanical Mind", "🚴 Pace Line Fitter", "💙 Team Glue"],
+    stats: { watts: 7, heart: 7, vibe: 9, grit: 7 },
+  },
+  {
+    id: 25,
+    name: "Ethan Pomfret",
+    nickname: "The Young Gun",
+    donorSlug: "Ethan-Pomfret",
+    tier: "rider",
+    years: 2,
+    song: "Black Muddy River",
+    initials: "EP",
+    bio: "The Young Gun. Rides alongside mom Elizabeth — which is either adorable or terrifying depending on whether he's the one setting the pace. Ethan brings youth, energy, and the kind of fearlessness that comes from not yet knowing you're supposed to be tired. The next generation of TGT is in good hands.",
+    funFact: "Part of the Pomfret family duo on the team with Elizabeth.",
+    badges: ["🔫 Young Gun", "👨‍👩‍👦 Family Rider", "⚡ Next Gen", "🚀 Upside"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 7 },
+  },
+  {
+    id: 26,
+    name: "Nathan Grenell",
+    nickname: "G-Nate",
+    donorSlug: "4899",
+    tier: "rider",
+    years: 2,
+    song: "Loser",
+    initials: "NG",
+    bio: "G-Nate. The elder Grenell. Rides with brother Justin — which is a power move in any cycling context. Doubles your chance of having someone to draft and doubles your chance of getting roasted at dinner. G-Nate brings the experience, the steady hand, and the stoic presence of someone who has seen some miles.",
+    funFact: "Part of the Grenell sibling pairing. Two Grenells for the price of one is simply good value.",
+    badges: ["👬 Sibling Duo", "🏅 Veteran Legs", "📐 Steady Rider", "💙 Trustworthy"],
+    stats: { watts: 7, heart: 7, vibe: 7, grit: 8 },
+  },
+  {
+    id: 27,
+    name: "Kiersten Schulte",
+    nickname: "The Compass",
+    donorSlug: "Kiersten-Schulte-2026",
+    tier: "rider",
+    years: 2,
+    song: "Stella Blue",
+    initials: "KS",
+    bio: "The Compass. Always knows where she's going and more importantly, why. Kiersten brings direction to every ride — literal and figurative. One of those riders who seems to know exactly what they're doing at mile 5 and still knows at mile 95. Follow the Compass. You won't end up in a ditch.",
+    funFact: "If the group is lost — physically or motivationally — Kiersten usually knows the way back.",
+    badges: ["🧭 The Compass", "🌟 Directional Energy", "💙 Consistent", "🚴 Steady"],
+    stats: { watts: 6, heart: 8, vibe: 8, grit: 8 },
+  },
+  {
+    id: 28,
+    name: "Justin Grenell",
+    nickname: "J-Grenell",
+    donorSlug: "Justin-Grenell",
+    tier: "rider",
+    years: 2,
+    song: "New Speedway Boogie",
+    initials: "JG",
+    bio: "J-Grenell. The younger Grenell (probably). Rides with brother Nathan, which means there's always someone to race to the next town sign and someone to blame when you miss a turn. Justin brings enthusiasm and legs. The sibling dynamic makes every group ride 40% more entertaining.",
+    funFact: "The Grenell brothers together are a whole mood on any training ride.",
+    badges: ["👬 Sibling Duo", "⚡ Fast Twitch", "🤣 Keeps It Fun", "🚴 Strong Legs"],
+    stats: { watts: 7, heart: 7, vibe: 9, grit: 7 },
+  },
+  {
+    id: 29,
+    name: "Andrew Kennedy",
+    nickname: "AK-47",
+    donorSlug: "4854",
+    tier: "veteran",
+    years: 3,
+    song: "Uncle John's Band",
+    initials: "AK",
+    bio: "AK-47. Initials that hit hard and a rider who backs it up. Andrew Kennedy has been a fixture in TGT long enough to know the rhythm — early registration, solid training, serious fundraising, full send on race day. The kind of veteran who makes rookies think it looks easy. It is not easy. Andrew just makes it look that way.",
+    funFact: "The initials AK combined with the number 47 were too perfect not to use. Sorry Andrew, not sorry.",
+    badges: ["💥 AK-47", "🏅 Veteran", "💰 Fundraiser", "⚡ High Output"],
+    stats: { watts: 8, heart: 8, vibe: 8, grit: 9 },
+  },
+  {
+    id: 30,
+    name: "Andy Oconnor",
+    nickname: "The Connector",
+    donorSlug: "5135",
+    tier: "rookie",
+    years: 1,
+    song: "Deal",
+    initials: "AO",
+    bio: "The Connector. Andy has a gift for making people feel like they already know each other — which is exactly the energy you need on a three-day bike tour with 50 strangers who become not-strangers very fast. First year on the WAM, already connecting dots. Watch this space.",
+    funFact: "The kind of person who introduces two people at mile 40 and they're still texting each other by mile 300.",
+    badges: ["🌱 WAM Rookie", "🤝 Super Connector", "💬 Social Glue", "👀 One to Watch"],
+    stats: { watts: 6, heart: 8, vibe: 9, grit: 7 },
+  },
+  {
+    id: 31,
+    name: "Cami Mastenbrook",
+    nickname: "The Cam Show",
+    donorSlug: "4880",
+    tier: "veteran",
+    years: 3,
+    song: "Sugaree",
+    initials: "CM",
+    bio: "The Cam Show. Every group has that person who brings the energy that makes the whole thing better — and at TGT, that's Cami. Three years deep and still bringing it like it's day one. Great rider, great fundraiser, and the kind of person who makes a 6am training ride feel like a reasonable life choice.",
+    funFact: "The nickname The Cam Show is earned. Every. Single. Year.",
+    badges: ["🎬 The Cam Show", "🔥 Energy Bringer", "🚴 Consistent Rider", "💙 Ride or Die"],
+    stats: { watts: 7, heart: 8, vibe: 9, grit: 8 },
+  },
+  {
+    id: 32,
+    name: "Cole Christians",
+    nickname: "The Cole Train",
+    donorSlug: "4950",
+    tier: "veteran",
+    years: 3,
+    song: "Fire on the Mountain",
+    initials: "CC",
+    bio: "The Cole Train. No brakes, no mercy, no reason to slow down. Cole Christians hits the road like a freight train — steady, powerful, and not particularly interested in stopping. Three years into TGT and the engine is still running hot. Get on the train or get out of the way.",
+    funFact: "The Cole Train is a one-way service. Destination: finish line.",
+    badges: ["🚂 Cole Train", "💪 Power Output", "🔥 Year 3 Fire", "⚡ No Brakes"],
+    stats: { watts: 8, heart: 7, vibe: 8, grit: 9 },
+  },
+  {
+    id: 33,
+    name: "Crystal Weller",
+    nickname: "Crystal Clear",
+    donorSlug: "Crystal-Weller",
+    tier: "rider",
+    years: 2,
+    song: "Crystal Blue Persuasion",
+    initials: "CW",
+    bio: "Crystal Clear. Transparent about the mission, clear on why she rides, and consistently delivering on both. Crystal Weller doesn't need convincing — she's already in. The kind of rider who makes fundraising look natural because to her, it is. She believes in this and it shows.",
+    funFact: "When Crystal asks for donations, people say yes. It's the Crystal Clear approach.",
+    badges: ["💎 Crystal Clear", "💙 Believer", "💰 Natural Fundraiser", "🌟 Bright Energy"],
+    stats: { watts: 6, heart: 9, vibe: 8, grit: 7 },
+  },
+  {
+    id: 34,
+    name: "David Dirksen",
+    nickname: "The Director",
+    donorSlug: "4883",
+    tier: "veteran",
+    years: 3,
+    song: "Passenger",
+    initials: "DD",
+    bio: "The Director. David has a vision for how things should go and the quiet authority to make them happen. Three years in and consistently one of those team members who just handles things — no drama, no ego, full execution. Whether it's logistics, pace-setting, or morale, The Director knows his role.",
+    funFact: "The kind of person every team needs and rarely talks about. He knows.",
+    badges: ["🎬 The Director", "📋 Logistics Pro", "🏅 Veteran", "🤝 Handles Business"],
+    stats: { watts: 7, heart: 7, vibe: 7, grit: 8 },
+  },
+  {
+    id: 35,
+    name: "Eli Luke",
+    nickname: "The Chosen One",
+    donorSlug: "5131",
+    tier: "rookie",
+    years: 1,
+    song: "Wharf Rat",
+    initials: "EL",
+    bio: "Eli Luke. The Chosen One. We're not saying there's destiny involved in riding 300 miles for Make-A-Wish — but Eli Luke makes it feel like maybe there is. First year on the WAM and already radiating that 'this is exactly where I'm supposed to be' energy. The Force is strong with this one.",
+    funFact: "The name Eli Luke practically demands a destiny-adjacent nickname. He leans into it.",
+    badges: ["⭐ The Chosen One", "🌱 WAM Rookie", "🔮 Big Future", "💙 Born For This"],
+    stats: { watts: 7, heart: 8, vibe: 8, grit: 7 },
+  },
+  {
+    id: 36,
+    name: "Elizabeth Pomfret",
+    nickname: "The Matriarch",
+    donorSlug: "4904",
+    tier: "veteran",
+    years: 3,
+    song: "China Cat Sunflower",
+    initials: "EP",
+    bio: "The Matriarch. Elizabeth Pomfret rides with her son Ethan, which means she is simultaneously a veteran presence and a living proof of concept that this sport is a family affair. Three years deep with the wisdom to match. The kind of rider who anchors the team in ways that go beyond watts.",
+    funFact: "Rides with son Ethan. The Pomfret family took 'family hobby' and said 'we're going 300 miles.'",
+    badges: ["👑 The Matriarch", "👨‍👩‍👦 Family Rider", "🏅 Veteran", "🌹 Team Anchor"],
+    stats: { watts: 6, heart: 9, vibe: 8, grit: 8 },
+  },
+  {
+    id: 37,
+    name: "Emma DiCello",
+    nickname: "The DiCello",
+    donorSlug: "Emma-DiCello",
+    tier: "rider",
+    years: 2,
+    song: "Brown-Eyed Women",
+    initials: "ED",
+    bio: "The DiCello. Some last names just carry their own gravity and Emma leans into hers — with warmth, with purpose, and with the kind of fundraising energy that makes her hard to say no to. A genuine presence in the Grateful Girlies crew and a rider who earns every mile.",
+    funFact: "The last name DiCello is too good not to be a callsign. Emma agreed.",
+    badges: ["🌸 Grateful Girlie", "💰 Fundraising Drive", "🤝 Good Energy", "🚴 Earned It"],
+    stats: { watts: 6, heart: 8, vibe: 8, grit: 7 },
+  },
+  {
+    id: 38,
+    name: "Georgina Hill",
+    nickname: "Queen of the Hill",
+    donorSlug: "5091",
+    tier: "rookie",
+    years: 1,
+    song: "Hills of Snow",
+    initials: "GH",
+    bio: "Queen of the Hill — because her last name was basically asking for it and her riding earns it. Georgina shows up to year one of the WAM with a last name that writes its own destiny. If there's a climb involved, consider it her moment. The Queen ascends.",
+    funFact: "Her last name is Hill. On a 300-mile bike ride. The universe was clearly planning this.",
+    badges: ["👑 Queen of the Hill", "🏔️ Climber DNA", "🌱 WAM Rookie", "⚡ Natural Fit"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 8 },
+  },
+  {
+    id: 39,
+    name: "Greta Orszula",
+    nickname: "The Great Greta",
+    donorSlug: "5049",
+    tier: "rider",
+    years: 2,
+    song: "Playing in the Band",
+    initials: "GO",
+    bio: "The Great Greta. Not a title she had to campaign for — just the natural result of showing up and being exactly as great as advertised. Greta Orszula rides with intention and fundraises with conviction. The kind of rider who makes every training ride feel like a performance and every WAM finish feel like a standing ovation.",
+    funFact: "Called 'Great' not because she asked, but because everyone else started saying it.",
+    badges: ["🎭 Great Greta", "🎵 In the Band", "💪 Performance Rider", "💙 Consistent"],
+    stats: { watts: 7, heart: 8, vibe: 9, grit: 7 },
+  },
+  {
+    id: 40,
+    name: "Jason Agar",
+    nickname: "The Blueprint",
+    donorSlug: "5071",
+    tier: "legend",
+    years: 3,
+    song: "Ripple",
+    initials: "JA",
+    bio: "Jason Agar dove headfirst into TGT three seasons ago — not because someone asked him, but because showing up without being asked was how he lived his whole life. He did the quiet, unglamorous work. Led by example. Turned everything into an adventure. Taught his children to love others by demonstrating it every single day. We lost Jason to pancreatic cancer. His son Caleb carries the torch. Jason was the blueprint.",
+    funFact: "TGT lost Jason to pancreatic cancer. His son Caleb now rides with the team in his honor. Forever in their hearts.",
+    badges: ["💙 Forever TGT", "🕊️ In Our Hearts", "🌹 The Blueprint", "✨ Always With Us"],
+    stats: { watts: 8, heart: 10, vibe: 10, grit: 10 },
+  },
+  {
+    id: 41,
+    name: "Jeffrey Steigerwald",
+    nickname: "The Steig",
+    donorSlug: "5120",
+    tier: "rookie",
+    years: 1,
+    song: "Samson and Delilah",
+    initials: "JS",
+    bio: "The Steig. Steigerwald is a name with power and Jeff channels it directly into the pedals. First year on the WAM, already arriving with the kind of conviction that suggests he's been thinking about this for longer than year one. The Steig is here and the Steig means business.",
+    funFact: "Steigerwald. Say it out loud. That's the energy he brings to every ride.",
+    badges: ["🌱 WAM Rookie", "💪 Conviction Rider", "⚡ Powerful Name", "🤝 Ready to Ride"],
+    stats: { watts: 7, heart: 7, vibe: 7, grit: 8 },
+  },
+  {
+    id: 42,
+    name: "Jess Mata",
+    nickname: "The Matador",
+    donorSlug: "5063",
+    tier: "rider",
+    years: 2,
+    song: "Lazy Lightnin'",
+    initials: "JM",
+    bio: "The Matador. Jess faces down every challenge on the road with the same calm defiance that defines the title. Headwind? Red cape. Long climb? Red cape. Someone suggesting a bonus hill at mile 250? Absolute red cape. The Matador doesn't flinch. The Matador charges.",
+    funFact: "Mata → Matador. The nickname arc is impeccable.",
+    badges: ["🎯 The Matador", "💪 Defiant Climber", "🔴 Red Cape Energy", "⚡ Never Blinks"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 9 },
+  },
+  {
+    id: 43,
+    name: "Jessica Barr",
+    nickname: "Bar None",
+    donorSlug: "5055",
+    tier: "rider",
+    years: 2,
+    song: "Dancin' in the Streets",
+    initials: "JB",
+    bio: "Bar None. Jessica Barr is, bar none, exactly the rider you want alongside you when things get hard. Cheerful, steady, and somehow always has enough energy left over to lift someone else's spirits when the road gets long. That's a rare combination. Bar None.",
+    funFact: "Barr → Bar None. The nickname is a statement of quality. Backed up every ride.",
+    badges: ["🥇 Bar None", "💛 Spirit Lifter", "🎉 Fun On Wheels", "💙 Team Boost"],
+    stats: { watts: 6, heart: 9, vibe: 9, grit: 7 },
+  },
+  {
+    id: 44,
+    name: "Nathan McGlinchey",
+    nickname: "McGlinch",
+    donorSlug: "4938",
+    tier: "veteran",
+    years: 3,
+    song: "Ramble On Rose",
+    initials: "NM",
+    bio: "McGlinch. One of those nicknames that feels right the moment it's said — like a cycling callsign that came pre-loaded. Nathan McGlinchey has been putting in years and miles with TGT and brings the veteran credibility to match. McGlinch knows the road. McGlinch knows the mission. McGlinch shows up.",
+    funFact: "McGlinchey → McGlinch. Four syllables → two. Efficiency on the bike and in the name.",
+    badges: ["🏅 Veteran", "🛣️ Road Knowledge", "💪 Consistent", "🤘 TGT Faithful"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 8 },
+  },
+  {
+    id: 45,
+    name: "Nathan Schilling",
+    nickname: "N-Shill",
+    donorSlug: "5123",
+    tier: "rookie",
+    years: 1,
+    song: "Mexicali Blues",
+    initials: "NS",
+    bio: "N-Shill. Fresh on the WAM, with a last name that follows a family tradition — Bob Schilling is already on the team, so the Schilling dynasty just got another member. N-Shill comes in with something to prove and a family legacy to uphold. First year. Full send.",
+    funFact: "Part of the Schilling family on TGT. Robert Schilling is also on the roster. The Schillings roll deep.",
+    badges: ["🌱 WAM Rookie", "👨‍👦 Schilling Dynasty", "💪 Full Send", "👀 One to Watch"],
+    stats: { watts: 7, heart: 7, vibe: 7, grit: 7 },
+  },
+  {
+    id: 46,
+    name: "Nick Carlisle",
+    nickname: "Nicky C",
+    donorSlug: "5082",
+    tier: "rider",
+    years: 2,
+    song: "Althea",
+    initials: "NC",
+    bio: "Nicky C. Easy to say, easy to like, easy to ride with. Nick Carlisle brings a smooth, low-drama presence to every group ride that functions as a kind of social lubricant — everything flows better when Nicky C is around. Solid rider, good wheel, even better teammate.",
+    funFact: "Nicky C is the kind of nickname that sounds like it's been around forever even if it just got assigned.",
+    badges: ["😎 Smooth Operator", "🤝 Easy Rider", "💙 Social Glue", "🚴 Clean Wheel"],
+    stats: { watts: 7, heart: 7, vibe: 9, grit: 7 },
+  },
+  {
+    id: 47,
+    name: "Quintanilla Solak",
+    nickname: "The Q",
+    donorSlug: "5115",
+    tier: "rookie",
+    years: 1,
+    song: "Terrapin Station",
+    initials: "QS",
+    bio: "The Q. As in: no further explanation needed. Quintanilla Solak walks into the room and The Q just makes sense. First year on the WAM and already one of the most memorable names on the roster — which is no small feat when you're competing with Stanislaw Krzyzanowski. The Q. Remember it.",
+    funFact: "The Q is the only single-letter nickname on the roster. Quintanilla earned it on name alone.",
+    badges: ["🌱 WAM Rookie", "⭐ Most Unique Name", "🎯 The Q", "🔮 Mysterious Energy"],
+    stats: { watts: 6, heart: 7, vibe: 8, grit: 7 },
+  },
+  {
+    id: 48,
+    name: "Ross Kraft",
+    nickname: "The Kraftsman",
+    donorSlug: "4953",
+    tier: "veteran",
+    years: 3,
+    song: "Cumberland Blues",
+    initials: "RK",
+    bio: "The Kraftsman. Ross Kraft approaches every ride like a craftsman approaches a project — with care, with precision, and with the understanding that corners are not for cutting. Three years of WAM experience have built a fine-tuned machine here. The Kraftsman's work is in the miles.",
+    funFact: "Kraft → Kraftsman. The wordplay was too clean. The rider backs it up.",
+    badges: ["🔨 The Craftsman", "📐 Precision Rider", "🏅 Veteran", "💪 Built Different"],
+    stats: { watts: 8, heart: 7, vibe: 7, grit: 9 },
+  },
+  {
+    id: 49,
+    name: "Taylor Hill",
+    nickname: "T-Hill",
+    donorSlug: "5089",
+    tier: "rookie",
+    years: 1,
+    song: "Mountains of the Moon",
+    initials: "TH",
+    bio: "T-Hill. Last name Hill on a cycling team is almost cosmically appropriate. Taylor Hill shows up for year one of the WAM and immediately has the most on-theme last name in the entire sport. Rookies don't usually arrive this perfectly labeled. Mountains of the Moon? T-Hill knows something about mountains.",
+    funFact: "Last name: Hill. Job: cycling 300 miles. The universe has a sense of humor and we respect it.",
+    badges: ["🏔️ Hill Namesake", "🌱 WAM Rookie", "⭐ Cosmic Fit", "💪 Ready to Climb"],
+    stats: { watts: 7, heart: 7, vibe: 8, grit: 8 },
+  },
+  {
+    id: 50,
+    name: "Teodoro Vecchio",
+    nickname: "Little Spokes",
+    donorSlug: "5125",
+    tier: "rookie",
+    years: 1,
+    song: "El Paso",
+    initials: "TV",
+    bio: "Little Spokes. The Vecchio name carries weight in TGT — Luis Vecchio is the Spoke Father and now Teodoro arrives to carry the family legacy forward. Whether that's father and son or uncle and nephew or cousins or something else entirely, one thing is clear: the Vecchios go deep on this team. Little Spokes is here and ready to roll.",
+    funFact: "The Vecchio name is TGT royalty. Teodoro arrives to continue the legacy.",
+    badges: ["🌱 WAM Rookie", "👨‍👦 Vecchio Legacy", "⚡ From Spoke to Hope", "🚀 Big Future"],
+    stats: { watts: 6, heart: 8, vibe: 8, grit: 7 },
+  },
+  {
+    id: 51,
+    name: "Anna Cook",
+    nickname: "The Cookie",
+    donorSlug: "5247",
+    tier: "rookie",
+    years: 1,
+    song: "Golden Road",
+    initials: "AC",
+    bio: "The Cookie. Brand new to TGT and bringing the sweetness — which is exactly what you want at the back of a pace line when things get hard and sugar becomes a strategy. Anna Cook shows up with a last name that practically demands dessert-adjacent branding and a mission focus that is anything but soft. Fresh-baked. Ready to roll.",
+    funFact: "Highest DonorDrive registration number on the team — the newest member of the roster. Welcome, Cookie.",
+    badges: ["🌱 Freshest Rookie", "🍪 The Cookie", "🌟 Golden Road", "💙 New Energy"],
+    stats: { watts: 6, heart: 7, vibe: 9, grit: 7 },
+  },
+];
+
+/* ══════════════════════════════════════
+   BADGE LOOKUP
+══════════════════════════════════════ */
+const TIER_LABELS = {
+  legend: "Legend",
+  veteran: "Veteran",
+  rider: "Rider",
+  rookie: "Rookie",
+};
+
+/* ══════════════════════════════════════
+   RENDER CARDS
+══════════════════════════════════════ */
+function statBar(val) {
+  return `<div class="tcard-stat-fill" style="width:${val * 10}%"></div>`;
+}
+
+function renderCard(r, index) {
+  const donorHref = r.donorSlug.startsWith('http')
+    ? r.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${r.donorSlug}`;
+
+  const badgeHTML = r.badges.map(b => {
+    const emoji = b.split(' ')[0];
+    const label = b.slice(b.indexOf(' ') + 1);
+    return `<span class="tcard-back-badge" title="${label}">${b}</span>`;
+  }).join('');
+
+  const num = String(index + 1).padStart(2, '0');
+  const total = RIDERS.length;
+
+  return `
+  <div class="tcard-wrap" data-tier="${r.tier}" data-name="${r.name.toLowerCase()}" data-id="${r.id}">
+    <div class="tcard-inner">
+
+      <!-- FRONT -->
+      <div class="tcard-front">
+        <div class="tcard-topbar">
+          <span class="tcard-num">#${num}/${total}</span>
+          <span class="tcard-tier-badge">${TIER_LABELS[r.tier]}</span>
+        </div>
+
+        <div class="tcard-avatar-area">
+          <div class="tcard-avatar">${r.initials}</div>
+        </div>
+
+        <div class="tcard-body">
+          <div class="tcard-nickname">${r.nickname}</div>
+          <div class="tcard-name">${r.name}</div>
+
+          <div class="tcard-stats">
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Watts</span>
+              <div class="tcard-stat-bar">${statBar(r.stats.watts)}</div>
+              <span class="tcard-stat-num">${r.stats.watts}/10</span>
+            </div>
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Heart</span>
+              <div class="tcard-stat-bar">${statBar(r.stats.heart)}</div>
+              <span class="tcard-stat-num">${r.stats.heart}/10</span>
+            </div>
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Vibe</span>
+              <div class="tcard-stat-bar">${statBar(r.stats.vibe)}</div>
+              <span class="tcard-stat-num">${r.stats.vibe}/10</span>
+            </div>
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Grit</span>
+              <div class="tcard-stat-bar">${statBar(r.stats.grit)}</div>
+              <span class="tcard-stat-num">${r.stats.grit}/10</span>
+            </div>
+          </div>
+
+          <div class="tcard-song">🎵 <span>"${r.song}"</span></div>
+          <div class="tcard-badges">
+            ${r.badges.slice(0, 4).map(b => `<div class="tcard-badge" title="${b.slice(b.indexOf(' ')+1)}">${b.split(' ')[0]}</div>`).join('')}
+          </div>
+        </div>
+
+        <div class="tcard-stamp">⚡ Wish Hero · TGT · WAM ⚡</div>
+        <div class="tcard-flip-hint">tap to flip →</div>
+      </div>
+
+      <!-- BACK -->
+      <div class="tcard-back">
+        <div class="tcard-back-header">
+          <div class="tcard-back-title">${r.nickname}<br><span style="font-family:'DM Sans',sans-serif;font-size:10px;color:rgba(26,14,43,0.5);font-weight:500;">${r.name}</span></div>
+          <div class="tcard-back-wam">WAM Year${r.years > 1 ? 's' : ''}<br>${r.years}</div>
+        </div>
+
+        <p class="tcard-back-bio">${r.bio}</p>
+
+        <div class="tcard-back-badges">${badgeHTML}</div>
+
+        <div class="tcard-back-footer">
+          <a class="tcard-donate-btn" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Donate →</a>
+          <span class="tcard-back-num">🎵 ${r.song}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>`;
+}
+
+function renderAll(filter, query) {
+  const grid = document.getElementById('rosterGrid');
+  const q = (query || '').toLowerCase().trim();
+
+  const filtered = RIDERS.filter(r => {
+    const matchesTier = filter === 'all' || r.tier === filter;
+    const matchesQuery = !q || r.name.toLowerCase().includes(q) || r.nickname.toLowerCase().includes(q);
+    return matchesTier && matchesQuery;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="roster-empty">No riders found. Try a different search.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((r, i) => renderCard(r, RIDERS.indexOf(r))).join('');
+
+  // Wire flip
+  grid.querySelectorAll('.tcard-wrap').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+
+    // Tilt effect
+    const inner = card.querySelector('.tcard-inner');
+    card.addEventListener('mousemove', e => {
+      if (card.classList.contains('flipped')) return;
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      if (!card.classList.contains('flipped')) {
+        inner.style.transform = '';
+      }
+    });
+  });
+}
+
+/* ══════════════════════════════════════
+   INIT & CONTROLS
+══════════════════════════════════════ */
+let currentFilter = 'all';
+let currentQuery = '';
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderAll(currentFilter, currentQuery);
+  });
+});
+
+document.getElementById('rosterSearch').addEventListener('input', e => {
+  currentQuery = e.target.value;
+  renderAll(currentFilter, currentQuery);
+});
+
+renderAll('all', '');
+</script>
+</body>
+</html>
