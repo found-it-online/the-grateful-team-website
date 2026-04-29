@@ -2269,9 +2269,6 @@ function renderAll(filter, query) {
 
   grid.innerHTML = filtered.map((r, i) => renderCard(r, RIDERS.indexOf(r))).join('');
 
-  // Detect touch device
-const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-
   // Wire grid cards: click = open modal; tilt + shimmer stay
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
     const inner = card.querySelector('.tcard-inner');
@@ -2298,6 +2295,7 @@ const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matche
 /* ══════════════════════════════════════
    MODAL
 ══════════════════════════════════════ */
+const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 let _photoMap = {};
 let _fundMap  = {};
 
