@@ -7,6 +7,11 @@ now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 with open('/tmp/team.json')         as f: team          = json.load(f)
 with open('/tmp/donations.json')    as f: raw_donations  = json.load(f)
 with open('/tmp/participants.json') as f: raw_parts      = json.load(f)
+try:
+    with open('/tmp/strava_activities.json') as f:
+        raw_strava_activities = json.load(f)
+except FileNotFoundError:
+    raw_strava_activities = []
 
 # team-stats.json
 stats = {
@@ -65,4 +70,33 @@ with open('assets/data/participants.json', 'w') as f:
     json.dump(avatar_data, f, indent=2)
 print('participants.json written')
 
-print('Done: {} donations, {} riders'.format(len(donations), len(raw_parts)))
+# strava-rides.json (training rides from Strava club API)
+strava_rides = []
+for a in raw_strava_activities if isinstance(raw_strava_activities, list) else []:
+    athlete = a.get('athlete') or {}
+    athlete_name = ' '.join(filter(None, [athlete.get('firstname', ''), athlete.get('lastname', '')])).strip()
+    strava_rides.append({
+        'id': a.get('id'),
+        'name': a.get('name', 'Untitled ride'),
+        'athleteName': athlete_name or 'Club Rider',
+        'athleteId': athlete.get('id'),
+        'distanceMeters': a.get('distance', 0),
+        'movingTimeSec': a.get('moving_time', 0),
+        'elevationGainMeters': a.get('total_elevation_gain', 0),
+        'sportType': a.get('sport_type', a.get('type', 'Ride')),
+        'startDateUTC': a.get('start_date', now),
+        'startDateLocal': a.get('start_date_local', a.get('start_date', now)),
+        'activityUrl': 'https://www.strava.com/activities/{}'.format(a.get('id')) if a.get('id') else 'https://www.strava.com/clubs/1302442',
+        'clubUrl': 'https://www.strava.com/clubs/1302442',
+    })
+
+with open('assets/data/strava-rides.json', 'w') as f:
+    json.dump({
+        'updatedAt': now,
+        'clubId': 1302442,
+        'clubUrl': 'https://www.strava.com/clubs/1302442',
+        'rides': strava_rides,
+    }, f, indent=2)
+print('strava-rides.json written')
+
+print('Done: {} donations, {} riders, {} strava rides'.format(len(donations), len(raw_parts), len(strava_rides)))
