@@ -55,6 +55,9 @@ avatar_data = [
         'participantID':  p.get('participantID'),
         'displayName':    p.get('displayName', ''),
         'avatarImageURL': p.get('avatarImageURL') if p.get('isCustomAvatarImage') else None,
+        'sumDonations':   p.get('sumDonations', 0),
+        'fundraisingGoal': p.get('fundraisingGoal', 1200),
+        'numDonations':   p.get('numDonations', 0),
     }
     for p in raw_parts
 ]
