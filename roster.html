@@ -1830,6 +1830,36 @@
   </div>
 </section>
 
+<section id="team-resources" style="background:var(--color-cream);padding:clamp(44px,6vw,64px) 24px;border-top:1px solid var(--color-cream-dark);">
+  <div style="max-width:980px;margin:0 auto;">
+    <div style="text-align:center;max-width:680px;margin:0 auto 30px;">
+      <p class="eyebrow" style="color:var(--color-red);margin:0 0 10px;">Current Team Members</p>
+      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.8rem,4vw,2.4rem);color:var(--color-night);line-height:1.1;margin:0 0 12px;">Team Resources</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
+      <a href="#" target="_blank" rel="noopener" data-needs-luis-url="drive" style="display:block;background:#fff;border:1px solid rgba(26,14,43,0.14);border-radius:12px;padding:18px 18px 16px;text-decoration:none;color:inherit;">
+        <h3 style="font-family:'Josefin Slab',serif;font-size:1.15rem;color:var(--color-night);margin:0 0 8px;">Team Google Drive</h3>
+        <p style="margin:0;font-family:'DM Sans',sans-serif;color:rgba(26,14,43,0.74);line-height:1.55;">Schedules, fundraising templates, route files, photos. The whole team brain.</p>
+      </a>
+      <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" style="display:block;background:#fff;border:1px solid rgba(26,14,43,0.14);border-radius:12px;padding:18px 18px 16px;text-decoration:none;color:inherit;">
+        <h3 style="font-family:'Josefin Slab',serif;font-size:1.15rem;color:var(--color-night);margin:0 0 8px;">TGT Strava Club</h3>
+        <p style="margin:0;font-family:'DM Sans',sans-serif;color:rgba(26,14,43,0.74);line-height:1.55;">See who's riding, post your miles, find someone for a Saturday spin.</p>
+      </a>
+    </div>
+
+    <div style="margin-top:30px;max-width:860px;">
+      <h3 style="font-family:'Josefin Slab',serif;font-size:1.3rem;color:var(--color-night);margin:0 0 10px;">Need something else?</h3>
+      <ul style="margin:0;padding-left:18px;font-family:'DM Sans',sans-serif;color:rgba(26,14,43,0.78);line-height:1.7;">
+        <li>Lost the group chat invite? Text Luis: (616) 366-3725.</li>
+        <li>Need a fundraising email template? It's in the Drive under <code>fundraising/</code>.</li>
+        <li>Want to lead a training ride? Same — drop a message in the group chat or email Luis.</li>
+        <li>New to the team? The drive link is for current TGT riders only. Join the team first and we'll send you access.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- CARD MODAL -->
 <div id="cardModal" class="card-modal-overlay" style="display:none;" onclick="closeModal()">
   <button class="card-modal-close" onclick="closeModal()" aria-label="Close">✕</button>
@@ -3082,8 +3112,6 @@ function openModal(riderId, triggerEvent) {
   if (challengeState.rookieShares >= 1 && riderTier === 'rookie') modalCampaignBadges.push('🌟 First-Time Donor Champion');
   const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
   const sharePack = getSharePack(rider, donorHref, cs);
-  const shareTextEnc = encodeURIComponent(sharePack.text);
-  const shareUrlEnc = encodeURIComponent(sharePack.url);
   const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
   const storyCopySafe = sharePack.storyText.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
@@ -3142,7 +3170,8 @@ function openModal(riderId, triggerEvent) {
         <button type="button" class="share-link" onclick="shareStoryWithCardImage(${rider.id}, '${donorHref}', '${storyCopySafe}');">🖼️ Copy Story + Card Image</button>
         <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'instagram');">📸 Instagram Story</button>
         <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'facebook');">📘 Facebook Story</button>
-        <a class="share-link" href="https://twitter.com/intent/tweet?text=${shareCombinedEnc}" target="_blank" rel="noopener" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">𝕏 X</a>
+        <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'x');">𝕏 X</button>
+        <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'facebook');">📘 Facebook</button>
         <a class="share-link" href="sms:?&body=${shareCombinedEnc}" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">💬 iMessage</a>
       </div>
       <p class="share-generator-note">Use Copy Story + Card Image for the best Story workflow: it copies rider text and captures the card image. Story buttons share rider bio + stats + donation link via your phone's share sheet.</p>
@@ -3259,6 +3288,14 @@ function copyShareText(text, url) {
   navigator.clipboard.writeText(value).catch(() => {});
 }
 
+function isUnsupportedSocialShareContext() {
+  const host = (window.location.hostname || '').toLowerCase();
+  const href = (window.location.href || '').toLowerCase();
+  const isLocal = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local');
+  const isNetlifyAdmin = href.indexOf('app.netlify.com/projects/') !== -1;
+  return isLocal || isNetlifyAdmin;
+}
+
 let _shareToastTimer = null;
 function showShareToast(message) {
   let el = document.getElementById('shareToast');
@@ -3298,6 +3335,32 @@ function showShareToast(message) {
     el.style.opacity = '0';
     el.style.transform = 'translateX(-50%) translateY(16px)';
   }, 2600);
+}
+
+function openSocialDraft(riderId, donorHref, network) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const sharePack = getSharePack(rider, donorHref, computeStats(rider, _fundMap));
+  if (isUnsupportedSocialShareContext()) {
+    copyShareText(sharePack.storyText, donorHref);
+    showShareToast('Cannot open social sharer from localhost/admin page. Story text copied instead.');
+    return;
+  }
+  const onDone = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  const encoded = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
+  const targetUrl = network === 'facebook'
+    ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(sharePack.url)}&quote=${encodeURIComponent(sharePack.text)}`
+    : `https://twitter.com/intent/tweet?text=${encoded}`;
+  const opened = window.open(targetUrl, '_blank', 'noopener');
+  if (!opened) {
+    copyShareText(sharePack.storyText, donorHref);
+    showShareToast('Popup blocked. Story text copied so you can paste and share manually.');
+    return;
+  }
+  onDone();
 }
 
 let _html2canvasLoaderPromise = null;
