@@ -3015,19 +3015,20 @@ function shareRiderCard(rider) {
   const donorHref = rider.donorSlug.startsWith('http')
     ? rider.donorSlug
     : `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}`;
-  const text = `Can you support ${rider.nickname} (${rider.name}) and help grant wishes through Make-A-Wish Michigan? Donate here: ${donorHref}`;
+  const cardUrl = buildRiderShareUrl(rider.id);
+  const text = `Check out ${rider.nickname} (${rider.name}) on the Grateful Team roster and support their Make-A-Wish ride.`;
   const onShared = () => tgtRecordRiderShare(rider.id);
   if (navigator.share) {
     navigator.share({
       title: `Support ${rider.nickname}`,
       text,
-      url: donorHref
+      url: cardUrl
     }).then(onShared).catch(() => {});
     return;
   }
   tgtRecordRiderShare(rider.id);
   tgtRecordChallengeProgress('share', rider);
-  const smsBody = encodeURIComponent(text);
+  const smsBody = encodeURIComponent(`${text} ${cardUrl}`);
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const smsUrl = isIOS ? `sms:&body=${smsBody}` : `sms:?body=${smsBody}`;
   window.location.href = smsUrl;
@@ -3305,7 +3306,7 @@ function shareCard(e, riderId) {
   if (!rider) return;
   const { name, nickname } = rider;
   const text = `${nickname} (${name}) — a Wish Hero riding 300 miles for Make-A-Wish Michigan with The Grateful Team 🚲💙`;
-  const url = window.location.href.split('#')[0];
+  const url = buildRiderShareUrl(riderId);
   const onDone = () => {
     tgtRecordRiderShare(riderId);
     tgtRecordChallengeProgress('share', rider);
@@ -3321,6 +3322,22 @@ function shareCard(e, riderId) {
       setTimeout(() => { btn.textContent = orig; }, 1500);
     }).catch(() => {});
   }
+}
+
+function buildRiderShareUrl(riderId) {
+  const base = window.location.origin + window.location.pathname;
+  return `${base}?rider=${encodeURIComponent(riderId)}`;
+}
+
+function getRequestedRiderIdFromUrl() {
+  const params = new URLSearchParams(window.location.search || '');
+  const queryId = parseInt(params.get('rider') || '', 10);
+  if (queryId && RIDERS.some(r => r.id === queryId)) return queryId;
+  const hash = (window.location.hash || '').replace(/^#/, '');
+  const m = /^rider-(\d+)$/.exec(hash);
+  const hashId = m ? parseInt(m[1], 10) : 0;
+  if (hashId && RIDERS.some(r => r.id === hashId)) return hashId;
+  return 0;
 }
 
 function getSharePack(rider, donorHref, cs) {
@@ -3684,6 +3701,10 @@ document.getElementById('rosterSearch').addEventListener('input', e => {
 
 renderAll('all', '');
 renderChallengeHub();
+const requestedRiderId = getRequestedRiderIdFromUrl();
+if (requestedRiderId) {
+  setTimeout(() => openModal(requestedRiderId), 0);
+}
 
 // Restore discovered counter from localStorage
 (function() {
