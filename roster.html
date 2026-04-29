@@ -806,6 +806,141 @@
       white-space: nowrap;
     }
     .tier-section-line { flex: 1; height: 1px; background: rgba(201,148,58,0.15); }
+
+    /* ══ CARD MODAL ══ */
+    .card-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,3,18,0.93);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fade-in 0.2s ease;
+    }
+    @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+    .card-modal-inner {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      max-width: 780px;
+      width: 100%;
+      position: relative;
+      animation: modal-rise 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modal-rise {
+      from { transform: scale(0.85) translateY(30px); opacity:0; }
+      to   { transform: scale(1) translateY(0);       opacity:1; }
+    }
+    .card-modal-card-slot .tcard-wrap {
+      width: 340px !important;
+      height: 490px !important;
+      animation: none !important;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .card-modal-panel {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 4px;
+    }
+    .card-modal-close {
+      position: fixed;
+      top: 18px;
+      right: 22px;
+      width: 38px;
+      height: 38px;
+      background: rgba(250,246,232,0.08);
+      border: 1px solid rgba(250,246,232,0.18);
+      border-radius: 50%;
+      color: rgba(250,246,232,0.8);
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 150ms;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-modal-close:hover { background: rgba(250,246,232,0.18); color:#fff; }
+    .card-modal-song-box {
+      background: rgba(250,246,232,0.05);
+      border: 1px solid rgba(249,241,8,0.15);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .card-modal-song-name {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.15rem;
+      color: var(--color-gold);
+      margin: 0 0 3px;
+    }
+    .card-modal-song-by {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.4);
+      margin: 0 0 12px;
+    }
+    .modal-play-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .modal-play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: filter 150ms, transform 100ms;
+    }
+    .modal-play-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .modal-play-btn:active { transform: translateY(0); }
+    .modal-play-btn-yt { background: #ff0000; color: #fff; }
+    .modal-play-btn-sp { background: #1db954; color: #fff; }
+    .modal-play-btn-am { background: #fc3c44; color: #fff; }
+    .card-modal-donate-link {
+      display: block;
+      background: var(--color-purple);
+      color: #fff;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      transition: background 150ms;
+    }
+    .card-modal-donate-link:hover { background: var(--color-purple-light); }
+    .card-modal-hint {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.28);
+      text-align: center;
+      margin: 0;
+    }
+    @media (max-width: 680px) {
+      .card-modal-inner { flex-direction: column; align-items: center; }
+      .card-modal-card-slot .tcard-wrap { width: 300px !important; height: 430px !important; }
+      .card-modal-panel { width: 100%; max-width: 340px; }
+    }
   </style>
 </head>
 
@@ -891,6 +1026,15 @@
     <a href="/donate.html" class="btn-ghost" style="border-color:var(--color-gold);color:var(--color-gold);">Help us reach $115K — Donate now →</a>
   </div>
 </section>
+
+<!-- CARD MODAL -->
+<div id="cardModal" class="card-modal-overlay" style="display:none;" onclick="closeModal()">
+  <button class="card-modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+  <div class="card-modal-inner" onclick="event.stopPropagation()">
+    <div class="card-modal-card-slot" id="modalCardSlot"></div>
+    <div class="card-modal-panel" id="modalPanel"></div>
+  </div>
+</div>
 
 <div id="footer-slot"></div>
 
@@ -1743,47 +1887,145 @@ function renderAll(filter, query) {
 
   grid.innerHTML = filtered.map((r, i) => renderCard(r, RIDERS.indexOf(r))).join('');
 
-  // Wire flip + tilt + shimmer
+  // Wire grid cards: click = open modal; tilt + shimmer stay
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
     const inner = card.querySelector('.tcard-inner');
 
     card.addEventListener('click', e => {
-      const wasFlipped = card.classList.contains('flipped');
-      card.classList.toggle('flipped');
-      inner.style.transform = '';
-
-      // Discovered counter
-      const id = card.dataset.id;
-      const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
-      if (!seen[id]) {
-        seen[id] = true;
-        localStorage.setItem('tgt-seen', JSON.stringify(seen));
-        updateDiscoveredBar(seen);
-      }
-
-      // Confetti burst for Legends on first flip to back
-      if (!wasFlipped && card.dataset.tier === 'legend') {
-        burstConfetti(e.clientX || card.getBoundingClientRect().left + 120, e.clientY || card.getBoundingClientRect().top + 190);
-      }
+      openModal(parseInt(card.dataset.id), e);
     });
 
-    // Tilt + mouse-reactive shimmer
     card.addEventListener('mousemove', e => {
-      if (card.classList.contains('flipped')) return;
       const rect = card.getBoundingClientRect();
       const nx = (e.clientX - rect.left) / rect.width;
       const ny = (e.clientY - rect.top) / rect.height;
-      const x = nx - 0.5;
-      const y = ny - 0.5;
+      const x = nx - 0.5; const y = ny - 0.5;
       inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
       card.style.setProperty('--mx', nx.toFixed(3));
       card.style.setProperty('--my', ny.toFixed(3));
     });
-    card.addEventListener('mouseleave', () => {
-      inner.style.transform = '';
-    });
+    card.addEventListener('mouseleave', () => { inner.style.transform = ''; });
   });
 }
+
+/* ══════════════════════════════════════
+   MODAL
+══════════════════════════════════════ */
+let _photoMap = {};
+let _fundMap  = {};
+
+function openModal(riderId, triggerEvent) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+
+  const donorHref = rider.donorSlug.startsWith('http')
+    ? rider.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}`;
+
+  // Render card into modal slot
+  const slot = document.getElementById('modalCardSlot');
+  slot.innerHTML = renderCard(rider, RIDERS.indexOf(rider));
+
+  const modalCard  = slot.querySelector('.tcard-wrap');
+  const modalInner = slot.querySelector('.tcard-inner');
+
+  // Wire flip inside modal (+ confetti + discovered)
+  modalCard.addEventListener('click', e => {
+    e.stopPropagation();
+    const wasFlipped = modalCard.classList.contains('flipped');
+    modalCard.classList.toggle('flipped');
+    modalInner.style.transform = '';
+
+    // Discovered counter
+    const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
+    if (!seen[riderId]) {
+      seen[riderId] = true;
+      localStorage.setItem('tgt-seen', JSON.stringify(seen));
+      updateDiscoveredBar(seen);
+    }
+    if (!wasFlipped && rider.tier === 'legend') {
+      const rect = modalCard.getBoundingClientRect();
+      burstConfetti(e.clientX || rect.left + 170, e.clientY || rect.top + 240);
+    }
+  });
+
+  // Tilt + shimmer inside modal
+  modalCard.addEventListener('mousemove', e => {
+    if (modalCard.classList.contains('flipped')) return;
+    const rect = modalCard.getBoundingClientRect();
+    const nx = (e.clientX - rect.left) / rect.width;
+    const ny = (e.clientY - rect.top) / rect.height;
+    modalInner.style.transform = `perspective(1200px) rotateX(${-(ny-0.5)*8}deg) rotateY(${(nx-0.5)*12}deg)`;
+    modalCard.style.setProperty('--mx', nx.toFixed(3));
+    modalCard.style.setProperty('--my', ny.toFixed(3));
+  });
+  modalCard.addEventListener('mouseleave', () => { modalInner.style.transform = ''; });
+
+  // Apply cached photos & fundraising
+  const key = rider.name.toLowerCase();
+  if (_photoMap[key]) {
+    const av = modalCard.querySelector('.tcard-avatar');
+    if (av) av.innerHTML = `<img src="${_photoMap[key]}" alt="${rider.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  }
+  if (_fundMap[key] && _fundMap[key].sumDonations > 0) {
+    const data = _fundMap[key];
+    const raised = data.sumDonations;
+    const goal   = data.fundraisingGoal || 1200;
+    const pct    = Math.min(100, Math.round((raised / goal) * 100));
+    const donors = data.numDonations || 0;
+    const nameEl = modalCard.querySelector('.tcard-name');
+    if (nameEl) {
+      const fb = document.createElement('div');
+      fb.className = 'tcard-raised';
+      fb.innerHTML = `💰 <span>$${Math.round(raised).toLocaleString()}</span> raised`;
+      nameEl.parentNode.insertBefore(fb, nameEl.nextSibling);
+    }
+    const bio = modalCard.querySelector('.tcard-back-bio');
+    if (bio) {
+      const div = document.createElement('div');
+      div.style.cssText = 'margin-bottom:8px;position:relative;z-index:1;';
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+          <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
+          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${Math.round(raised).toLocaleString()}</span>
+        </div>
+        <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
+          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;"></div>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>`;
+      bio.parentNode.insertBefore(div, bio);
+    }
+  }
+
+  // Music + donate panel
+  const ytUrl = `https://www.youtube.com/results?search_query=Grateful+Dead+${encodeURIComponent('"'+rider.song+'"')}+live`;
+  const spUrl = `https://open.spotify.com/search/Grateful%20Dead%20${encodeURIComponent(rider.song)}`;
+  const amUrl = `https://music.apple.com/us/search?term=Grateful+Dead+${encodeURIComponent(rider.song)}`;
+
+  document.getElementById('modalPanel').innerHTML = `
+    <div class="card-modal-song-box">
+      <div class="card-modal-song-name">🎵 "${rider.song}"</div>
+      <div class="card-modal-song-by">The Grateful Dead · ${rider.name}'s ride song</div>
+      <div class="modal-play-btns">
+        <a href="${ytUrl}" target="_blank" rel="noopener" class="modal-play-btn modal-play-btn-yt">▶ YouTube</a>
+        <a href="${spUrl}" target="_blank" rel="noopener" class="modal-play-btn modal-play-btn-sp">♫ Spotify</a>
+        <a href="${amUrl}" target="_blank" rel="noopener" class="modal-play-btn modal-play-btn-am">♪ Apple</a>
+      </div>
+    </div>
+    <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
+    <p class="card-modal-hint">Click the card to flip it · ESC to close</p>
+  `;
+
+  document.getElementById('cardModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('cardModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ══════════════════════════════════════
    CONFETTI
@@ -1877,13 +2119,13 @@ renderAll('all', '');
 fetch('/assets/data/participants.json')
   .then(r => r.json())
   .then(parts => {
-    const photoMap = {};
-    const fundMap = {};
     parts.forEach(p => {
       const key = p.displayName.toLowerCase();
-      if (p.avatarImageURL) photoMap[key] = p.avatarImageURL;
-      fundMap[key] = p;
+      if (p.avatarImageURL) _photoMap[key] = p.avatarImageURL;
+      _fundMap[key] = p;
     });
+    const photoMap = _photoMap;
+    const fundMap  = _fundMap;
 
     document.querySelectorAll('.tcard-wrap').forEach(wrap => {
       const riderId = parseInt(wrap.dataset.id);
