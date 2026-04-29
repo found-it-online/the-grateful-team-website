@@ -3081,11 +3081,11 @@ function openModal(riderId, triggerEvent) {
   if ((_fundMap[rider.name.toLowerCase()] || {}).numDonations >= 5) modalCampaignBadges.push('🤝 5 Donors Club');
   if (challengeState.rookieShares >= 1 && riderTier === 'rookie') modalCampaignBadges.push('🌟 First-Time Donor Champion');
   const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
-  const sharePack = getSharePack(rider, donorHref);
+  const sharePack = getSharePack(rider, donorHref, cs);
   const shareTextEnc = encodeURIComponent(sharePack.text);
   const shareUrlEnc = encodeURIComponent(sharePack.url);
   const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
-  const igCopySafe = sharePack.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  const storyCopySafe = sharePack.storyText.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
   const ytUrl = `https://www.youtube.com/results?search_query=Grateful+Dead+${encodeURIComponent('"'+rider.song+'"')}+live`;
   const spUrl = `https://open.spotify.com/search/Grateful%20Dead%20${encodeURIComponent(rider.song)}`;
@@ -3139,12 +3139,13 @@ function openModal(riderId, triggerEvent) {
     <div class="share-generator">
       <h4>One-Click Share Generator</h4>
       <div class="share-grid">
-        <button type="button" class="share-link" onclick="copyShareText('${igCopySafe}', '${sharePack.url}'); window.open('https://www.instagram.com/','_blank','noopener'); tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">📸 Instagram</button>
+        <button type="button" class="share-link" onclick="shareStoryWithCardImage(${rider.id}, '${donorHref}', '${storyCopySafe}');">🖼️ Copy Story + Card Image</button>
+        <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'instagram');">📸 Instagram Story</button>
+        <button type="button" class="share-link" onclick="shareRiderStory(${rider.id}, '${donorHref}', '${storyCopySafe}', 'facebook');">📘 Facebook Story</button>
         <a class="share-link" href="https://twitter.com/intent/tweet?text=${shareCombinedEnc}" target="_blank" rel="noopener" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">𝕏 X</a>
-        <a class="share-link" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEnc}&quote=${shareTextEnc}" target="_blank" rel="noopener" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">📘 Facebook</a>
         <a class="share-link" href="sms:?&body=${shareCombinedEnc}" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">💬 iMessage</a>
       </div>
-      <p class="share-generator-note">Instagram copies your caption/link and opens Instagram. X/Facebook/iMessage open prefilled drafts.</p>
+      <p class="share-generator-note">Use Copy Story + Card Image for the best Story workflow: it copies rider text and captures the card image. Story buttons share rider bio + stats + donation link via your phone's share sheet.</p>
     </div>
   `;
 
@@ -3231,17 +3232,171 @@ function shareCard(e, riderId) {
   }
 }
 
-function getSharePack(rider, donorHref) {
+function getSharePack(rider, donorHref, cs) {
   const first = rider.name.split(' ')[0];
+  const stats = cs || computeStats(rider, _fundMap);
+  const tierLabel = (TIER_LABELS[getComputedTier(rider)] || 'Rider').toUpperCase();
+  const badges = (rider.badges || []).slice(0, 2).join(' • ');
+  const statsLine = `Fundraising ${stats.fundraising}/10 | Experience ${stats.experience}/10 | Spirit ${stats.spirit}/10 | Grit ${stats.grit}/10`;
+  const bioLine = rider.funFact ? `Fun fact: ${rider.funFact}` : '';
   return {
     text: `Ride with ${rider.nickname} (${rider.name}) and help grant wishes with The Grateful Team. Please support ${first}!`,
-    url: donorHref
+    storyText: [
+      `🚴 Rider Card: ${rider.nickname} (${rider.name})`,
+      `${tierLabel} • ${rider.years} WAM year${rider.years !== 1 ? 's' : ''}`,
+      statsLine,
+      badges ? `Badges: ${badges}` : '',
+      bioLine,
+      `Help ${first} grant wishes with Make-A-Wish Michigan 💙`
+    ].filter(Boolean).join('\n'),
+    url: donorHref,
+    firstName: first
   };
 }
 
 function copyShareText(text, url) {
   const value = `${text}\n${url}`;
   navigator.clipboard.writeText(value).catch(() => {});
+}
+
+let _shareToastTimer = null;
+function showShareToast(message) {
+  let el = document.getElementById('shareToast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'shareToast';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    el.style.cssText = [
+      'position:fixed',
+      'left:50%',
+      'bottom:20px',
+      'transform:translateX(-50%) translateY(16px)',
+      'background:rgba(26,14,43,0.96)',
+      'color:#faf6e8',
+      'border:1px solid rgba(250,246,232,0.2)',
+      'padding:10px 14px',
+      'border-radius:10px',
+      'font-family:Josefin Slab, serif',
+      'font-weight:700',
+      'font-size:12px',
+      'letter-spacing:.04em',
+      'text-align:center',
+      'max-width:min(90vw,520px)',
+      'z-index:9999',
+      'opacity:0',
+      'transition:opacity 180ms ease, transform 180ms ease',
+      'pointer-events:none'
+    ].join(';');
+    document.body.appendChild(el);
+  }
+  el.textContent = message;
+  el.style.opacity = '1';
+  el.style.transform = 'translateX(-50%) translateY(0)';
+  if (_shareToastTimer) clearTimeout(_shareToastTimer);
+  _shareToastTimer = setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(-50%) translateY(16px)';
+  }, 2600);
+}
+
+let _html2canvasLoaderPromise = null;
+function ensureHtml2CanvasLoaded() {
+  if (window.html2canvas) return Promise.resolve(window.html2canvas);
+  if (_html2canvasLoaderPromise) return _html2canvasLoaderPromise;
+  _html2canvasLoaderPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload = () => resolve(window.html2canvas);
+    script.onerror = () => reject(new Error('Failed to load html2canvas'));
+    document.head.appendChild(script);
+  });
+  return _html2canvasLoaderPromise;
+}
+
+function downloadBlob(blob, filename) {
+  const href = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    URL.revokeObjectURL(href);
+    a.remove();
+  }, 400);
+}
+
+async function captureModalCardImage(rider) {
+  const cardEl = document.querySelector('#modalCardSlot .tcard-wrap');
+  if (!cardEl) throw new Error('Card not found');
+  const h2c = await ensureHtml2CanvasLoaded();
+  const wasFlipped = cardEl.classList.contains('flipped');
+  if (wasFlipped) cardEl.classList.remove('flipped');
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const canvas = await h2c(cardEl, {
+    backgroundColor: null,
+    scale: Math.min(3, window.devicePixelRatio > 1 ? 2 : 1.5),
+    useCORS: true,
+    logging: false
+  });
+  if (wasFlipped) cardEl.classList.add('flipped');
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('Unable to render card image');
+  const safeName = (rider.name || 'rider').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const file = new File([blob], `tgt-rider-card-${safeName}.png`, { type: 'image/png' });
+  return file;
+}
+
+async function shareStoryWithCardImage(riderId, donorHref, storyText) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const done = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  copyShareText(storyText, donorHref);
+  try {
+    const cardFile = await captureModalCardImage(rider);
+    if (navigator.canShare && navigator.canShare({ files: [cardFile] }) && navigator.share) {
+      await navigator.share({
+        title: `Rider Card: ${rider.nickname}`,
+        text: `${storyText}\n${donorHref}`,
+        files: [cardFile]
+      });
+    } else {
+      downloadBlob(cardFile, cardFile.name);
+      showShareToast('Story text copied and card image downloaded. Upload image to Story and paste the copied text.');
+    }
+    done();
+  } catch (err) {
+    showShareToast('Story text copied. Card capture failed here; take a screenshot and post it with the copied text.');
+    done();
+  }
+}
+
+function shareRiderStory(riderId, donorHref, storyText, network) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const done = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  const fallbackToClipboard = () => {
+    copyShareText(storyText, donorHref);
+    const appName = network === 'facebook' ? 'Facebook' : 'Instagram';
+    showShareToast(`Story text copied. Paste into ${appName} Story/caption and attach the rider card image.`);
+    done();
+  };
+  if (navigator.share) {
+    navigator.share({
+      title: `Rider Card: ${rider.nickname}`,
+      text: storyText,
+      url: donorHref
+    }).then(done).catch(() => fallbackToClipboard());
+    return;
+  }
+  fallbackToClipboard();
 }
 
 function normalizeName(value) {
