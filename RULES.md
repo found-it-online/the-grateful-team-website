@@ -50,6 +50,18 @@ Prevent accidental pushes and keep `main` stable.
 - Never commit editor settings, local configs, or secrets.
 - Keep personal notes in `RULES.local.md` (local-only, never committed).
 
+## Local Dev Server Rule (AI and Humans)
+
+Before testing any UI/content/code change locally:
+
+1. Check whether a local dev server is already running.
+2. If one is running, stop/kill it first.
+3. Start exactly one fresh local server.
+4. Confirm which localhost URL/port is active.
+5. Validate changes on that active URL only.
+
+Do not leave multiple servers running on different ports, because this can make changes appear "broken" when you are viewing an outdated process.
+
 ## Pull Request Checklist
 
 Before opening or merging a PR:
