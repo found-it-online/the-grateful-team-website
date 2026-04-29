@@ -740,6 +740,51 @@
       flex-shrink: 0;
     }
 
+    /* Leaderboard tabs */
+    .lb-tab {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(250,246,232,0.18);
+      background: transparent;
+      color: rgba(250,246,232,0.5);
+      cursor: pointer;
+      transition: all 150ms;
+    }
+    .lb-tab:hover { border-color: rgba(249,241,8,0.4); color: var(--color-gold); }
+    .lb-tab.active { background: var(--color-gold); color: var(--color-night); border-color: var(--color-gold); }
+
+    /* WAM countdown */
+    .countdown-unit {
+      text-align: center;
+      background: rgba(250,246,232,0.06);
+      border: 1px solid rgba(249,241,8,0.2);
+      border-radius: 10px;
+      padding: 10px 16px;
+      min-width: 64px;
+    }
+    .countdown-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: 2rem;
+      color: var(--color-gold);
+      line-height: 1;
+      display: block;
+    }
+    .countdown-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.45);
+      display: block;
+      margin-top: 2px;
+    }
+
     @media (max-width: 640px) {
       #liveSection > div { grid-template-columns: 1fr !important; }
     }
@@ -953,6 +998,7 @@
     <p class="eyebrow" style="color:var(--color-gold);margin:0 0 14px;">The Grateful Team · Make-A-Wish Michigan</p>
     <h1>The Grateful<br>Roster</h1>
     <p>Every rider earns their spot. Every dollar grants a wish. These are the Wish Heroes — 51 riders who show up every year to do something ridiculous and beautiful for kids who need a miracle.</p>
+    <div id="wamCountdown" style="display:inline-flex;gap:16px;margin:0 0 20px;flex-wrap:wrap;justify-content:center;"></div>
     <div class="roster-hero-stats">
       <div class="roster-hero-stat">
         <span class="roster-hero-stat-num" id="stat-riders">51</span>
@@ -1014,10 +1060,15 @@
       <div id="donationFeed" style="display:flex;flex-direction:column;gap:8px;"></div>
     </div>
 
-    <!-- Top Fundraisers -->
+    <!-- Leaderboard w/ tabs -->
     <div>
-      <p class="eyebrow" style="color:var(--color-gold);margin:0 0 8px;">The Leaderboard</p>
-      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.5rem,3vw,2rem);color:var(--color-cream);margin:0 0 20px;line-height:1.1;">Top Fundraisers.</h2>
+      <p class="eyebrow" style="color:var(--color-gold);margin:0 0 8px;">The Challenge Board</p>
+      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.5rem,3vw,2rem);color:var(--color-cream);margin:0 0 14px;line-height:1.1;">Who's Winning?</h2>
+      <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+        <button class="lb-tab active" data-tab="top" onclick="switchLbTab('top',this)">🏆 Top Raised</button>
+        <button class="lb-tab" data-tab="close" onclick="switchLbTab('close',this)">🎯 Closest to Goal</button>
+        <button class="lb-tab" data-tab="help" onclick="switchLbTab('help',this)">💙 Needs a Push</button>
+      </div>
       <div id="leaderboard" style="display:flex;flex-direction:column;gap:6px;"></div>
     </div>
 
@@ -2013,6 +2064,7 @@ function openModal(riderId, triggerEvent) {
       </div>
     </div>
     <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
+    <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
     <p class="card-modal-hint">Click the card to flip it · ESC to close</p>
   `;
 
@@ -2230,6 +2282,120 @@ Promise.all([
     }
   }
 });
+
+// WAM Countdown
+(function() {
+  const WAM_DATE = new Date('2026-07-24T07:00:00-04:00'); // 7am ET start
+  function tick() {
+    const now = new Date();
+    const diff = WAM_DATE - now;
+    if (diff <= 0) return;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const el = document.getElementById('wamCountdown');
+    if (!el) return;
+    el.innerHTML = [
+      ['Days', d], ['Hrs', h], ['Min', m], ['Sec', s]
+    ].map(([label, val]) => `
+      <div class="countdown-unit">
+        <span class="countdown-num">${String(val).padStart(2,'0')}</span>
+        <span class="countdown-label">${label} to WAM</span>
+      </div>
+    `).join('');
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// Leaderboard tab state & renderer
+let _lbParts = [];
+let _currentLbTab = 'top';
+
+function renderLeaderboard(tab) {
+  const lbEl = document.getElementById('leaderboard');
+  if (!lbEl || !_lbParts.length) return;
+  _currentLbTab = tab;
+
+  let ranked;
+  if (tab === 'top') {
+    ranked = [..._lbParts].sort((a,b) => b.sumDonations - a.sumDonations).slice(0,8);
+  } else if (tab === 'close') {
+    // Closest to goal WITHOUT having hit it yet
+    ranked = [..._lbParts]
+      .filter(p => p.sumDonations > 0 && p.sumDonations < (p.fundraisingGoal || 1200))
+      .sort((a,b) => {
+        const aPct = a.sumDonations / (a.fundraisingGoal || 1200);
+        const bPct = b.sumDonations / (b.fundraisingGoal || 1200);
+        return bPct - aPct;
+      }).slice(0,8);
+  } else {
+    // Furthest from goal — needs a push
+    ranked = [..._lbParts]
+      .filter(p => p.sumDonations >= 0)
+      .sort((a,b) => {
+        const aNeed = (a.fundraisingGoal||1200) - a.sumDonations;
+        const bNeed = (b.fundraisingGoal||1200) - b.sumDonations;
+        return bNeed - aNeed;
+      }).slice(0,8);
+  }
+
+  if (!ranked.length) { lbEl.innerHTML = '<p style="color:rgba(250,246,232,0.3);font-family:\'DM Sans\',sans-serif;font-size:13px;">Data loading — check back soon.</p>'; return; }
+
+  const max = tab === 'top' ? ranked[0].sumDonations : (ranked[0].fundraisingGoal || 1200);
+  const donor = ranked[0];
+
+  lbEl.innerHTML = ranked.map((p, i) => {
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+    const rankCls = i === 0 ? 'lb-rank-1' : i === 1 ? 'lb-rank-2' : i === 2 ? 'lb-rank-3' : '';
+    let barPct, statLabel;
+    if (tab === 'top') {
+      barPct = Math.round((p.sumDonations / max) * 100);
+      statLabel = `$${Math.round(p.sumDonations).toLocaleString()}`;
+    } else if (tab === 'close') {
+      const pct = Math.min(100, Math.round((p.sumDonations / (p.fundraisingGoal||1200)) * 100));
+      barPct = pct;
+      statLabel = `${pct}%`;
+    } else {
+      const need = Math.max(0, (p.fundraisingGoal||1200) - p.sumDonations);
+      barPct = Math.round(((p.fundraisingGoal||1200) - need) / (p.fundraisingGoal||1200) * 100);
+      statLabel = `$${Math.round(need).toLocaleString()} needed`;
+    }
+    const rider = RIDERS.find(r => r.name.toLowerCase() === p.displayName.toLowerCase());
+    const donorHref = rider ? `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}` : '#';
+    return `
+      <div class="lb-row" style="animation-delay:${i*0.04}s;cursor:pointer;" onclick="if('${donorHref}'!=='#')window.open('${donorHref}','_blank')">
+        <span class="lb-rank ${rankCls}">${medal}</span>
+        <span class="lb-name">${p.displayName}</span>
+        <div class="lb-bar-wrap"><div class="lb-bar-track"><div class="lb-bar-fill" style="width:${barPct}%"></div></div></div>
+        <span class="lb-amount">${statLabel}</span>
+      </div>`;
+  }).join('');
+}
+
+function switchLbTab(tab, btn) {
+  document.querySelectorAll('.lb-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLeaderboard(tab);
+}
+
+// Challenge a rider
+function challengeRider(name, nickname, donorUrl) {
+  const msg = `🚲 Can you help ${nickname} (${name}) grant a wish? They're riding 300 miles for Make-A-Wish Michigan — donate here: ${donorUrl}`;
+  if (navigator.share) {
+    navigator.share({ title: `Challenge: Support ${nickname}`, text: msg, url: donorUrl }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(msg).then(() => {
+      const btn = event.currentTarget;
+      const orig = btn.textContent;
+      btn.textContent = '✓ Link copied — share it!';
+      btn.style.background = 'rgba(249,241,8,0.15)';
+      btn.style.color = 'var(--color-gold)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = 'rgba(250,246,232,0.07)'; btn.style.color = 'rgba(250,246,232,0.7)'; }, 2000);
+    }).catch(() => window.open(donorUrl, '_blank'));
+  }
+}
 
 // Fetch live team totals for hero stats
 fetch('/assets/data/team-stats.json')
