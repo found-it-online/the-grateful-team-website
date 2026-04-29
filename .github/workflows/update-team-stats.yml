@@ -1,6 +1,9 @@
 name: Update Team Stats & Activity Feed
 
 on:
+  push:
+    branches:
+      - jackson-changes
   schedule:
     - cron: '0 14 * * *'   # Daily at 9am ET (14:00 UTC)
   workflow_dispatch:         # Allow manual trigger from GitHub Actions tab
@@ -57,6 +60,7 @@ jobs:
         run: python3 scripts/update_stats.py
 
       - name: Commit if changed
+        if: ${{ github.ref_name != 'main' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -64,3 +68,7 @@ jobs:
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: update team stats and activity feed [skip ci]"
           git push origin HEAD:${{ github.ref_name }}
+
+      - name: Skip protected main push
+        if: ${{ github.ref_name == 'main' }}
+        run: echo "Running on main; skipping commit/push because main is protected."
