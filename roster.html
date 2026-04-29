@@ -2893,6 +2893,9 @@ let _fundMap  = {};
 let _stravaMap = {};
 let _riderAliasMap = null;
 let _modalScrollHandler = null;
+const STRAVA_ATHLETE_OVERRIDES = {
+  'luis vecchio': { athleteId: 52089356, profileUrl: 'https://www.strava.com/athletes/52089356' }
+};
 
 function shareRiderCard(rider) {
   if (!rider) return;
@@ -3486,6 +3489,17 @@ Promise.all([
       _stravaMap[riderKey] = {
         profileUrl: m.profileUrl || null,
         clubUrl: m.clubUrl || 'https://www.strava.com/clubs/1302442'
+      };
+    });
+    Object.keys(STRAVA_ATHLETE_OVERRIDES).forEach(function (nameKey) {
+      const rider = findRiderByExternalName(nameKey);
+      if (!rider) return;
+      const riderKey = normalizeName(rider.name);
+      const override = STRAVA_ATHLETE_OVERRIDES[nameKey];
+      const existing = _stravaMap[riderKey] || { clubUrl: 'https://www.strava.com/clubs/1302442' };
+      _stravaMap[riderKey] = {
+        profileUrl: override.profileUrl || existing.profileUrl || null,
+        clubUrl: existing.clubUrl || 'https://www.strava.com/clubs/1302442'
       };
     });
   }
