@@ -671,6 +671,56 @@
       letter-spacing: 0.06em;
       white-space: nowrap;
     }
+    /* Injected DonorDrive “raised” block (grid + modal back) */
+    .tcard-back-raised {
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .tcard-back-raised-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 4px;
+      min-width: 0;
+    }
+    .tcard-back-raised-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(26, 14, 43, 0.5);
+      flex-shrink: 0;
+    }
+    .tcard-back-raised-amt {
+      font-family: 'Abril Fatface', serif;
+      font-size: 13px;
+      color: var(--color-purple);
+      text-align: right;
+      min-width: 0;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .tcard-back-raised-track {
+      height: 5px;
+      background: rgba(26, 14, 43, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+    .tcard-back-raised-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-purple), var(--color-purple-light));
+      border-radius: 3px;
+    }
+    .tcard-back-raised-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      color: rgba(26, 14, 43, 0.4);
+      line-height: 1.35;
+    }
     /* Hover tilt effect */
     .tcard-wrap { transition: transform 0.1s ease; }
 
@@ -941,6 +991,93 @@
       .tcard-raised-hero-amt { font-size: 1.4rem !important; }
     }
 
+    /* Tablet / small desktop: larger roster cards (not modal — see 781px block) */
+    @media (min-width: 641px) {
+      .roster-grid {
+        grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+        gap: 28px;
+      }
+      .tcard-wrap {
+        height: 452px;
+      }
+      .tcard-edition { font-size: 10px; margin-bottom: 9px; }
+      .tcard-num { font-size: 11px; }
+      .tcard-tier-badge { font-size: 10px; padding: 4px 9px; }
+      .tcard-avatar-area { padding: 10px 0 12px; }
+      .tcard-avatar { width: 96px; height: 96px; font-size: 28px; }
+      .tcard-nickname { font-size: clamp(1.32rem, 2vw, 1.55rem); }
+      .tcard-name { font-size: 12.5px; margin-bottom: 11px; }
+      .tcard-body { padding: 0 15px; }
+      .tcard-stat-label { font-size: 8.75px; width: 72px; letter-spacing: 0.07em; }
+      .tcard-stat-num { font-size: 9px; width: 26px; }
+      .tcard-stat-bar { height: 6px; }
+      .tcard-stat-row { margin-bottom: 5px; }
+      .tcard-song { font-size: 10px; margin-top: 7px; }
+      .tcard-song span { font-size: 11.5px; }
+      .tcard-badge { width: 24px; height: 24px; font-size: 12px; }
+      .tcard-stamp { font-size: 9px; letter-spacing: 0.16em; }
+      .tcard-raised-hero { padding: 8px 14px 18px; min-height: 58px; }
+      .tcard-raised-hero-amt { font-size: 2.2rem; }
+      .tcard-raised-hero-label { font-size: 9px; margin-top: 4px; }
+      .tcard-back { padding: 18px; }
+      .tcard-back-title { font-size: 1.12rem; }
+      .tcard-back-wam { font-size: 10px; }
+      .tcard-funfact { font-size: 11.5px; padding: 8px 10px; }
+      .tcard-funfact-label { font-size: 9px; }
+      .tcard-back-bio { font-size: 13px; line-height: 1.58; -webkit-line-clamp: 7; }
+      .tcard-back-badge { font-size: 9.5px; padding: 4px 9px; }
+      .tcard-donate-btn { font-size: 11px; padding: 9px 12px; }
+      .tcard-share-btn { font-size: 14px; padding: 9px 10px; }
+      .tcard-back-num { font-size: 10px; }
+      .tcard-back-raised-label { font-size: 9.5px; }
+      .tcard-back-raised-amt { font-size: 15px; }
+      .tcard-back-raised-track { height: 6px; }
+      .tcard-back-raised-meta { font-size: 10px; }
+    }
+
+    /* Desktop modal (split from roster so we do not fight max-width 780 modal rules on phones) */
+    @media (min-width: 781px) {
+      .card-modal-card-slot .tcard-nickname { font-size: 1.52rem !important; }
+      .card-modal-card-slot .tcard-name { font-size: 15px !important; }
+      .card-modal-card-slot .tcard-avatar { width: 118px !important; height: 118px !important; font-size: 36px !important; }
+      .card-modal-card-slot .tcard-stat-label { font-size: 10px !important; width: 82px !important; }
+      .card-modal-card-slot .tcard-stat-num { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-stat-bar { height: 8px !important; }
+      .card-modal-card-slot .tcard-song { font-size: 13px !important; }
+      .card-modal-card-slot .tcard-edition { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-num { font-size: 11px !important; }
+      .card-modal-card-slot .tcard-tier-badge { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-raised-hero-amt { font-size: 2.35rem !important; }
+      .card-modal-card-slot .tcard-raised-hero-label { font-size: 9.5px !important; }
+      .card-modal-card-slot .tcard-stamp { font-size: 9px !important; }
+      .card-modal-card-slot .tcard-back-title { font-size: 1.22rem !important; }
+      .card-modal-card-slot .tcard-back-wam { font-size: 10.5px !important; }
+      .card-modal-card-slot .tcard-funfact { font-size: 13px !important; }
+      .card-modal-card-slot .tcard-funfact-label { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-back-bio { font-size: 15px !important; line-height: 1.62 !important; }
+      .card-modal-card-slot .tcard-back-badge { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-donate-btn { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-back-num { font-size: 10.5px !important; }
+
+      .modal-rider-nickname { font-size: clamp(1.65rem, 3vw, 2.15rem); }
+      .modal-rider-name { font-size: 16px; }
+      .modal-rider-meta { font-size: 11px; }
+      .modal-wish-granter-badge { font-size: 10px; padding: 4px 11px; }
+      .modal-stats-heading, .modal-badges-heading { font-size: 10px; }
+      .modal-stat-label { font-size: 12.5px; width: 128px; }
+      .modal-stat-val { font-size: 18px; width: 40px; }
+      .modal-stat-track { height: 12px; }
+      .modal-stat-boost { font-size: 16px; }
+      .modal-badge-pill { font-size: 14px; padding: 6px 14px; }
+      .modal-funfact-label { font-size: 10px; }
+      .modal-funfact p { font-size: 14px; line-height: 1.52; }
+      .card-modal-song-name { font-size: 1.22rem; }
+      .card-modal-song-by { font-size: 12px; }
+      .modal-play-btn { font-size: 11px; padding: 8px 14px; }
+      .card-modal-donate-link { font-size: 13px; padding: 14px; }
+      #modalPanel button[onclick^="challengeRider"] { font-size: 11px !important; padding: 11px !important; }
+    }
+
     /* Card entrance animation */
     @keyframes card-enter {
       from { opacity: 0; transform: translateY(18px) scale(0.96); }
@@ -1071,19 +1208,22 @@
 
     .tcard-raised-hero {
       text-align: center;
-      padding: 4px 14px 2px;
-      min-height: 52px;
+      padding: 6px 14px 16px;
+      min-height: 56px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
     .tcard-raised-hero-amt {
       font-family: 'Abril Fatface', serif;
       font-size: 2rem;
-      line-height: 1;
+      line-height: 1.12;
       color: var(--color-gold);
       letter-spacing: -0.01em;
+      display: block;
+      padding-bottom: 1px;
     }
     [data-tier="legend"] .tcard-raised-hero-amt { text-shadow: 0 0 16px rgba(249,241,8,0.5); }
     [data-tier="veteran"] .tcard-raised-hero-amt { color: var(--color-purple-light); }
@@ -2688,16 +2828,14 @@ function openModal(riderId, triggerEvent) {
     const bio = modalCard.querySelector('.tcard-back-bio');
     if (bio) {
       const div = document.createElement('div');
-      div.style.cssText = 'margin-bottom:8px;position:relative;z-index:1;';
+      div.className = 'tcard-back-raised';
       div.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-          <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
-          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${Math.round(raised).toLocaleString()}</span>
+        <div class="tcard-back-raised-top">
+          <span class="tcard-back-raised-label">Raised</span>
+          <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
         </div>
-        <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
-          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;"></div>
-        </div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>`;
+        <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
+        <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>`;
       bio.parentNode.insertBefore(div, bio);
     }
   }
@@ -2932,16 +3070,14 @@ fetchParticipantsLiveFirst()
       const bio = wrap.querySelector('.tcard-back-bio');
       if (!bio || raised <= 0) return;
       const div = document.createElement('div');
-      div.style.cssText = 'margin-bottom:8px;position:relative;z-index:1;';
+      div.className = 'tcard-back-raised';
       div.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-          <span style="font-family:'Josefin Slab',serif;font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(26,14,43,0.5);">Raised</span>
-          <span style="font-family:'Abril Fatface',serif;font-size:13px;color:var(--color-purple);">$${Math.round(raised).toLocaleString()}</span>
+        <div class="tcard-back-raised-top">
+          <span class="tcard-back-raised-label">Raised</span>
+          <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
         </div>
-        <div style="height:5px;background:rgba(26,14,43,0.08);border-radius:3px;overflow:hidden;margin-bottom:3px;">
-          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--color-purple),var(--color-purple-light));border-radius:3px;"></div>
-        </div>
-        <div style="font-family:'DM Sans',sans-serif;font-size:9px;color:rgba(26,14,43,0.4);">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
+        <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
+        <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
       `;
       bio.parentNode.insertBefore(div, bio);
     });
