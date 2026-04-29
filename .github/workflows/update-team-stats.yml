@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: jackson-changes
+          ref: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch DonorDrive data
@@ -63,4 +63,4 @@ jobs:
           git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: update team stats and activity feed [skip ci]"
-          git push origin HEAD:jackson-changes
+          git push origin HEAD:${{ github.ref_name }}
