@@ -1607,6 +1607,48 @@
       color: rgba(250,246,232,0.6);
       line-height: 1.4;
     }
+    .modal-qr-wrap {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(250,246,232,0.12);
+      background: rgba(250,246,232,0.04);
+      text-align: center;
+    }
+    .modal-qr-title {
+      margin: 0 0 8px;
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-gold);
+    }
+    .modal-qr-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 8px;
+      border: 1px solid rgba(250,246,232,0.2);
+      background: #fff;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    .modal-qr-download {
+      border: 1px solid rgba(4,178,202,0.45);
+      background: rgba(4,178,202,0.16);
+      color: var(--color-cream);
+      border-radius: 18px;
+      padding: 8px 12px;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+    .modal-qr-download:hover {
+      background: rgba(4,178,202,0.26);
+      border-color: rgba(4,178,202,0.8);
+    }
     @media (max-width: 780px) {
       /* Full-screen sheet: keep card visible above details */
       .card-modal-overlay {
@@ -3129,7 +3171,9 @@ function openModal(riderId, triggerEvent) {
   const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
   const sharePack = getSharePack(rider, donorHref, cs);
   const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
-  const storyCopySafe = sharePack.storyText.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+  const donorHrefEnc = encodeURIComponent(donorHref);
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=${donorHrefEnc}`;
+  const qrDownloadName = `tgt-${normalizeName(rider.name).replace(/\s+/g, '-')}-donate-qr.png`;
 
   const ytUrl = `https://www.youtube.com/results?search_query=Grateful+Dead+${encodeURIComponent('"'+rider.song+'"')}+live`;
   const spUrl = `https://open.spotify.com/search/Grateful%20Dead%20${encodeURIComponent(rider.song)}`;
@@ -3179,6 +3223,11 @@ function openModal(riderId, triggerEvent) {
     </div>
     <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
     ${stravaLinkInfo ? `<a class="card-modal-donate-link" href="${stravaLinkInfo.profileUrl || stravaLinkInfo.clubUrl}" target="_blank" rel="noopener" style="background:var(--color-orange);margin-top:8px;">🧡 ${stravaLinkInfo.profileUrl ? `View ${rider.name.split(' ')[0]} on Strava` : `View ${rider.name.split(' ')[0]} in Strava Club`}</a>` : ''}
+    <div class="modal-qr-wrap">
+      <p class="modal-qr-title">Donor QR Code</p>
+      <img class="modal-qr-img" src="${qrCodeUrl}" alt="QR code to donate to ${rider.name}">
+      <button type="button" class="modal-qr-download" onclick="downloadQrCodeImage('${qrCodeUrl}', '${qrDownloadName}')">⬇ Download QR</button>
+    </div>
     <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
     <div class="share-generator">
       <h4>One-Click Share Generator</h4>
@@ -3299,6 +3348,27 @@ function getSharePack(rider, donorHref, cs) {
 function copyShareText(text, url) {
   const value = `${text}\n${url}`;
   navigator.clipboard.writeText(value).catch(() => {});
+}
+
+async function downloadQrCodeImage(qrUrl, filename) {
+  try {
+    const res = await fetch(qrUrl);
+    if (!res.ok) throw new Error('Failed to fetch QR');
+    const blob = await res.blob();
+    const href = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = href;
+    a.download = filename || 'tgt-donor-qr.png';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(href);
+      a.remove();
+    }, 500);
+    showShareToast('QR downloaded. Share it to send donors directly to this rider page.');
+  } catch (_) {
+    window.open(qrUrl, '_blank', 'noopener');
+  }
 }
 
 function isUnsupportedSocialShareContext() {
