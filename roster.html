@@ -2890,6 +2890,7 @@ function renderAll(filter, query) {
 const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 let _photoMap = {};
 let _fundMap  = {};
+let _stravaMap = {};
 let _modalScrollHandler = null;
 
 function shareRiderCard(rider) {
@@ -3044,6 +3045,7 @@ function openModal(riderId, triggerEvent) {
   const riderTier = getComputedTier(rider);
   const tierLabel = TIER_LABELS[riderTier] || riderTier;
   const wishBadge = cs.isWishGranter ? '<span class="modal-wish-granter-badge">⚡ Wish Granter</span>' : '';
+  const stravaProfileUrl = _stravaMap[normalizeName(rider.name)] || null;
   const challengeState = tgtLoadChallenges();
   const modalCampaignBadges = [];
   if (tgtGetShareCount(rider.id) >= 3) modalCampaignBadges.push('📣 Share x3');
@@ -3103,6 +3105,7 @@ function openModal(riderId, triggerEvent) {
       </div>
     </div>
     <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
+    ${stravaProfileUrl ? `<a class="card-modal-donate-link" href="${stravaProfileUrl}" target="_blank" rel="noopener" style="background:var(--color-orange);margin-top:8px;">🧡 View ${rider.name.split(' ')[0]} on Strava</a>` : ''}
     <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
     <div class="share-generator">
       <h4>One-Click Share Generator</h4>
@@ -3389,8 +3392,9 @@ fetchParticipantsLiveFirst()
 Promise.all([
   fetch('/assets/data/activity-feed.json').then(r => r.json()).catch(() => null),
   fetchParticipantsLiveFirst().catch(() => null),
-  fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null)
-]).then(([feed, parts, stravaData]) => {
+  fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null),
+  fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null)
+]).then(([feed, parts, stravaData, stravaMembers]) => {
   const liveSection = document.getElementById('liveSection');
 
   // Recent donations feed
@@ -3436,6 +3440,14 @@ Promise.all([
     });
   }
 
+
+  if (stravaMembers && Array.isArray(stravaMembers.members)) {
+    _stravaMap = {};
+    stravaMembers.members.forEach(function (m) {
+      const key = normalizeName(m.displayName);
+      if (key && m.profileUrl && !_stravaMap[key]) _stravaMap[key] = m.profileUrl;
+    });
+  }
 
   if (stravaData) renderTrainingRides(stravaData);
 });

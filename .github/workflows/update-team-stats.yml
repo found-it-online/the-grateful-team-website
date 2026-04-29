@@ -40,12 +40,17 @@ jobs:
           if [ -z "$STRAVA_ACCESS_TOKEN" ]; then
             echo "No STRAVA_ACCESS_TOKEN set; writing empty Strava payload"
             echo "[]" > /tmp/strava_activities.json
+            echo "[]" > /tmp/strava_members.json
             exit 0
           fi
           echo "Fetching Strava club activities..."
           curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
             "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=40&page=1" \
             -o /tmp/strava_activities.json || echo "[]" > /tmp/strava_activities.json
+          echo "Fetching Strava club members..."
+          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+            "https://www.strava.com/api/v3/clubs/1302442/members?per_page=200&page=1" \
+            -o /tmp/strava_members.json || echo "[]" > /tmp/strava_members.json
           echo "Strava fetch complete"
 
       - name: Process and write data files
@@ -55,7 +60,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json
+          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: update team stats and activity feed [skip ci]"
           git push origin HEAD:jackson-changes

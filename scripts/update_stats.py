@@ -12,6 +12,11 @@ try:
         raw_strava_activities = json.load(f)
 except FileNotFoundError:
     raw_strava_activities = []
+try:
+    with open('/tmp/strava_members.json') as f:
+        raw_strava_members = json.load(f)
+except FileNotFoundError:
+    raw_strava_members = []
 
 # team-stats.json
 stats = {
@@ -99,4 +104,30 @@ with open('assets/data/strava-rides.json', 'w') as f:
     }, f, indent=2)
 print('strava-rides.json written')
 
-print('Done: {} donations, {} riders, {} strava rides'.format(len(donations), len(raw_parts), len(strava_rides)))
+# strava-members.json (club member directory with profile links)
+strava_members = []
+for m in raw_strava_members if isinstance(raw_strava_members, list) else []:
+    first = (m.get('firstname') or '').strip()
+    last = (m.get('lastname') or '').strip()
+    full = ' '.join(filter(None, [first, last])).strip()
+    athlete_id = m.get('id')
+    strava_members.append({
+        'athleteId': athlete_id,
+        'firstName': first,
+        'lastName': last,
+        'displayName': full if full else 'Club Rider',
+        'profileUrl': 'https://www.strava.com/athletes/{}'.format(athlete_id) if athlete_id else None,
+        'clubUrl': 'https://www.strava.com/clubs/1302442',
+    })
+
+with open('assets/data/strava-members.json', 'w') as f:
+    json.dump({
+        'updatedAt': now,
+        'clubId': 1302442,
+        'clubUrl': 'https://www.strava.com/clubs/1302442',
+        'members': strava_members,
+    }, f, indent=2)
+print('strava-members.json written')
+
+print('Done: {} donations, {} riders, {} strava rides, {} strava members'.format(
+    len(donations), len(raw_parts), len(strava_rides), len(strava_members)))
