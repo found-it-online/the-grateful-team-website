@@ -107,10 +107,11 @@ print('strava-rides.json written')
 # strava-members.json (club member directory with profile links)
 strava_members = []
 for m in raw_strava_members if isinstance(raw_strava_members, list) else []:
-    first = (m.get('firstname') or '').strip()
-    last = (m.get('lastname') or '').strip()
+    athlete_obj = m.get('athlete') if isinstance(m.get('athlete'), dict) else {}
+    first = (m.get('firstname') or athlete_obj.get('firstname') or '').strip()
+    last = (m.get('lastname') or athlete_obj.get('lastname') or '').strip()
     full = ' '.join(filter(None, [first, last])).strip()
-    athlete_id = m.get('id')
+    athlete_id = m.get('id') or m.get('athlete_id') or athlete_obj.get('id')
     strava_members.append({
         'athleteId': athlete_id,
         'firstName': first,

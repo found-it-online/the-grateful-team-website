@@ -2891,7 +2891,36 @@ const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matche
 let _photoMap = {};
 let _fundMap  = {};
 let _stravaMap = {};
+let _riderAliasMap = null;
 let _modalScrollHandler = null;
+const STRAVA_ATHLETE_OVERRIDES = {
+  'luis vecchio': { athleteId: 52089356, profileUrl: 'https://www.strava.com/athletes/52089356' },
+  'brad johnson': { athleteId: 31815516, profileUrl: 'https://www.strava.com/athletes/31815516' },
+  'jason winchell': { athleteId: 20567387, profileUrl: 'https://www.strava.com/athletes/20567387' },
+  'ethan pomfret': { athleteId: 188692144, profileUrl: 'https://www.strava.com/athletes/188692144' },
+  'stan krzyzanowski': { athleteId: 114949603, profileUrl: 'https://www.strava.com/athletes/114949603' },
+  'stanislaw krzyzanowski': { athleteId: 114949603, profileUrl: 'https://www.strava.com/athletes/114949603' },
+  'jess mata': { athleteId: 1171877272, profileUrl: 'https://www.strava.com/athletes/1171877272' },
+  'jessica mata': { athleteId: 1171877272, profileUrl: 'https://www.strava.com/athletes/1171877272' },
+  'andrew kennedy': { athleteId: 8545140, profileUrl: 'https://www.strava.com/athletes/8545140' },
+  'jackson maitner': { athleteId: 100928534, profileUrl: 'https://www.strava.com/athletes/100928534' },
+  'eli luke': { athleteId: 15364796, profileUrl: 'https://www.strava.com/athletes/15364796' },
+  'lauren froman': { athleteId: 71101428, profileUrl: 'https://www.strava.com/athletes/71101428' },
+  'anthony lazzaro': { athleteId: 129347277, profileUrl: 'https://www.strava.com/athletes/129347277' },
+  'benjamin kulczewski': { athleteId: 48193270, profileUrl: 'https://www.strava.com/athletes/48193270' },
+  'cameron mcgill': { athleteId: 59127458, profileUrl: 'https://www.strava.com/athletes/59127458' },
+  'cami mastenbrook': { athleteId: 114419410, profileUrl: 'https://www.strava.com/athletes/114419410' },
+  'emma dicello': { athleteId: 38115800, profileUrl: 'https://www.strava.com/athletes/38115800' },
+  'kiersten schulte': { athleteId: 122254630, profileUrl: 'https://www.strava.com/athletes/122254630' },
+  'lauren milligan': { athleteId: 9075186, profileUrl: 'https://www.strava.com/athletes/9075186' },
+  'lauren sytsma': { athleteId: 173925066, profileUrl: 'https://www.strava.com/athletes/173925066' },
+  'lisa marsh': { athleteId: 139519403, profileUrl: 'https://www.strava.com/athletes/139519403' },
+  'nakayla kosmerick': { athleteId: 135775239, profileUrl: 'https://www.strava.com/athletes/135775239' },
+  'robert grooters': { athleteId: 147506015, profileUrl: 'https://www.strava.com/athletes/147506015' },
+  'caleb agar': { athleteId: 166815710, profileUrl: 'https://www.strava.com/athletes/166815710' },
+  'jessica barr': { athleteId: 30825918, profileUrl: 'https://www.strava.com/athletes/30825918' },
+  'justin grenell': { athleteId: 22762955, profileUrl: 'https://www.strava.com/athletes/22762955' }
+};
 
 function shareRiderCard(rider) {
   if (!rider) return;
@@ -3045,7 +3074,7 @@ function openModal(riderId, triggerEvent) {
   const riderTier = getComputedTier(rider);
   const tierLabel = TIER_LABELS[riderTier] || riderTier;
   const wishBadge = cs.isWishGranter ? '<span class="modal-wish-granter-badge">⚡ Wish Granter</span>' : '';
-  const stravaProfileUrl = _stravaMap[normalizeName(rider.name)] || null;
+  const stravaLinkInfo = _stravaMap[normalizeName(rider.name)] || null;
   const challengeState = tgtLoadChallenges();
   const modalCampaignBadges = [];
   if (tgtGetShareCount(rider.id) >= 3) modalCampaignBadges.push('📣 Share x3');
@@ -3105,7 +3134,7 @@ function openModal(riderId, triggerEvent) {
       </div>
     </div>
     <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
-    ${stravaProfileUrl ? `<a class="card-modal-donate-link" href="${stravaProfileUrl}" target="_blank" rel="noopener" style="background:var(--color-orange);margin-top:8px;">🧡 View ${rider.name.split(' ')[0]} on Strava</a>` : ''}
+    ${stravaLinkInfo ? `<a class="card-modal-donate-link" href="${stravaLinkInfo.profileUrl || stravaLinkInfo.clubUrl}" target="_blank" rel="noopener" style="background:var(--color-orange);margin-top:8px;">🧡 ${stravaLinkInfo.profileUrl ? `View ${rider.name.split(' ')[0]} on Strava` : `View ${rider.name.split(' ')[0]} in Strava Club`}</a>` : ''}
     <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
     <div class="share-generator">
       <h4>One-Click Share Generator</h4>
@@ -3219,6 +3248,43 @@ function normalizeName(value) {
   return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
+function buildRiderAliasMap() {
+  if (_riderAliasMap) return _riderAliasMap;
+  const map = {};
+  RIDERS.forEach(function (rider) {
+    const full = normalizeName(rider.name);
+    if (full) map[full] = rider;
+    const parts = rider.name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      const first = normalizeName(parts[0]);
+      const lastInitial = normalizeName(parts[parts.length - 1]).charAt(0);
+      if (first && lastInitial) {
+        const key = `${first} ${lastInitial}`;
+        map[key] = map[key] || rider;
+      }
+    }
+  });
+  _riderAliasMap = map;
+  return map;
+}
+
+function findRiderByExternalName(value) {
+  const key = normalizeName(value);
+  if (!key) return null;
+  const aliasMap = buildRiderAliasMap();
+  if (aliasMap[key]) return aliasMap[key];
+
+  const parts = key.split(' ').filter(Boolean);
+  if (parts.length < 2) return null;
+  const first = parts[0];
+  const lastInitial = parts[parts.length - 1].charAt(0);
+  const candidates = RIDERS.filter(function (r) {
+    const rp = r.name.trim().toLowerCase().split(/\s+/);
+    return rp[0] === first && rp[rp.length - 1].charAt(0) === lastInitial;
+  });
+  return candidates.length === 1 ? candidates[0] : null;
+}
+
 function fmtMiles(meters) {
   return ((Number(meters) || 0) * 0.000621371).toFixed(1) + ' mi';
 }
@@ -3240,11 +3306,8 @@ function renderTrainingRides(data) {
   const host = document.getElementById('trainingRidesFeed');
   if (!section || !host || !data || !Array.isArray(data.rides) || !data.rides.length) return;
 
-  const rosterByName = {};
-  RIDERS.forEach(r => { rosterByName[normalizeName(r.name)] = r; });
-
   host.innerHTML = data.rides.slice(0, 12).map(function (ride) {
-    const matched = rosterByName[normalizeName(ride.athleteName)] || null;
+    const matched = findRiderByExternalName(ride.athleteName);
     const riderJump = matched
       ? `<button type="button" onclick="openModal(${matched.id})" style="background:rgba(249,241,8,0.14);border:1px solid rgba(249,241,8,0.45);border-radius:999px;padding:6px 10px;color:var(--color-gold);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;">Open ${matched.name.split(' ')[0]}'s Card</button>`
       : `<a href="${ride.clubUrl || 'https://www.strava.com/clubs/1302442'}" target="_blank" rel="noopener" style="color:var(--color-cerulean);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-decoration:none;">View in Club →</a>`;
@@ -3444,8 +3507,25 @@ Promise.all([
   if (stravaMembers && Array.isArray(stravaMembers.members)) {
     _stravaMap = {};
     stravaMembers.members.forEach(function (m) {
-      const key = normalizeName(m.displayName);
-      if (key && m.profileUrl && !_stravaMap[key]) _stravaMap[key] = m.profileUrl;
+      const rider = findRiderByExternalName(m.displayName);
+      if (!rider) return;
+      const riderKey = normalizeName(rider.name);
+      if (!riderKey || _stravaMap[riderKey]) return;
+      _stravaMap[riderKey] = {
+        profileUrl: m.profileUrl || null,
+        clubUrl: m.clubUrl || 'https://www.strava.com/clubs/1302442'
+      };
+    });
+    Object.keys(STRAVA_ATHLETE_OVERRIDES).forEach(function (nameKey) {
+      const rider = findRiderByExternalName(nameKey);
+      if (!rider) return;
+      const riderKey = normalizeName(rider.name);
+      const override = STRAVA_ATHLETE_OVERRIDES[nameKey];
+      const existing = _stravaMap[riderKey] || { clubUrl: 'https://www.strava.com/clubs/1302442' };
+      _stravaMap[riderKey] = {
+        profileUrl: override.profileUrl || existing.profileUrl || null,
+        clubUrl: existing.clubUrl || 'https://www.strava.com/clubs/1302442'
+      };
     });
   }
 
