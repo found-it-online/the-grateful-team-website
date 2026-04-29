@@ -886,11 +886,7 @@
       .lb-amount { font-size: 10px; }
       .lb-tab { font-size: 8.5px; padding: 4px 9px; }
 
-      /* Donation toast: full width at bottom */
-      .donation-toast-wrap { left: 12px; right: 12px; bottom: 16px; }
-      .donation-toast { max-width: 100%; }
-      .donation-toast-main { font-size: 12px; }
-      .donation-toast-amount { font-size: 16px; }
+
     }
 
     /* Very small phones ≤ 400px — single column */
@@ -993,51 +989,7 @@
       white-space: nowrap;
     }
 
-    /* ══ DONATION TOAST ══ */
-    .donation-toast-wrap {
-      position: fixed;
-      bottom: 24px;
-      left: 24px;
-      z-index: 500;
-      pointer-events: none;
-    }
-    .donation-toast {
-      background: rgba(12,4,24,0.97);
-      border: 1px solid rgba(4,178,202,0.4);
-      border-radius: 14px;
-      padding: 14px 18px;
-      max-width: 300px;
-      backdrop-filter: blur(12px);
-      transform: translateY(16px);
-      opacity: 0;
-      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(4,178,202,0.1);
-    }
-    .donation-toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    .donation-toast-label {
-      font-family: 'Josefin Slab', serif;
-      font-size: 8.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--color-cerulean);
-      margin-bottom: 6px;
-    }
-    .donation-toast-main {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: rgba(250,246,232,0.85);
-      line-height: 1.45;
-    }
-    .donation-toast-amount {
-      font-family: 'Abril Fatface', serif;
-      font-size: 18px;
-      color: var(--color-gold);
-      margin-right: 4px;
-    }
+
 
     /* ══ HOT STREAK CARD ══ */
     .tcard-wrap.hot-streak .tcard-front {
@@ -1402,13 +1354,6 @@
 
 <div id="footer-slot"></div>
 
-<!-- DONATION TOAST -->
-<div class="donation-toast-wrap">
-  <div class="donation-toast" id="donationToast">
-    <div class="donation-toast-label">💙 Live Activity</div>
-    <div class="donation-toast-main" id="donationToastText"></div>
-  </div>
-</div>
 
 <script src="/assets/js/nav.js" defer></script>
 <script>
@@ -2720,25 +2665,7 @@ Promise.all([
     });
   }
 
-  // Cycling donation toasts
-  if (realDonations.length > 0) {
-    const toast = document.getElementById('donationToast');
-    const textEl = document.getElementById('donationToastText');
-    if (toast && textEl) {
-      // Sort by most recent first for relevance
-      const sorted = [...realDonations].reverse();
-      let idx = 0;
-      function showToast() {
-        const d = sorted[idx % sorted.length];
-        textEl.innerHTML = `<span class="donation-toast-amount">$${Math.round(d.amount).toLocaleString()}</span> from ${d.displayName} → ${d.recipientName}`;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 4000);
-        idx++;
-      }
-      setTimeout(showToast, 3000); // first toast after 3s
-      setInterval(showToast, 10000); // every 10s after
-    }
-  }
+
 });
 
 // WAM Countdown
