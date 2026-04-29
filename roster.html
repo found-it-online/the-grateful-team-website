@@ -549,6 +549,37 @@
       color: rgba(250,246,232,0.3);
     }
     .discovered-bar .disc-count { color: var(--color-gold); }
+    .challenge-hub {
+      background: rgba(4,178,202,0.08);
+      border-bottom: 1px solid rgba(4,178,202,0.24);
+      padding: 14px 24px;
+    }
+    .challenge-hub-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .challenge-pill {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(245,237,214,0.92);
+      border: 1px solid rgba(250,246,232,0.2);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(20,9,18,0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .challenge-pill.done {
+      border-color: rgba(249,241,8,0.55);
+      background: rgba(249,241,8,0.14);
+      color: var(--color-gold);
+    }
 
     /* Confetti particles */
     .confetti-particle {
@@ -966,6 +997,8 @@
 
       /* Discovered bar */
       .discovered-bar { font-size: 11px; padding: 8px 16px; }
+      .challenge-hub { padding: 10px 16px; }
+      .challenge-pill { font-size: 11px; padding: 7px 10px; }
 
       /* Live section */
       #liveSection { padding: 28px 16px; }
@@ -1527,6 +1560,53 @@
       gap: 6px;
       max-width: 100%;
     }
+    .share-generator {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(250,246,232,0.12);
+      background: rgba(250,246,232,0.04);
+    }
+    .share-generator h4 {
+      margin: 0 0 9px;
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-gold);
+    }
+    .share-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .share-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 10px 8px;
+      border: 1px solid rgba(250,246,232,0.2);
+      color: rgba(250,246,232,0.95);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      transition: background 120ms ease, border-color 120ms ease;
+      background: transparent;
+      cursor: pointer;
+    }
+    .share-link:hover {
+      background: rgba(250,246,232,0.1);
+      border-color: rgba(249,241,8,0.45);
+    }
+    .share-generator-note {
+      margin: 8px 0 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.6);
+      line-height: 1.4;
+    }
     @media (max-width: 780px) {
       /* Full-screen sheet: keep card visible above details */
       .card-modal-overlay {
@@ -1684,6 +1764,9 @@
 <div class="discovered-bar" id="discoveredBar" style="display:none;">
   <span class="disc-count" id="discCount">0</span> / 51 riders discovered — flip a card to learn their story
 </div>
+<div class="challenge-hub" id="challengeHub">
+  <div class="challenge-hub-inner" id="challengeHubInner"></div>
+</div>
 
 <!-- FILTER CONTROLS -->
 <div class="roster-controls">
@@ -1730,6 +1813,20 @@
   </div>
   <div style="text-align:center;margin-top:40px;">
     <a href="/donate.html" class="btn-ghost" style="border-color:var(--color-gold);color:var(--color-gold);">Help us reach $115K — Donate now →</a>
+  </div>
+</section>
+
+<section id="trainingRidesSection" style="background:#100824;padding:clamp(36px,5vw,56px) 24px;display:none;border-top:1px solid rgba(201,148,58,0.14);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="eyebrow" style="color:var(--color-cerulean);margin:0 0 8px;">Strava Club Training</p>
+    <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 16px;">Recent Team Rides</h2>
+    <p style="margin:0 0 22px;font-family:'DM Sans',sans-serif;color:rgba(250,246,232,0.72);line-height:1.55;max-width:780px;">
+      Pulled from the Grateful Team Strava club. When a rider name matches this roster, you can jump directly to their card.
+    </p>
+    <div id="trainingRidesFeed" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;"></div>
+    <div style="margin-top:16px;">
+      <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost" style="border-color:rgba(4,178,202,0.45);color:var(--color-cerulean);">View Strava Club →</a>
+    </div>
   </div>
 </section>
 
@@ -2484,9 +2581,51 @@ const RIDERS = [
 const STATS_SPIRIT_BASE = 5;
 /** Share taps from this browser toward max grit (per rider, localStorage). */
 const GRIT_SHARE_INCREMENTS_TOTAL = 50;
+const TGT_CHALLENGE_KEY = 'tgt-challenges-v1';
 
 function tgtShareStorageKey(id) {
   return `tgt-share-v1:${id}`;
+}
+
+function tgtLoadChallenges() {
+  const fallback = { totalShares: 0, supporterShares: 0, rookieShares: 0 };
+  try {
+    const parsed = JSON.parse(localStorage.getItem(TGT_CHALLENGE_KEY) || '{}');
+    return {
+      totalShares: Math.max(0, Number(parsed.totalShares) || 0),
+      supporterShares: Math.max(0, Number(parsed.supporterShares) || 0),
+      rookieShares: Math.max(0, Number(parsed.rookieShares) || 0),
+    };
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function tgtSaveChallenges(next) {
+  try { localStorage.setItem(TGT_CHALLENGE_KEY, JSON.stringify(next)); } catch (e) {}
+}
+
+function tgtRecordChallengeProgress(kind, rider) {
+  const state = tgtLoadChallenges();
+  state.totalShares += 1;
+  if (kind === 'supporter') state.supporterShares += 1;
+  if (rider && getComputedTier(rider) === 'rookie') state.rookieShares += 1;
+  tgtSaveChallenges(state);
+  renderChallengeHub();
+}
+
+function renderChallengeHub() {
+  const host = document.getElementById('challengeHubInner');
+  if (!host) return;
+  const state = tgtLoadChallenges();
+  const defs = [
+    { done: state.totalShares >= 3, text: `📣 Share 3 Times (${Math.min(state.totalShares, 3)}/3)` },
+    { done: state.supporterShares >= 5, text: `🤝 Bring 5 Donors (${Math.min(state.supporterShares, 5)}/5)` },
+    { done: state.rookieShares >= 1, text: `🌟 First-Time Donor Champion (${Math.min(state.rookieShares, 1)}/1)` }
+  ];
+  host.innerHTML = defs.map(function (d) {
+    return `<span class="challenge-pill ${d.done ? 'done' : ''}">${d.done ? '✅' : '⏳'} ${d.text}</span>`;
+  }).join('');
 }
 
 function tgtGetShareCount(riderId) {
@@ -2580,7 +2719,15 @@ function renderCard(r, index) {
     ? r.donorSlug
     : `https://makeawishmichigan.donordrive.com/participants/${r.donorSlug}`;
 
-  const badgeHTML = r.badges.map(b => {
+  const challengeState = tgtLoadChallenges();
+  const campaignBadges = [];
+  if (tgtGetShareCount(r.id) >= 3) campaignBadges.push('📣 Share x3');
+  const fundData = _fundMap[r.name.toLowerCase()];
+  if (fundData && (fundData.numDonations || 0) >= 5) campaignBadges.push('🤝 5 Donors Club');
+  if (challengeState.rookieShares >= 1 && tier === 'rookie') campaignBadges.push('🌟 First-Time Donor Champion');
+  const allBadges = r.badges.concat(campaignBadges);
+
+  const badgeHTML = allBadges.map(b => {
     const emoji = b.split(' ')[0];
     const label = b.slice(b.indexOf(' ') + 1);
     return `<span class="tcard-back-badge" title="${label}">${b}</span>`;
@@ -2635,7 +2782,7 @@ function renderCard(r, index) {
 
           <div class="tcard-song">🎵 <span>"${r.song}"</span></div>
           <div class="tcard-badges">
-            ${r.badges.slice(0, 4).map(b => `<div class="tcard-badge" title="${b.slice(b.indexOf(' ')+1)}">${b.split(' ')[0]}</div>`).join('')}
+            ${allBadges.slice(0, 4).map(b => `<div class="tcard-badge" title="${b.slice(b.indexOf(' ')+1)}">${b.split(' ')[0]}</div>`).join('')}
           </div>
         </div>
 
@@ -2761,6 +2908,7 @@ function shareRiderCard(rider) {
     return;
   }
   tgtRecordRiderShare(rider.id);
+  tgtRecordChallengeProgress('share', rider);
   const smsBody = encodeURIComponent(text);
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const smsUrl = isIOS ? `sms:&body=${smsBody}` : `sms:?body=${smsBody}`;
@@ -2896,7 +3044,17 @@ function openModal(riderId, triggerEvent) {
   const riderTier = getComputedTier(rider);
   const tierLabel = TIER_LABELS[riderTier] || riderTier;
   const wishBadge = cs.isWishGranter ? '<span class="modal-wish-granter-badge">⚡ Wish Granter</span>' : '';
-  const badgesHTML = rider.badges.map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
+  const challengeState = tgtLoadChallenges();
+  const modalCampaignBadges = [];
+  if (tgtGetShareCount(rider.id) >= 3) modalCampaignBadges.push('📣 Share x3');
+  if ((_fundMap[rider.name.toLowerCase()] || {}).numDonations >= 5) modalCampaignBadges.push('🤝 5 Donors Club');
+  if (challengeState.rookieShares >= 1 && riderTier === 'rookie') modalCampaignBadges.push('🌟 First-Time Donor Champion');
+  const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
+  const sharePack = getSharePack(rider, donorHref);
+  const shareTextEnc = encodeURIComponent(sharePack.text);
+  const shareUrlEnc = encodeURIComponent(sharePack.url);
+  const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
+  const igCopySafe = sharePack.text.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
   const ytUrl = `https://www.youtube.com/results?search_query=Grateful+Dead+${encodeURIComponent('"'+rider.song+'"')}+live`;
   const spUrl = `https://open.spotify.com/search/Grateful%20Dead%20${encodeURIComponent(rider.song)}`;
@@ -2946,6 +3104,16 @@ function openModal(riderId, triggerEvent) {
     </div>
     <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
     <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
+    <div class="share-generator">
+      <h4>One-Click Share Generator</h4>
+      <div class="share-grid">
+        <button type="button" class="share-link" onclick="copyShareText('${igCopySafe}', '${sharePack.url}'); window.open('https://www.instagram.com/','_blank','noopener'); tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">📸 Instagram</button>
+        <a class="share-link" href="https://twitter.com/intent/tweet?text=${shareCombinedEnc}" target="_blank" rel="noopener" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">𝕏 X</a>
+        <a class="share-link" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrlEnc}&quote=${shareTextEnc}" target="_blank" rel="noopener" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">📘 Facebook</a>
+        <a class="share-link" href="sms:?&body=${shareCombinedEnc}" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">💬 iMessage</a>
+      </div>
+      <p class="share-generator-note">Instagram copies your caption/link and opens Instagram. X/Facebook/iMessage open prefilled drafts.</p>
+    </div>
   `;
 
   // Animate stat bars after paint
@@ -3014,7 +3182,10 @@ function shareCard(e, riderId) {
   const { name, nickname } = rider;
   const text = `${nickname} (${name}) — a Wish Hero riding 300 miles for Make-A-Wish Michigan with The Grateful Team 🚲💙`;
   const url = window.location.href.split('#')[0];
-  const onDone = () => tgtRecordRiderShare(riderId);
+  const onDone = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
   if (navigator.share) {
     navigator.share({ title: `TGT Rider Card: ${nickname}`, text, url }).then(onDone).catch(() => {});
   } else {
@@ -3026,6 +3197,75 @@ function shareCard(e, riderId) {
       setTimeout(() => { btn.textContent = orig; }, 1500);
     }).catch(() => {});
   }
+}
+
+function getSharePack(rider, donorHref) {
+  const first = rider.name.split(' ')[0];
+  return {
+    text: `Ride with ${rider.nickname} (${rider.name}) and help grant wishes with The Grateful Team. Please support ${first}!`,
+    url: donorHref
+  };
+}
+
+function copyShareText(text, url) {
+  const value = `${text}\n${url}`;
+  navigator.clipboard.writeText(value).catch(() => {});
+}
+
+function normalizeName(value) {
+  return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function fmtMiles(meters) {
+  return ((Number(meters) || 0) * 0.000621371).toFixed(1) + ' mi';
+}
+
+function fmtElevFeet(meters) {
+  return Math.round((Number(meters) || 0) * 3.28084).toLocaleString() + ' ft';
+}
+
+function fmtDuration(sec) {
+  const s = Number(sec) || 0;
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+
+function renderTrainingRides(data) {
+  const section = document.getElementById('trainingRidesSection');
+  const host = document.getElementById('trainingRidesFeed');
+  if (!section || !host || !data || !Array.isArray(data.rides) || !data.rides.length) return;
+
+  const rosterByName = {};
+  RIDERS.forEach(r => { rosterByName[normalizeName(r.name)] = r; });
+
+  host.innerHTML = data.rides.slice(0, 12).map(function (ride) {
+    const matched = rosterByName[normalizeName(ride.athleteName)] || null;
+    const riderJump = matched
+      ? `<button type="button" onclick="openModal(${matched.id})" style="background:rgba(249,241,8,0.14);border:1px solid rgba(249,241,8,0.45);border-radius:999px;padding:6px 10px;color:var(--color-gold);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;">Open ${matched.name.split(' ')[0]}'s Card</button>`
+      : `<a href="${ride.clubUrl || 'https://www.strava.com/clubs/1302442'}" target="_blank" rel="noopener" style="color:var(--color-cerulean);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-decoration:none;">View in Club →</a>`;
+    return `
+      <article style="background:rgba(250,246,232,0.05);border:1px solid rgba(250,246,232,0.12);border-radius:10px;padding:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;">
+          <strong style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--color-cream);line-height:1.35;">${ride.name || 'Training Ride'}</strong>
+          <span style="font-family:'Josefin Slab',serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(4,178,202,0.8);">${ride.sportType || 'Ride'}</span>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(250,246,232,0.68);margin-bottom:8px;">🚴 ${ride.athleteName || 'Club Rider'}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.82);">📏 ${fmtMiles(ride.distanceMeters)}</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.82);">⛰️ ${fmtElevFeet(ride.elevationGainMeters)}</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.82);">⏱️ ${fmtDuration(ride.movingTimeSec)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          ${riderJump}
+          <a href="${ride.activityUrl || 'https://www.strava.com/clubs/1302442'}" target="_blank" rel="noopener" style="color:var(--color-cream);font-family:'DM Sans',sans-serif;font-size:11px;text-decoration:none;border:1px solid rgba(250,246,232,0.22);border-radius:999px;padding:6px 10px;">Activity ↗</a>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  section.style.display = 'block';
 }
 
 /* ══════════════════════════════════════
@@ -3076,6 +3316,7 @@ document.getElementById('rosterSearch').addEventListener('input', e => {
 });
 
 renderAll('all', '');
+renderChallengeHub();
 
 // Restore discovered counter from localStorage
 (function() {
@@ -3147,8 +3388,9 @@ fetchParticipantsLiveFirst()
 // Populate live activity + leaderboard sections
 Promise.all([
   fetch('/assets/data/activity-feed.json').then(r => r.json()).catch(() => null),
-  fetchParticipantsLiveFirst().catch(() => null)
-]).then(([feed, parts]) => {
+  fetchParticipantsLiveFirst().catch(() => null),
+  fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null)
+]).then(([feed, parts, stravaData]) => {
   const liveSection = document.getElementById('liveSection');
 
   // Recent donations feed
@@ -3195,6 +3437,7 @@ Promise.all([
   }
 
 
+  if (stravaData) renderTrainingRides(stravaData);
 });
 
 // WAM Countdown
@@ -3297,10 +3540,13 @@ function switchLbTab(tab, btn) {
 // Challenge a rider
 function challengeRider(name, nickname, donorUrl) {
   const msg = `🚲 Can you help ${nickname} (${name}) grant a wish? They're riding 300 miles for Make-A-Wish Michigan — donate here: ${donorUrl}`;
+  const rider = RIDERS.find(r => r.name === name);
+  const onDone = () => tgtRecordChallengeProgress('supporter', rider);
   if (navigator.share) {
-    navigator.share({ title: `Challenge: Support ${nickname}`, text: msg, url: donorUrl }).catch(() => {});
+    navigator.share({ title: `Challenge: Support ${nickname}`, text: msg, url: donorUrl }).then(onDone).catch(() => {});
   } else {
     navigator.clipboard.writeText(msg).then(() => {
+      onDone();
       const btn = event.currentTarget;
       const orig = btn.textContent;
       btn.textContent = '✓ Link copied — share it!';
