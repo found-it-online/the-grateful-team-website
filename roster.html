@@ -807,6 +807,143 @@
     .tcard-wrap:nth-child(8)  { animation-delay: 0.21s; }
     .tcard-wrap:nth-child(n+9) { animation-delay: 0.24s; }
 
+    /* ══ TEAM GOAL PROGRESS BAR ══ */
+    .team-goal-bar {
+      background: #0c0418;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(249,241,8,0.12);
+    }
+    .team-goal-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .team-goal-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-gold);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .team-goal-track {
+      flex: 1;
+      min-width: 180px;
+      height: 8px;
+      background: rgba(250,246,232,0.07);
+      border-radius: 4px;
+      overflow: visible;
+      position: relative;
+    }
+    .team-goal-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1.8s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+    .team-goal-fill::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      background: var(--color-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(249,241,8,0.6), 0 0 20px rgba(249,241,8,0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease 1.5s;
+    }
+    .team-goal-fill.loaded::after { opacity: 1; }
+    .team-goal-pct {
+      font-family: 'Abril Fatface', serif;
+      font-size: 20px;
+      color: var(--color-gold);
+      flex-shrink: 0;
+      min-width: 48px;
+      text-align: right;
+      line-height: 1;
+    }
+    .team-goal-details {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.4);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* ══ DONATION TOAST ══ */
+    .donation-toast-wrap {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 500;
+      pointer-events: none;
+    }
+    .donation-toast {
+      background: rgba(12,4,24,0.97);
+      border: 1px solid rgba(4,178,202,0.4);
+      border-radius: 14px;
+      padding: 14px 18px;
+      max-width: 300px;
+      backdrop-filter: blur(12px);
+      transform: translateY(16px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(4,178,202,0.1);
+    }
+    .donation-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .donation-toast-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-cerulean);
+      margin-bottom: 6px;
+    }
+    .donation-toast-main {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: rgba(250,246,232,0.85);
+      line-height: 1.45;
+    }
+    .donation-toast-amount {
+      font-family: 'Abril Fatface', serif;
+      font-size: 18px;
+      color: var(--color-gold);
+      margin-right: 4px;
+    }
+
+    /* ══ HOT STREAK CARD ══ */
+    .tcard-wrap.hot-streak .tcard-front {
+      box-shadow: 0 0 0 2px rgba(249,241,8,0.6), 0 0 24px rgba(249,241,8,0.15);
+    }
+    .tcard-hot-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 22px;
+      z-index: 10;
+      filter: drop-shadow(0 0 6px rgba(232,98,26,0.9));
+      animation: fire-pulse 1.2s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes fire-pulse {
+      from { transform: scale(0.88) rotate(-6deg); }
+      to   { transform: scale(1.12) rotate(6deg); }
+    }
+
     /* Front fundraising badge */
     .tcard-raised {
       font-family: 'Josefin Slab', serif;
@@ -1027,6 +1164,19 @@
   </span>
 </div>
 
+<!-- TEAM GOAL BAR -->
+<div class="team-goal-bar">
+  <div class="team-goal-inner">
+    <span class="team-goal-label">🚲 Team Fundraising Goal</span>
+    <div class="team-goal-track">
+      <div class="team-goal-fill" id="teamGoalFill"></div>
+    </div>
+    <span class="team-goal-pct" id="teamGoalPct">—</span>
+    <span class="team-goal-details" id="teamGoalDetails">Loading…</span>
+    <a href="/donate.html" style="font-family:'Josefin Slab',serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--color-cerulean);text-decoration:none;flex-shrink:0;border:1px solid rgba(4,178,202,0.3);padding:4px 10px;border-radius:10px;transition:all 150ms;" onmouseover="this.style.background='rgba(4,178,202,0.1)'" onmouseout="this.style.background='transparent'">Donate →</a>
+  </div>
+</div>
+
 <!-- DISCOVERED BAR -->
 <div class="discovered-bar" id="discoveredBar" style="display:none;">
   <span class="disc-count" id="discCount">0</span> / 51 riders discovered — flip a card to learn their story
@@ -1040,6 +1190,7 @@
     <button class="filter-btn" data-filter="veteran">🔥 Veterans</button>
     <button class="filter-btn" data-filter="rider">🚴 Riders</button>
     <button class="filter-btn" data-filter="rookie">🌱 Rookies</button>
+    <button class="filter-btn" id="randomRiderBtn" onclick="openRandomRider()" title="Open a random rider card" style="background:rgba(249,241,8,0.07);border-color:rgba(249,241,8,0.25);color:rgba(249,241,8,0.7);">🎲 Surprise Me</button>
     <input class="roster-search" type="search" placeholder="Search riders…" id="rosterSearch" autocomplete="off">
   </div>
 </div>
@@ -1088,6 +1239,14 @@
 </div>
 
 <div id="footer-slot"></div>
+
+<!-- DONATION TOAST -->
+<div class="donation-toast-wrap">
+  <div class="donation-toast" id="donationToast">
+    <div class="donation-toast-label">💙 Live Activity</div>
+    <div class="donation-toast-main" id="donationToastText"></div>
+  </div>
+</div>
 
 <script src="/assets/js/nav.js" defer></script>
 <script>
@@ -2240,45 +2399,64 @@ Promise.all([
 
   // Recent donations feed
   const feedEl = document.getElementById('donationFeed');
-  if (feed && feed.donations && feed.donations.length > 0) {
-    const realDonations = feed.donations.filter(d => !d.isRegFee && d.amount > 0).slice(0, 8);
-    if (realDonations.length > 0) {
-      feedEl.innerHTML = realDonations.map((d, i) => `
-        <div class="donation-row" style="animation-delay:${i * 0.05}s">
-          <span class="donation-donor">💙 ${d.displayName}</span>
-          <span class="donation-to">→ ${d.recipientName}</span>
-          <span class="donation-amount">$${Math.round(d.amount).toLocaleString()}</span>
-        </div>
-      `).join('');
-      liveSection.style.display = 'block';
-    }
+  const realDonations = feed && feed.donations ? feed.donations.filter(d => !d.isRegFee && d.amount > 0) : [];
+  if (realDonations.length > 0) {
+    feedEl.innerHTML = realDonations.slice(0, 8).map((d, i) => `
+      <div class="donation-row" style="animation-delay:${i * 0.05}s">
+        <span class="donation-donor">💙 ${d.displayName}</span>
+        <span class="donation-to">→ ${d.recipientName}</span>
+        <span class="donation-amount">$${Math.round(d.amount).toLocaleString()}</span>
+      </div>
+    `).join('');
+    liveSection.style.display = 'block';
   }
 
-  // Leaderboard from participants
-  const lbEl = document.getElementById('leaderboard');
-  if (parts) {
-    const ranked = parts
-      .filter(p => p.sumDonations > 0)
-      .sort((a, b) => b.sumDonations - a.sumDonations)
-      .slice(0, 8);
-    if (ranked.length > 0) {
-      const max = ranked[0].sumDonations;
-      lbEl.innerHTML = ranked.map((p, i) => {
-        const rankClass = i === 0 ? 'lb-rank-1' : i === 1 ? 'lb-rank-2' : i === 2 ? 'lb-rank-3' : '';
-        const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1);
-        const pct = Math.round((p.sumDonations / max) * 100);
-        return `
-          <div class="lb-row" style="animation-delay:${i * 0.05}s">
-            <span class="lb-rank ${rankClass}">${medal}</span>
-            <span class="lb-name">${p.displayName}</span>
-            <div class="lb-bar-wrap">
-              <div class="lb-bar-track"><div class="lb-bar-fill" style="width:${pct}%"></div></div>
-            </div>
-            <span class="lb-amount">$${Math.round(p.sumDonations).toLocaleString()}</span>
-          </div>
-        `;
-      }).join('');
-      liveSection.style.display = 'block';
+  // Tabbed leaderboard — populate _lbParts and render
+  if (parts && parts.length) {
+    _lbParts = parts;
+    renderLeaderboard('top');
+    liveSection.style.display = 'block';
+  }
+
+  // Hot streak: riders with donations in the last 90 days get a 🔥 badge
+  if (realDonations.length) {
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 86400000);
+    const hotNames = new Set(
+      realDonations
+        .filter(d => new Date(d.createdDateUTC) > ninetyDaysAgo)
+        .map(d => d.recipientName.toLowerCase())
+    );
+    document.querySelectorAll('.tcard-wrap[data-id]').forEach(wrap => {
+      const riderId = parseInt(wrap.dataset.id);
+      const rider = RIDERS.find(r => r.id === riderId);
+      if (rider && hotNames.has(rider.name.toLowerCase())) {
+        wrap.classList.add('hot-streak');
+        const badge = document.createElement('span');
+        badge.className = 'tcard-hot-badge';
+        badge.textContent = '🔥';
+        wrap.style.position = 'relative';
+        wrap.appendChild(badge);
+      }
+    });
+  }
+
+  // Cycling donation toasts
+  if (realDonations.length > 0) {
+    const toast = document.getElementById('donationToast');
+    const textEl = document.getElementById('donationToastText');
+    if (toast && textEl) {
+      // Sort by most recent first for relevance
+      const sorted = [...realDonations].reverse();
+      let idx = 0;
+      function showToast() {
+        const d = sorted[idx % sorted.length];
+        textEl.innerHTML = `<span class="donation-toast-amount">$${Math.round(d.amount).toLocaleString()}</span> from ${d.displayName} → ${d.recipientName}`;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+        idx++;
+      }
+      setTimeout(showToast, 3000); // first toast after 3s
+      setInterval(showToast, 10000); // every 10s after
     }
   }
 });
@@ -2397,19 +2575,51 @@ function challengeRider(name, nickname, donorUrl) {
   }
 }
 
-// Fetch live team totals for hero stats
+// Fetch live team totals for hero stats + goal bar
 fetch('/assets/data/team-stats.json')
   .then(r => r.json())
   .then(s => {
     const raisedEl = document.getElementById('stat-raised');
     const ridersEl = document.getElementById('stat-riders');
-    if (raisedEl && s.sumDonations) {
-      const k = s.sumDonations >= 1000 ? '$' + (s.sumDonations / 1000).toFixed(1) + 'k' : '$' + Math.round(s.sumDonations);
+    const raised = s.sumDonations || 0;
+    const goal = s.fundraisingGoal || 115000;
+    if (raisedEl && raised) {
+      const k = raised >= 1000 ? '$' + (raised / 1000).toFixed(1) + 'k' : '$' + Math.round(raised);
       raisedEl.textContent = k;
     }
     if (ridersEl && s.numParticipants) ridersEl.textContent = s.numParticipants;
+
+    // Animate goal bar
+    const fill = document.getElementById('teamGoalFill');
+    const pctEl = document.getElementById('teamGoalPct');
+    const detailsEl = document.getElementById('teamGoalDetails');
+    if (fill && raised) {
+      const pct = Math.min(100, Math.round((raised / goal) * 100));
+      setTimeout(() => {
+        fill.style.width = pct + '%';
+        fill.classList.add('loaded');
+      }, 400);
+      if (pctEl) pctEl.textContent = pct + '%';
+      if (detailsEl) detailsEl.textContent = `$${Math.round(raised).toLocaleString()} of $${(goal/1000).toFixed(0)}k goal`;
+    }
   })
   .catch(() => {});
+
+// Open a random rider card
+function openRandomRider() {
+  const cards = document.querySelectorAll('.tcard-wrap[data-id]');
+  if (!cards.length) return;
+  const card = cards[Math.floor(Math.random() * cards.length)];
+  openModal(parseInt(card.dataset.id));
+  // Bounce the button
+  const btn = document.getElementById('randomRiderBtn');
+  if (btn) {
+    btn.style.transform = 'scale(0.9)';
+    btn.style.transition = 'transform 0.1s ease';
+    setTimeout(() => { btn.style.transform = 'scale(1.05)'; }, 100);
+    setTimeout(() => { btn.style.transform = ''; }, 250);
+  }
+}
 </script>
 </body>
 </html>
