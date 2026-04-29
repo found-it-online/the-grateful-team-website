@@ -786,8 +786,121 @@
       margin-top: 2px;
     }
 
+    /* ══ MOBILE RESPONSIVE ══ */
+
+    /* Tablet: 2-column grid, tighter controls */
+    @media (max-width: 900px) {
+      .roster-controls-inner { gap: 8px; }
+      .filter-btn { font-size: 10px; padding: 6px 11px; }
+      .roster-search { width: 150px; }
+      .roster-search:focus { width: 180px; }
+    }
+
+    /* Mobile ≤ 640px — single column, compact everything */
     @media (max-width: 640px) {
-      #liveSection > div { grid-template-columns: 1fr !important; }
+      /* Hero */
+      .roster-hero { padding: 40px 16px 28px; }
+      .roster-hero h1 { font-size: clamp(2.4rem,11vw,3.5rem); }
+      .roster-hero p { font-size: 14px; margin-bottom: 20px; }
+      .roster-hero-stats { gap: 16px; }
+      .roster-hero-stat-num { font-size: clamp(1.6rem,6vw,2.2rem); }
+
+      /* WAM countdown — smaller units */
+      #wamCountdown { gap: 8px !important; }
+      .countdown-unit { padding: 8px 10px; min-width: 52px; }
+      .countdown-num { font-size: 1.4rem; }
+      .countdown-label { font-size: 7px; }
+
+      /* Team goal bar — hide donate link, compact */
+      .team-goal-bar { padding: 10px 16px; }
+      .team-goal-inner { gap: 10px; }
+      .team-goal-inner > a { display: none; }
+      .team-goal-pct { font-size: 16px; }
+      .team-goal-details { font-size: 10px; }
+      .team-goal-label { font-size: 9px; }
+
+      /* Controls — horizontal scroll so buttons don't wrap badly */
+      .roster-controls { padding: 12px 16px; top: 56px; }
+      .roster-controls-inner {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 7px;
+        padding-bottom: 2px;
+      }
+      .roster-controls-inner::-webkit-scrollbar { display: none; }
+      .filter-btn { font-size: 10px; padding: 6px 11px; flex-shrink: 0; }
+      .roster-search {
+        flex-shrink: 0;
+        width: 130px;
+        margin-left: 0;
+      }
+      #sortRaisedBtn, #randomRiderBtn { flex-shrink: 0; }
+
+      /* Card grid: 2 columns on mobile */
+      .roster-grid-wrap { padding: 20px 12px; }
+      .roster-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      /* Cards: shorter height for 2-col layout */
+      .tcard-wrap { height: 320px; }
+      .tcard-nickname { font-size: 0.95rem !important; }
+      .tcard-name { font-size: 9.5px !important; margin-bottom: 7px !important; }
+      .tcard-avatar-area { padding: 5px 0 6px; }
+      .tcard-avatar { width: 60px !important; height: 60px !important; font-size: 19px !important; }
+      .tcard-body { padding: 0 10px; }
+      .tcard-stat-label { font-size: 6.5px !important; width: 56px !important; letter-spacing: 0.04em !important; }
+      .tcard-stat-num { font-size: 7px !important; }
+      .tcard-stat-row { margin-bottom: 3px; }
+      .tcard-stat-bar { height: 4px !important; }
+      .tcard-stats { margin: 0 0 6px; }
+      .tcard-song { font-size: 8px !important; padding: 4px 0 2px; margin-top: 4px !important; }
+      .tcard-song span { font-size: 8.5px; }
+      .tcard-badges { padding: 4px 0 6px; gap: 4px; }
+      .tcard-badge { width: 18px; height: 18px; font-size: 9px; }
+      .tcard-stamp { font-size: 6.5px; padding-bottom: 6px; }
+      .tcard-flip-hint { font-size: 7.5px; padding-bottom: 8px; }
+      .tcard-topbar { padding: 7px 10px 5px; }
+      .tcard-num { font-size: 8.5px; }
+      .tcard-tier-badge { font-size: 7.5px; padding: 2px 6px; }
+
+      /* Hover donate btn: show on mobile tap via active */
+      .tcard-hover-donate { display: none; }
+
+      /* Hot streak badge: smaller */
+      .tcard-hot-badge { font-size: 16px; top: -6px; right: -6px; }
+
+      /* Discovered bar */
+      .discovered-bar { font-size: 11px; padding: 8px 16px; }
+
+      /* Live section */
+      #liveSection { padding: 28px 16px; }
+      #liveSection > div { grid-template-columns: 1fr !important; gap: 28px !important; }
+      .donation-row { font-size: 11px; gap: 6px; }
+
+      /* Leaderboard */
+      .lb-name { font-size: 11px; }
+      .lb-amount { font-size: 10px; }
+      .lb-tab { font-size: 8.5px; padding: 4px 9px; }
+
+      /* Donation toast: full width at bottom */
+      .donation-toast-wrap { left: 12px; right: 12px; bottom: 16px; }
+      .donation-toast { max-width: 100%; }
+      .donation-toast-main { font-size: 12px; }
+      .donation-toast-amount { font-size: 16px; }
+    }
+
+    /* Very small phones ≤ 400px — single column */
+    @media (max-width: 400px) {
+      .roster-grid { grid-template-columns: 1fr; }
+      .tcard-wrap { height: 380px; }
+      .tcard-nickname { font-size: 1.1rem !important; }
+      .tcard-name { font-size: 10.5px !important; }
+      .tcard-avatar { width: 72px !important; height: 72px !important; font-size: 22px !important; }
+      .tcard-stat-label { font-size: 7.5px !important; width: 64px !important; }
     }
 
     /* Card entrance animation */
@@ -1155,9 +1268,17 @@
     }
     .card-modal-close:hover { background: rgba(250,246,232,0.18); color:#fff; }
     @media (max-width: 780px) {
+      .card-modal-overlay { padding: 20px 12px; }
       .card-modal-inner { flex-direction: column; align-items: center; gap: 20px; }
-      .card-modal-card-slot .tcard-wrap { width: 320px !important; height: 456px !important; }
-      .card-modal-panel { width: 100%; max-width: 400px; max-height: none; }
+      .card-modal-card-slot .tcard-wrap { width: 300px !important; height: 428px !important; }
+      .card-modal-card-slot .tcard-stat-label { font-size: 8px !important; width: 68px !important; }
+      .card-modal-panel { width: 100%; max-width: 420px; }
+    }
+    @media (max-width: 400px) {
+      .card-modal-card-slot .tcard-wrap { width: 280px !important; height: 400px !important; }
+      .card-modal-inner { gap: 14px; }
+      .modal-rider-nickname { font-size: 1.4rem; }
+      .modal-stat-label { font-size: 10px; width: 100px; }
     }
   </style>
 </head>
@@ -2203,6 +2324,9 @@ function renderAll(filter, query) {
 
   grid.innerHTML = filtered.map((r, i) => renderCard(r, RIDERS.indexOf(r))).join('');
 
+  // Detect touch device
+const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
   // Wire grid cards: click = open modal; tilt + shimmer stay
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
     const inner = card.querySelector('.tcard-inner');
@@ -2211,16 +2335,18 @@ function renderAll(filter, query) {
       openModal(parseInt(card.dataset.id), e);
     });
 
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const nx = (e.clientX - rect.left) / rect.width;
-      const ny = (e.clientY - rect.top) / rect.height;
-      const x = nx - 0.5; const y = ny - 0.5;
-      inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
-      card.style.setProperty('--mx', nx.toFixed(3));
-      card.style.setProperty('--my', ny.toFixed(3));
-    });
-    card.addEventListener('mouseleave', () => { inner.style.transform = ''; });
+    if (!IS_TOUCH) {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width;
+        const ny = (e.clientY - rect.top) / rect.height;
+        const x = nx - 0.5; const y = ny - 0.5;
+        inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
+        card.style.setProperty('--mx', nx.toFixed(3));
+        card.style.setProperty('--my', ny.toFixed(3));
+      });
+      card.addEventListener('mouseleave', () => { inner.style.transform = ''; });
+    }
   });
 }
 
@@ -2265,17 +2391,19 @@ function openModal(riderId, triggerEvent) {
     }
   });
 
-  // Tilt + shimmer inside modal
-  modalCard.addEventListener('mousemove', e => {
-    if (modalCard.classList.contains('flipped')) return;
-    const rect = modalCard.getBoundingClientRect();
-    const nx = (e.clientX - rect.left) / rect.width;
-    const ny = (e.clientY - rect.top) / rect.height;
-    modalInner.style.transform = `perspective(1200px) rotateX(${-(ny-0.5)*8}deg) rotateY(${(nx-0.5)*12}deg)`;
-    modalCard.style.setProperty('--mx', nx.toFixed(3));
-    modalCard.style.setProperty('--my', ny.toFixed(3));
-  });
-  modalCard.addEventListener('mouseleave', () => { modalInner.style.transform = ''; });
+  // Tilt + shimmer inside modal (desktop only)
+  if (!IS_TOUCH) {
+    modalCard.addEventListener('mousemove', e => {
+      if (modalCard.classList.contains('flipped')) return;
+      const rect = modalCard.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / rect.width;
+      const ny = (e.clientY - rect.top) / rect.height;
+      modalInner.style.transform = `perspective(1200px) rotateX(${-(ny-0.5)*8}deg) rotateY(${(nx-0.5)*12}deg)`;
+      modalCard.style.setProperty('--mx', nx.toFixed(3));
+      modalCard.style.setProperty('--my', ny.toFixed(3));
+    });
+    modalCard.addEventListener('mouseleave', () => { modalInner.style.transform = ''; });
+  }
 
   // Apply cached photos & fundraising
   const key = rider.name.toLowerCase();
