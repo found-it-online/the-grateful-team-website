@@ -867,11 +867,13 @@
 
       /* Cards: fluid sizing across phone widths */
       .tcard-wrap {
-        width: min(100%, 360px);
+        width: min(100%, 352px);
+        max-width: 352px;
         aspect-ratio: 5 / 7;
         height: auto;
         min-height: 360px;
         margin: 0 auto;
+        justify-self: center;
       }
       .tcard-topbar { padding: 10px 14px 8px !important; }
       .tcard-num { font-size: 11px !important; }
@@ -932,7 +934,8 @@
       .roster-grid-wrap { padding: 16px 12px; }
       .roster-grid { max-width: 100%; }
       .tcard-wrap {
-        width: min(100%, 332px);
+        width: min(100%, 324px);
+        max-width: 324px;
         min-height: 360px;
       }
       .tcard-raised-hero-amt { font-size: 1.4rem !important; }
@@ -1183,6 +1186,54 @@
     .card-modal-card-slot .tcard-stat-bar   { height: 7px !important; }
     .card-modal-card-slot .tcard-stats { gap: 8px !important; margin: 8px 0 10px !important; }
     .card-modal-card-slot .tcard-song { font-size: 12px !important; margin-top: 6px !important; }
+
+    /* Modal: full back face — no fixed card height / inner scroll when flipped */
+    .card-modal-card-slot .tcard-back-bio {
+      display: block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: unset !important;
+      overflow: visible !important;
+      flex: 0 1 auto !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped {
+      aspect-ratio: unset !important;
+      height: auto !important;
+      min-height: 575px;
+      max-height: none !important;
+      overflow: visible;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      height: auto !important;
+      min-height: 0;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-front,
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-back {
+      grid-area: 1 / 1;
+      position: relative !important;
+      inset: auto !important;
+      width: 100%;
+      height: auto !important;
+      align-self: start;
+      overflow: visible !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-front {
+      visibility: hidden;
+      pointer-events: none;
+      opacity: 0;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-back {
+      z-index: 1;
+    }
+
     .card-modal-panel {
       flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px;
     }
@@ -1281,26 +1332,77 @@
       color: rgba(250,246,232,0.25); text-align: center; margin: 0;
     }
     .card-modal-close {
-      position: fixed; top: 18px; right: 22px; width: 40px; height: 40px;
-      background: rgba(250,246,232,0.08); border: 1px solid rgba(250,246,232,0.18);
-      border-radius: 50%; color: rgba(250,246,232,0.8); font-size: 16px;
-      cursor: pointer; z-index: 10; transition: background 150ms;
+      position: fixed;
+      top: max(12px, env(safe-area-inset-top, 0px));
+      right: max(16px, env(safe-area-inset-right, 0px));
+      width: 44px; height: 44px;
+      background: rgba(16, 8, 36, 0.92);
+      border: 1px solid rgba(250,246,232,0.35);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+      transition: background 150ms, border-color 150ms;
       display: flex; align-items: center; justify-content: center;
     }
-    .card-modal-close:hover { background: rgba(250,246,232,0.18); color:#fff; }
+    .card-modal-close:hover { background: rgba(40, 22, 58, 0.98); border-color: rgba(250,246,232,0.55); color: #fff; }
+
+    /* Share CTA sits in flow between card + panel (not fixed — avoids overlapping the card) */
+    .card-modal-left-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .modal-share-rail {
+      width: 100%;
+      max-width: 410px;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 4px 16px 10px;
+      display: none;
+    }
+    .modal-share-rail.show {
+      display: block;
+    }
+    .modal-share-btn {
+      border: 1px solid rgba(4,178,202,0.45);
+      background: rgba(4,178,202,0.16);
+      color: var(--color-cream);
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 22px;
+      padding: 10px 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 100%;
+    }
     @media (max-width: 780px) {
       /* Full-screen sheet: keep card visible above details */
       .card-modal-overlay {
-        padding: 0; align-items: flex-end; justify-content: center;
+        padding: 10px 0 24px; align-items: flex-start; justify-content: center;
         width: 100vw;
         max-width: 100vw;
         overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .card-modal-inner {
         display: block;
         width: 100vw; min-width: 100vw; max-width: 100vw; margin: 0;
         background: #100824; border-radius: 20px 20px 0 0;
-        max-height: 92vh; overflow-y: auto; overflow-x: hidden;
+        max-height: none; overflow: visible;
+        overflow-anchor: none;
+        /* Reserve space so the fixed close control does not sit on top of the card */
+        padding-top: 52px;
       }
       .card-modal-card-slot {
         display: flex;
@@ -1310,12 +1412,13 @@
         padding: 18px 14px 8px;
         overflow-x: hidden;
         flex-shrink: 0;
+        position: static;
       }
       .card-modal-card-slot .tcard-wrap {
         width: min(100%, 360px) !important;
         aspect-ratio: 5 / 7;
         height: auto !important;
-        max-height: 70vh;
+        max-height: 58vh;
         min-height: 0;
       }
       .card-modal-card-slot .tcard-topbar { padding: 10px 14px 8px !important; }
@@ -1339,7 +1442,7 @@
       .card-modal-card-slot .tcard-back-wam { font-size: 12px !important; }
       .card-modal-card-slot .tcard-funfact { padding: 11px 12px !important; font-size: 14px !important; line-height: 1.6 !important; }
       .card-modal-card-slot .tcard-funfact-label { font-size: 11px !important; }
-      .card-modal-card-slot .tcard-back-bio { font-size: 14.5px !important; line-height: 1.65 !important; -webkit-line-clamp: 8; }
+      .card-modal-card-slot .tcard-back-bio { font-size: 14.5px !important; line-height: 1.65 !important; }
       .card-modal-card-slot .tcard-back-badge { font-size: 11.5px !important; padding: 6px 11px !important; }
       .card-modal-card-slot .tcard-donate-btn { font-size: 12.5px !important; padding: 11px 13px !important; }
       .card-modal-card-slot .tcard-share-btn { font-size: 16px !important; padding: 10px 11px !important; }
@@ -1356,7 +1459,26 @@
       .modal-rider-nickname { font-size: 1.6rem; }
       .modal-stat-label { font-size: 10.5px; width: 108px; }
       .modal-stat-val { font-size: 15px; width: 34px; }
-      .card-modal-close { top: 14px; right: 16px; }
+      .card-modal-close {
+        top: max(10px, env(safe-area-inset-top, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px));
+      }
+      .modal-share-rail {
+        max-width: 360px;
+        padding: 8px 16px 14px;
+        display: block;
+        min-height: 46px;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 140ms ease;
+      }
+      .modal-share-rail.show {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-share-btn { font-size: 10px; padding: 9px 14px; }
     }
   </style>
 </head>
@@ -1473,7 +1595,12 @@
 <div id="cardModal" class="card-modal-overlay" style="display:none;" onclick="closeModal()">
   <button class="card-modal-close" onclick="closeModal()" aria-label="Close">✕</button>
   <div class="card-modal-inner" onclick="event.stopPropagation()">
-    <div class="card-modal-card-slot" id="modalCardSlot"></div>
+    <div class="card-modal-left-stack">
+      <div class="card-modal-card-slot" id="modalCardSlot"></div>
+      <div id="modalShareRail" class="modal-share-rail" aria-hidden="true">
+        <button id="cardShareFab" type="button" class="modal-share-btn" aria-label="Share this rider card">💬 Share Card</button>
+      </div>
+    </div>
     <div class="card-modal-panel" id="modalPanel"></div>
   </div>
 </div>
@@ -2427,6 +2554,27 @@ function renderAll(filter, query) {
 const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 let _photoMap = {};
 let _fundMap  = {};
+let _modalScrollHandler = null;
+
+function shareRiderCard(rider) {
+  if (!rider) return;
+  const donorHref = rider.donorSlug.startsWith('http')
+    ? rider.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}`;
+  const text = `Can you support ${rider.nickname} (${rider.name}) and help grant wishes through Make-A-Wish Michigan? Donate here: ${donorHref}`;
+  if (navigator.share) {
+    navigator.share({
+      title: `Support ${rider.nickname}`,
+      text,
+      url: donorHref
+    }).catch(() => {});
+    return;
+  }
+  const smsBody = encodeURIComponent(text);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const smsUrl = isIOS ? `sms:&body=${smsBody}` : `sms:?body=${smsBody}`;
+  window.location.href = smsUrl;
+}
 
 function openModal(riderId, triggerEvent) {
   const rider = RIDERS.find(r => r.id === riderId);
@@ -2443,6 +2591,31 @@ function openModal(riderId, triggerEvent) {
   const modalCard  = slot.querySelector('.tcard-wrap');
   const modalInner = slot.querySelector('.tcard-inner');
   modalCard.classList.add('modal-open-view');
+  modalCard.classList.add('flipped');
+  const modalEl = document.getElementById('cardModal');
+  const shareFab = document.getElementById('cardShareFab');
+  const shareRail = document.getElementById('modalShareRail');
+
+  function syncShareFab() {
+    if (!modalEl) return;
+    const scrolled = modalEl.scrollTop > 60;
+    const flipped = modalCard.classList.contains('flipped');
+    const on = scrolled && !flipped;
+    if (shareRail) {
+      shareRail.classList.toggle('show', on);
+      shareRail.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+  }
+
+  if (shareFab) {
+    shareFab.onclick = (e) => {
+      e.stopPropagation();
+      shareRiderCard(rider);
+    };
+  }
+  if (modalEl && _modalScrollHandler) modalEl.removeEventListener('scroll', _modalScrollHandler);
+  _modalScrollHandler = syncShareFab;
+  if (modalEl) modalEl.addEventListener('scroll', _modalScrollHandler, { passive: true });
 
   // Wire flip inside modal (+ confetti + discovered)
   modalCard.addEventListener('click', e => {
@@ -2450,6 +2623,21 @@ function openModal(riderId, triggerEvent) {
     const wasFlipped = modalCard.classList.contains('flipped');
     modalCard.classList.toggle('flipped');
     modalInner.style.transform = '';
+
+    /* Back → front: card height drops a lot while scroll position stays put, so only a sliver of
+       the face stays visible with a huge gap. Reset modal scroll once layout has settled. */
+    if (wasFlipped && modalEl) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          modalEl.scrollTop = 0;
+          const cardSlot = document.getElementById('modalCardSlot');
+          if (cardSlot) cardSlot.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
+          syncShareFab();
+        });
+      });
+    } else {
+      syncShareFab();
+    }
 
     // Discovered counter
     const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
@@ -2579,10 +2767,22 @@ function openModal(riderId, triggerEvent) {
 
   document.getElementById('cardModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  if (modalEl) modalEl.scrollTop = 0;
+  syncShareFab();
 }
 
 function closeModal() {
-  document.getElementById('cardModal').style.display = 'none';
+  const modalEl = document.getElementById('cardModal');
+  const shareRail = document.getElementById('modalShareRail');
+  if (modalEl && _modalScrollHandler) {
+    modalEl.removeEventListener('scroll', _modalScrollHandler);
+    _modalScrollHandler = null;
+  }
+  if (shareRail) {
+    shareRail.classList.remove('show');
+    shareRail.setAttribute('aria-hidden', 'true');
+  }
+  modalEl.style.display = 'none';
   document.body.style.overflow = '';
 }
 
