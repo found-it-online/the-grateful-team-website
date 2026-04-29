@@ -1027,6 +1027,36 @@
     }
     [data-tier="legend"] .tcard-raised span { text-shadow: 0 0 8px rgba(249,241,8,0.4); }
 
+    .tcard-raised-hero {
+      text-align: center;
+      padding: 4px 14px 2px;
+      min-height: 52px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .tcard-raised-hero-amt {
+      font-family: 'Abril Fatface', serif;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--color-gold);
+      letter-spacing: -0.01em;
+    }
+    [data-tier="legend"] .tcard-raised-hero-amt { text-shadow: 0 0 16px rgba(249,241,8,0.5); }
+    [data-tier="veteran"] .tcard-raised-hero-amt { color: var(--color-purple-light); }
+    [data-tier="rider"] .tcard-raised-hero-amt { color: var(--color-cerulean); }
+    [data-tier="rookie"] .tcard-raised-hero-amt { color: rgba(250,246,232,0.7); }
+    .tcard-raised-hero-label {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(250,246,232,0.35);
+      margin-top: 3px;
+    }
+
     /* ══ QUICK DONATE HOVER BUTTON ══ */
     .tcard-hover-donate {
       position: absolute;
@@ -2202,6 +2232,8 @@ function renderCard(r, index) {
           </div>
         </div>
 
+        <div class="tcard-raised-hero" data-rider-id="${r.id}"></div>
+
         <div class="tcard-stamp">⚡ Wish Hero · TGT · WAM ⚡</div>
         <div class="tcard-flip-hint">tap to flip →</div>
         <a class="tcard-hover-donate" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💙 Donate to ${r.name.split(' ')[0]}</a>
@@ -2581,13 +2613,10 @@ fetch('/assets/data/participants.json')
       const pct = Math.min(100, Math.round((raised / goal) * 100));
       const donors = data.numDonations || 0;
 
-      // Front: small raised badge below name
-      const nameEl = wrap.querySelector('.tcard-name');
-      if (nameEl) {
-        const frontBadge = document.createElement('div');
-        frontBadge.className = 'tcard-raised';
-        frontBadge.innerHTML = `💰 <span>$${Math.round(raised).toLocaleString()}</span> raised`;
-        nameEl.parentNode.insertBefore(frontBadge, nameEl.nextSibling);
+      // Front: large raised amount in hero slot
+      const heroEl = wrap.querySelector('.tcard-raised-hero');
+      if (heroEl) {
+        heroEl.innerHTML = `<div class="tcard-raised-hero-amt">$${Math.round(raised).toLocaleString()}</div><div class="tcard-raised-hero-label">raised this year</div>`;
       }
 
       // Back: fundraising bar above bio
