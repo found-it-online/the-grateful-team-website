@@ -12,6 +12,106 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    .training-strava-panel {
+      background: var(--color-tile-cream);
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 14px;
+      padding: 24px 22px 20px;
+      margin: 0 0 28px;
+      max-width: 720px;
+    }
+    .training-strava-panel .training-strava-eyebrow {
+      font-family: 'Josefin Slab', serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-red);
+      margin: 0 0 8px;
+    }
+    .training-strava-panel h3 {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.35rem;
+      color: var(--color-night);
+      margin: 0 0 10px;
+      line-height: 1.15;
+    }
+    .training-strava-panel .training-strava-lede {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: rgba(26,14,43,0.72);
+      line-height: 1.55;
+      margin: 0 0 16px;
+    }
+    .training-strava-next {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: rgba(26,14,43,0.88);
+      line-height: 1.5;
+      padding: 14px 16px;
+      background: #fff;
+      border: 1px solid var(--color-cream-dark);
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+    .training-strava-next strong { color: var(--color-night); }
+    .training-strava-note {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: rgba(26,14,43,0.55);
+      line-height: 1.45;
+      margin: 0 0 12px;
+    }
+    .strava-week-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--color-cream-dark);
+    }
+    .strava-week-row a {
+      display: block;
+      padding: 12px 4px;
+      border-bottom: 1px solid rgba(26,14,43,0.08);
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.12s ease;
+    }
+    .strava-week-row a:hover { background: rgba(90,30,138,0.06); }
+    .strava-week-who {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--color-night);
+      display: block;
+    }
+    .strava-week-ride {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: rgba(26,14,43,0.75);
+      display: block;
+      margin-top: 2px;
+    }
+    .strava-week-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(26,14,43,0.5);
+      margin-top: 4px;
+      display: block;
+    }
+    .strava-week-empty {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: rgba(26,14,43,0.62);
+      line-height: 1.5;
+      padding: 14px 0 6px;
+      margin: 0;
+    }
+    .training-strava-foot {
+      margin-top: 14px;
+      text-align: left;
+    }
+  </style>
 </head>
 
 <body>
@@ -68,6 +168,24 @@
     <p style="font-family:'DM Sans',sans-serif; font-size:16px; color:rgba(26,14,43,0.65); margin:-8px 0 24px; line-height:1.6;">
       Five group rides in the 5 weeks leading into WAM. All rides depart from Grand Rapids — exact meet point, time, and distance TBD.
     </p>
+
+    <div class="training-strava-panel" id="trainingStravaPanel">
+      <p class="training-strava-eyebrow">Strava + the schedule</p>
+      <h3>Who’s getting miles — and what’s next</h3>
+      <p class="training-strava-lede">
+        Your official Saturday meetups are on the calendar below. The Strava club can’t predict the future, but it shows who’s already logged rides in the last week — post yours after you roll so teammates can see.
+      </p>
+      <div class="training-strava-next" id="nextWamStravaSlot" aria-live="polite">Loading next ride…</div>
+      <p class="training-strava-note" id="stravaWeekNote">
+        Recent club rides (last 7 days, from our site sync). Not live-to-the-second — if this looks empty, check the club on Strava.
+      </p>
+      <ul class="strava-week-list" id="stravaWeekRidesList">
+        <li class="strava-week-empty">Loading recent club rides…</li>
+      </ul>
+      <div class="training-strava-foot">
+        <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost-dark">Open TGT Strava Club →</a>
+      </div>
+    </div>
 
     <div class="event-card">
       <span class="event-card-date">Saturday, June 21, 2026</span>
@@ -171,6 +289,125 @@
 
 <script src="/assets/js/nav.js" defer></script>
 <script>
+(function () {
+  var WAM_TRAINING = [
+    { iso: '2026-06-21', title: 'WAM Training Ride #1' },
+    { iso: '2026-06-28', title: 'WAM Training Ride #2' },
+    { iso: '2026-07-05', title: 'WAM Training Ride #3' },
+    { iso: '2026-07-12', title: 'WAM Training Ride #4' },
+    { iso: '2026-07-19', title: 'WAM Training Ride #5 — Last ride before WAM' }
+  ];
+  var CLUB_URL = 'https://www.strava.com/clubs/1302442';
+
+  function escapeHtml(str) {
+    var d = document.createElement('div');
+    d.textContent = str == null ? '' : String(str);
+    return d.innerHTML;
+  }
+
+  function fmtLong(isoYmd) {
+    var d = new Date(isoYmd + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  }
+
+  function nextWamTraining() {
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    for (var i = 0; i < WAM_TRAINING.length; i++) {
+      var dt = new Date(WAM_TRAINING[i].iso + 'T12:00:00');
+      if (dt >= now) return WAM_TRAINING[i];
+    }
+    return null;
+  }
+
+  function withinLast7Days(isoUtcOrLocal) {
+    var raw = isoUtcOrLocal;
+    var t = new Date(raw).getTime();
+    if (Number.isNaN(t)) return false;
+    var now = Date.now();
+    return t >= now - 7 * 86400000 && t <= now + 60000;
+  }
+
+  function miles(m) {
+    return ((Number(m) || 0) / 1609.34).toFixed(1);
+  }
+
+  var elNext = document.getElementById('nextWamStravaSlot');
+  var elList = document.getElementById('stravaWeekRidesList');
+  var next = nextWamTraining();
+  if (elNext) {
+    if (next) {
+      elNext.innerHTML =
+        '<strong>Next team Saturday:</strong> ' +
+        fmtLong(next.iso) +
+        ' — ' +
+        escapeHtml(next.title) +
+        '. <span style="color:rgba(26,14,43,0.65);">Hit the group ride, then log it to the club so everyone can cheer.</span>';
+    } else {
+      elNext.innerHTML =
+        '<strong>Training block:</strong> All five summer Saturdays are on the calendar. See you at WAM — keep posting miles in the club.';
+    }
+  }
+
+  fetch('/assets/data/strava-rides.json')
+    .then(function (r) {
+      if (!r.ok) throw new Error('bad');
+      return r.json();
+    })
+    .then(function (data) {
+      var rides = data && Array.isArray(data.rides) ? data.rides : [];
+      var recent = rides.filter(function (x) {
+        return withinLast7Days(x.startDateUTC || x.startDateLocal);
+      });
+      recent.sort(function (a, b) {
+        return new Date(b.startDateUTC || b.startDateLocal) - new Date(a.startDateUTC || a.startDateLocal);
+      });
+      if (!elList) return;
+      if (!recent.length) {
+        elList.innerHTML =
+          '<li class="strava-week-empty">No club rides in our feed for the last 7 days. If you just rode, make sure you’re in the TGT club and the activity is visible there — this list updates when our site syncs Strava.</li>';
+        return;
+      }
+      elList.innerHTML = recent.slice(0, 18).map(function (row) {
+        var when = new Date(row.startDateUTC || row.startDateLocal);
+        var whenStr = when.toLocaleString('en-US', {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit'
+        });
+        var badge = when.getDay() === 6
+          ? ' <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-orange);">Sat</span>'
+          : '';
+        var href = row.activityUrl || CLUB_URL;
+        return (
+          '<li class="strava-week-row"><a href="' +
+          escapeHtml(href) +
+          '" target="_blank" rel="noopener">' +
+          '<span class="strava-week-who">' +
+          escapeHtml(row.athleteName || 'Rider') +
+          badge +
+          '</span>' +
+          '<span class="strava-week-ride">' +
+          escapeHtml(row.name || 'Ride') +
+          '</span>' +
+          '<span class="strava-week-meta">' +
+          miles(row.distanceMeters) +
+          ' mi · ' +
+          escapeHtml(whenStr) +
+          '</span></a></li>'
+        );
+      }).join('');
+    })
+    .catch(function () {
+      if (elList) {
+        elList.innerHTML =
+          '<li class="strava-week-empty">Couldn’t load Strava data from this site. Open the Strava club to see the latest rides.</li>';
+      }
+    });
+})();
+
 function makeVEvent(summary, dateStart, dateEnd, location, description) {
   return [
     'BEGIN:VEVENT',
