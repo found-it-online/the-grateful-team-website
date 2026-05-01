@@ -4,24 +4,36 @@ on:
   push:
     branches:
       - main
-      - jackson-changes
   schedule:
     - cron: '0 */6 * * *'   # Every 6 hours UTC — keeps repo JSON closer to DonorDrive between deploys
-    - cron: '0 14 * * *'   # Daily at 9am ET (14:00 UTC)
-  workflow_dispatch:         # Allow manual trigger from GitHub Actions tab
+    - cron: '0 14 * * *'    # Daily at 9am ET (14:00 UTC)
+  workflow_dispatch:
+
+# Avoid overlapping writers trampling each other when cron + dispatch coincide.
+concurrency:
+  group: tgt-stats-${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    # Runs always bump JSON updatedAt strings. Skip re-entry only when THIS push was our own bot commit
+    # ([tgt-data-sync]); schedule/dispatch ignore push rules. Omit [skip ci] so hosts like Netlify still build.
+    if: |-
+      ${{ !(
+          github.event_name == 'push' &&
+          github.event.head_commit != null &&
+          contains(github.event.head_commit.message, '[tgt-data-sync]')
+        ) }}
     permissions:
       contents: write
-      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Fetch DonorDrive data
         run: python3 scripts/fetch_donordrive.py
@@ -49,35 +61,14 @@ jobs:
       - name: Process and write data files
         run: python3 scripts/update_stats.py
 
-      - name: Commit if changed
-        if: ${{ github.ref_name != 'main' }}
+      - name: Commit and push
+        env:
+          BRANCH: ${{ github.ref_name }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "chore: update team stats and activity feed [skip ci]"
-          git push origin HEAD:${{ github.ref_name }}
-
-      - name: Skip protected main push
-        if: ${{ github.ref_name == 'main' }}
-        run: echo "Running on main; skipping commit/push because main is protected."
-
-      - name: Create PR with refreshed data (main only)
-        if: ${{ github.ref_name == 'main' }}
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update team stats and activity feed [skip ci]"
-          title: "chore: update team stats and activity feed"
-          body: |
-            Automated data refresh from DonorDrive + Strava.
-
-            - updates `assets/data/team-stats.json`
-            - updates `assets/data/activity-feed.json`
-            - updates `assets/data/participants.json`
-            - updates `assets/data/strava-rides.json`
-            - updates `assets/data/strava-members.json`
-          branch: "bot/update-team-stats"
-          base: "main"
-          delete-branch: true
+          git commit -m "chore(data): refresh DonorDrive + Strava JSON [tgt-data-sync]"
+          git pull --rebase origin "${BRANCH}"
+          git push origin "HEAD:${BRANCH}"
