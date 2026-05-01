@@ -30,7 +30,7 @@ jobs:
             -o /tmp/team.json
           echo "Fetching donations..."
           curl -sf -H "Accept: application/json" \
-            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=20&orderBy=createdDateUTC&desc=true" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=150&orderBy=enteredDateUTC&desc=true" \
             -o /tmp/donations.json
           echo "Fetching participants..."
           curl -sf -H "Accept: application/json" \

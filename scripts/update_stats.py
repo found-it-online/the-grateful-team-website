@@ -29,7 +29,10 @@ with open('assets/data/team-stats.json', 'w') as f:
     json.dump(stats, f, indent=2)
 print('team-stats.json written')
 
-# activity-feed.json
+# activity-feed.json (DonorDrive often returns oldest-first; store newest-first)
+def _donation_sort_key(d):
+    return d.get('createdDateUTC') or ''
+
 donations = [
     {
         'displayName':      d.get('displayName', 'A supporter'),
@@ -41,6 +44,7 @@ donations = [
     }
     for d in raw_donations
 ]
+donations.sort(key=_donation_sort_key, reverse=True)
 
 participants = [
     {

@@ -3687,18 +3687,29 @@ function fetchParticipantsLiveFirst() {
 
 /** Recent donations for the live section — DonorDrive API first, activity-feed.json fallback */
 function fetchDonationsLiveFirst() {
-  return fetch(`${DONORDRIVE_BASE}/donations?limit=20&orderBy=createdDateUTC&desc=true`, {
+  return fetch(`${DONORDRIVE_BASE}/donations?limit=100&orderBy=enteredDateUTC&desc=true`, {
     headers: { Accept: 'application/json' }
   })
     .then(r => {
       if (!r.ok) throw new Error('Live donations fetch failed');
       return r.json();
     })
-    .then(rows => (Array.isArray(rows) ? rows : []))
+    .then(rows => {
+      const list = Array.isArray(rows) ? rows : [];
+      return list.slice().sort((a, b) => {
+        const tb = new Date(b.createdDateUTC || 0).getTime();
+        const ta = new Date(a.createdDateUTC || 0).getTime();
+        return tb - ta;
+      });
+    })
     .catch(() =>
       fetch('/assets/data/activity-feed.json')
         .then(r => r.json())
-        .then(f => (f && Array.isArray(f.donations) ? f.donations : []))
+        .then(f => {
+          const list = f && Array.isArray(f.donations) ? f.donations : [];
+          return list.slice().sort((a, b) =>
+            new Date(b.createdDateUTC || 0) - new Date(a.createdDateUTC || 0));
+        })
         .catch(() => [])
     );
 }
