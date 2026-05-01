@@ -3685,6 +3685,24 @@ function fetchParticipantsLiveFirst() {
     .catch(() => fetch('/assets/data/participants.json').then(r => r.json()).catch(() => []));
 }
 
+/** Recent donations for the live section — DonorDrive API first, activity-feed.json fallback */
+function fetchDonationsLiveFirst() {
+  return fetch(`${DONORDRIVE_BASE}/donations?limit=20&orderBy=createdDateUTC&desc=true`, {
+    headers: { Accept: 'application/json' }
+  })
+    .then(r => {
+      if (!r.ok) throw new Error('Live donations fetch failed');
+      return r.json();
+    })
+    .then(rows => (Array.isArray(rows) ? rows : []))
+    .catch(() =>
+      fetch('/assets/data/activity-feed.json')
+        .then(r => r.json())
+        .then(f => (f && Array.isArray(f.donations) ? f.donations : []))
+        .catch(() => [])
+    );
+}
+
 document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
@@ -3775,16 +3793,16 @@ fetchParticipantsLiveFirst()
 
 // Populate live activity + leaderboard sections
 Promise.all([
-  fetch('/assets/data/activity-feed.json').then(r => r.json()).catch(() => null),
+  fetchDonationsLiveFirst().catch(() => []),
   fetchParticipantsLiveFirst().catch(() => null),
   fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null),
   fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null)
-]).then(([feed, parts, stravaData, stravaMembers]) => {
+]).then(([donations, parts, stravaData, stravaMembers]) => {
   const liveSection = document.getElementById('liveSection');
 
   // Recent donations feed
   const feedEl = document.getElementById('donationFeed');
-  const realDonations = feed && feed.donations ? feed.donations.filter(d => !d.isRegFee && d.amount > 0) : [];
+  const realDonations = (donations || []).filter(d => !d.isRegFee && d.amount > 0);
   if (realDonations.length > 0) {
     feedEl.innerHTML = realDonations.slice(0, 8).map((d, i) => `
       <div class="donation-row" style="animation-delay:${i * 0.05}s">
