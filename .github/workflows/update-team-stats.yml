@@ -1,0 +1,95 @@
+name: Update Team Stats & Activity Feed
+
+on:
+  push:
+    branches:
+      - jackson-changes
+  schedule:
+    - cron: '0 */6 * * *'   # Every 6 hours UTC — keeps repo JSON closer to DonorDrive between deploys
+    - cron: '0 14 * * *'   # Daily at 9am ET (14:00 UTC)
+  workflow_dispatch:         # Allow manual trigger from GitHub Actions tab
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch DonorDrive data
+        run: |
+          echo "Fetching team..."
+          curl -sf -H "Accept: application/json" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450" \
+            -o /tmp/team.json
+          echo "Fetching donations..."
+          curl -sf -H "Accept: application/json" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=20&orderBy=createdDateUTC&desc=true" \
+            -o /tmp/donations.json
+          echo "Fetching participants..."
+          curl -sf -H "Accept: application/json" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/participants?limit=60&orderBy=displayName" \
+            -o /tmp/participants.json
+          echo "All fetches complete"
+
+      - name: Fetch Strava club activities
+        env:
+          STRAVA_ACCESS_TOKEN: ${{ secrets.STRAVA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$STRAVA_ACCESS_TOKEN" ]; then
+            echo "No STRAVA_ACCESS_TOKEN set; writing empty Strava payload"
+            echo "[]" > /tmp/strava_activities.json
+            echo "[]" > /tmp/strava_members.json
+            exit 0
+          fi
+          echo "Fetching Strava club activities..."
+          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=40&page=1" \
+            -o /tmp/strava_activities.json || echo "[]" > /tmp/strava_activities.json
+          echo "Fetching Strava club members..."
+          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+            "https://www.strava.com/api/v3/clubs/1302442/members?per_page=200&page=1" \
+            -o /tmp/strava_members.json || echo "[]" > /tmp/strava_members.json
+          echo "Strava fetch complete"
+
+      - name: Process and write data files
+        run: python3 scripts/update_stats.py
+
+      - name: Commit if changed
+        if: ${{ github.ref_name != 'main' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore: update team stats and activity feed [skip ci]"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Skip protected main push
+        if: ${{ github.ref_name == 'main' }}
+        run: echo "Running on main; skipping commit/push because main is protected."
+
+      - name: Create PR with refreshed data (main only)
+        if: ${{ github.ref_name == 'main' }}
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update team stats and activity feed [skip ci]"
+          title: "chore: update team stats and activity feed"
+          body: |
+            Automated data refresh from DonorDrive + Strava.
+
+            - updates `assets/data/team-stats.json`
+            - updates `assets/data/activity-feed.json`
+            - updates `assets/data/participants.json`
+            - updates `assets/data/strava-rides.json`
+            - updates `assets/data/strava-members.json`
+          branch: "bot/update-team-stats"
+          base: "main"
+          delete-branch: true

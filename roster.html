@@ -1,0 +1,4053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grateful Roster — Rider Trading Cards</title>
+  <meta name="description" content="51 riders. Every one a Wish Hero. Meet the people who ride 300 miles for Make-A-Wish Michigan.">
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <style>
+    html, body { overflow-x: hidden; }
+
+    /* ══════════════════════════════════════
+       ROSTER PAGE — TRADING CARD STYLES
+    ══════════════════════════════════════ */
+
+    /* Hero */
+    .roster-hero {
+      background: var(--color-night-deep);
+      padding: clamp(56px, 10vw, 96px) 24px clamp(40px, 8vw, 72px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .roster-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 50%, rgba(90,30,138,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(4,178,202,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .roster-hero-inner { position: relative; max-width: 760px; margin: 0 auto; }
+    .roster-hero h1 {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      color: var(--color-gold);
+      margin: 0 0 16px;
+      line-height: 1;
+      text-shadow: 0 0 40px rgba(249,241,8,0.3);
+    }
+    .roster-hero p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: rgba(250,246,232,0.75);
+      line-height: 1.65;
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+    .roster-hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: clamp(20px, 4vw, 48px);
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .roster-hero-stat { text-align: center; }
+    .roster-hero-stat-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      color: var(--color-gold);
+      display: block;
+      line-height: 1;
+    }
+    .roster-hero-stat-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.5);
+      display: block;
+      margin-top: 4px;
+    }
+
+    /* Scrolling marquee */
+    .roster-marquee {
+      background: var(--color-gold);
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .roster-marquee-track {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-night);
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Controls */
+    .roster-controls {
+      background: var(--color-night);
+      padding: 20px 24px;
+      position: sticky;
+      top: 64px;
+      z-index: 40;
+      border-bottom: 1px solid rgba(201,148,58,0.15);
+    }
+    .roster-controls-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(250,246,232,0.2);
+      background: transparent;
+      color: rgba(250,246,232,0.6);
+      cursor: pointer;
+      transition: all 150ms ease;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { border-color: rgba(249,241,8,0.5); color: var(--color-gold); }
+    .filter-btn.active { background: var(--color-gold); color: var(--color-night); border-color: var(--color-gold); }
+    .roster-search {
+      margin-left: auto;
+      background: rgba(250,246,232,0.08);
+      border: 1.5px solid rgba(250,246,232,0.15);
+      border-radius: 20px;
+      padding: 7px 16px;
+      color: var(--color-cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      width: 180px;
+      outline: none;
+      transition: border-color 150ms ease, width 200ms ease;
+    }
+    .roster-search:focus { border-color: rgba(249,241,8,0.4); width: 220px; }
+    .roster-search::placeholder { color: rgba(250,246,232,0.35); }
+
+    /* Card grid */
+    .roster-grid-wrap {
+      background: var(--color-night);
+      padding: clamp(32px, 5vw, 56px) 24px;
+      min-height: 400px;
+    }
+    .roster-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    /* THE CARD */
+    .tcard-wrap {
+      perspective: 1200px;
+      height: 380px;
+      cursor: pointer;
+    }
+    .tcard-wrap.hidden { display: none; }
+    .tcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+      border-radius: 14px;
+    }
+    .tcard-wrap.flipped .tcard-inner { transform: rotateY(180deg); }
+    .tcard-front, .tcard-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+    }
+
+    /* Tier colors */
+    .tcard-wrap[data-tier="legend"] .tcard-front { border: 2.5px solid var(--color-gold); }
+    .tcard-wrap[data-tier="veteran"] .tcard-front { border: 2.5px solid var(--color-purple-light); }
+    .tcard-wrap[data-tier="rider"] .tcard-front { border: 2.5px solid var(--color-cerulean); }
+    .tcard-wrap[data-tier="rookie"] .tcard-front { border: 2.5px solid rgba(250,246,232,0.3); }
+    .tcard-back { border: 2px solid rgba(201,148,58,0.2); }
+
+    /* Card front */
+    .tcard-front {
+      background: linear-gradient(160deg, #1a0826 0%, #0e0618 60%, #150a22 100%);
+      display: flex;
+      flex-direction: column;
+    }
+    /* Holographic shimmer layer */
+    .tcard-front::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(249,241,8,0.04) 20%,
+        rgba(90,30,138,0.06) 40%,
+        rgba(4,178,202,0.05) 60%,
+        transparent 80%
+      );
+      background-size: 300% 300%;
+      animation: holo-drift 6s ease infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes holo-drift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .tcard-wrap[data-tier="legend"] .tcard-front::before {
+      background: linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(249,241,8,0.12) 20%,
+        rgba(232,98,26,0.08) 40%,
+        rgba(249,241,8,0.10) 60%,
+        rgba(4,178,202,0.06) 80%,
+        transparent 100%
+      );
+      background-size: 300% 300%;
+      animation: holo-legend 4s ease infinite;
+    }
+    @keyframes holo-legend {
+      0%, 100% { background-position: 0% 0%; opacity: 0.7; }
+      50% { background-position: 100% 100%; opacity: 1; }
+    }
+    /* Mouse-reactive shimmer spotlight */
+    .tcard-front::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: radial-gradient(
+        circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+        rgba(255,255,255,0.12) 0%,
+        rgba(249,241,8,0.07) 20%,
+        transparent 55%
+      );
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .tcard-wrap:hover:not(.flipped) .tcard-front::after { opacity: 1; }
+    [data-tier="legend"] .tcard-front::after {
+      background: radial-gradient(
+        circle at calc(var(--mx, 0.5) * 100%) calc(var(--my, 0.5) * 100%),
+        rgba(255,255,255,0.18) 0%,
+        rgba(249,241,8,0.14) 20%,
+        rgba(232,98,26,0.06) 40%,
+        transparent 60%
+      );
+    }
+
+    /* Card top bar */
+    .tcard-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .tcard-edition {
+      display: block;
+      text-align: center;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(250,246,232,0.46);
+      margin: 0 0 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .tcard-tap-top {
+      display: none;
+      text-align: center;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(249,241,8,0.92);
+      margin: 2px 0 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .tcard-wrap.modal-open-view .tcard-tap-top { display: block; }
+    .tcard-num {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.35);
+    }
+    .tcard-tier-badge {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    [data-tier="legend"] .tcard-tier-badge { background: var(--color-gold); color: var(--color-night); }
+    [data-tier="veteran"] .tcard-tier-badge { background: var(--color-purple-light); color: #fff; }
+    [data-tier="rider"] .tcard-tier-badge { background: var(--color-cerulean); color: var(--color-night); }
+    [data-tier="rookie"] .tcard-tier-badge { background: rgba(250,246,232,0.15); color: rgba(250,246,232,0.7); }
+
+    /* Avatar ring */
+    .tcard-avatar-area {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0 10px;
+      position: relative;
+      z-index: 2;
+    }
+    .tcard-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Abril Fatface', serif;
+      font-size: 26px;
+      color: var(--color-night);
+      position: relative;
+      flex-shrink: 0;
+    }
+    [data-tier="legend"] .tcard-avatar { background: linear-gradient(135deg, var(--color-gold) 0%, #e8a500 100%); box-shadow: 0 0 20px rgba(249,241,8,0.4); }
+    [data-tier="veteran"] .tcard-avatar { background: linear-gradient(135deg, var(--color-purple-light) 0%, var(--color-purple) 100%); color: #fff; box-shadow: 0 0 16px rgba(123,59,177,0.4); }
+    [data-tier="rider"] .tcard-avatar { background: linear-gradient(135deg, var(--color-cerulean) 0%, #0390a5 100%); box-shadow: 0 0 16px rgba(4,178,202,0.3); }
+    [data-tier="rookie"] .tcard-avatar { background: rgba(250,246,232,0.12); color: var(--color-cream); border: 2px solid rgba(250,246,232,0.2); }
+
+    /* Card body text */
+    .tcard-body {
+      padding: 0 14px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tcard-nickname {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(1.1rem, 3vw, 1.35rem);
+      color: var(--color-cream);
+      line-height: 1.15;
+      margin: 0 0 4px;
+      font-style: italic;
+    }
+    [data-tier="legend"] .tcard-nickname { color: var(--color-gold); }
+    .tcard-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(250,246,232,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 0 0 12px;
+    }
+
+    /* Stats */
+    .tcard-stats { margin: 0 0 10px; }
+    .tcard-stat-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+    .tcard-stat-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 7.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(250,246,232,0.5);
+      width: 66px;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .tcard-stat-bar {
+      flex: 1;
+      height: 5px;
+      background: rgba(250,246,232,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .tcard-stat-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    [data-tier="legend"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-orange) 0%, var(--color-gold) 100%); }
+    [data-tier="veteran"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-purple) 0%, var(--color-purple-light) 100%); }
+    [data-tier="rider"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-cerulean-dark) 0%, var(--color-cerulean) 100%); }
+    [data-tier="rookie"] .tcard-stat-fill { background: rgba(250,246,232,0.3); }
+    .tcard-stat-num {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8px;
+      font-weight: 700;
+      color: rgba(250,246,232,0.35);
+      width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Song */
+    .tcard-song {
+      margin-top: 6px;
+      padding: 6px 0 4px;
+      font-family: 'Josefin Slab', serif;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,232,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .tcard-song span { color: rgba(250,246,232,0.55); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 10px; }
+
+    /* Badges row */
+    .tcard-badges {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 0 10px;
+    }
+    .tcard-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(250,246,232,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      position: relative;
+      cursor: default;
+    }
+    .tcard-badge[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-night);
+      border: 1px solid rgba(201,148,58,0.3);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: var(--color-cream);
+      white-space: nowrap;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* WISH HERO stamp */
+    .tcard-stamp {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(249,241,8,0.25);
+      text-align: center;
+      padding: 0 0 10px;
+      position: relative;
+      z-index: 2;
+    }
+    [data-tier="legend"] .tcard-stamp { color: rgba(249,241,8,0.5); }
+
+    /* Fun fact callout */
+    .tcard-funfact {
+      background: rgba(90,30,138,0.06);
+      border-left: 2.5px solid var(--color-purple);
+      border-radius: 0 6px 6px 0;
+      padding: 6px 8px;
+      margin-bottom: 7px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10.5px;
+      color: rgba(26,14,43,0.7);
+      line-height: 1.5;
+      font-style: italic;
+    }
+    .tcard-funfact-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-purple);
+      font-style: normal;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Share button */
+    .tcard-share-btn {
+      background: rgba(26,14,43,0.06);
+      border: none;
+      border-radius: 6px;
+      padding: 8px 9px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 150ms;
+      flex-shrink: 0;
+    }
+    .tcard-share-btn:hover { background: rgba(26,14,43,0.12); }
+
+    /* Discovered counter bar */
+    .discovered-bar {
+      background: rgba(250,246,232,0.04);
+      border-bottom: 1px solid rgba(201,148,58,0.1);
+      padding: 8px 24px;
+      text-align: center;
+      font-family: 'Josefin Slab', serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.3);
+    }
+    .discovered-bar .disc-count { color: var(--color-gold); }
+    .challenge-hub {
+      background: rgba(4,178,202,0.08);
+      border-bottom: 1px solid rgba(4,178,202,0.24);
+      padding: 14px 24px;
+    }
+    .challenge-hub-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .challenge-pill {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(245,237,214,0.92);
+      border: 1px solid rgba(250,246,232,0.2);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(20,9,18,0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .challenge-pill.done {
+      border-color: rgba(249,241,8,0.55);
+      background: rgba(249,241,8,0.14);
+      color: var(--color-gold);
+    }
+
+    /* Confetti particles */
+    .confetti-particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: confetti-fly 0.9s ease-out forwards;
+    }
+    @keyframes confetti-fly {
+      0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) rotate(var(--dr)) scale(0.3); opacity: 0; }
+    }
+
+    /* CARD BACK */
+    .tcard-back {
+      background: linear-gradient(170deg, #faf6e8 0%, #f0e9d0 100%);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Watermark rose on back */
+    .tcard-back::before {
+      content: '🌹';
+      position: absolute;
+      right: -8px;
+      bottom: 30px;
+      font-size: 80px;
+      opacity: 0.055;
+      pointer-events: none;
+      filter: grayscale(1);
+      transform: rotate(-15deg);
+      z-index: 0;
+    }
+    [data-tier="legend"] .tcard-back::before { content: '⭐'; opacity: 0.07; }
+    [data-tier="rookie"] .tcard-back::before { content: '🌱'; opacity: 0.07; }
+    .tcard-back-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(26,14,43,0.12);
+    }
+    .tcard-back-title {
+      font-family: 'Abril Fatface', serif;
+      font-size: 0.95rem;
+      color: var(--color-night);
+      line-height: 1.2;
+    }
+    .tcard-back-wam {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-purple);
+      text-align: right;
+    }
+    .tcard-back-bio {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11.5px;
+      color: rgba(26,14,43,0.8);
+      line-height: 1.6;
+      flex: 1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
+    }
+    .tcard-back-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 10px 0 8px;
+    }
+    .tcard-back-badge {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 7px;
+      border-radius: 10px;
+      background: rgba(26,14,43,0.07);
+      color: rgba(26,14,43,0.6);
+    }
+    .tcard-back-footer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(26,14,43,0.1);
+    }
+    .tcard-donate-btn {
+      flex: 1;
+      background: var(--color-purple);
+      color: #fff;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 8px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      text-align: center;
+      transition: background 150ms;
+    }
+    .tcard-donate-btn:hover { background: var(--color-purple-light); }
+    .tcard-back-num {
+      font-family: 'Josefin Slab', serif;
+      font-size: 9px;
+      color: rgba(26,14,43,0.3);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    /* Injected DonorDrive “raised” block (grid + modal back) */
+    .tcard-back-raised {
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .tcard-back-raised-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 4px;
+      min-width: 0;
+    }
+    .tcard-back-raised-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(26, 14, 43, 0.5);
+      flex-shrink: 0;
+    }
+    .tcard-back-raised-amt {
+      font-family: 'Abril Fatface', serif;
+      font-size: 13px;
+      color: var(--color-purple);
+      text-align: right;
+      min-width: 0;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .tcard-back-raised-track {
+      height: 5px;
+      background: rgba(26, 14, 43, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+    .tcard-back-raised-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-purple), var(--color-purple-light));
+      border-radius: 3px;
+    }
+    .tcard-back-raised-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      color: rgba(26, 14, 43, 0.4);
+      line-height: 1.35;
+    }
+    /* Hover tilt effect */
+    .tcard-wrap { transition: transform 0.1s ease; }
+
+    /* Donation feed row */
+    .donation-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(250,246,232,0.04);
+      border-radius: 8px;
+      border: 1px solid rgba(250,246,232,0.06);
+      animation: card-enter 0.3s ease both;
+    }
+    .donation-donor {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--color-cream);
+      font-weight: 500;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .donation-amount {
+      font-family: 'Abril Fatface', serif;
+      font-size: 14px;
+      color: var(--color-gold);
+      flex-shrink: 0;
+    }
+    .donation-to {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.4);
+      flex-shrink: 0;
+    }
+
+    /* Leaderboard row */
+    .lb-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: rgba(250,246,232,0.04);
+      border-radius: 8px;
+      border: 1px solid rgba(250,246,232,0.06);
+      animation: card-enter 0.3s ease both;
+    }
+    .lb-rank {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: rgba(250,246,232,0.3);
+      width: 20px;
+      flex-shrink: 0;
+    }
+    .lb-rank-1 { color: var(--color-gold); }
+    .lb-rank-2 { color: rgba(192,192,192,0.8); }
+    .lb-rank-3 { color: rgba(205,127,50,0.8); }
+    .lb-name {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--color-cream);
+      font-weight: 500;
+      flex: 1;
+    }
+    .lb-bar-wrap { flex: 1; }
+    .lb-bar-track {
+      height: 4px;
+      background: rgba(250,246,232,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .lb-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
+      border-radius: 2px;
+    }
+    .lb-amount {
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-gold);
+      flex-shrink: 0;
+    }
+
+    /* Leaderboard tabs */
+    .lb-tab {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(250,246,232,0.18);
+      background: transparent;
+      color: rgba(250,246,232,0.5);
+      cursor: pointer;
+      transition: all 150ms;
+    }
+    .lb-tab:hover { border-color: rgba(249,241,8,0.4); color: var(--color-gold); }
+    .lb-tab.active { background: var(--color-gold); color: var(--color-night); border-color: var(--color-gold); }
+
+    /* WAM countdown */
+    .countdown-unit {
+      text-align: center;
+      background: rgba(250,246,232,0.06);
+      border: 1px solid rgba(249,241,8,0.2);
+      border-radius: 10px;
+      padding: 10px 16px;
+      min-width: 64px;
+    }
+    .countdown-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: 2rem;
+      color: var(--color-gold);
+      line-height: 1;
+      display: block;
+    }
+    .countdown-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.45);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* ══ MOBILE RESPONSIVE ══ */
+
+    /* Tablet: 2-column grid, tighter controls */
+    @media (max-width: 900px) {
+      .roster-controls-inner { gap: 8px; }
+      .filter-btn { font-size: 10px; padding: 6px 11px; }
+      .roster-search { width: 150px; }
+      .roster-search:focus { width: 180px; }
+    }
+
+    /* Mobile ≤ 640px — single column, compact everything */
+    @media (max-width: 640px) {
+      /* Hero */
+      .roster-hero { padding: 40px 16px 28px; }
+      .roster-hero h1 { font-size: clamp(2.4rem,11vw,3.5rem); }
+      .roster-hero p { font-size: 14px; margin-bottom: 20px; }
+      .roster-hero-stats { gap: 16px; }
+      .roster-hero-stat-num { font-size: clamp(1.6rem,6vw,2.2rem); }
+
+      /* WAM countdown — smaller units */
+      #wamCountdown { gap: 8px !important; }
+      .countdown-unit { padding: 8px 10px; min-width: 52px; }
+      .countdown-num { font-size: 1.4rem; }
+      .countdown-label { font-size: 7px; }
+
+      /* Team goal bar — hide donate link, compact */
+      .team-goal-bar { padding: 10px 16px; }
+      .team-goal-inner { gap: 10px; }
+      .team-goal-inner > a { display: none; }
+      .team-goal-pct { font-size: 16px; }
+      .team-goal-details { font-size: 10px; }
+      .team-goal-label { font-size: 9px; }
+
+      /* Controls — horizontal scroll so buttons don't wrap badly */
+      .roster-controls { padding: 12px 16px; top: 56px; }
+      .roster-controls-inner {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 7px;
+        padding-bottom: 2px;
+      }
+      .roster-controls-inner::-webkit-scrollbar { display: none; }
+      .filter-btn { font-size: 10px; padding: 6px 11px; flex-shrink: 0; }
+      .roster-search {
+        flex-shrink: 0;
+        width: 130px;
+        margin-left: 0;
+      }
+      #sortRaisedBtn, #randomRiderBtn { flex-shrink: 0; }
+
+      /* Card grid: single column on mobile */
+      .roster-grid-wrap { padding: 20px 16px; }
+      .roster-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 16px;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      /* Cards: fluid sizing across phone widths */
+      .tcard-wrap {
+        width: min(100%, 352px);
+        max-width: 352px;
+        aspect-ratio: 5 / 7;
+        height: auto;
+        min-height: 360px;
+        margin: 0 auto;
+        justify-self: center;
+      }
+      .tcard-topbar { padding: 10px 14px 8px !important; }
+      .tcard-num { font-size: 11px !important; }
+      .tcard-tier-badge { font-size: 10px !important; padding: 4px 9px !important; }
+      .tcard-edition { font-size: 10px; margin-bottom: 10px; }
+      .tcard-nickname { font-size: 1.9rem !important; line-height: 1.08 !important; }
+      .tcard-name { font-size: 12.5px !important; margin-bottom: 14px !important; }
+      .tcard-avatar-area { padding: 10px 0 12px; }
+      .tcard-avatar { width: 104px !important; height: 104px !important; font-size: 32px !important; }
+      .tcard-body { padding: 0 16px; }
+      .tcard-stat-label { font-size: 10px !important; width: 86px !important; letter-spacing: 0.05em !important; }
+      .tcard-stat-num { font-size: 11px !important; width: 28px !important; }
+      .tcard-stat-row { margin-bottom: 4px; }
+      .tcard-stat-bar { height: 7px !important; }
+      .tcard-stats { margin: 0 0 8px; }
+      .tcard-song { font-size: 11px !important; padding: 4px 0 3px; margin-top: 8px !important; }
+      .tcard-song span { font-size: 12px; }
+      .tcard-badges { padding: 8px 0 10px; gap: 8px; }
+      .tcard-badge { width: 28px; height: 28px; font-size: 14px; }
+      .tcard-back { padding: 20px 17px; }
+      .tcard-back-title { font-size: 1.24rem; }
+      .tcard-back-wam { font-size: 11.5px; }
+      .tcard-funfact { padding: 10px 11px; font-size: 13.5px; line-height: 1.6; }
+      .tcard-funfact-label { font-size: 10.5px; }
+      .tcard-back-bio { font-size: 14px; line-height: 1.65; -webkit-line-clamp: 8; }
+      .tcard-back-badges { gap: 7px; margin: 12px 0 10px; }
+      .tcard-back-badge { font-size: 11px; padding: 6px 10px; }
+      .tcard-donate-btn { font-size: 12px; padding: 11px 13px; }
+      .tcard-share-btn { font-size: 16px; padding: 10px 11px; }
+      .tcard-back-num { font-size: 11px; }
+      .tcard-raised-hero-amt { font-size: 1.6rem !important; }
+      .tcard-stamp { font-size: 10px; padding-bottom: 9px; }
+
+      /* Hover donate btn: show on mobile tap via active */
+      .tcard-hover-donate { display: none; }
+
+      /* Hot streak badge: smaller */
+      .tcard-hot-badge { font-size: 16px; top: -6px; right: -6px; }
+
+      /* Discovered bar */
+      .discovered-bar { font-size: 11px; padding: 8px 16px; }
+      .challenge-hub { padding: 10px 16px; }
+      .challenge-pill { font-size: 11px; padding: 7px 10px; }
+
+      /* Live section */
+      #liveSection { padding: 28px 16px; }
+      #liveSection > div { grid-template-columns: 1fr !important; gap: 28px !important; }
+      .donation-row { font-size: 11px; gap: 6px; }
+
+      /* Leaderboard */
+      .lb-name { font-size: 11px; }
+      .lb-amount { font-size: 10px; }
+      .lb-tab { font-size: 8.5px; padding: 4px 9px; }
+
+
+    }
+
+    /* Very small phones ≤ 400px — tighten grid wrapper */
+    @media (max-width: 400px) {
+      .roster-grid-wrap { padding: 16px 12px; }
+      .roster-grid { max-width: 100%; }
+      .tcard-wrap {
+        width: min(100%, 324px);
+        max-width: 324px;
+        min-height: 360px;
+      }
+      .tcard-raised-hero-amt { font-size: 1.4rem !important; }
+    }
+
+    /* Tablet / small desktop: larger roster cards (not modal — see 781px block) */
+    @media (min-width: 641px) {
+      .roster-grid {
+        grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+        gap: 28px;
+      }
+      .tcard-wrap {
+        height: 452px;
+      }
+      .tcard-edition { font-size: 10px; margin-bottom: 9px; }
+      .tcard-num { font-size: 11px; }
+      .tcard-tier-badge { font-size: 10px; padding: 4px 9px; }
+      .tcard-avatar-area { padding: 10px 0 12px; }
+      .tcard-avatar { width: 96px; height: 96px; font-size: 28px; }
+      .tcard-nickname { font-size: clamp(1.32rem, 2vw, 1.55rem); }
+      .tcard-name { font-size: 12.5px; margin-bottom: 11px; }
+      .tcard-body { padding: 0 15px; }
+      .tcard-stat-label { font-size: 8.75px; width: 72px; letter-spacing: 0.07em; }
+      .tcard-stat-num { font-size: 9px; width: 26px; }
+      .tcard-stat-bar { height: 6px; }
+      .tcard-stat-row { margin-bottom: 5px; }
+      .tcard-song { font-size: 10px; margin-top: 7px; }
+      .tcard-song span { font-size: 11.5px; }
+      .tcard-badge { width: 24px; height: 24px; font-size: 12px; }
+      .tcard-stamp { font-size: 9px; letter-spacing: 0.16em; }
+      .tcard-raised-hero { padding: 8px 14px 18px; min-height: 58px; }
+      .tcard-raised-hero-amt { font-size: 2.2rem; }
+      .tcard-raised-hero-label { font-size: 9px; margin-top: 4px; }
+      .tcard-back { padding: 18px; }
+      .tcard-back-title { font-size: 1.12rem; }
+      .tcard-back-wam { font-size: 10px; }
+      .tcard-funfact { font-size: 11.5px; padding: 8px 10px; }
+      .tcard-funfact-label { font-size: 9px; }
+      .tcard-back-bio { font-size: 13px; line-height: 1.58; -webkit-line-clamp: 7; }
+      .tcard-back-badge { font-size: 9.5px; padding: 4px 9px; }
+      .tcard-donate-btn { font-size: 11px; padding: 9px 12px; }
+      .tcard-share-btn { font-size: 14px; padding: 9px 10px; }
+      .tcard-back-num { font-size: 10px; }
+      .tcard-back-raised-label { font-size: 9.5px; }
+      .tcard-back-raised-amt { font-size: 15px; }
+      .tcard-back-raised-track { height: 6px; }
+      .tcard-back-raised-meta { font-size: 10px; }
+    }
+
+    /* Desktop modal (split from roster so we do not fight max-width 780 modal rules on phones) */
+    @media (min-width: 781px) {
+      .card-modal-card-slot .tcard-nickname { font-size: 1.52rem !important; }
+      .card-modal-card-slot .tcard-name { font-size: 15px !important; }
+      .card-modal-card-slot .tcard-avatar { width: 118px !important; height: 118px !important; font-size: 36px !important; }
+      .card-modal-card-slot .tcard-stat-label { font-size: 10px !important; width: 82px !important; }
+      .card-modal-card-slot .tcard-stat-num { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-stat-bar { height: 8px !important; }
+      .card-modal-card-slot .tcard-song { font-size: 13px !important; }
+      .card-modal-card-slot .tcard-edition { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-num { font-size: 11px !important; }
+      .card-modal-card-slot .tcard-tier-badge { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-raised-hero-amt { font-size: 2.35rem !important; }
+      .card-modal-card-slot .tcard-raised-hero-label { font-size: 9.5px !important; }
+      .card-modal-card-slot .tcard-stamp { font-size: 9px !important; }
+      .card-modal-card-slot .tcard-back-title { font-size: 1.22rem !important; }
+      .card-modal-card-slot .tcard-back-wam { font-size: 10.5px !important; }
+      .card-modal-card-slot .tcard-funfact { font-size: 13px !important; }
+      .card-modal-card-slot .tcard-funfact-label { font-size: 10px !important; }
+      .card-modal-card-slot .tcard-back-bio { font-size: 15px !important; line-height: 1.62 !important; }
+      .card-modal-card-slot .tcard-back-badge { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-donate-btn { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-back-num { font-size: 10.5px !important; }
+
+      .modal-rider-nickname { font-size: clamp(1.65rem, 3vw, 2.15rem); }
+      .modal-rider-name { font-size: 16px; }
+      .modal-rider-meta { font-size: 11px; }
+      .modal-wish-granter-badge { font-size: 10px; padding: 4px 11px; }
+      .modal-stats-heading, .modal-badges-heading { font-size: 10px; }
+      .modal-stat-label { font-size: 12.5px; width: 128px; }
+      .modal-stat-val { font-size: 18px; width: 40px; }
+      .modal-stat-track { height: 12px; }
+      .modal-stat-boost { font-size: 16px; }
+      .modal-badge-pill { font-size: 14px; padding: 6px 14px; }
+      .modal-funfact-label { font-size: 10px; }
+      .modal-funfact p { font-size: 14px; line-height: 1.52; }
+      .card-modal-song-name { font-size: 1.22rem; }
+      .card-modal-song-by { font-size: 12px; }
+      .modal-play-btn { font-size: 11px; padding: 8px 14px; }
+      .card-modal-donate-link { font-size: 13px; padding: 14px; }
+      #modalPanel button[onclick^="challengeRider"] { font-size: 11px !important; padding: 11px !important; }
+    }
+
+    /* Card entrance animation */
+    @keyframes card-enter {
+      from { opacity: 0; transform: translateY(18px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .tcard-wrap {
+      animation: card-enter 0.35s ease both;
+    }
+    .tcard-wrap:nth-child(1)  { animation-delay: 0.00s; }
+    .tcard-wrap:nth-child(2)  { animation-delay: 0.03s; }
+    .tcard-wrap:nth-child(3)  { animation-delay: 0.06s; }
+    .tcard-wrap:nth-child(4)  { animation-delay: 0.09s; }
+    .tcard-wrap:nth-child(5)  { animation-delay: 0.12s; }
+    .tcard-wrap:nth-child(6)  { animation-delay: 0.15s; }
+    .tcard-wrap:nth-child(7)  { animation-delay: 0.18s; }
+    .tcard-wrap:nth-child(8)  { animation-delay: 0.21s; }
+    .tcard-wrap:nth-child(n+9) { animation-delay: 0.24s; }
+
+    /* ══ TEAM GOAL PROGRESS BAR ══ */
+    .team-goal-bar {
+      background: #0c0418;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(249,241,8,0.12);
+    }
+    .team-goal-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .team-goal-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--color-gold);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .team-goal-track {
+      flex: 1;
+      min-width: 180px;
+      height: 8px;
+      background: rgba(250,246,232,0.07);
+      border-radius: 4px;
+      overflow: visible;
+      position: relative;
+    }
+    .team-goal-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
+      border-radius: 4px;
+      width: 0%;
+      transition: width 1.8s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+    .team-goal-fill::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      background: var(--color-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(249,241,8,0.6), 0 0 20px rgba(249,241,8,0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease 1.5s;
+    }
+    .team-goal-fill.loaded::after { opacity: 1; }
+    .team-goal-pct {
+      font-family: 'Abril Fatface', serif;
+      font-size: 20px;
+      color: var(--color-gold);
+      flex-shrink: 0;
+      min-width: 48px;
+      text-align: right;
+      line-height: 1;
+    }
+    .team-goal-details {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.4);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+
+
+    /* ══ HOT STREAK CARD ══ */
+    .tcard-wrap.hot-streak .tcard-front {
+      box-shadow: 0 0 0 2px rgba(249,241,8,0.6), 0 0 24px rgba(249,241,8,0.15);
+    }
+    .tcard-hot-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 22px;
+      z-index: 10;
+      filter: drop-shadow(0 0 6px rgba(232,98,26,0.9));
+      animation: fire-pulse 1.2s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes fire-pulse {
+      from { transform: scale(0.88) rotate(-6deg); }
+      to   { transform: scale(1.12) rotate(6deg); }
+    }
+
+    /* Front fundraising badge */
+    .tcard-raised {
+      font-family: 'Josefin Slab', serif;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(250,246,232,0.45);
+      text-align: center;
+      margin: -6px 0 6px;
+    }
+    .tcard-raised span {
+      color: var(--color-gold);
+      font-size: 11px;
+    }
+    [data-tier="legend"] .tcard-raised span { text-shadow: 0 0 8px rgba(249,241,8,0.4); }
+
+    .tcard-raised-hero {
+      text-align: center;
+      padding: 6px 14px 16px;
+      min-height: 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .tcard-raised-hero-amt {
+      font-family: 'Abril Fatface', serif;
+      font-size: 2rem;
+      line-height: 1.12;
+      color: var(--color-gold);
+      letter-spacing: -0.01em;
+      display: block;
+      padding-bottom: 1px;
+    }
+    [data-tier="legend"] .tcard-raised-hero-amt { text-shadow: 0 0 16px rgba(249,241,8,0.5); }
+    [data-tier="veteran"] .tcard-raised-hero-amt { color: var(--color-purple-light); }
+    [data-tier="rider"] .tcard-raised-hero-amt { color: var(--color-cerulean); }
+    [data-tier="rookie"] .tcard-raised-hero-amt { color: rgba(250,246,232,0.7); }
+    .tcard-raised-hero-label {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(250,246,232,0.35);
+      margin-top: 3px;
+    }
+
+    /* ══ QUICK DONATE HOVER BUTTON ══ */
+    .tcard-hover-donate {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      background: var(--color-cerulean);
+      color: var(--color-night);
+      font-family: 'Josefin Slab', serif;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 7px 18px;
+      border-radius: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      z-index: 20;
+      box-shadow: 0 4px 14px rgba(4,178,202,0.5);
+      pointer-events: none;
+    }
+    .tcard-wrap:hover:not(.flipped) .tcard-hover-donate {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Empty state */
+    .roster-empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: rgba(250,246,232,0.4);
+      font-family: 'DM Sans', sans-serif;
+      grid-column: 1 / -1;
+    }
+
+    /* Section label */
+    .tier-section-label {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0;
+    }
+    .tier-section-label span {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(250,246,232,0.35);
+      white-space: nowrap;
+    }
+    .tier-section-line { flex: 1; height: 1px; background: rgba(201,148,58,0.15); }
+
+    /* ══ CARD MODAL ══ */
+    .card-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(8,3,18,0.94);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      z-index: 600; display: flex; align-items: flex-start; justify-content: center;
+      padding: 32px 20px; animation: fade-in 0.2s ease; overflow-y: auto;
+    }
+    @keyframes fade-in { from { opacity:0; } to { opacity:1; } }
+    .card-modal-inner {
+      display: flex; gap: 28px; align-items: flex-start;
+      max-width: 1080px; width: 100%; position: relative; margin: auto;
+      animation: modal-rise 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modal-rise {
+      from { transform: scale(0.88) translateY(28px); opacity:0; }
+      to   { transform: scale(1) translateY(0); opacity:1; }
+    }
+    .card-modal-card-slot .tcard-wrap {
+      width: 410px !important; height: 575px !important;
+      animation: none !important; cursor: pointer; flex-shrink: 0;
+    }
+    .card-modal-card-slot .tcard-nickname { font-size: 1.35rem !important; }
+    .card-modal-card-slot .tcard-name     { font-size: 14px !important; }
+    .card-modal-card-slot .tcard-avatar   { width: 108px !important; height: 108px !important; font-size: 34px !important; }
+    .card-modal-card-slot .tcard-stat-label { font-size: 9px !important; width: 76px !important; letter-spacing: 0.05em !important; }
+    .card-modal-card-slot .tcard-stat-num   { font-size: 11px !important; }
+    .card-modal-card-slot .tcard-stat-bar   { height: 7px !important; }
+    .card-modal-card-slot .tcard-stats { gap: 8px !important; margin: 8px 0 10px !important; }
+    .card-modal-card-slot .tcard-song { font-size: 12px !important; margin-top: 6px !important; }
+
+    /* Modal: full back face — no fixed card height / inner scroll when flipped */
+    .card-modal-card-slot .tcard-back-bio {
+      display: block !important;
+      -webkit-line-clamp: unset !important;
+      -webkit-box-orient: unset !important;
+      overflow: visible !important;
+      flex: 0 1 auto !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped {
+      aspect-ratio: unset !important;
+      height: auto !important;
+      min-height: 575px;
+      max-height: none !important;
+      overflow: visible;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      height: auto !important;
+      min-height: 0;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-front,
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-back {
+      grid-area: 1 / 1;
+      position: relative !important;
+      inset: auto !important;
+      width: 100%;
+      height: auto !important;
+      align-self: start;
+      overflow: visible !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-front {
+      visibility: hidden;
+      pointer-events: none;
+      opacity: 0;
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-width: 0 !important;
+      overflow: hidden !important;
+    }
+    .card-modal-card-slot .tcard-wrap.flipped .tcard-back {
+      z-index: 1;
+    }
+
+    .card-modal-panel {
+      flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px;
+    }
+    .modal-rider-header { border-bottom: 1px solid rgba(201,148,58,0.15); padding-bottom: 12px; }
+    .modal-rider-nickname {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--color-gold); line-height: 1; margin-bottom: 5px;
+      font-style: italic;
+    }
+    .modal-rider-name {
+      font-family: 'DM Sans', sans-serif; font-size: 15px;
+      color: var(--color-cream); font-weight: 500; margin-bottom: 5px;
+    }
+    .modal-rider-meta {
+      font-family: 'Josefin Slab', serif; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(250,246,232,0.4); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .modal-wish-granter-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: linear-gradient(90deg, var(--color-gold), #ffc107);
+      color: var(--color-night); font-family: 'Josefin Slab', serif;
+      font-size: 9px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; padding: 3px 10px; border-radius: 10px;
+      animation: wish-pulse 2s ease infinite alternate;
+    }
+    @keyframes wish-pulse {
+      from { box-shadow: 0 0 6px rgba(249,241,8,0.4); }
+      to   { box-shadow: 0 0 18px rgba(249,241,8,0.9); }
+    }
+    .modal-stats-section { display: flex; flex-direction: column; gap: 9px; }
+    .modal-stats-heading, .modal-badges-heading {
+      font-family: 'Josefin Slab', serif; font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: rgba(250,246,232,0.3); margin-bottom: 4px;
+    }
+    .modal-stat-row { display: flex; align-items: center; gap: 10px; }
+    .modal-stat-label {
+      font-family: 'Josefin Slab', serif; font-size: 11.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: rgba(250,246,232,0.65); width: 118px; flex-shrink: 0;
+    }
+    .modal-stat-track {
+      flex: 1; height: 11px; background: rgba(250,246,232,0.07); border-radius: 6px; overflow: hidden;
+    }
+    .modal-stat-fill {
+      height: 100%; border-radius: 6px;
+      transition: width 0.9s cubic-bezier(0.4,0,0.2,1); width: 0%;
+    }
+    .modal-stat-fill-fundraising { background: linear-gradient(90deg, var(--color-purple), var(--color-gold)); }
+    .modal-stat-fill-experience  { background: linear-gradient(90deg, var(--color-cerulean), #7fdfef); }
+    .modal-stat-fill-spirit      { background: linear-gradient(90deg, var(--color-orange), #f9a825); }
+    .modal-stat-fill-grit        { background: linear-gradient(90deg, #7b3bb1, var(--color-cerulean)); }
+    .modal-stat-val {
+      font-family: 'Abril Fatface', serif; font-size: 16px;
+      color: var(--color-cream); width: 38px; text-align: right; flex-shrink: 0;
+    }
+    .modal-stat-boost { font-size: 15px; flex-shrink: 0; filter: drop-shadow(0 0 4px rgba(249,241,8,0.7)); }
+    .modal-badges-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .modal-badge-pill {
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px;
+      background: rgba(250,246,232,0.06); border: 1px solid rgba(250,246,232,0.12);
+      border-radius: 20px; padding: 5px 13px; color: rgba(250,246,232,0.75); white-space: nowrap;
+    }
+    .modal-funfact { background: rgba(249,241,8,0.05); border-left: 3px solid var(--color-gold); border-radius: 0 8px 8px 0; padding: 8px 12px; }
+    .modal-funfact-label {
+      font-family: 'Josefin Slab', serif; font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em; color: var(--color-gold);
+      display: block; margin-bottom: 5px;
+    }
+    .modal-funfact p { font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(250,246,232,0.7); line-height: 1.5; margin: 0; }
+    .card-modal-song-box { background: rgba(250,246,232,0.05); border: 1px solid rgba(249,241,8,0.15); border-radius: 12px; padding: 14px; }
+    .card-modal-song-name { font-family: 'Abril Fatface', serif; font-size: 1.1rem; color: var(--color-gold); margin: 0 0 2px; }
+    .card-modal-song-by { font-family: 'DM Sans', sans-serif; font-size: 11px; color: rgba(250,246,232,0.4); margin: 0 0 10px; }
+    .modal-play-btns { display: flex; gap: 7px; flex-wrap: wrap; }
+    .modal-play-btn {
+      display: inline-flex; align-items: center; gap: 5px; padding: 7px 13px;
+      border-radius: 20px; font-family: 'Josefin Slab', serif; font-weight: 700;
+      font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+      text-decoration: none; cursor: pointer; border: none; transition: filter 150ms, transform 100ms;
+    }
+    .modal-play-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .modal-play-btn:active { transform: translateY(0); }
+    .modal-play-btn-yt { background: #ff0000; color: #fff; }
+    .modal-play-btn-sp { background: #1db954; color: #fff; }
+    .modal-play-btn-am { background: #fc3c44; color: #fff; }
+    .card-modal-donate-link {
+      display: block; background: var(--color-purple); color: #fff;
+      font-family: 'Josefin Slab', serif; font-weight: 700; font-size: 12px;
+      text-transform: uppercase; letter-spacing: 0.1em; padding: 13px;
+      border-radius: 10px; text-align: center; text-decoration: none; transition: background 150ms;
+    }
+    .card-modal-donate-link:hover { background: var(--color-purple-light); }
+    .card-modal-hint {
+      font-family: 'DM Sans', sans-serif; font-size: 11px;
+      color: rgba(250,246,232,0.25); text-align: center; margin: 0;
+    }
+    .card-modal-close {
+      position: fixed;
+      top: max(12px, env(safe-area-inset-top, 0px));
+      right: max(16px, env(safe-area-inset-right, 0px));
+      width: 44px; height: 44px;
+      background: rgba(16, 8, 36, 0.92);
+      border: 1px solid rgba(250,246,232,0.35);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+      transition: background 150ms, border-color 150ms;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-modal-close:hover { background: rgba(40, 22, 58, 0.98); border-color: rgba(250,246,232,0.55); color: #fff; }
+
+    /* Share CTA sits in flow between card + panel (not fixed — avoids overlapping the card) */
+    .card-modal-left-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .modal-share-rail {
+      width: 100%;
+      max-width: 410px;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 4px 16px 10px;
+      display: none;
+    }
+    .modal-share-rail.show {
+      display: block;
+    }
+    .modal-share-btn {
+      border: 1px solid rgba(4,178,202,0.45);
+      background: rgba(4,178,202,0.16);
+      color: var(--color-cream);
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-radius: 22px;
+      padding: 10px 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 100%;
+    }
+    .share-generator {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(250,246,232,0.12);
+      background: rgba(250,246,232,0.04);
+    }
+    .share-generator h4 {
+      margin: 0 0 9px;
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-gold);
+    }
+    .share-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .share-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 10px 8px;
+      border: 1px solid rgba(250,246,232,0.2);
+      color: rgba(250,246,232,0.95);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      transition: background 120ms ease, border-color 120ms ease;
+      background: transparent;
+      cursor: pointer;
+    }
+    .share-link:hover {
+      background: rgba(250,246,232,0.1);
+      border-color: rgba(249,241,8,0.45);
+    }
+    .share-generator-note {
+      margin: 8px 0 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      color: rgba(250,246,232,0.6);
+      line-height: 1.4;
+    }
+    .modal-qr-wrap {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(250,246,232,0.12);
+      background: rgba(250,246,232,0.04);
+      text-align: center;
+    }
+    .modal-qr-title {
+      margin: 0 0 8px;
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-gold);
+    }
+    .modal-qr-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 8px;
+      border: 1px solid rgba(250,246,232,0.2);
+      background: #fff;
+      display: block;
+      margin: 0 auto 8px;
+    }
+    .modal-qr-download {
+      border: 1px solid rgba(4,178,202,0.45);
+      background: rgba(4,178,202,0.16);
+      color: var(--color-cream);
+      border-radius: 18px;
+      padding: 8px 12px;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+    }
+    .modal-qr-download:hover {
+      background: rgba(4,178,202,0.26);
+      border-color: rgba(4,178,202,0.8);
+    }
+    @media (max-width: 780px) {
+      /* Full-screen sheet: keep card visible above details */
+      .card-modal-overlay {
+        padding: 10px 0 24px; align-items: flex-start; justify-content: center;
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .card-modal-inner {
+        display: block;
+        width: 100vw; min-width: 100vw; max-width: 100vw; margin: 0;
+        background: #100824; border-radius: 20px 20px 0 0;
+        max-height: none; overflow: visible;
+        overflow-anchor: none;
+        /* Reserve space so the fixed close control does not sit on top of the card */
+        padding-top: 52px;
+      }
+      .card-modal-card-slot {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 18px 14px 8px;
+        overflow-x: hidden;
+        flex-shrink: 0;
+        position: static;
+      }
+      .card-modal-card-slot .tcard-wrap {
+        width: min(100%, 360px) !important;
+        aspect-ratio: 5 / 7;
+        height: auto !important;
+        max-height: 58vh;
+        min-height: 0;
+      }
+      .card-modal-card-slot .tcard-topbar { padding: 10px 14px 8px !important; }
+      .card-modal-card-slot .tcard-num { font-size: 11px !important; }
+      .card-modal-card-slot .tcard-tier-badge { font-size: 10px !important; padding: 4px 9px !important; }
+      .card-modal-card-slot .tcard-edition { font-size: 11px !important; margin-bottom: 10px !important; }
+      .card-modal-card-slot .tcard-avatar-area { padding: 10px 0 12px !important; }
+      .card-modal-card-slot .tcard-avatar { width: 114px !important; height: 114px !important; font-size: 34px !important; }
+      .card-modal-card-slot .tcard-body { padding: 0 16px !important; }
+      .card-modal-card-slot .tcard-nickname { font-size: 1.9rem !important; line-height: 1.08 !important; }
+      .card-modal-card-slot .tcard-name { font-size: 12.5px !important; margin: 0 0 14px !important; }
+      .card-modal-card-slot .tcard-stat-label { font-size: 10px !important; width: 86px !important; }
+      .card-modal-card-slot .tcard-stat-bar { height: 7px !important; }
+      .card-modal-card-slot .tcard-stat-num { font-size: 11px !important; width: 28px !important; }
+      .card-modal-card-slot .tcard-song { font-size: 11px !important; margin-top: 8px !important; }
+      .card-modal-card-slot .tcard-song span { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-badges { padding: 8px 0 10px !important; gap: 8px !important; }
+      .card-modal-card-slot .tcard-badge { width: 28px !important; height: 28px !important; font-size: 14px !important; }
+      .card-modal-card-slot .tcard-back { padding: 21px 18px !important; }
+      .card-modal-card-slot .tcard-back-title { font-size: 1.32rem !important; }
+      .card-modal-card-slot .tcard-back-wam { font-size: 12px !important; }
+      .card-modal-card-slot .tcard-funfact { padding: 11px 12px !important; font-size: 14px !important; line-height: 1.6 !important; }
+      .card-modal-card-slot .tcard-funfact-label { font-size: 11px !important; }
+      .card-modal-card-slot .tcard-back-bio { font-size: 14.5px !important; line-height: 1.65 !important; }
+      .card-modal-card-slot .tcard-back-badge { font-size: 11.5px !important; padding: 6px 11px !important; }
+      .card-modal-card-slot .tcard-donate-btn { font-size: 12.5px !important; padding: 11px 13px !important; }
+      .card-modal-card-slot .tcard-share-btn { font-size: 16px !important; padding: 10px 11px !important; }
+      .card-modal-card-slot .tcard-back-num { font-size: 11px !important; }
+      .card-modal-card-slot .tcard-stamp { font-size: 10px !important; padding-bottom: 9px !important; }
+      .card-modal-card-slot .tcard-tap-top {
+        font-size: 16px !important;
+        margin: 4px 0 10px !important;
+      }
+      .card-modal-panel {
+        width: 100%; padding: 24px 20px 40px; box-sizing: border-box; overflow-x: hidden;
+        flex-shrink: 0;
+      }
+      .modal-rider-nickname { font-size: 1.6rem; }
+      .modal-stat-label { font-size: 10.5px; width: 108px; }
+      .modal-stat-val { font-size: 15px; width: 34px; }
+      .card-modal-close {
+        top: max(10px, env(safe-area-inset-top, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px));
+      }
+      .modal-share-rail {
+        max-width: 360px;
+        padding: 8px 16px 14px;
+        display: block;
+        min-height: 46px;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 140ms ease;
+      }
+      .modal-share-rail.show {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .modal-share-btn { font-size: 10px; padding: 9px 14px; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="nav-slot"></div>
+
+<!-- HERO -->
+<section class="roster-hero">
+  <div class="roster-hero-inner">
+    <p class="eyebrow" style="color:var(--color-gold);margin:0 0 14px;">The Grateful Team · Make-A-Wish Michigan</p>
+    <h1>The Grateful<br>Roster</h1>
+    <p>Every rider earns their spot. Every dollar grants a wish. These are the Wish Heroes — 51 riders who show up every year to do something ridiculous and beautiful for kids who need a miracle.</p>
+    <div id="wamCountdown" style="display:inline-flex;gap:16px;margin:0 0 20px;flex-wrap:wrap;justify-content:center;"></div>
+    <div class="roster-hero-stats">
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num" id="stat-riders">51</span>
+        <span class="roster-hero-stat-label">Riders</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">300</span>
+        <span class="roster-hero-stat-label">Miles · 3 Days</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num" id="stat-raised">$12k</span>
+        <span class="roster-hero-stat-label">Raised So Far</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">$115k</span>
+        <span class="roster-hero-stat-label">2026 Goal</span>
+      </div>
+      <div class="roster-hero-stat">
+        <span class="roster-hero-stat-num">15,300</span>
+        <span class="roster-hero-stat-label">Collective Miles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="roster-marquee">
+  <span class="roster-marquee-track">
+    ⚡ FROM SPOKE TO HOPE &nbsp;·&nbsp; 🐻 WAM 300 MILES &nbsp;·&nbsp; 🌹 MAKE-A-WISH MICHIGAN &nbsp;·&nbsp; ⚡ 51 RIDERS ONE MISSION &nbsp;·&nbsp; 🎵 THE GRATEFUL TEAM &nbsp;·&nbsp; 💙 GRANTING WISHES &nbsp;·&nbsp; ⚡ FROM SPOKE TO HOPE &nbsp;·&nbsp; 🐻 WAM 300 MILES &nbsp;·&nbsp; 🌹 MAKE-A-WISH MICHIGAN &nbsp;·&nbsp; ⚡ 51 RIDERS ONE MISSION &nbsp;·&nbsp; 🎵 THE GRATEFUL TEAM &nbsp;·&nbsp; 💙 GRANTING WISHES &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- TEAM GOAL BAR -->
+<div class="team-goal-bar">
+  <div class="team-goal-inner">
+    <span class="team-goal-label">🚲 Team Fundraising Goal</span>
+    <div class="team-goal-track">
+      <div class="team-goal-fill" id="teamGoalFill"></div>
+    </div>
+    <span class="team-goal-pct" id="teamGoalPct">—</span>
+    <span class="team-goal-details" id="teamGoalDetails">Loading…</span>
+    <a href="/donate.html" style="font-family:'Josefin Slab',serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--color-cerulean);text-decoration:none;flex-shrink:0;border:1px solid rgba(4,178,202,0.3);padding:4px 10px;border-radius:10px;transition:all 150ms;" onmouseover="this.style.background='rgba(4,178,202,0.1)'" onmouseout="this.style.background='transparent'">Donate →</a>
+  </div>
+</div>
+
+<!-- DISCOVERED BAR -->
+<div class="discovered-bar" id="discoveredBar" style="display:none;">
+  <span class="disc-count" id="discCount">0</span> / 51 riders discovered — flip a card to learn their story
+</div>
+<div class="challenge-hub" id="challengeHub">
+  <div class="challenge-hub-inner" id="challengeHubInner"></div>
+</div>
+
+<!-- FILTER CONTROLS -->
+<div class="roster-controls">
+  <div class="roster-controls-inner">
+    <button class="filter-btn active" data-filter="all">All Riders</button>
+    <button class="filter-btn" data-filter="legend">⭐ Legends</button>
+    <button class="filter-btn" data-filter="veteran">🔥 Veterans</button>
+    <button class="filter-btn" data-filter="rider">🚴 Riders</button>
+    <button class="filter-btn" data-filter="rookie">🌱 Rookies</button>
+    <button class="filter-btn" id="sortRaisedBtn" onclick="toggleSortByRaised(this)" title="Sort cards by amount raised">📊 Sort: Default</button>
+    <button class="filter-btn" id="randomRiderBtn" onclick="openRandomRider()" title="Open a random rider card" style="background:rgba(249,241,8,0.07);border-color:rgba(249,241,8,0.25);color:rgba(249,241,8,0.7);">🎲 Surprise Me</button>
+    <input class="roster-search" type="search" placeholder="Search riders…" id="rosterSearch" autocomplete="off">
+  </div>
+</div>
+
+<!-- CARD GRID -->
+<div class="roster-grid-wrap">
+  <div class="roster-grid" id="rosterGrid"></div>
+</div>
+
+<!-- LIVE ACTIVITY + LEADERBOARD -->
+<section id="liveSection" style="background:var(--color-night);padding:clamp(40px,6vw,72px) 24px;display:none;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;">
+
+    <!-- Recent Donations -->
+    <div>
+      <p class="eyebrow" style="color:var(--color-cerulean);margin:0 0 8px;">Live Activity</p>
+      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.5rem,3vw,2rem);color:var(--color-cream);margin:0 0 20px;line-height:1.1;">Recent Donations.</h2>
+      <div id="donationFeed" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+
+    <!-- Leaderboard w/ tabs -->
+    <div>
+      <p class="eyebrow" style="color:var(--color-gold);margin:0 0 8px;">The Challenge Board</p>
+      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.5rem,3vw,2rem);color:var(--color-cream);margin:0 0 14px;line-height:1.1;">Who's Winning?</h2>
+      <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+        <button class="lb-tab active" data-tab="top" onclick="switchLbTab('top',this)">🏆 Top Raised</button>
+        <button class="lb-tab" data-tab="close" onclick="switchLbTab('close',this)">🎯 Closest to Goal</button>
+        <button class="lb-tab" data-tab="help" onclick="switchLbTab('help',this)">💙 Needs a Push</button>
+      </div>
+      <div id="leaderboard" style="display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+
+  </div>
+  <div style="text-align:center;margin-top:40px;">
+    <a href="/donate.html" class="btn-ghost" style="border-color:var(--color-gold);color:var(--color-gold);">Help us reach $115K — Donate now →</a>
+  </div>
+</section>
+
+<section id="trainingRidesSection" style="background:#100824;padding:clamp(36px,5vw,56px) 24px;display:none;border-top:1px solid rgba(201,148,58,0.14);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="eyebrow" style="color:var(--color-cerulean);margin:0 0 8px;">Strava Club Training</p>
+    <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 16px;">Recent Team Rides</h2>
+    <p style="margin:0 0 22px;font-family:'DM Sans',sans-serif;color:rgba(250,246,232,0.72);line-height:1.55;max-width:780px;">
+      Pulled from the Grateful Team Strava club. When a rider name matches this roster, you can jump directly to their card.
+    </p>
+    <div id="trainingRidesFeed" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;"></div>
+    <div style="margin-top:16px;">
+      <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost" style="border-color:rgba(4,178,202,0.45);color:var(--color-cerulean);">View Strava Club →</a>
+    </div>
+  </div>
+</section>
+
+<section id="team-resources" style="background:var(--color-night);padding:clamp(48px,7vw,72px) 24px;border-top:1px solid rgba(201,148,58,0.16);">
+  <div class="section-inner">
+    <div style="text-align:center;max-width:700px;margin:0 auto 30px;">
+      <p class="eyebrow" style="color:var(--color-gold);margin:0 0 10px;">Current Team Members</p>
+      <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.9rem,4vw,2.5rem);color:var(--color-cream);line-height:1.1;margin:0 0 12px;">Team Resources</h2>
+    </div>
+
+    <div class="member-tiles">
+      <a class="member-tile" href="#" target="_blank" rel="noopener" data-needs-luis-url="drive">
+        <div class="member-tile-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3>Team Google Drive</h3>
+        <p>Schedules, fundraising templates, route files, photos. The whole team brain.</p>
+      </a>
+
+      <a class="member-tile" href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener">
+        <div class="member-tile-icon member-tile-icon-strava" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/>
+          </svg>
+        </div>
+        <h3>TGT Strava Club</h3>
+        <p>See who's riding, post your miles, find someone for a Saturday spin.</p>
+      </a>
+    </div>
+
+    <div style="margin-top:40px;max-width:760px;margin-left:auto;margin-right:auto;">
+      <h2 class="section-h3" style="margin-top:0;color:var(--color-cream);">Need something else?</h2>
+      <ul class="prose" style="color:rgba(250,246,232,0.82);">
+        <li>Lost the group chat invite? Text Luis: (616) 366-3725.</li>
+        <li>Need a fundraising email template? It's in the Drive under <code>fundraising/</code>.</li>
+        <li>Want to lead a training ride? Same — drop a message in the group chat or email Luis.</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:28px;padding:24px;background:rgba(250,246,232,0.06);border-left:4px solid var(--color-gold);border-radius:4px;max-width:760px;margin-left:auto;margin-right:auto;">
+      <p class="font-body" style="font-size:15px;color:rgba(250,246,232,0.84);margin:0;line-height:1.6;">
+        <strong>New to the team?</strong> The drive link is for current TGT riders only. <a href="/#join" style="color:var(--color-gold);font-weight:700;">Join the team</a> first and we'll send you access.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD MODAL -->
+<div id="cardModal" class="card-modal-overlay" style="display:none;" onclick="closeModal()">
+  <button class="card-modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+  <div class="card-modal-inner" onclick="event.stopPropagation()">
+    <div class="card-modal-left-stack">
+      <div class="card-modal-card-slot" id="modalCardSlot"></div>
+      <div id="modalShareRail" class="modal-share-rail" aria-hidden="true">
+        <button id="cardShareFab" type="button" class="modal-share-btn" aria-label="Share this rider card">💬 Share Card</button>
+      </div>
+    </div>
+    <div class="card-modal-panel" id="modalPanel"></div>
+  </div>
+</div>
+
+<div id="footer-slot"></div>
+
+
+<script src="/assets/js/nav.js" defer></script>
+<script>
+/* ══════════════════════════════════════
+   RIDER DATA
+══════════════════════════════════════ */
+const RIDERS = [
+  {
+    id: 1,
+    name: "Brad Johnson",
+    nickname: "The Grateful Elder",
+    donorSlug: "4849",
+    tier: "legend",
+    years: 5,
+    song: "Friend of the Devil",
+    initials: "BJ",
+    bio: "The one we all measure ourselves against. Before Brad came along, there was a benchmark. Then Brad showed up and reset the entire scale. Five years in and somehow still getting faster, still raising more. The Grateful Elder doesn't just ride — he sets the standard. If TGT had a Mount Rushmore, Brad's face is carved deepest. Grateful for everything. Owes no one anything. Gives it all anyway.",
+    funFact: "Referenced by the Instagram as the new gold standard of TGT riding — the rider Lauren Milligan was once measured against.",
+    badges: ["👑 Team Legend", "⚡ Pace Setter", "🏔️ Climber", "💰 Fundraising Force"],
+    stats: { spirit: 9, grit: 10 },
+  },
+  {
+    id: 2,
+    name: "Lauren Milligan",
+    nickname: "The Wattage Cottage",
+    donorSlug: "4906",
+    tier: "legend",
+    years: 4,
+    song: "The Music Never Stopped",
+    initials: "LM",
+    bio: "Spelled like the boys name. One of the best. The Wattage Cottage. The one — until Brad came around — that we would all measure a rider's strength against. Lauren is on his way to being as great at fundraising as he is at riding. It was Lauren who gave Luis his first bike tool and if we go all the way back, this is all his fault. Someone to always rely on. Good heart and a great teammate. His favorite Dead song is always changing. Whatever one is feeling the bluesiest.",
+    funFact: "Gave Luis his first bike tool. If you trace it all back — this guy is why TGT exists.",
+    badges: ["⚡ Watt Machine", "🔧 Wrench Gifter", "🌹 Heart of the Team", "🎵 Dead Head"],
+    stats: { spirit: 8, grit: 9 },
+  },
+  {
+    id: 3,
+    name: "Luis Vecchio",
+    nickname: "El Capitan",
+    donorSlug: "4818",
+    tier: "legend",
+    years: 5,
+    song: "The Other One",
+    initials: "LV",
+    bio: "El Capitan. And we mean that literally — Luis is an actual boat captain and owns Boat Quarters in Chicago, available for charter if you're feeling nautical. He runs TGT the same way he runs a boat: clear eyes, calm seas, everyone accounted for, nobody left on the dock. Built this team from nothing and somehow always knows where the wind is coming from. Whether it's the open water or a 300-mile bike tour, El Capitan is at the helm.",
+    funFact: "Actual boat captain. Owns Boat Quarters in Chicago — available for rental. The Spoke Father is also the Spoke Captain.",
+    badges: ["⚓ El Capitan", "🚢 Boat Quarters Chicago", "👑 Founder Energy", "📱 Always Available"],
+    stats: { spirit: 10, grit: 9 },
+  },
+  {
+    id: 4,
+    name: "Jason Winchell",
+    nickname: "Eaton Beacon",
+    donorSlug: "4956",
+    tier: "legend",
+    years: 4,
+    song: "Ripple",
+    initials: "JW",
+    bio: "We stole him from Team Eaton and we are not sorry about it. The Eaton Beacon. Jason Winchell showed up on another team's radar first — their loss, our gain, and honestly one of the best personnel moves in TGT history. He rides for his son Jeremiah, a wish kid who left a mark on everyone he touched. Some people bring watts to this team. Jason brings something heavier and more important. We're lucky to have him.",
+    funFact: "Recruited directly from Team Eaton. TGT takes the best. His son Jeremiah was a Make-A-Wish kid — the team rides carrying that.",
+    badges: ["💙 Wish Family", "🕊️ Riding for Jeremiah", "🌹 Heart of Gold", "🏁 Always Finishes"],
+    stats: { spirit: 9, grit: 10 },
+  },
+  {
+    id: 5,
+    name: "Charlie Wondergem",
+    nickname: "Chuck Diamond",
+    donorSlug: "4888",
+    tier: "veteran",
+    years: 3,
+    song: "Brokedown Palace",
+    initials: "CW",
+    bio: "Chuck Diamond. Rider. Philanthropist. Guy who will absolutely skip the first 50 miles of the WAM for a board meeting and still show up looking fresh. Chuck is a businessman in the streets and a cyclist in the sheets — he carries his brother Billy everywhere he rides through the Billy Bear Hug Foundation, which has put stuffed animals into the arms of hundreds of kids facing hardship. The board meetings are important. So is every mile after mile 50.",
+    funFact: "Known to skip the first 50 WAM miles for a board meeting, then rejoin mid-ride like it's nothing. Also founded the Billy Bear Hug Foundation in memory of his brother Billy.",
+    badges: ["🧸 Billy Bear Hug", "💙 Wish Heart", "🌹 Team Soul", "🤘 OG Rider"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 6,
+    name: "Benjamin Kulczewski",
+    nickname: "Ben-Dana",
+    donorSlug: "4940",
+    tier: "veteran",
+    years: 1,
+    song: "Truckin'",
+    initials: "BK",
+    bio: "Ben-Dana. A compound identity for a compound personality. Ben Kulczewski defies single-word categorization — he's the kind of rider who shows up to San Francisco and still reps TGT, the kind of teammate who's always in motion and somehow always present. Ben-Dana contains multitudes. Ben-Dana keeps Truckin'. Don't try to put Ben-Dana in a box. The box can't keep up.",
+    funFact: "Ben-Dana. Two names, one rider, infinite range. Made it to the Golden Gate Bridge still repping TGT.",
+    badges: ["✈️ World Traveler", "🌉 Golden Gate", "🚴 Adventure Rider", "💰 Fundraiser"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 7,
+    name: "Caleb Agar",
+    nickname: "The Torchbearer",
+    donorSlug: "CalebAgar",
+    tier: "rider",
+    years: 1,
+    song: "He's Gone",
+    initials: "CA",
+    bio: "Three seasons ago his dad Jason dove headfirst into TGT — not because someone asked him, but because that's how Jason did everything. When TGT lost Jason to pancreatic cancer, the team lost a quiet, unglamorous force who showed up without being asked and made everything an adventure. Now Caleb carries the torch. He shows up every year and rides with something extra in the tank. This one's for you, Jason.",
+    funFact: "Rides in honor of his father Jason Agar, who passed from pancreatic cancer and was a beloved TGT founding member.",
+    badges: ["🕯️ Torchbearer", "💙 In Memory of Jason", "🌹 Family First", "🤘 All Heart"],
+    stats: { spirit: 8, grit: 10 },
+  },
+  {
+    id: 8,
+    name: "Lauren Froman",
+    nickname: "GoFro",
+    donorSlug: "4821",
+    tier: "veteran",
+    years: 3,
+    song: "Shakedown Street",
+    initials: "LF",
+    bio: "GoFro. The directive and the person are one and the same. When it's time to move, GoFro moves — no deliberation, no warm-up lap, just go. One of the earliest believers in TGT, someone who was all in before 'all in' was even on the table. If this team has an igniter, it's Lauren Froman. Good vibes, serious legs, and a commitment to the mission that doesn't waver. GoFro doesn't make excuses. GoFro makes miles.",
+    funFact: "Instagram handle @lofro54. One of TGT's earliest and most committed believers. The nickname evolved — GoFro just fits better.",
+    badges: ["🔥 Fire Starter", "🤘 OG Supporter", "🚴 Training Grinder", "💛 All In"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 9,
+    name: "Jackson Maitner",
+    nickname: "Jaxon",
+    donorSlug: "4941",
+    tier: "rider",
+    years: 3,
+    song: "Althea",
+    initials: "JM",
+    bio: "Jaxon. Yes, with an X. Fast letter, fast rider. Shows up on a black Raleigh with carbon aero handlebars that gets enough compliments to derail a pre-ride briefing. There is also ongoing in-house debate about whether Luis wishes he had this bike. No official statement has been issued. Until then, the rumors stand.",
+    funFact: "Rents Luis's house while Luis lives in Chicago, so rides often start and end at the same place. Totally normal. Do not worry about it.",
+    badges: ["📚 Road Scholar", "🔍 Eyes Open", "🚴 Solid Legs", "💙 Mission Believer"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 10,
+    name: "Nate Milanowski",
+    nickname: "D1",
+    donorSlug: "4946",
+    tier: "rider",
+    years: 2,
+    song: "Casey Jones",
+    initials: "NM",
+    bio: "D1. Division One. As in: the level at which Nate Milanowski operates. D1 doesn't show up to participate — D1 shows up to compete. The kind of athlete whose warm-up pace makes other people nervous. Brother to Nick, which means the Milanowski duo collectively brings enough D1 energy to make the WAM feel like a qualifier. High motor. Great wheel to follow. Even better human.",
+    funFact: "D1 energy on a charity bike ride. One half of the Milanowski duo — the other half being brother Nick.",
+    badges: ["💪 High Motor", "🏔️ Hill Goat", "🤝 Great Teammate", "🚴 Always Shows Up"],
+    stats: { spirit: 8, grit: 9 },
+  },
+  {
+    id: 11,
+    name: "Nicholas Milanowski",
+    nickname: "Lax-Bro",
+    donorSlug: "4853",
+    tier: "rider",
+    years: 1,
+    song: "Sugar Magnolia",
+    initials: "NM",
+    bio: "Lax-Bro. The lacrosse-to-cycling pipeline is real and Nicholas Milanowski is proof. He brings an athlete's mentality, a lax bro's effortless confidence, and a Milanowski's competitive instinct to every ride. Also: there is persistent paddock gossip that Nick and Teodoro might ride a tandem bike if someone throws $100 in the jar. Is it true? Ask them directly. We are merely journalists.",
+    funFact: "Rumor mill says a Nick + Teodoro tandem appears for a $100 donation. Confirmations pending. Cameras ready.",
+    badges: ["👬 Sibling Duo", "🎶 Smooth Rider", "💰 Fundraiser", "🌈 Good Vibes"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 12,
+    name: "Ally Austin",
+    nickname: "All-In Ally",
+    donorSlug: "4841",
+    tier: "veteran",
+    years: 3,
+    song: "Scarlet Begonias",
+    initials: "AA",
+    bio: "Ally doesn't do halfway. All-In Ally is exactly what it sounds like: someone who commits so fully to the mission, the training, and the team that it makes the rest of us reassess our life choices. The Grateful Girlies wouldn't be the Grateful Girlies without this energy. Shows up. Stays up. Raises up.",
+    funFact: "A cornerstone of the Grateful Girlies crew — the women's faction of TGT that is absolutely not to be underestimated.",
+    badges: ["💪 All In", "🌸 Grateful Girlie", "🔥 Committed", "💙 Mission First"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 13,
+    name: "Stanislaw Krzyzanowski",
+    nickname: "Stan the Man",
+    donorSlug: "5121",
+    tier: "rookie",
+    years: 2,
+    song: "Dark Star",
+    initials: "SK",
+    bio: "Stan the Man. Simple, iconic, earned. Behind the most magnificently unspellable last name on the roster is a rider who is anything but complicated — Stan shows up, Stan goes hard, Stan is a blast to be around. There's something cosmically right about riding 300 miles next to someone named Stanislaw Krzyzanowski. Autocorrect has given up. The man himself has not.",
+    funFact: "Stanislaw Krzyzanowski. Autocorrect's nemesis. Stan the Man's real name. Every group chat has suffered.",
+    badges: ["⭐ Dark Star", "🌱 WAM Rookie", "💪 Strong Debut", "🤣 Best Name Award"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 14,
+    name: "Mary Tabanguil",
+    nickname: "The Heart",
+    donorSlug: "Mary-T",
+    tier: "rider",
+    years: 2,
+    song: "Althea",
+    initials: "MT",
+    bio: "Mary is the soul in the room. The Heart. When the ride gets hard and the miles pile up, some people dig into fitness and some dig into something else entirely — Mary digs into why. And the why is always crystal clear for her. That clarity carries people further than watts ever could. The kind of rider who makes the whole team feel the mission.",
+    funFact: "Brings a unique warmth to every event that somehow makes the hard miles easier.",
+    badges: ["❤️ Heart of It All", "💙 Why We Ride", "🌹 Soul Rider", "🙏 Mission Driven"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 15,
+    name: "Robert Grooters",
+    nickname: "I Am Groot",
+    donorSlug: "5129",
+    tier: "rookie",
+    years: 1,
+    song: "Bertha",
+    initials: "RG",
+    bio: "I Am Groot. Not just Groot — the full declaration. Robert Grooters doesn't half-commit to an identity. Big presence, quiet strength, and a last name that is literally a Marvel character. He also goes by Kyle, which raises an excellent and unresolved question: how many names does this guy actually have? However many it is, he answers all of them while still turning the pedals.",
+    funFact: "Robert. Groot. Kyle. I Am Groot. At this point we're just collecting aliases and calling it branding.",
+    badges: ["🌱 WAM Rookie", "🌳 Groot Energy", "💪 Strong Debut", "🤝 Team Player"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 16,
+    name: "Anthony Lazzaro",
+    nickname: "The Influencer",
+    donorSlug: "4851",
+    tier: "veteran",
+    years: 3,
+    song: "St. Stephen",
+    initials: "AL",
+    bio: "The Influencer. Sooooo LA. Anthony Lazzaro brings a West Coast energy to every Midwest ride that is genuinely difficult to explain but impossible to ignore. The kind of person who makes everything look good — the jersey, the pace, the fundraising post. Three years of WAM and every year the content gets better. Follow The Influencer. He's probably already posting about it.",
+    funFact: "The vibe is undeniably LA. The commitment to TGT is undeniably real. The Influencer delivers both.",
+    badges: ["🏅 Veteran Rider", "🔒 Reliable", "🚴 Miles Banker", "💪 Steady Wheels"],
+    stats: { spirit: 7, grit: 9 },
+  },
+  {
+    id: 17,
+    name: "Lauren Sytsma",
+    nickname: "Sticks",
+    donorSlug: "4963",
+    tier: "rider",
+    years: 1,
+    song: "Row Jimmy",
+    initials: "LS",
+    bio: "Sticks. The rhythm section of TGT. Lauren Sytsma keeps the beat — steady, consistent, and the thing that holds everything together when the road gets chaotic. Every great band needs a drummer. Every great ride needs a Sticks. Composed. Capable. The kind of rider who makes it look effortless when it absolutely isn't. Great presence in the pace line. Even better at the post-ride celebration.",
+    funFact: "Sticks — the rhythm keeper of TGT. Makes hard riding look easy. Probably both talent and training.",
+    badges: ["😎 Cool Under Pressure", "🚴 Clean Form", "💙 Team Supporter", "🎉 Post-Ride MVP"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 18,
+    name: "Robert Schilling",
+    nickname: "Bob the Builder",
+    donorSlug: "Bob-Schilling-Make_a_Wish_page",
+    tier: "veteran",
+    years: 3,
+    song: "Box of Rain",
+    initials: "RS",
+    bio: "Bob the Builder. Can we fix it? Yes we can — and yes he will. The kind of person who shows up early, stays late, and does the work no one talks about but everyone benefits from. Bob builds things: endurance, fundraising totals, team culture. You can always count on him to show up and put in.",
+    funFact: "The kind of teammate who makes every group ride run smoother just by being there.",
+    badges: ["🔨 Builder Mentality", "⏰ Early Arrival", "💰 Fundraiser", "🤝 Reliable Wheel"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 19,
+    name: "Sarah Joos",
+    nickname: "The Juice",
+    donorSlug: "5174",
+    tier: "rookie",
+    years: 1,
+    song: "Women Are Smarter",
+    initials: "SJ",
+    bio: "The Juice. Not the process — the product. Pure, concentrated, high-octane Sarah Joos energy delivered directly to every training ride, fundraising ask, and WAM mile. The Juice is loose and the Juice is running hot in year one. Brand new to the WAM and already squeezing maximum value out of every moment. Some veterans should be nervous. That's healthy.",
+    funFact: "Joos → The Juice. The phonetics basically demanded it. Rookie year energy is fully juiced.",
+    badges: ["🌱 WAM Rookie", "💥 Full Send", "💰 Fundraiser", "👀 One to Watch"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 20,
+    name: "Nakayla Kosmerick",
+    nickname: "Nananana! Batman!",
+    donorSlug: "4830",
+    tier: "veteran",
+    years: 2,
+    song: "Estimated Prophet",
+    initials: "NK",
+    bio: "Nananana! Batman! The full thing. Every syllable. Nakayla Kosmerick arrives at every ride like a superhero who doesn't need an origin story — just shows up, handles business, and disappears into the night. Three years of WAM and still swooping in when the team needs a lift. The cape is invisible but the impact is not. Nananana! Batman!",
+    funFact: "Nananana! Batman! — said exactly like that, every time. Three WAM years of superhero-level consistency.",
+    badges: ["🌟 Team Spark", "🔥 Consistent Energy", "💪 Year Over Year", "💙 All Heart"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 21,
+    name: "Nate Conroy",
+    nickname: "The Mixtape",
+    donorSlug: "4978",
+    tier: "rookie",
+    years: 1,
+    song: "Going Down the Road Feeling Bad",
+    initials: "NC",
+    bio: "The Mixtape. Nate Conroy comes in as a first-year rookie with serious music-guy energy and a catalog of stories from his old band days (Clyde Park Avenue). He works at Ada Bible, has eclectic taste, and appreciates old-school collectibles and all the weird cool stuff most people walk right past. New father, all-heart teammate, and brother-in-law to Derek Sanchez (yes, we are counting Derek as future roster depth). Nate's not exactly a dyed-in-the-wool Dead Head yet, but we're working on him one long ride playlist at a time.",
+    funFact: "Played in a band called Clyde Park Avenue, collects old-school finds, and is stepping into rookie year as a brand-new dad.",
+    badges: ["🎸 The Mixtape", "🍼 New Dad Energy", "📦 Vintage Collector", "🌱 Rookie Year"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 22,
+    name: "Lisa Marsh",
+    nickname: "Spicy Salsa",
+    donorSlug: "4820",
+    tier: "veteran",
+    years: 2,
+    song: "Dire Wolf",
+    initials: "LM",
+    bio: "Spicy Salsa. Lisa Marsh rides one of the coolest bikes on the entire roster — her Salsa is all personality and all business, just like her. She brings that same style to every WAM weekend: calm, fun, and quietly fast when it matters. If you see the Salsa rolling by, you're looking at one of the most unmistakable setups in TGT.",
+    funFact: "Her signature Salsa bike is a team favorite — equal parts cool, capable, and unmistakably Lisa.",
+    badges: ["👑 OG Rider", "🏅 Founding Energy", "💙 Team Pillar", "🌿 Grounded"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 23,
+    name: "Taylor Robson",
+    nickname: "Kickstand",
+    donorSlug: "5075",
+    tier: "rider",
+    years: 3,
+    song: "Touch of Grey",
+    initials: "TR",
+    bio: "Kickstand. The thing that holds the whole bike up when everything stops. Taylor Robson is the support structure — when the group needs steadying, when the morale dips, when someone needs a reason to keep going, Kickstand is there. Reliable, load-bearing, and criminally underrated in the grand scheme of cycling mechanics. Every team needs a Kickstand. TGT has a great one.",
+    funFact: "Kickstand — the unsung hero of cycling infrastructure. Taylor Robson IS the support structure.",
+    badges: ["🎯 Efficient", "🔄 Pace Line Pro", "🤝 Team Rider", "🎉 Campfire Presence"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 24,
+    name: "Cameron McGill",
+    nickname: "Muscles",
+    donorSlug: "Cameron-McGill-2026",
+    tier: "rider",
+    years: 1,
+    song: "Franklin's Tower",
+    initials: "CM",
+    bio: "Muscles. Cameron McGill earned this one the old-fashioned way — by having them and using them. The kind of rider who doesn't need to talk about doing work because the work is self-evident. Muscles in the legs, muscles in the fundraising numbers, muscles in the team culture. When Muscles shows up, the pace goes up. That's just physics.",
+    funFact: "Muscles. Earned. Not given.",
+    badges: ["🎸 Cam Jam", "🔧 Mechanical Mind", "🚴 Pace Line Fitter", "💙 Team Glue"],
+    stats: { spirit: 9, grit: 7 },
+  },
+  {
+    id: 25,
+    name: "Ethan Pomfret",
+    nickname: "The Reader",
+    donorSlug: "Ethan-Pomfret",
+    tier: "rider",
+    years: 2,
+    song: "Black Muddy River",
+    initials: "EP",
+    bio: "The Reader. Ethan Pomfret reads the road, reads the pace, reads the moment. Rides alongside mom Elizabeth (The Writer), making the Pomfret family the most literary duo in TGT history — one writes the story, one absorbs it. The Reader picks up on things others miss: the shift in the wind, the silent suffering in the pace line, the right moment to go. That's a gift.",
+    funFact: "The Reader — rides with mom Elizabeth (The Writer). Together they're basically a full library on wheels.",
+    badges: ["🔫 Young Gun", "👨‍👩‍👦 Family Rider", "⚡ Next Gen", "🚀 Upside"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 26,
+    name: "Nathan Grenell",
+    nickname: "Nate Dogg",
+    donorSlug: "4899",
+    tier: "rider",
+    years: 2,
+    song: "Loser",
+    initials: "NG",
+    bio: "Nate Dogg. Regulate. Nathan Grenell brings a smooth, authoritative presence to every ride — the kind of rider who sets the tone without having to say much about it. Rides with brother Justin (The Dumptruck), which is one of the better sibling pairings in TGT history. Nate Dogg handles the smooth and Justin handles the heavy lifting. Together they're basically the whole album.",
+    funFact: "Half of the Grenell sibling duo with The Dumptruck (Justin). Nate Dogg regulates.",
+    badges: ["👬 Sibling Duo", "🏅 Veteran Legs", "📐 Steady Rider", "💙 Trustworthy"],
+    stats: { spirit: 7, grit: 8 },
+  },
+  {
+    id: 27,
+    name: "Kiersten Schulte",
+    nickname: "Staff",
+    donorSlug: "Kiersten-Schulte-2026",
+    tier: "rider",
+    years: 2,
+    song: "Stella Blue",
+    initials: "KS",
+    bio: "Staff. And we mean that literally — Kiersten Schulte is Make-A-Wish staff and a Grateful Team rider, living both sides of the mission at the same time. She helps make wishes happen behind the scenes and then lines up to ride for those same kids on the road. It's a rare kind of full-circle commitment, and TGT is better because she brings both perspectives to the team.",
+    funFact: "She serves as Make-A-Wish staff member and WAM rider — mission at work and mission on the bike.",
+    badges: ["🧭 The Compass", "🌟 Directional Energy", "💙 Consistent", "🚴 Steady"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 28,
+    name: "Justin Grenell",
+    nickname: "The Dumptruck",
+    donorSlug: "Justin-Grenell",
+    tier: "rider",
+    years: 2,
+    song: "New Speedway Boogie",
+    initials: "JG",
+    bio: "The Dumptruck. Big load. Full capacity. Doesn't stop. Justin Grenell powers through every mile with the relentless efficiency of a vehicle that was built specifically to carry a lot and keep moving. Rides alongside brother Nate Dogg, which makes the Grenell sibling pairing one of the great combos in TGT history — one smooth, one powerful, both going the distance.",
+    funFact: "The Dumptruck carries the load. Brother Nate Dogg (Nathan) provides the soundtrack. Classic sibling dynamic.",
+    badges: ["👬 Sibling Duo", "⚡ Fast Twitch", "🤣 Keeps It Fun", "🚴 Strong Legs"],
+    stats: { spirit: 9, grit: 7 },
+  },
+  {
+    id: 29,
+    name: "Andrew Kennedy",
+    nickname: "AK-47",
+    donorSlug: "4854",
+    tier: "veteran",
+    years: 1,
+    song: "Uncle John's Band",
+    initials: "AK",
+    bio: "AK-47. Initials that hit hard and a rider who backs it up. Andrew Kennedy has been a fixture in TGT long enough to know the rhythm — early registration, solid training, serious fundraising, full send on race day. The kind of veteran who makes rookies think it looks easy. It is not easy. Andrew just makes it look that way.",
+    funFact: "The initials AK combined with the number 47 were too perfect not to use. Sorry Andrew, not sorry.",
+    badges: ["💥 AK-47", "🏅 Veteran", "💰 Fundraiser", "⚡ High Output"],
+    stats: { spirit: 8, grit: 9 },
+  },
+  {
+    id: 30,
+    name: "Andy Oconnor",
+    nickname: "Andy O",
+    donorSlug: "5135",
+    tier: "rookie",
+    years: 1,
+    song: "Deal",
+    initials: "AO",
+    bio: "Andy O. Clean, classic, and to the point. Andy Oconnor doesn't need a long nickname — two syllables, maximum impact. The kind of name you yell across a parking lot when you're looking for your ride. First year on the WAM, already making the whole thing feel more fun just by being in it. Andy O. Say it. It works.",
+    funFact: "Andy O. Two syllables. Zero ambiguity. Rookie year done right.",
+    badges: ["🌱 WAM Rookie", "🤝 Super Connector", "💬 Social Glue", "👀 One to Watch"],
+    stats: { spirit: 9, grit: 7 },
+  },
+  {
+    id: 31,
+    name: "Cami Mastenbrook",
+    nickname: "Hollandaise",
+    donorSlug: "4880",
+    tier: "veteran",
+    years: 1,
+    song: "Sugaree",
+    initials: "CM",
+    bio: "Hollandaise. Rich, smooth, and makes everything it touches better. Cami Mastenbrook is the secret sauce of TGT — the element that elevates the whole dish. Three years in and still pouring generously at every ride, every event, every group chat check-in. Hollandaise doesn't show up halfway. Hollandaise shows up fully emulsified and ready to go.",
+    funFact: "Hollandaise — the sauce that makes everything better. Three WAM seasons of elevating the whole team.",
+    badges: ["🎬 The Cam Show", "🔥 Energy Bringer", "🚴 Consistent Rider", "💙 Ride or Die"],
+    stats: { spirit: 9, grit: 8 },
+  },
+  {
+    id: 32,
+    name: "Cole Christians",
+    nickname: "Apollo",
+    donorSlug: "4950",
+    tier: "veteran",
+    years: 3,
+    song: "Fire on the Mountain",
+    initials: "CC",
+    bio: "Apollo. Not just the myth — the space program. Cole Christians carries that name because his grandfather, Al Worden, flew on Apollo 15, performed the first deep-space spacewalk, and helped pilot the mission with the lunar rover. That's probably why Cole rides the way he does: curious, composed, and built for distance. Bonus detail: he does it on a Litespeed titanium bike, which feels very Apollo-coded.",
+    funFact: "His grandfather Al Worden flew on Apollo 15 and performed the first deep-space spacewalk. Cole rides a Litespeed titanium bike.",
+    badges: ["🚀 Apollo Legacy", "🌕 Lunar Rover Mission", "🛰️ Spacewalk Bloodline", "⚙️ Titanium Litespeed"],
+    stats: { spirit: 8, grit: 9 },
+  },
+  {
+    id: 33,
+    name: "Crystal Weller",
+    nickname: "Crystal Clear",
+    donorSlug: "Crystal-Weller",
+    tier: "rider",
+    years: 2,
+    song: "Crystal Blue Persuasion",
+    initials: "CW",
+    bio: "Crystal Clear. Transparent about the mission, clear on why she rides, and consistently delivering on both. Crystal Weller doesn't need convincing — she's already in. The kind of rider who makes fundraising look natural because to her, it is. She believes in this and it shows.",
+    funFact: "When Crystal asks for donations, people say yes. It's the Crystal Clear approach.",
+    badges: ["💎 Crystal Clear", "💙 Believer", "💰 Natural Fundraiser", "🌟 Bright Energy"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 34,
+    name: "David Dirksen",
+    nickname: "Gummies",
+    donorSlug: "4883",
+    tier: "veteran",
+    years: 2,
+    song: "Passenger",
+    initials: "DD",
+    bio: "Gummies. Soft on the outside, impossible to get rid of, and absolutely essential to any long-distance effort. David Dirksen is TGT's Gummies — the thing everyone reaches for at mile 150 when the energy is low and the road is long. Sweet, reliable, and there when you need him. Three years of WAM and Gummies has never run out.",
+    funFact: "Gummies: the unofficial fuel of long rides and the official nickname of David Dirksen. Three years and counting.",
+    badges: ["🎬 The Director", "📋 Logistics Pro", "🏅 Veteran", "🤝 Handles Business"],
+    stats: { spirit: 7, grit: 8 },
+  },
+  {
+    id: 35,
+    name: "Eli Luke",
+    nickname: "The Rookie",
+    donorSlug: "5131",
+    tier: "rookie",
+    years: 4,
+    song: "Wharf Rat",
+    initials: "EL",
+    bio: "The Rookie. Eli Luke wears it with honor — because being the rookie means you still have everything ahead of you. First WAM, first 300 miles, first time crossing that finish line and realizing this is something you'll do every year for the rest of your life. The Rookie is exactly where you want to be: at the beginning of something great, with the whole road in front of you.",
+    funFact: "The Rookie — Eli Luke, year one. The best nickname you can have when the whole story is still being written.",
+    badges: ["⭐ The Chosen One", "🌱 WAM Rookie", "🔮 Big Future", "💙 Born For This"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 36,
+    name: "Elizabeth Pomfret",
+    nickname: "The Writer",
+    donorSlug: "4904",
+    tier: "veteran",
+    years: 3,
+    song: "China Cat Sunflower",
+    initials: "EP",
+    bio: "The Writer. Elizabeth Pomfret sees the story in everything — the team, the road, the mission, the people. Three years of WAM and she's still finding new chapters. Rides alongside son Ethan (The Reader), which makes the Pomfret family pairing the most literary dynamic on the whole roster. The Writer doesn't just experience TGT. The Writer documents it, contextualizes it, and helps everyone understand what it means.",
+    funFact: "The Writer — rides with son Ethan (The Reader). The Pomfret family is the most literary duo on the roster.",
+    badges: ["👑 The Matriarch", "👨‍👩‍👦 Family Rider", "🏅 Veteran", "🌹 Team Anchor"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 37,
+    name: "Emma DiCello",
+    nickname: "Limoncello",
+    donorSlug: "Emma-DiCello",
+    tier: "rider",
+    years: 2,
+    song: "Brown-Eyed Women",
+    initials: "ED",
+    bio: "Limoncello. Bright, sharp, Italian, and hits harder than you expect. Emma DiCello's nickname is basically built into her last name if you squint at it right — and once you see it you can't unsee it. Sweet on the surface, serious underneath, and the kind of presence that makes everything more fun. A genuine Grateful Girlie and a rider who earns every single mile.",
+    funFact: "DiCello → Limoncello. The linguistic leap was inevitable. The vibe matches perfectly.",
+    badges: ["🌸 Grateful Girlie", "💰 Fundraising Drive", "🤝 Good Energy", "🚴 Earned It"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 38,
+    name: "Georgina Hill",
+    nickname: "Grant Hill",
+    donorSlug: "5091",
+    tier: "rookie",
+    years: 1,
+    song: "Hills of Snow",
+    initials: "GH",
+    bio: "Grant Hill. The basketball legend's name, on a cyclist, on a hill-filled 300-mile bike tour. It's perfect and we're not explaining it further. Georgina Hill arrives for year one of the WAM with a last name that is basically a sports dynasty and the legs to back it up. Grant Hill was a six-time All-Star. TGT's Grant Hill is a first-year WAM rider with similar future Hall of Fame potential.",
+    funFact: "Last name Hill. Nickname Grant Hill. The basketball reference is too perfect to ignore. First WAM. Big future.",
+    badges: ["👑 Queen of the Hill", "🏔️ Climber DNA", "🌱 WAM Rookie", "⚡ Natural Fit"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 39,
+    name: "Greta Orszula",
+    nickname: "Greta Van Fleet",
+    donorSlug: "5049",
+    tier: "rider",
+    years: 2,
+    song: "Playing in the Band",
+    initials: "GO",
+    bio: "Greta Van Fleet. The rock band, the rider, the vibe — all arriving at once. Greta Orszula brings a full-band energy to every ride: loud, powerful, a little retro, and impossible to ignore. You don't just notice Greta Van Fleet on the road — you hear her coming. Rides with intention, fundraises with conviction, and finishes every WAM like it's a sold-out stadium show.",
+    funFact: "Greta → Greta Van Fleet. The band has four members. TGT's Greta Van Fleet is one rider doing the work of four.",
+    badges: ["🎭 Great Greta", "🎵 In the Band", "💪 Performance Rider", "💙 Consistent"],
+    stats: { spirit: 9, grit: 7 },
+  },
+  {
+    id: 40,
+    name: "Jason Agar",
+    nickname: "The Blueprint",
+    donorSlug: "5071",
+    tier: "legend",
+    years: 3,
+    song: "Ripple",
+    initials: "JA",
+    bio: "Jason Agar dove headfirst into TGT three seasons ago — not because someone asked him, but because showing up without being asked was how he lived his whole life. He did the quiet, unglamorous work. Led by example. Turned everything into an adventure. Taught his children to love others by demonstrating it every single day. We lost Jason to pancreatic cancer. His son Caleb carries the torch. Jason was the blueprint.",
+    funFact: "TGT lost Jason to pancreatic cancer. His son Caleb now rides with the team in his honor. Forever in their hearts.",
+    badges: ["💙 Forever TGT", "🕊️ In Our Hearts", "🌹 The Blueprint", "✨ Always With Us"],
+    stats: { spirit: 10, grit: 10 },
+  },
+  {
+    id: 41,
+    name: "Jeffrey Steigerwald",
+    nickname: "Art Van",
+    donorSlug: "5120",
+    tier: "rookie",
+    years: 4,
+    song: "Samson and Delilah",
+    initials: "JS",
+    bio: "Art Van. Michigan's legendary furniture king — and now Jeffrey Steigerwald's eternal nickname. There's something poetic about a Michigan guy on a Michigan charity ride carrying the name of Michigan's most beloved furniture empire. Art Van believed in quality, comfort, and showing up for the Midwest. So does Jeffrey. First WAM. Great bones. Will hold up.",
+    funFact: "Art Van — the Michigan furniture legend lives on in Jeffrey Steigerwald. A Michigan man on a Michigan ride.",
+    badges: ["🌱 WAM Rookie", "💪 Conviction Rider", "⚡ Powerful Name", "🤝 Ready to Ride"],
+    stats: { spirit: 7, grit: 8 },
+  },
+  {
+    id: 42,
+    name: "Jess Mata",
+    nickname: "Meta Glasses",
+    donorSlug: "5063",
+    tier: "rider",
+    years: 2,
+    song: "Lazy Lightnin'",
+    initials: "JM",
+    bio: "Meta Glasses. The Ray-Ban Metas of the TGT roster — stylish, tech-forward, and recording everything. Jess Mata sees the whole ride with a little extra clarity. Whether that's the route, the vibes, or the moment worth capturing, Meta Glasses doesn't miss it. Two years of WAM and still looking cool doing it. The future of cycling is augmented. Jess was already there.",
+    funFact: "Meta Glasses — Jess Mata sees everything and looks good doing it. The tech-forward rider TGT didn't know it needed.",
+    badges: ["🎯 The Matador", "💪 Defiant Climber", "🔴 Red Cape Energy", "⚡ Never Blinks"],
+    stats: { spirit: 8, grit: 9 },
+  },
+  {
+    id: 43,
+    name: "Jessica Barr",
+    nickname: "Faster than Luis",
+    donorSlug: "5055",
+    tier: "rider",
+    years: 3,
+    song: "Dancin' in the Streets",
+    initials: "JB",
+    bio: "Faster than Luis. High praise. The ultimate benchmark. Luis Vecchio — El Capitan, founder, the guy whose phone number is on the website — is the standard. Jessica Barr clears it. That's the whole bio. If you need more convincing, just try to keep up. Two years of WAM and the gap is not closing in Luis's favor. Respect.",
+    funFact: "Faster than Luis Vecchio — the TGT founder and El Capitan himself. That's the metric and Jessica passes it.",
+    badges: ["🥇 Bar None", "💛 Spirit Lifter", "🎉 Fun On Wheels", "💙 Team Boost"],
+    stats: { spirit: 9, grit: 7 },
+  },
+  {
+    id: 44,
+    name: "Nathan McGlinchey",
+    nickname: "Pinchy McGlinchey",
+    donorSlug: "4938",
+    tier: "veteran",
+    years: 3,
+    song: "Ramble On Rose",
+    initials: "NM",
+    bio: "Pinchy McGlinchey. The full thing. Not just McGlinchey — Pinchy McGlinchey. The pinchy part is non-negotiable and the McGlinchey part is already a gift. Nathan arrives at every ride with the distinction of having one of the most deeply delightful names in TGT history. Three years of WAM, three years of answering to Pinchy, zero complaints reported.",
+    funFact: "Pinchy McGlinchey. It needed the Pinchy. McGlinchey alone was good. Pinchy McGlinchey is great.",
+    badges: ["🏅 Veteran", "🛣️ Road Knowledge", "💪 Consistent", "🤘 TGT Faithful"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 45,
+    name: "Nathan Schilling",
+    nickname: "N-Shill",
+    donorSlug: "5123",
+    tier: "rookie",
+    years: 1,
+    song: "Mexicali Blues",
+    initials: "NS",
+    bio: "N-Shill. Fresh on the WAM, with a last name that follows a family tradition — Bob Schilling is already on the team, so the Schilling dynasty just got another member. N-Shill comes in with something to prove and a family legacy to uphold. First year. Full send.",
+    funFact: "Part of the Schilling family on TGT. Robert Schilling is also on the roster. The Schillings roll deep.",
+    badges: ["🌱 WAM Rookie", "👨‍👦 Schilling Dynasty", "💪 Full Send", "👀 One to Watch"],
+    stats: { spirit: 7, grit: 7 },
+  },
+  {
+    id: 46,
+    name: "Nick Carlisle",
+    nickname: "Wall Street",
+    donorSlug: "5082",
+    tier: "rider",
+    years: 1,
+    song: "Althea",
+    initials: "NC",
+    bio: "Wall Street. Nick Carlisle moves through a pace line the way money moves through markets — efficiently, confidently, and always looking for the best position. Wall Street doesn't panic in downturns. Wall Street doesn't flinch at volatility. Wall Street has a plan at mile 5 and the same plan at mile 295. Two years of WAM, strong returns, diversified effort.",
+    funFact: "Wall Street — smooth, strategic, and always positioned well. Nick Carlisle's portfolio of TGT miles is looking good.",
+    badges: ["😎 Smooth Operator", "🤝 Easy Rider", "💙 Social Glue", "🚴 Clean Wheel"],
+    stats: { spirit: 9, grit: 7 },
+  },
+  {
+    id: 47,
+    name: "Quintanilla Solak",
+    nickname: "The Q",
+    donorSlug: "5115",
+    tier: "rookie",
+    years: 1,
+    song: "Terrapin Station",
+    initials: "QS",
+    bio: "The Q. As in: no further explanation needed. Quintanilla Solak walks into the room and The Q just makes sense. First year on the WAM and already one of the most memorable names on the roster — which is no small feat when you're competing with Stanislaw Krzyzanowski. The Q. Remember it.",
+    funFact: "The Q is the only single-letter nickname on the roster. Quintanilla earned it on name alone.",
+    badges: ["🌱 WAM Rookie", "⭐ Most Unique Name", "🎯 The Q", "🔮 Mysterious Energy"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 48,
+    name: "Ross Kraft",
+    nickname: "Little Charlie Minion",
+    donorSlug: "4953",
+    tier: "veteran",
+    years: 1,
+    song: "Cumberland Blues",
+    initials: "RK",
+    bio: "Little Charlie Minion. A name that arrives with its own energy and demands zero further context. Ross Kraft has been doing the work for three WAM years — the loyal, tireless, surprisingly effective work of someone who shows up, executes the mission, and makes it look kind of fun. Little Charlie Minion does not ask questions. Little Charlie Minion delivers.",
+    funFact: "Little Charlie Minion. Three WAM years of dependable, enthusiastic, minion-level dedication to the cause.",
+    badges: ["🔨 The Craftsman", "📐 Precision Rider", "🏅 Veteran", "💪 Built Different"],
+    stats: { spirit: 7, grit: 9 },
+  },
+  {
+    id: 49,
+    name: "Taylor Hill",
+    nickname: "One Tree Hill",
+    donorSlug: "5089",
+    tier: "rookie",
+    years: 1,
+    song: "Mountains of the Moon",
+    initials: "TH",
+    bio: "One Tree Hill. The CW drama, the U2 song, the Taylor Hill experience — all rolled into one. Taylor arrives for year one of the WAM and immediately has the most cinematic last name in the peloton. One Tree Hill isn't just a place — it's a feeling. The feeling of standing at the top of a climb you weren't sure you could make, looking back at the road, and deciding to keep going.",
+    funFact: "One Tree Hill — the show, the song, the rider. Taylor Hill's WAM debut is already season one material.",
+    badges: ["🏔️ Hill Namesake", "🌱 WAM Rookie", "⭐ Cosmic Fit", "💪 Ready to Climb"],
+    stats: { spirit: 8, grit: 8 },
+  },
+  {
+    id: 50,
+    name: "Teodoro Vecchio",
+    nickname: "The Deckhand",
+    donorSlug: "5125",
+    tier: "rookie",
+    years: 1,
+    song: "El Paso",
+    initials: "TV",
+    bio: "The Deckhand. El Capitan (Luis) runs the boat — The Deckhand keeps it moving. Teodoro Vecchio arrives in the Vecchio tradition: ready to work, no drama, hands on deck. There is now active rumor-season chatter that Teodoro and Nick Milanowski will show up on a tandem if someone drops a $100 donation. Confirmed? Not by us. Plausible? Absolutely. Worth testing? Extremely.",
+    funFact: "If the $100 tandem rumor is real, Teodoro and Nick owe the people a debut ride. We support this initiative.",
+    badges: ["🌱 WAM Rookie", "👨‍👦 Vecchio Legacy", "⚡ From Spoke to Hope", "🚀 Big Future"],
+    stats: { spirit: 8, grit: 7 },
+  },
+  {
+    id: 51,
+    name: "Anna Cook",
+    nickname: "The Cookie",
+    donorSlug: "5247",
+    tier: "rookie",
+    years: 1,
+    song: "Golden Road",
+    initials: "AC",
+    bio: "The Cookie. Brand new to TGT and bringing the sweetness — which is exactly what you want at the back of a pace line when things get hard and sugar becomes a strategy. Anna Cook shows up with a last name that practically demands dessert-adjacent branding and a mission focus that is anything but soft. Fresh-baked. Ready to roll.",
+    funFact: "Highest DonorDrive registration number on the team — the newest member of the roster. Welcome, Cookie.",
+    badges: ["🌱 Freshest Rookie", "🍪 The Cookie", "🌟 Golden Road", "💙 New Energy"],
+    stats: { spirit: 9, grit: 7 },
+  },
+];
+
+/* ══════════════════════════════════════
+   COMPUTED STATS — Fundraising/Experience/Spirit/Grit
+   Fundraising: % of rider goal → /10 (e.g. $1k of $2k = 5/10; at or above goal = 10/10)
+   Experience:  1 point per WAM year (years), max 10
+   Spirit:      fixed 5/10 for everyone (placeholder until we measure it)
+   Grit:        starts 5/10; sharing this rider’s card from the site adds “grit points” in
+                this browser only (50 share actions → 10/10) — honor system, not global metrics
+   Wish Granter: badge when raised ≥ goal (no longer changes the fundraising score)
+══════════════════════════════════════ */
+const STATS_SPIRIT_BASE = 5;
+/** Share taps from this browser toward max grit (per rider, localStorage). */
+const GRIT_SHARE_INCREMENTS_TOTAL = 50;
+const TGT_CHALLENGE_KEY = 'tgt-challenges-v1';
+
+function tgtShareStorageKey(id) {
+  return `tgt-share-v1:${id}`;
+}
+
+function tgtLoadChallenges() {
+  const fallback = { totalShares: 0, supporterShares: 0, rookieShares: 0 };
+  try {
+    const parsed = JSON.parse(localStorage.getItem(TGT_CHALLENGE_KEY) || '{}');
+    return {
+      totalShares: Math.max(0, Number(parsed.totalShares) || 0),
+      supporterShares: Math.max(0, Number(parsed.supporterShares) || 0),
+      rookieShares: Math.max(0, Number(parsed.rookieShares) || 0),
+    };
+  } catch (e) {
+    return fallback;
+  }
+}
+
+function tgtSaveChallenges(next) {
+  try { localStorage.setItem(TGT_CHALLENGE_KEY, JSON.stringify(next)); } catch (e) {}
+}
+
+function tgtRecordChallengeProgress(kind, rider) {
+  const state = tgtLoadChallenges();
+  state.totalShares += 1;
+  if (kind === 'supporter') state.supporterShares += 1;
+  if (rider && getComputedTier(rider) === 'rookie') state.rookieShares += 1;
+  tgtSaveChallenges(state);
+  renderChallengeHub();
+}
+
+function renderChallengeHub() {
+  const host = document.getElementById('challengeHubInner');
+  if (!host) return;
+  const state = tgtLoadChallenges();
+  const defs = [
+    { done: state.totalShares >= 3, text: `📣 Share 3 Times (${Math.min(state.totalShares, 3)}/3)` },
+    { done: state.supporterShares >= 5, text: `🤝 Bring 5 Donors (${Math.min(state.supporterShares, 5)}/5)` },
+    { done: state.rookieShares >= 1, text: `🌟 First-Time Donor Champion (${Math.min(state.rookieShares, 1)}/1)` }
+  ];
+  host.innerHTML = defs.map(function (d) {
+    return `<span class="challenge-pill ${d.done ? 'done' : ''}">${d.done ? '✅' : '⏳'} ${d.text}</span>`;
+  }).join('');
+}
+
+function tgtGetShareCount(riderId) {
+  try {
+    return Math.max(0, parseInt(localStorage.getItem(tgtShareStorageKey(riderId)), 10) || 0);
+  } catch (e) {
+    return 0;
+  }
+}
+
+function gritFromShareTaps(riderId) {
+  const n = Math.min(tgtGetShareCount(riderId), GRIT_SHARE_INCREMENTS_TOTAL);
+  const extra = Math.min(5, (n / GRIT_SHARE_INCREMENTS_TOTAL) * 5);
+  return Math.min(10, Math.round(STATS_SPIRIT_BASE + extra));
+}
+
+function tgtRecordRiderShare(riderId) {
+  if (riderId === undefined || riderId === null) return;
+  try {
+    const k = tgtShareStorageKey(riderId);
+    const n = parseInt(localStorage.getItem(k), 10) || 0;
+    localStorage.setItem(k, String(n + 1));
+  } catch (e) {}
+  queueMicrotask(() => {
+    if (typeof renderAll === 'function') {
+      renderAll(typeof currentFilter !== 'undefined' ? currentFilter : 'all', typeof currentQuery !== 'undefined' ? currentQuery : '');
+    }
+    const modal = document.getElementById('cardModal');
+    if (modal && modal.style.display === 'flex') {
+      const slot = document.querySelector('#modalCardSlot .tcard-wrap[data-id]');
+      const openId = slot ? parseInt(slot.dataset.id, 10) : 0;
+      if (openId && typeof openModal === 'function') openModal(openId);
+    }
+  });
+}
+
+function computeStats(rider, fundMap) {
+  const key = rider.name.toLowerCase();
+  const data = fundMap ? (fundMap[key] || null) : null;
+  const defaultGoal = 1200;
+  const computedTier = getComputedTier(rider);
+
+  let fundraising;
+  if (data && typeof data.sumDonations === 'number') {
+    const goal = Math.max(data.fundraisingGoal || defaultGoal, 1);
+    const pct = Math.min(1, data.sumDonations / goal);
+    fundraising = Math.min(10, Math.max(0, Math.round(pct * 10)));
+  } else {
+    fundraising = computedTier === 'legend' ? 8 : computedTier === 'veteran' ? 6 : computedTier === 'rider' ? 4 : 2;
+  }
+
+  const experience = Math.min(10, Math.max(0, Math.round(Number(rider.years) || 0)));
+  const spirit = STATS_SPIRIT_BASE;
+  const grit = gritFromShareTaps(rider.id);
+
+  const isWishGranter = !!(data && data.sumDonations >= (data.fundraisingGoal || defaultGoal));
+
+  return { fundraising, experience, spirit, grit, isWishGranter };
+}
+
+/* ══════════════════════════════════════
+   BADGE LOOKUP
+══════════════════════════════════════ */
+const TIER_LABELS = {
+  legend: "Legend",
+  veteran: "Veteran",
+  rider: "Rider",
+  rookie: "Rookie",
+};
+
+const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3 };
+
+function getComputedTier(rider) {
+  if (rider.tier === 'legend') return 'legend';
+  const years = Number(rider.years) || 0;
+  if (years >= 3) return 'veteran';
+  if (years === 2) return 'rider';
+  return 'rookie';
+}
+
+/* ══════════════════════════════════════
+   RENDER CARDS
+══════════════════════════════════════ */
+function statBar(val) {
+  return `<div class="tcard-stat-fill" style="width:${val * 10}%"></div>`;
+}
+
+function renderCard(r, index) {
+  const tier = getComputedTier(r);
+  const donorHref = r.donorSlug.startsWith('http')
+    ? r.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${r.donorSlug}`;
+
+  const challengeState = tgtLoadChallenges();
+  const campaignBadges = [];
+  if (tgtGetShareCount(r.id) >= 3) campaignBadges.push('📣 Share x3');
+  const fundData = _fundMap[r.name.toLowerCase()];
+  if (fundData && (fundData.numDonations || 0) >= 5) campaignBadges.push('🤝 5 Donors Club');
+  if (challengeState.rookieShares >= 1 && tier === 'rookie') campaignBadges.push('🌟 First-Time Donor Champion');
+  const allBadges = r.badges.concat(campaignBadges);
+
+  const badgeHTML = allBadges.map(b => {
+    const emoji = b.split(' ')[0];
+    const label = b.slice(b.indexOf(' ') + 1);
+    return `<span class="tcard-back-badge" title="${label}">${b}</span>`;
+  }).join('');
+
+  const num = String(index + 1).padStart(2, '0');
+  const total = RIDERS.length;
+
+  return `
+  <div class="tcard-wrap" data-tier="${tier}" data-name="${r.name.toLowerCase()}" data-id="${r.id}">
+    <div class="tcard-inner">
+
+      <!-- FRONT -->
+      <div class="tcard-front">
+        <div class="tcard-topbar">
+          <span class="tcard-num">#${num}/${total}</span>
+          <span class="tcard-tier-badge">${TIER_LABELS[tier]}</span>
+        </div>
+        <div class="tcard-edition">2026 Edition</div>
+        <div class="tcard-tap-top">Tap to Flip →</div>
+
+        <div class="tcard-avatar-area">
+          <div class="tcard-avatar">${r.initials}</div>
+        </div>
+
+        <div class="tcard-body">
+          <div class="tcard-nickname">"${r.nickname}"</div>
+          <div class="tcard-name">${r.name}</div>
+
+          <div class="tcard-stats" data-rider-id="${r.id}">
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Fundraising</span>
+              <div class="tcard-stat-bar"><div class="tcard-stat-fill" style="width:${computeStats(r,_fundMap).fundraising*10}%"></div></div>
+              <span class="tcard-stat-num">${computeStats(r,_fundMap).fundraising}/10</span>
+            </div>
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Experience</span>
+              <div class="tcard-stat-bar"><div class="tcard-stat-fill" style="width:${computeStats(r,_fundMap).experience*10}%"></div></div>
+              <span class="tcard-stat-num">${computeStats(r,_fundMap).experience}/10</span>
+            </div>
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Spirit</span>
+              <div class="tcard-stat-bar"><div class="tcard-stat-fill" style="width:${computeStats(r,_fundMap).spirit*10}%"></div></div>
+              <span class="tcard-stat-num">${computeStats(r,_fundMap).spirit}/10</span>
+            </div>
+            <div class="tcard-stat-row">
+              <span class="tcard-stat-label">Grit</span>
+              <div class="tcard-stat-bar"><div class="tcard-stat-fill" style="width:${computeStats(r,_fundMap).grit*10}%"></div></div>
+              <span class="tcard-stat-num">${computeStats(r,_fundMap).grit}/10</span>
+            </div>
+          </div>
+
+          <div class="tcard-song">🎵 <span>"${r.song}"</span></div>
+          <div class="tcard-badges">
+            ${allBadges.slice(0, 4).map(b => `<div class="tcard-badge" title="${b.slice(b.indexOf(' ')+1)}">${b.split(' ')[0]}</div>`).join('')}
+          </div>
+        </div>
+
+        <div class="tcard-raised-hero" data-rider-id="${r.id}"></div>
+
+        <div class="tcard-stamp">⚡ Wish Hero · TGT · WAM ⚡</div>
+        <a class="tcard-hover-donate" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💙 Donate to ${r.name.split(' ')[0]}</a>
+      </div>
+
+      <!-- BACK -->
+      <div class="tcard-back">
+        <div class="tcard-back-header" style="position:relative;z-index:1;">
+          <div class="tcard-back-title"><span style="font-style:italic;">"${r.nickname}"</span><br><span style="font-family:'DM Sans',sans-serif;font-size:13.5px;color:rgba(26,14,43,0.5);font-weight:500;">${r.name}</span></div>
+          <div class="tcard-back-wam">WAM Year${r.years > 1 ? 's' : ''}<br>${r.years}</div>
+        </div>
+
+        <div class="tcard-funfact" style="position:relative;z-index:1;">
+          <span class="tcard-funfact-label">⚡ Fun Fact</span>
+          ${r.funFact}
+        </div>
+
+        <p class="tcard-back-bio" style="position:relative;z-index:1;">${r.bio}</p>
+
+        <div class="tcard-back-badges" style="position:relative;z-index:1;">${badgeHTML}</div>
+
+        <div class="tcard-back-footer" style="position:relative;z-index:1;">
+          <a class="tcard-donate-btn" href="${donorHref}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💙 Donate</a>
+          <button class="tcard-share-btn" onclick="shareCard(event, ${r.id})" title="Share this rider (counts toward Grit for you on this device)">🔗</button>
+          <span class="tcard-back-num">🎵 ${r.song}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>`;
+}
+
+let _sortByRaised = false;
+
+function toggleSortByRaised(btn) {
+  _sortByRaised = !_sortByRaised;
+  btn.classList.toggle('active', _sortByRaised);
+  btn.textContent = _sortByRaised ? '📊 Sort: Raised ↓' : '📊 Sort: Default';
+  renderAll(currentFilter, currentQuery);
+}
+
+function renderAll(filter, query) {
+  const grid = document.getElementById('rosterGrid');
+  const q = (query || '').toLowerCase().trim();
+
+  let filtered = RIDERS.filter(r => {
+    const matchesTier = filter === 'all' || getComputedTier(r) === filter;
+    const matchesQuery = !q || r.name.toLowerCase().includes(q) || r.nickname.toLowerCase().includes(q);
+    return matchesTier && matchesQuery;
+  });
+
+  // Sort by raised if active and fund data is loaded
+  if (_sortByRaised && Object.keys(_fundMap).length) {
+    filtered = [...filtered].sort((a, b) => {
+      const aRaised = (_fundMap[a.name.toLowerCase()] || {}).sumDonations || 0;
+      const bRaised = (_fundMap[b.name.toLowerCase()] || {}).sumDonations || 0;
+      return bRaised - aRaised;
+    });
+  } else {
+    // Default ordering requested: Legend -> Veteran -> Rider -> Rookie
+    filtered = [...filtered].sort((a, b) => {
+      const tierDiff = (TIER_ORDER[getComputedTier(a)] ?? 99) - (TIER_ORDER[getComputedTier(b)] ?? 99);
+      if (tierDiff !== 0) return tierDiff;
+      return a.name.localeCompare(b.name);
+    });
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="roster-empty">No riders found. Try a different search.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((r, i) => renderCard(r, i)).join('');
+
+  // Wire grid cards: click = open modal; tilt + shimmer stay
+  grid.querySelectorAll('.tcard-wrap').forEach(card => {
+    const inner = card.querySelector('.tcard-inner');
+
+    card.addEventListener('click', e => {
+      openModal(parseInt(card.dataset.id), e);
+    });
+
+    if (!IS_TOUCH) {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const nx = (e.clientX - rect.left) / rect.width;
+        const ny = (e.clientY - rect.top) / rect.height;
+        const x = nx - 0.5; const y = ny - 0.5;
+        inner.style.transform = `perspective(1000px) rotateX(${-y * 10}deg) rotateY(${x * 14}deg)`;
+        card.style.setProperty('--mx', nx.toFixed(3));
+        card.style.setProperty('--my', ny.toFixed(3));
+      });
+      card.addEventListener('mouseleave', () => { inner.style.transform = ''; });
+    }
+  });
+}
+
+/* ══════════════════════════════════════
+   MODAL
+══════════════════════════════════════ */
+const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+let _photoMap = {};
+let _fundMap  = {};
+let _stravaMap = {};
+let _riderAliasMap = null;
+let _modalScrollHandler = null;
+const STRAVA_ATHLETE_OVERRIDES = {
+  'luis vecchio': { athleteId: 52089356, profileUrl: 'https://www.strava.com/athletes/52089356' },
+  'brad johnson': { athleteId: 31815516, profileUrl: 'https://www.strava.com/athletes/31815516' },
+  'jason winchell': { athleteId: 20567387, profileUrl: 'https://www.strava.com/athletes/20567387' },
+  'ethan pomfret': { athleteId: 188692144, profileUrl: 'https://www.strava.com/athletes/188692144' },
+  'stan krzyzanowski': { athleteId: 114949603, profileUrl: 'https://www.strava.com/athletes/114949603' },
+  'stanislaw krzyzanowski': { athleteId: 114949603, profileUrl: 'https://www.strava.com/athletes/114949603' },
+  'jess mata': { athleteId: 1171877272, profileUrl: 'https://www.strava.com/athletes/1171877272' },
+  'jessica mata': { athleteId: 1171877272, profileUrl: 'https://www.strava.com/athletes/1171877272' },
+  'andrew kennedy': { athleteId: 8545140, profileUrl: 'https://www.strava.com/athletes/8545140' },
+  'jackson maitner': { athleteId: 100928534, profileUrl: 'https://www.strava.com/athletes/100928534' },
+  'eli luke': { athleteId: 15364796, profileUrl: 'https://www.strava.com/athletes/15364796' },
+  'lauren froman': { athleteId: 71101428, profileUrl: 'https://www.strava.com/athletes/71101428' },
+  'anthony lazzaro': { athleteId: 129347277, profileUrl: 'https://www.strava.com/athletes/129347277' },
+  'benjamin kulczewski': { athleteId: 48193270, profileUrl: 'https://www.strava.com/athletes/48193270' },
+  'cameron mcgill': { athleteId: 59127458, profileUrl: 'https://www.strava.com/athletes/59127458' },
+  'cami mastenbrook': { athleteId: 114419410, profileUrl: 'https://www.strava.com/athletes/114419410' },
+  'emma dicello': { athleteId: 38115800, profileUrl: 'https://www.strava.com/athletes/38115800' },
+  'kiersten schulte': { athleteId: 122254630, profileUrl: 'https://www.strava.com/athletes/122254630' },
+  'lauren milligan': { athleteId: 9075186, profileUrl: 'https://www.strava.com/athletes/9075186' },
+  'lauren sytsma': { athleteId: 173925066, profileUrl: 'https://www.strava.com/athletes/173925066' },
+  'lisa marsh': { athleteId: 139519403, profileUrl: 'https://www.strava.com/athletes/139519403' },
+  'nakayla kosmerick': { athleteId: 135775239, profileUrl: 'https://www.strava.com/athletes/135775239' },
+  'robert grooters': { athleteId: 147506015, profileUrl: 'https://www.strava.com/athletes/147506015' },
+  'caleb agar': { athleteId: 166815710, profileUrl: 'https://www.strava.com/athletes/166815710' },
+  'jessica barr': { athleteId: 30825918, profileUrl: 'https://www.strava.com/athletes/30825918' },
+  'justin grenell': { athleteId: 22762955, profileUrl: 'https://www.strava.com/athletes/22762955' }
+};
+
+function shareRiderCard(rider) {
+  if (!rider) return;
+  const donorHref = rider.donorSlug.startsWith('http')
+    ? rider.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}`;
+  const cardUrl = buildRiderShareUrl(rider.id);
+  const text = `Check out ${rider.nickname} (${rider.name}) on the Grateful Team roster and support their Make-A-Wish ride.`;
+  const onShared = () => tgtRecordRiderShare(rider.id);
+  if (navigator.share) {
+    navigator.share({
+      title: `Support ${rider.nickname}`,
+      text,
+      url: cardUrl
+    }).then(onShared).catch(() => {});
+    return;
+  }
+  tgtRecordRiderShare(rider.id);
+  tgtRecordChallengeProgress('share', rider);
+  const smsBody = encodeURIComponent(`${text} ${cardUrl}`);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const smsUrl = isIOS ? `sms:&body=${smsBody}` : `sms:?body=${smsBody}`;
+  window.location.href = smsUrl;
+}
+
+function openModal(riderId, triggerEvent) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+
+  const donorHref = rider.donorSlug.startsWith('http')
+    ? rider.donorSlug
+    : `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}`;
+
+  // Render card into modal slot
+  const slot = document.getElementById('modalCardSlot');
+  slot.innerHTML = renderCard(rider, RIDERS.indexOf(rider));
+
+  const modalCard  = slot.querySelector('.tcard-wrap');
+  const modalInner = slot.querySelector('.tcard-inner');
+  modalCard.classList.add('modal-open-view');
+  modalCard.classList.add('flipped');
+  const modalEl = document.getElementById('cardModal');
+  const shareFab = document.getElementById('cardShareFab');
+  const shareRail = document.getElementById('modalShareRail');
+
+  function syncShareFab() {
+    if (!modalEl) return;
+    const scrolled = modalEl.scrollTop > 60;
+    const flipped = modalCard.classList.contains('flipped');
+    const on = scrolled && !flipped;
+    if (shareRail) {
+      shareRail.classList.toggle('show', on);
+      shareRail.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+  }
+
+  if (shareFab) {
+    shareFab.onclick = (e) => {
+      e.stopPropagation();
+      shareRiderCard(rider);
+    };
+  }
+  if (modalEl && _modalScrollHandler) modalEl.removeEventListener('scroll', _modalScrollHandler);
+  _modalScrollHandler = syncShareFab;
+  if (modalEl) modalEl.addEventListener('scroll', _modalScrollHandler, { passive: true });
+
+  // Wire flip inside modal (+ confetti + discovered)
+  modalCard.addEventListener('click', e => {
+    e.stopPropagation();
+    const wasFlipped = modalCard.classList.contains('flipped');
+    modalCard.classList.toggle('flipped');
+    modalInner.style.transform = '';
+
+    /* Back → front: card height drops a lot while scroll position stays put, so only a sliver of
+       the face stays visible with a huge gap. Reset modal scroll once layout has settled. */
+    if (wasFlipped && modalEl) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          modalEl.scrollTop = 0;
+          const cardSlot = document.getElementById('modalCardSlot');
+          if (cardSlot) cardSlot.scrollIntoView({ behavior: 'auto', block: 'start', inline: 'nearest' });
+          syncShareFab();
+        });
+      });
+    } else {
+      syncShareFab();
+    }
+
+    // Discovered counter
+    const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
+    if (!seen[riderId]) {
+      seen[riderId] = true;
+      localStorage.setItem('tgt-seen', JSON.stringify(seen));
+      updateDiscoveredBar(seen);
+    }
+    if (!wasFlipped && rider.tier === 'legend') {
+      const rect = modalCard.getBoundingClientRect();
+      burstConfetti(e.clientX || rect.left + 170, e.clientY || rect.top + 240);
+    }
+  });
+
+  // Tilt + shimmer inside modal (desktop only)
+  if (!IS_TOUCH) {
+    modalCard.addEventListener('mousemove', e => {
+      if (modalCard.classList.contains('flipped')) return;
+      const rect = modalCard.getBoundingClientRect();
+      const nx = (e.clientX - rect.left) / rect.width;
+      const ny = (e.clientY - rect.top) / rect.height;
+      modalInner.style.transform = `perspective(1200px) rotateX(${-(ny-0.5)*8}deg) rotateY(${(nx-0.5)*12}deg)`;
+      modalCard.style.setProperty('--mx', nx.toFixed(3));
+      modalCard.style.setProperty('--my', ny.toFixed(3));
+    });
+    modalCard.addEventListener('mouseleave', () => { modalInner.style.transform = ''; });
+  }
+
+  // Apply cached photos & fundraising
+  const key = rider.name.toLowerCase();
+  if (_photoMap[key]) {
+    const av = modalCard.querySelector('.tcard-avatar');
+    if (av) av.innerHTML = `<img src="${_photoMap[key]}" alt="${rider.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  }
+  if (_fundMap[key] && _fundMap[key].sumDonations > 0) {
+    const data = _fundMap[key];
+    const raised = data.sumDonations;
+    const goal   = data.fundraisingGoal || 1200;
+    const pct    = Math.min(100, Math.round((raised / goal) * 100));
+    const donors = data.numDonations || 0;
+    const nameEl = modalCard.querySelector('.tcard-name');
+    if (nameEl) {
+      const fb = document.createElement('div');
+      fb.className = 'tcard-raised';
+      fb.innerHTML = `💰 <span>$${Math.round(raised).toLocaleString()}</span> raised`;
+      nameEl.parentNode.insertBefore(fb, nameEl.nextSibling);
+    }
+    const bio = modalCard.querySelector('.tcard-back-bio');
+    if (bio) {
+      const div = document.createElement('div');
+      div.className = 'tcard-back-raised';
+      div.innerHTML = `
+        <div class="tcard-back-raised-top">
+          <span class="tcard-back-raised-label">Raised</span>
+          <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
+        </div>
+        <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
+        <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>`;
+      bio.parentNode.insertBefore(div, bio);
+    }
+  }
+
+  // Build panel with full rider profile
+  const cs = computeStats(rider, _fundMap);
+  const riderTier = getComputedTier(rider);
+  const tierLabel = TIER_LABELS[riderTier] || riderTier;
+  const wishBadge = cs.isWishGranter ? '<span class="modal-wish-granter-badge">⚡ Wish Granter</span>' : '';
+  const stravaLinkInfo = _stravaMap[normalizeName(rider.name)] || null;
+  const challengeState = tgtLoadChallenges();
+  const modalCampaignBadges = [];
+  if (tgtGetShareCount(rider.id) >= 3) modalCampaignBadges.push('📣 Share x3');
+  if ((_fundMap[rider.name.toLowerCase()] || {}).numDonations >= 5) modalCampaignBadges.push('🤝 5 Donors Club');
+  if (challengeState.rookieShares >= 1 && riderTier === 'rookie') modalCampaignBadges.push('🌟 First-Time Donor Champion');
+  const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
+  const sharePack = getSharePack(rider, donorHref, cs);
+  const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
+  const donorHrefEnc = encodeURIComponent(donorHref);
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=${donorHrefEnc}`;
+  const qrDownloadName = `tgt-${normalizeName(rider.name).replace(/\s+/g, '-')}-donate-qr.png`;
+
+  const ytUrl = `https://www.youtube.com/results?search_query=Grateful+Dead+${encodeURIComponent('"'+rider.song+'"')}+live`;
+  const spUrl = `https://open.spotify.com/search/Grateful%20Dead%20${encodeURIComponent(rider.song)}`;
+  const amUrl = `https://music.apple.com/us/search?term=Grateful+Dead+${encodeURIComponent(rider.song)}`;
+
+  function statRowHTML(label, cls, val, boost) {
+    const boostIcon = boost ? '<span class="modal-stat-boost">⚡</span>' : '';
+    return `<div class="modal-stat-row">
+      <span class="modal-stat-label">${label}</span>
+      <div class="modal-stat-track"><div class="modal-stat-fill modal-stat-fill-${cls}" data-target="${val*10}"></div></div>
+      <span class="modal-stat-val">${val}/10</span>${boostIcon}
+    </div>`;
+  }
+
+  document.getElementById('modalPanel').innerHTML = `
+    <div class="modal-rider-header">
+      <div class="modal-rider-nickname">"${rider.nickname}"</div>
+      <div class="modal-rider-name">${rider.name}</div>
+      <div class="modal-rider-meta">
+        <span>${tierLabel} · ${rider.years} WAM Year${rider.years !== 1 ? 's' : ''}</span>
+        ${wishBadge}
+      </div>
+    </div>
+    <div class="modal-stats-section">
+      <div class="modal-stats-heading">Rider Stats</div>
+      ${statRowHTML('💰 Fundraising', 'fundraising', cs.fundraising, cs.isWishGranter)}
+      ${statRowHTML('📅 Experience',  'experience',  cs.experience,  false)}
+      ${statRowHTML('🎵 Spirit',      'spirit',      cs.spirit,      false)}
+      ${statRowHTML('💪 Grit',        'grit',        cs.grit,        false)}
+    </div>
+    <div>
+      <div class="modal-badges-heading">Badges & Honors</div>
+      <div class="modal-badges-grid">${badgesHTML}</div>
+    </div>
+    <div class="modal-funfact">
+      <span class="modal-funfact-label">⚡ Fun Fact</span>
+      <p>${rider.funFact}</p>
+    </div>
+    <div class="card-modal-song-box">
+      <div class="card-modal-song-name">🎵 "${rider.song}"</div>
+      <div class="card-modal-song-by">The Grateful Dead · ${rider.name.split(' ')[0]}'s ride song</div>
+      <div class="modal-play-btns">
+        <a href="${ytUrl}" target="_blank" rel="noopener" class="modal-play-btn modal-play-btn-yt">▶ YouTube</a>
+        <a href="${spUrl}" target="_blank" rel="noopener" class="modal-play-btn modal-play-btn-sp">♫ Spotify</a>
+        <a href="${amUrl}" target="_blank" rel="noopener" class="modal-play-btn modal-play-btn-am">♪ Apple</a>
+      </div>
+    </div>
+    <a class="card-modal-donate-link" href="${donorHref}" target="_blank" rel="noopener">💙 Donate to ${rider.name.split(' ')[0]}</a>
+    ${stravaLinkInfo ? `<a class="card-modal-donate-link" href="${stravaLinkInfo.profileUrl || stravaLinkInfo.clubUrl}" target="_blank" rel="noopener" style="background:var(--color-orange);margin-top:8px;">🧡 ${stravaLinkInfo.profileUrl ? `View ${rider.name.split(' ')[0]} on Strava` : `View ${rider.name.split(' ')[0]} in Strava Club`}</a>` : ''}
+    <div class="modal-qr-wrap">
+      <p class="modal-qr-title">Donor QR Code</p>
+      <img class="modal-qr-img" src="${qrCodeUrl}" alt="QR code to donate to ${rider.name}">
+      <button type="button" class="modal-qr-download" onclick="downloadQrCodeImage('${qrCodeUrl}', '${qrDownloadName}')">⬇ Download QR</button>
+    </div>
+    <button onclick="challengeRider('${rider.name}','${rider.nickname}','${donorHref}')" style="background:rgba(250,246,232,0.07);border:1px solid rgba(250,246,232,0.15);border-radius:8px;color:rgba(250,246,232,0.7);font-family:'Josefin Slab',serif;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:10px;cursor:pointer;width:100%;transition:all 150ms;" onmouseover="this.style.background='rgba(249,241,8,0.1)'" onmouseout="this.style.background='rgba(250,246,232,0.07)'">⚡ Challenge a Friend to Beat This</button>
+    <div class="share-generator">
+      <h4>One-Click Share Generator</h4>
+      <div class="share-grid">
+        <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'x');">𝕏 X</button>
+        <button type="button" class="share-link" onclick="openSocialDraft(${rider.id}, '${donorHref}', 'facebook');">📘 Facebook</button>
+        <a class="share-link" href="sms:?&body=${shareCombinedEnc}" onclick="tgtRecordRiderShare(${rider.id}); tgtRecordChallengeProgress('share', RIDERS.find(r => r.id === ${rider.id}));">💬 iMessage</a>
+      </div>
+      <p class="share-generator-note">Use X, Facebook, or iMessage to share this rider quickly with a prefilled draft and donation link.</p>
+    </div>
+  `;
+
+  // Animate stat bars after paint
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#modalPanel .modal-stat-fill[data-target]').forEach(bar => {
+      bar.style.width = bar.dataset.target + '%';
+    });
+  });
+
+  document.getElementById('cardModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (modalEl) modalEl.scrollTop = 0;
+  syncShareFab();
+}
+
+function closeModal() {
+  const modalEl = document.getElementById('cardModal');
+  const shareRail = document.getElementById('modalShareRail');
+  if (modalEl && _modalScrollHandler) {
+    modalEl.removeEventListener('scroll', _modalScrollHandler);
+    _modalScrollHandler = null;
+  }
+  if (shareRail) {
+    shareRail.classList.remove('show');
+    shareRail.setAttribute('aria-hidden', 'true');
+  }
+  modalEl.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ══════════════════════════════════════
+   CONFETTI
+══════════════════════════════════════ */
+function burstConfetti(cx, cy) {
+  const colors = ['#f9f108','#5a1e8a','#e8621a','#04b2ca','#ffffff','#ff69b4'];
+  for (let i = 0; i < 14; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-particle';
+    const angle = (i / 14) * 360 + Math.random() * 30;
+    const dist = 60 + Math.random() * 80;
+    const rad = angle * Math.PI / 180;
+    el.style.cssText = `
+      left:${cx}px; top:${cy}px;
+      background:${colors[i % colors.length]};
+      --dx:${Math.cos(rad) * dist}px;
+      --dy:${Math.sin(rad) * dist - 30}px;
+      --dr:${Math.random() * 540 - 270}deg;
+      width:${6 + Math.random() * 6}px;
+      height:${4 + Math.random() * 5}px;
+      border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 950);
+  }
+}
+
+/* ══════════════════════════════════════
+   SHARE CARD
+══════════════════════════════════════ */
+function shareCard(e, riderId) {
+  e.stopPropagation();
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const { name, nickname } = rider;
+  const text = `${nickname} (${name}) — a Wish Hero riding 300 miles for Make-A-Wish Michigan with The Grateful Team 🚲💙`;
+  const url = buildRiderShareUrl(riderId);
+  const onDone = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  if (navigator.share) {
+    navigator.share({ title: `TGT Rider Card: ${nickname}`, text, url }).then(onDone).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+      onDone();
+      const btn = e.currentTarget;
+      const orig = btn.textContent;
+      btn.textContent = '✓';
+      setTimeout(() => { btn.textContent = orig; }, 1500);
+    }).catch(() => {});
+  }
+}
+
+function buildRiderShareUrl(riderId) {
+  const base = window.location.origin + window.location.pathname;
+  return `${base}?rider=${encodeURIComponent(riderId)}`;
+}
+
+function getRequestedRiderIdFromUrl() {
+  const params = new URLSearchParams(window.location.search || '');
+  const queryId = parseInt(params.get('rider') || '', 10);
+  if (queryId && RIDERS.some(r => r.id === queryId)) return queryId;
+  const hash = (window.location.hash || '').replace(/^#/, '');
+  const m = /^rider-(\d+)$/.exec(hash);
+  const hashId = m ? parseInt(m[1], 10) : 0;
+  if (hashId && RIDERS.some(r => r.id === hashId)) return hashId;
+  return 0;
+}
+
+function getSharePack(rider, donorHref, cs) {
+  const first = rider.name.split(' ')[0];
+  const stats = cs || computeStats(rider, _fundMap);
+  const tierLabel = (TIER_LABELS[getComputedTier(rider)] || 'Rider').toUpperCase();
+  const badges = (rider.badges || []).slice(0, 2).join(' • ');
+  const statsLine = `Fundraising ${stats.fundraising}/10 | Experience ${stats.experience}/10 | Spirit ${stats.spirit}/10 | Grit ${stats.grit}/10`;
+  const bioLine = rider.funFact ? `Fun fact: ${rider.funFact}` : '';
+  return {
+    text: `Ride with ${rider.nickname} (${rider.name}) and help grant wishes with The Grateful Team. Please support ${first}!`,
+    storyText: [
+      `🚴 Rider Card: ${rider.nickname} (${rider.name})`,
+      `${tierLabel} • ${rider.years} WAM year${rider.years !== 1 ? 's' : ''}`,
+      statsLine,
+      badges ? `Badges: ${badges}` : '',
+      bioLine,
+      `Help ${first} grant wishes with Make-A-Wish Michigan 💙`
+    ].filter(Boolean).join('\n'),
+    url: donorHref,
+    firstName: first
+  };
+}
+
+function copyShareText(text, url) {
+  const value = `${text}\n${url}`;
+  navigator.clipboard.writeText(value).catch(() => {});
+}
+
+async function downloadQrCodeImage(qrUrl, filename) {
+  try {
+    const res = await fetch(qrUrl);
+    if (!res.ok) throw new Error('Failed to fetch QR');
+    const blob = await res.blob();
+    const href = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = href;
+    a.download = filename || 'tgt-donor-qr.png';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      URL.revokeObjectURL(href);
+      a.remove();
+    }, 500);
+    showShareToast('QR downloaded. Share it to send donors directly to this rider page.');
+  } catch (_) {
+    window.open(qrUrl, '_blank', 'noopener');
+  }
+}
+
+function isUnsupportedSocialShareContext() {
+  const host = (window.location.hostname || '').toLowerCase();
+  const href = (window.location.href || '').toLowerCase();
+  const isLocal = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local');
+  const isNetlifyAdmin = href.indexOf('app.netlify.com/projects/') !== -1;
+  return isLocal || isNetlifyAdmin;
+}
+
+let _shareToastTimer = null;
+function showShareToast(message) {
+  let el = document.getElementById('shareToast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'shareToast';
+    el.setAttribute('role', 'status');
+    el.setAttribute('aria-live', 'polite');
+    el.style.cssText = [
+      'position:fixed',
+      'left:50%',
+      'bottom:20px',
+      'transform:translateX(-50%) translateY(16px)',
+      'background:rgba(26,14,43,0.96)',
+      'color:#faf6e8',
+      'border:1px solid rgba(250,246,232,0.2)',
+      'padding:10px 14px',
+      'border-radius:10px',
+      'font-family:Josefin Slab, serif',
+      'font-weight:700',
+      'font-size:12px',
+      'letter-spacing:.04em',
+      'text-align:center',
+      'max-width:min(90vw,520px)',
+      'z-index:9999',
+      'opacity:0',
+      'transition:opacity 180ms ease, transform 180ms ease',
+      'pointer-events:none'
+    ].join(';');
+    document.body.appendChild(el);
+  }
+  el.textContent = message;
+  el.style.opacity = '1';
+  el.style.transform = 'translateX(-50%) translateY(0)';
+  if (_shareToastTimer) clearTimeout(_shareToastTimer);
+  _shareToastTimer = setTimeout(() => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(-50%) translateY(16px)';
+  }, 2600);
+}
+
+function openSocialDraft(riderId, donorHref, network) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const sharePack = getSharePack(rider, donorHref, computeStats(rider, _fundMap));
+  if (isUnsupportedSocialShareContext()) {
+    copyShareText(sharePack.storyText, donorHref);
+    showShareToast('Cannot open social sharer from localhost/admin page. Story text copied instead.');
+    return;
+  }
+  const onDone = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  const encoded = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
+  const targetUrl = network === 'facebook'
+    ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(sharePack.url)}&quote=${encodeURIComponent(sharePack.text)}`
+    : `https://twitter.com/intent/tweet?text=${encoded}`;
+  const opened = window.open(targetUrl, '_blank', 'noopener');
+  if (!opened) {
+    copyShareText(sharePack.storyText, donorHref);
+    showShareToast('Popup blocked. Story text copied so you can paste and share manually.');
+    return;
+  }
+  onDone();
+}
+
+let _html2canvasLoaderPromise = null;
+function ensureHtml2CanvasLoaded() {
+  if (window.html2canvas) return Promise.resolve(window.html2canvas);
+  if (_html2canvasLoaderPromise) return _html2canvasLoaderPromise;
+  _html2canvasLoaderPromise = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+    script.onload = () => resolve(window.html2canvas);
+    script.onerror = () => reject(new Error('Failed to load html2canvas'));
+    document.head.appendChild(script);
+  });
+  return _html2canvasLoaderPromise;
+}
+
+function downloadBlob(blob, filename) {
+  const href = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    URL.revokeObjectURL(href);
+    a.remove();
+  }, 400);
+}
+
+async function captureModalCardImage(rider) {
+  const cardEl = document.querySelector('#modalCardSlot .tcard-wrap');
+  if (!cardEl) throw new Error('Card not found');
+  const h2c = await ensureHtml2CanvasLoaded();
+  const wasFlipped = cardEl.classList.contains('flipped');
+  if (wasFlipped) cardEl.classList.remove('flipped');
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const canvas = await h2c(cardEl, {
+    backgroundColor: null,
+    scale: Math.min(3, window.devicePixelRatio > 1 ? 2 : 1.5),
+    useCORS: true,
+    logging: false
+  });
+  if (wasFlipped) cardEl.classList.add('flipped');
+  const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+  if (!blob) throw new Error('Unable to render card image');
+  const safeName = (rider.name || 'rider').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const file = new File([blob], `tgt-rider-card-${safeName}.png`, { type: 'image/png' });
+  return file;
+}
+
+async function shareStoryWithCardImage(riderId, donorHref, storyText) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const done = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  copyShareText(storyText, donorHref);
+  try {
+    const cardFile = await captureModalCardImage(rider);
+    if (navigator.canShare && navigator.canShare({ files: [cardFile] }) && navigator.share) {
+      await navigator.share({
+        title: `Rider Card: ${rider.nickname}`,
+        text: `${storyText}\n${donorHref}`,
+        files: [cardFile]
+      });
+    } else {
+      downloadBlob(cardFile, cardFile.name);
+      showShareToast('Story text copied and card image downloaded. Upload image to Story and paste the copied text.');
+    }
+    done();
+  } catch (err) {
+    showShareToast('Story text copied. Card capture failed here; take a screenshot and post it with the copied text.');
+    done();
+  }
+}
+
+function shareRiderStory(riderId, donorHref, storyText, network) {
+  const rider = RIDERS.find(r => r.id === riderId);
+  if (!rider) return;
+  const done = () => {
+    tgtRecordRiderShare(riderId);
+    tgtRecordChallengeProgress('share', rider);
+  };
+  const fallbackToClipboard = () => {
+    copyShareText(storyText, donorHref);
+    const appName = network === 'facebook' ? 'Facebook' : 'Instagram';
+    showShareToast(`Story text copied. Paste into ${appName} Story/caption and attach the rider card image.`);
+    done();
+  };
+  if (navigator.share) {
+    navigator.share({
+      title: `Rider Card: ${rider.nickname}`,
+      text: storyText,
+      url: donorHref
+    }).then(done).catch(() => fallbackToClipboard());
+    return;
+  }
+  fallbackToClipboard();
+}
+
+function normalizeName(value) {
+  return (value || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+function buildRiderAliasMap() {
+  if (_riderAliasMap) return _riderAliasMap;
+  const map = {};
+  RIDERS.forEach(function (rider) {
+    const full = normalizeName(rider.name);
+    if (full) map[full] = rider;
+    const parts = rider.name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      const first = normalizeName(parts[0]);
+      const lastInitial = normalizeName(parts[parts.length - 1]).charAt(0);
+      if (first && lastInitial) {
+        const key = `${first} ${lastInitial}`;
+        map[key] = map[key] || rider;
+      }
+    }
+  });
+  _riderAliasMap = map;
+  return map;
+}
+
+function findRiderByExternalName(value) {
+  const key = normalizeName(value);
+  if (!key) return null;
+  const aliasMap = buildRiderAliasMap();
+  if (aliasMap[key]) return aliasMap[key];
+
+  const parts = key.split(' ').filter(Boolean);
+  if (parts.length < 2) return null;
+  const first = parts[0];
+  const lastInitial = parts[parts.length - 1].charAt(0);
+  const candidates = RIDERS.filter(function (r) {
+    const rp = r.name.trim().toLowerCase().split(/\s+/);
+    return rp[0] === first && rp[rp.length - 1].charAt(0) === lastInitial;
+  });
+  return candidates.length === 1 ? candidates[0] : null;
+}
+
+function fmtMiles(meters) {
+  return ((Number(meters) || 0) * 0.000621371).toFixed(1) + ' mi';
+}
+
+function fmtElevFeet(meters) {
+  return Math.round((Number(meters) || 0) * 3.28084).toLocaleString() + ' ft';
+}
+
+function fmtDuration(sec) {
+  const s = Number(sec) || 0;
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  if (h > 0) return `${h}h ${m}m`;
+  return `${m}m`;
+}
+
+function renderTrainingRides(data) {
+  const section = document.getElementById('trainingRidesSection');
+  const host = document.getElementById('trainingRidesFeed');
+  if (!section || !host || !data || !Array.isArray(data.rides) || !data.rides.length) return;
+
+  host.innerHTML = data.rides.slice(0, 12).map(function (ride) {
+    const matched = findRiderByExternalName(ride.athleteName);
+    const riderJump = matched
+      ? `<button type="button" onclick="openModal(${matched.id})" style="background:rgba(249,241,8,0.14);border:1px solid rgba(249,241,8,0.45);border-radius:999px;padding:6px 10px;color:var(--color-gold);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;cursor:pointer;">Open ${matched.name.split(' ')[0]}'s Card</button>`
+      : `<a href="${ride.clubUrl || 'https://www.strava.com/clubs/1302442'}" target="_blank" rel="noopener" style="color:var(--color-cerulean);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;text-decoration:none;">View in Club →</a>`;
+    return `
+      <article style="background:rgba(250,246,232,0.05);border:1px solid rgba(250,246,232,0.12);border-radius:10px;padding:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;">
+          <strong style="font-family:'DM Sans',sans-serif;font-size:13px;color:var(--color-cream);line-height:1.35;">${ride.name || 'Training Ride'}</strong>
+          <span style="font-family:'Josefin Slab',serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(4,178,202,0.8);">${ride.sportType || 'Ride'}</span>
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:12px;color:rgba(250,246,232,0.68);margin-bottom:8px;">🚴 ${ride.athleteName || 'Club Rider'}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.82);">📏 ${fmtMiles(ride.distanceMeters)}</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.82);">⛰️ ${fmtElevFeet(ride.elevationGainMeters)}</span>
+          <span style="font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.82);">⏱️ ${fmtDuration(ride.movingTimeSec)}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          ${riderJump}
+          <a href="${ride.activityUrl || 'https://www.strava.com/clubs/1302442'}" target="_blank" rel="noopener" style="color:var(--color-cream);font-family:'DM Sans',sans-serif;font-size:11px;text-decoration:none;border:1px solid rgba(250,246,232,0.22);border-radius:999px;padding:6px 10px;">Activity ↗</a>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  section.style.display = 'block';
+}
+
+/* ══════════════════════════════════════
+   DISCOVERED COUNTER
+══════════════════════════════════════ */
+function updateDiscoveredBar(seen) {
+  const count = Object.keys(seen).length;
+  const bar = document.getElementById('discoveredBar');
+  const num = document.getElementById('discCount');
+  if (!bar || !num) return;
+  bar.style.display = 'block';
+  num.textContent = count;
+  if (count === 51) {
+    bar.innerHTML = '🎉 You\'ve discovered all <span class="disc-count">51</span> riders. True Grateful Team status. 🌹';
+  }
+}
+
+/* ══════════════════════════════════════
+   INIT & CONTROLS
+══════════════════════════════════════ */
+let currentFilter = 'all';
+let currentQuery = '';
+const DONORDRIVE_TEAM_ID = 5450;
+const DONORDRIVE_BASE = `https://makeawishmichigan.donordrive.com/api/teams/${DONORDRIVE_TEAM_ID}`;
+
+function fetchParticipantsLiveFirst() {
+  return fetch(`${DONORDRIVE_BASE}/participants?limit=200&orderBy=createdDateUTC&desc=true`)
+    .then(r => {
+      if (!r.ok) throw new Error('Live participants fetch failed');
+      return r.json();
+    })
+    .then(parts => Array.isArray(parts) ? parts : [])
+    .catch(() => fetch('/assets/data/participants.json').then(r => r.json()).catch(() => []));
+}
+
+/** Recent donations for the live section — DonorDrive API first, activity-feed.json fallback */
+function fetchDonationsLiveFirst() {
+  return fetch(`${DONORDRIVE_BASE}/donations?limit=20&orderBy=createdDateUTC&desc=true`, {
+    headers: { Accept: 'application/json' }
+  })
+    .then(r => {
+      if (!r.ok) throw new Error('Live donations fetch failed');
+      return r.json();
+    })
+    .then(rows => (Array.isArray(rows) ? rows : []))
+    .catch(() =>
+      fetch('/assets/data/activity-feed.json')
+        .then(r => r.json())
+        .then(f => (f && Array.isArray(f.donations) ? f.donations : []))
+        .catch(() => [])
+    );
+}
+
+document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    renderAll(currentFilter, currentQuery);
+  });
+});
+
+document.getElementById('rosterSearch').addEventListener('input', e => {
+  currentQuery = e.target.value;
+  renderAll(currentFilter, currentQuery);
+});
+
+renderAll('all', '');
+renderChallengeHub();
+const requestedRiderId = getRequestedRiderIdFromUrl();
+if (requestedRiderId) {
+  setTimeout(() => openModal(requestedRiderId), 0);
+}
+
+// Restore discovered counter from localStorage
+(function() {
+  const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
+  if (Object.keys(seen).length > 0) updateDiscoveredBar(seen);
+})();
+
+// Load real photos and fundraising data from DonorDrive (live first, local fallback)
+fetchParticipantsLiveFirst()
+  .then(parts => {
+    parts.forEach(p => {
+      const key = p.displayName.toLowerCase();
+      if (p.avatarImageURL) _photoMap[key] = p.avatarImageURL;
+      _fundMap[key] = p;
+    });
+    const photoMap = _photoMap;
+    const fundMap  = _fundMap;
+
+    /* Re-render the full grid so all four stat bars match live goal/raised (not only after opening a card). */
+    renderAll(currentFilter, currentQuery);
+
+    document.querySelectorAll('.tcard-wrap').forEach(wrap => {
+      const riderId = parseInt(wrap.dataset.id);
+      const rider = RIDERS.find(r => r.id === riderId);
+      if (!rider) return;
+      const key = rider.name.toLowerCase();
+
+      // Inject real photo
+      const url = photoMap[key];
+      if (url) {
+        const avatarEl = wrap.querySelector('.tcard-avatar');
+        if (avatarEl) {
+          avatarEl.innerHTML = `<img src="${url}" alt="${rider.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+        }
+      }
+
+      // Inject fundraising on card FRONT (below name) and card BACK
+      const data = fundMap[key];
+      if (!data) return;
+      const raised = data.sumDonations || 0;
+      const goal = data.fundraisingGoal || 1200;
+      const pct = Math.min(100, Math.round((raised / goal) * 100));
+      const donors = data.numDonations || 0;
+
+      // Front: large raised amount in hero slot
+      const heroEl = wrap.querySelector('.tcard-raised-hero');
+      if (heroEl) {
+        heroEl.innerHTML = `<div class="tcard-raised-hero-amt">$${Math.round(raised).toLocaleString()}</div><div class="tcard-raised-hero-label">raised this year</div>`;
+      }
+
+      // Back: fundraising bar above bio
+      const bio = wrap.querySelector('.tcard-back-bio');
+      if (!bio || raised <= 0) return;
+      const div = document.createElement('div');
+      div.className = 'tcard-back-raised';
+      div.innerHTML = `
+        <div class="tcard-back-raised-top">
+          <span class="tcard-back-raised-label">Raised</span>
+          <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
+        </div>
+        <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
+        <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
+      `;
+      bio.parentNode.insertBefore(div, bio);
+    });
+  })
+  .catch(() => {}); // graceful fallback
+
+// Populate live activity + leaderboard sections
+Promise.all([
+  fetchDonationsLiveFirst().catch(() => []),
+  fetchParticipantsLiveFirst().catch(() => null),
+  fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null),
+  fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null)
+]).then(([donations, parts, stravaData, stravaMembers]) => {
+  const liveSection = document.getElementById('liveSection');
+
+  // Recent donations feed
+  const feedEl = document.getElementById('donationFeed');
+  const realDonations = (donations || []).filter(d => !d.isRegFee && d.amount > 0);
+  if (realDonations.length > 0) {
+    feedEl.innerHTML = realDonations.slice(0, 8).map((d, i) => `
+      <div class="donation-row" style="animation-delay:${i * 0.05}s">
+        <span class="donation-donor">💙 ${d.displayName}</span>
+        <span class="donation-to">→ ${d.recipientName}</span>
+        <span class="donation-amount">$${Math.round(d.amount).toLocaleString()}</span>
+      </div>
+    `).join('');
+    liveSection.style.display = 'block';
+  }
+
+  // Tabbed leaderboard — populate _lbParts and render
+  if (parts && parts.length) {
+    _lbParts = parts;
+    renderLeaderboard('top');
+    liveSection.style.display = 'block';
+  }
+
+  // Hot streak: riders with donations in the last 90 days get a 🔥 badge
+  if (realDonations.length) {
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 86400000);
+    const hotNames = new Set(
+      realDonations
+        .filter(d => new Date(d.createdDateUTC) > ninetyDaysAgo)
+        .map(d => d.recipientName.toLowerCase())
+    );
+    document.querySelectorAll('.tcard-wrap[data-id]').forEach(wrap => {
+      const riderId = parseInt(wrap.dataset.id);
+      const rider = RIDERS.find(r => r.id === riderId);
+      if (rider && hotNames.has(rider.name.toLowerCase())) {
+        wrap.classList.add('hot-streak');
+        const badge = document.createElement('span');
+        badge.className = 'tcard-hot-badge';
+        badge.textContent = '🔥';
+        wrap.style.position = 'relative';
+        wrap.appendChild(badge);
+      }
+    });
+  }
+
+
+  if (stravaMembers && Array.isArray(stravaMembers.members)) {
+    _stravaMap = {};
+    stravaMembers.members.forEach(function (m) {
+      const rider = findRiderByExternalName(m.displayName);
+      if (!rider) return;
+      const riderKey = normalizeName(rider.name);
+      if (!riderKey || _stravaMap[riderKey]) return;
+      _stravaMap[riderKey] = {
+        profileUrl: m.profileUrl || null,
+        clubUrl: m.clubUrl || 'https://www.strava.com/clubs/1302442'
+      };
+    });
+    Object.keys(STRAVA_ATHLETE_OVERRIDES).forEach(function (nameKey) {
+      const rider = findRiderByExternalName(nameKey);
+      if (!rider) return;
+      const riderKey = normalizeName(rider.name);
+      const override = STRAVA_ATHLETE_OVERRIDES[nameKey];
+      const existing = _stravaMap[riderKey] || { clubUrl: 'https://www.strava.com/clubs/1302442' };
+      _stravaMap[riderKey] = {
+        profileUrl: override.profileUrl || existing.profileUrl || null,
+        clubUrl: existing.clubUrl || 'https://www.strava.com/clubs/1302442'
+      };
+    });
+  }
+
+  if (stravaData) renderTrainingRides(stravaData);
+});
+
+// WAM Countdown
+(function() {
+  const WAM_DATE = new Date('2026-07-24T07:00:00-04:00'); // 7am ET start
+  function tick() {
+    const now = new Date();
+    const diff = WAM_DATE - now;
+    if (diff <= 0) return;
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const el = document.getElementById('wamCountdown');
+    if (!el) return;
+    el.innerHTML = [
+      ['Days', d], ['Hrs', h], ['Min', m], ['Sec', s]
+    ].map(([label, val]) => `
+      <div class="countdown-unit">
+        <span class="countdown-num">${String(val).padStart(2,'0')}</span>
+        <span class="countdown-label">${label} to WAM</span>
+      </div>
+    `).join('');
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// Leaderboard tab state & renderer
+let _lbParts = [];
+let _currentLbTab = 'top';
+
+function renderLeaderboard(tab) {
+  const lbEl = document.getElementById('leaderboard');
+  if (!lbEl || !_lbParts.length) return;
+  _currentLbTab = tab;
+
+  let ranked;
+  if (tab === 'top') {
+    ranked = [..._lbParts].sort((a,b) => b.sumDonations - a.sumDonations).slice(0,8);
+  } else if (tab === 'close') {
+    // Closest to goal WITHOUT having hit it yet
+    ranked = [..._lbParts]
+      .filter(p => p.sumDonations > 0 && p.sumDonations < (p.fundraisingGoal || 1200))
+      .sort((a,b) => {
+        const aPct = a.sumDonations / (a.fundraisingGoal || 1200);
+        const bPct = b.sumDonations / (b.fundraisingGoal || 1200);
+        return bPct - aPct;
+      }).slice(0,8);
+  } else {
+    // Furthest from goal — needs a push
+    ranked = [..._lbParts]
+      .filter(p => p.sumDonations >= 0)
+      .sort((a,b) => {
+        const aNeed = (a.fundraisingGoal||1200) - a.sumDonations;
+        const bNeed = (b.fundraisingGoal||1200) - b.sumDonations;
+        return bNeed - aNeed;
+      }).slice(0,8);
+  }
+
+  if (!ranked.length) { lbEl.innerHTML = '<p style="color:rgba(250,246,232,0.3);font-family:\'DM Sans\',sans-serif;font-size:13px;">Data loading — check back soon.</p>'; return; }
+
+  const max = tab === 'top' ? ranked[0].sumDonations : (ranked[0].fundraisingGoal || 1200);
+  const donor = ranked[0];
+
+  lbEl.innerHTML = ranked.map((p, i) => {
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+    const rankCls = i === 0 ? 'lb-rank-1' : i === 1 ? 'lb-rank-2' : i === 2 ? 'lb-rank-3' : '';
+    let barPct, statLabel;
+    if (tab === 'top') {
+      barPct = Math.round((p.sumDonations / max) * 100);
+      statLabel = `$${Math.round(p.sumDonations).toLocaleString()}`;
+    } else if (tab === 'close') {
+      const pct = Math.min(100, Math.round((p.sumDonations / (p.fundraisingGoal||1200)) * 100));
+      barPct = pct;
+      statLabel = `${pct}%`;
+    } else {
+      const need = Math.max(0, (p.fundraisingGoal||1200) - p.sumDonations);
+      barPct = Math.round(((p.fundraisingGoal||1200) - need) / (p.fundraisingGoal||1200) * 100);
+      statLabel = `$${Math.round(need).toLocaleString()} needed`;
+    }
+    const rider = RIDERS.find(r => r.name.toLowerCase() === p.displayName.toLowerCase());
+    const donorHref = rider ? `https://makeawishmichigan.donordrive.com/participants/${rider.donorSlug}` : '#';
+    return `
+      <div class="lb-row" style="animation-delay:${i*0.04}s;cursor:pointer;" onclick="if('${donorHref}'!=='#')window.open('${donorHref}','_blank')">
+        <span class="lb-rank ${rankCls}">${medal}</span>
+        <span class="lb-name">${p.displayName}</span>
+        <div class="lb-bar-wrap"><div class="lb-bar-track"><div class="lb-bar-fill" style="width:${barPct}%"></div></div></div>
+        <span class="lb-amount">${statLabel}</span>
+      </div>`;
+  }).join('');
+}
+
+function switchLbTab(tab, btn) {
+  document.querySelectorAll('.lb-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLeaderboard(tab);
+}
+
+// Challenge a rider
+function challengeRider(name, nickname, donorUrl) {
+  const msg = `🚲 Can you help ${nickname} (${name}) grant a wish? They're riding 300 miles for Make-A-Wish Michigan — donate here: ${donorUrl}`;
+  const rider = RIDERS.find(r => r.name === name);
+  const onDone = () => tgtRecordChallengeProgress('supporter', rider);
+  if (navigator.share) {
+    navigator.share({ title: `Challenge: Support ${nickname}`, text: msg, url: donorUrl }).then(onDone).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(msg).then(() => {
+      onDone();
+      const btn = event.currentTarget;
+      const orig = btn.textContent;
+      btn.textContent = '✓ Link copied — share it!';
+      btn.style.background = 'rgba(249,241,8,0.15)';
+      btn.style.color = 'var(--color-gold)';
+      setTimeout(() => { btn.textContent = orig; btn.style.background = 'rgba(250,246,232,0.07)'; btn.style.color = 'rgba(250,246,232,0.7)'; }, 2000);
+    }).catch(() => window.open(donorUrl, '_blank'));
+  }
+}
+
+// Fetch live team totals for hero stats + goal bar (DonorDrive API first, JSON fallback)
+function applyRosterTeamTotals(s) {
+    const raisedEl = document.getElementById('stat-raised');
+    const ridersEl = document.getElementById('stat-riders');
+    const raised = s.sumDonations || 0;
+    const goal = s.fundraisingGoal || 115000;
+    if (raisedEl && raised) {
+      const k = raised >= 1000 ? '$' + (raised / 1000).toFixed(1) + 'k' : '$' + Math.round(raised);
+      raisedEl.textContent = k;
+    }
+    if (ridersEl && s.numParticipants) ridersEl.textContent = s.numParticipants;
+
+    // Animate goal bar
+    const fill = document.getElementById('teamGoalFill');
+    const pctEl = document.getElementById('teamGoalPct');
+    const detailsEl = document.getElementById('teamGoalDetails');
+    if (fill && raised) {
+      const pct = Math.min(100, Math.round((raised / goal) * 100));
+      setTimeout(() => {
+        fill.style.width = pct + '%';
+        fill.classList.add('loaded');
+      }, 400);
+      if (pctEl) pctEl.textContent = pct + '%';
+      if (detailsEl) detailsEl.textContent = `$${Math.round(raised).toLocaleString()} of $${(goal/1000).toFixed(0)}k goal`;
+    }
+}
+
+fetch(DONORDRIVE_BASE, { headers: { Accept: 'application/json' } })
+  .then(r => {
+    if (!r.ok) throw new Error('team API failed');
+    return r.json();
+  })
+  .then(team => applyRosterTeamTotals({
+    sumDonations: team.sumDonations || 0,
+    fundraisingGoal: team.fundraisingGoal || 115000,
+    numParticipants: team.numParticipants || 0
+  }))
+  .catch(() => {
+    fetch('/assets/data/team-stats.json')
+      .then(r => r.json())
+      .then(applyRosterTeamTotals)
+      .catch(() => {});
+  });
+
+// Open a random rider card
+function openRandomRider() {
+  const cards = document.querySelectorAll('.tcard-wrap[data-id]');
+  if (!cards.length) return;
+  const card = cards[Math.floor(Math.random() * cards.length)];
+  openModal(parseInt(card.dataset.id));
+  // Bounce the button
+  const btn = document.getElementById('randomRiderBtn');
+  if (btn) {
+    btn.style.transform = 'scale(0.9)';
+    btn.style.transition = 'transform 0.1s ease';
+    setTimeout(() => { btn.style.transform = 'scale(1.05)'; }, 100);
+    setTimeout(() => { btn.style.transform = ''; }, 250);
+  }
+}
+</script>
+</body>
+</html>
