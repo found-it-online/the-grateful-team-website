@@ -30,7 +30,7 @@ jobs:
             -o /tmp/team.json
           echo "Fetching donations..."
           curl -sf -H "Accept: application/json" \
-            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=20&orderBy=createdDateUTC&desc=true" \
+            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=150&orderBy=enteredDateUTC&desc=true" \
             -o /tmp/donations.json
           echo "Fetching participants..."
           curl -sf -H "Accept: application/json" \
@@ -50,7 +50,7 @@ jobs:
           fi
           echo "Fetching Strava club activities..."
           curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
-            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=40&page=1" \
+            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=80&page=1" \
             -o /tmp/strava_activities.json || echo "[]" > /tmp/strava_activities.json
           echo "Fetching Strava club members..."
           curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
