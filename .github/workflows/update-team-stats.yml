@@ -3,6 +3,7 @@ name: Update Team Stats & Activity Feed
 on:
   push:
     branches:
+      - main
       - jackson-changes
   schedule:
     - cron: '0 */6 * * *'   # Every 6 hours UTC — keeps repo JSON closer to DonorDrive between deploys
@@ -23,20 +24,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch DonorDrive data
-        run: |
-          echo "Fetching team..."
-          curl -sf -H "Accept: application/json" \
-            "https://makeawishmichigan.donordrive.com/api/teams/5450" \
-            -o /tmp/team.json
-          echo "Fetching donations..."
-          curl -sf -H "Accept: application/json" \
-            "https://makeawishmichigan.donordrive.com/api/teams/5450/donations?limit=150&orderBy=enteredDateUTC&desc=true" \
-            -o /tmp/donations.json
-          echo "Fetching participants..."
-          curl -sf -H "Accept: application/json" \
-            "https://makeawishmichigan.donordrive.com/api/teams/5450/participants?limit=60&orderBy=displayName" \
-            -o /tmp/participants.json
-          echo "All fetches complete"
+        run: python3 scripts/fetch_donordrive.py
 
       - name: Fetch Strava club activities
         env:
