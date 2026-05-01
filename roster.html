@@ -3971,10 +3971,8 @@ function challengeRider(name, nickname, donorUrl) {
   }
 }
 
-// Fetch live team totals for hero stats + goal bar
-fetch('/assets/data/team-stats.json')
-  .then(r => r.json())
-  .then(s => {
+// Fetch live team totals for hero stats + goal bar (DonorDrive API first, JSON fallback)
+function applyRosterTeamTotals(s) {
     const raisedEl = document.getElementById('stat-raised');
     const ridersEl = document.getElementById('stat-riders');
     const raised = s.sumDonations || 0;
@@ -3998,8 +3996,24 @@ fetch('/assets/data/team-stats.json')
       if (pctEl) pctEl.textContent = pct + '%';
       if (detailsEl) detailsEl.textContent = `$${Math.round(raised).toLocaleString()} of $${(goal/1000).toFixed(0)}k goal`;
     }
+}
+
+fetch(DONORDRIVE_BASE, { headers: { Accept: 'application/json' } })
+  .then(r => {
+    if (!r.ok) throw new Error('team API failed');
+    return r.json();
   })
-  .catch(() => {});
+  .then(team => applyRosterTeamTotals({
+    sumDonations: team.sumDonations || 0,
+    fundraisingGoal: team.fundraisingGoal || 115000,
+    numParticipants: team.numParticipants || 0
+  }))
+  .catch(() => {
+    fetch('/assets/data/team-stats.json')
+      .then(r => r.json())
+      .then(applyRosterTeamTotals)
+      .catch(() => {});
+  });
 
 // Open a random rider card
 function openRandomRider() {
