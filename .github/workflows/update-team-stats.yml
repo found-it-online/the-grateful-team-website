@@ -1,0 +1,74 @@
+name: Update Team Stats & Activity Feed
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */6 * * *'   # Every 6 hours UTC — keeps repo JSON closer to DonorDrive between deploys
+    - cron: '0 14 * * *'    # Daily at 9am ET (14:00 UTC)
+  workflow_dispatch:
+
+# Avoid overlapping writers trampling each other when cron + dispatch coincide.
+concurrency:
+  group: tgt-stats-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    # Runs always bump JSON updatedAt strings. Skip re-entry only when THIS push was our own bot commit
+    # ([tgt-data-sync]); schedule/dispatch ignore push rules. Omit [skip ci] so hosts like Netlify still build.
+    if: |-
+      ${{ !(
+          github.event_name == 'push' &&
+          github.event.head_commit != null &&
+          contains(github.event.head_commit.message, '[tgt-data-sync]')
+        ) }}
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Fetch DonorDrive data
+        run: python3 scripts/fetch_donordrive.py
+
+      - name: Fetch Strava club activities
+        env:
+          STRAVA_ACCESS_TOKEN: ${{ secrets.STRAVA_ACCESS_TOKEN }}
+        run: |
+          if [ -z "$STRAVA_ACCESS_TOKEN" ]; then
+            echo "No STRAVA_ACCESS_TOKEN set; writing empty Strava payload"
+            echo "[]" > /tmp/strava_activities.json
+            echo "[]" > /tmp/strava_members.json
+            exit 0
+          fi
+          echo "Fetching Strava club activities..."
+          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=80&page=1" \
+            -o /tmp/strava_activities.json || echo "[]" > /tmp/strava_activities.json
+          echo "Fetching Strava club members..."
+          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+            "https://www.strava.com/api/v3/clubs/1302442/members?per_page=200&page=1" \
+            -o /tmp/strava_members.json || echo "[]" > /tmp/strava_members.json
+          echo "Strava fetch complete"
+
+      - name: Process and write data files
+        run: python3 scripts/update_stats.py
+
+      - name: Commit and push
+        env:
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "chore(data): refresh DonorDrive + Strava JSON [tgt-data-sync]"
+          git pull --rebase origin "${BRANCH}"
+          git push origin "HEAD:${BRANCH}"

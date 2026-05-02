@@ -29,7 +29,7 @@ python3 -m http.server 8765
 - `/packing-list.html` — Packing List
 - `/gear.html` — Gear Recommendations
 - `/faq.html` — FAQ
-- `/members.html` — Member Resources
+- `/roster.html` — Rider Trading Cards + Team Resources
 
 ## File structure
 
