@@ -1861,10 +1861,16 @@
 <section id="trainingRidesSection" style="background:#100824;padding:clamp(36px,5vw,56px) 24px;display:none;border-top:1px solid rgba(201,148,58,0.14);">
   <div style="max-width:1200px;margin:0 auto;">
     <p class="eyebrow" style="color:var(--color-cerulean);margin:0 0 8px;">Strava Club Training</p>
-    <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 16px;">Recent Team Rides</h2>
+    <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 16px;">Club rides &amp; training</h2>
     <p style="margin:0 0 22px;font-family:'DM Sans',sans-serif;color:rgba(250,246,232,0.72);line-height:1.55;max-width:780px;">
-      Pulled from the Grateful Team Strava club. When a rider name matches this roster, you can jump directly to their card.
+      Pulled from the Grateful Team Strava club. Scheduled club rides come from Strava group events; recent miles come from the club activity feed. When a rider name matches this roster, you can jump directly to their card.
     </p>
+    <div id="groupEventsBlock" style="display:none;margin-bottom:28px;">
+      <h3 style="font-family:'Abril Fatface',serif;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--color-cream);margin:0 0 10px;">Upcoming club rides</h3>
+      <p style="margin:0 0 14px;font-family:'DM Sans',sans-serif;color:rgba(250,246,232,0.65);font-size:13px;line-height:1.5;max-width:720px;">Official Strava club events — open in Strava to RSVP or see details.</p>
+      <div id="groupEventsFeed" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;"></div>
+    </div>
+    <h3 id="recentRidesHeading" style="display:none;font-family:'Abril Fatface',serif;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--color-cream);margin:0 0 12px;">Recent team rides</h3>
     <div id="trainingRidesFeed" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;"></div>
     <div style="margin-top:16px;">
       <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost" style="border-color:rgba(4,178,202,0.45);color:var(--color-cerulean);">View Strava Club →</a>
@@ -3626,11 +3632,97 @@ function fmtDuration(sec) {
   return `${m}m`;
 }
 
+function escapeHtmlStr(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function fmtGroupEventWhen(ev) {
+  const occ = ev.upcomingOccurrences || [];
+  var d;
+  if (occ.length) {
+    d = new Date(occ[0]);
+  } else if (ev.startDatetime) {
+    d = new Date(ev.startDatetime);
+  } else {
+    return '';
+  }
+  if (isNaN(d.getTime())) return '';
+  return d.toLocaleString(undefined, {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+}
+
+function renderGroupEvents(data) {
+  const block = document.getElementById('groupEventsBlock');
+  const host = document.getElementById('groupEventsFeed');
+  const section = document.getElementById('trainingRidesSection');
+  if (!block || !host) return false;
+  const events = data && Array.isArray(data.events) ? data.events : [];
+  const now = Date.now() - 3 * 3600000;
+  const upcoming = events.filter(function (ev) {
+    var occ = ev.upcomingOccurrences || [];
+    var i;
+    if (occ.length) {
+      for (i = 0; i < occ.length; i++) {
+        var t = new Date(occ[i]).getTime();
+        if (!isNaN(t) && t > now) return true;
+      }
+      return false;
+    }
+    if (ev.startDatetime) {
+      var tt = new Date(ev.startDatetime).getTime();
+      return !isNaN(tt) && tt > now;
+    }
+    return false;
+  });
+  if (!upcoming.length) {
+    block.style.display = 'none';
+    host.innerHTML = '';
+    return false;
+  }
+  host.innerHTML = upcoming.map(function (ev) {
+    var when = fmtGroupEventWhen(ev);
+    var org = ev.organizerName ? 'Hosted by ' + escapeHtmlStr(ev.organizerName) : '';
+    var addr = ev.address ? escapeHtmlStr(ev.address) : '';
+    var desc = ev.description ? escapeHtmlStr(ev.description) : '';
+    var title = escapeHtmlStr(ev.title || 'Club ride');
+    var type = escapeHtmlStr(ev.activityType || 'Ride');
+    var url = ev.eventUrl || 'https://www.strava.com/clubs/1302442';
+    return (
+      '<article style="background:rgba(4,178,202,0.08);border:1px solid rgba(4,178,202,0.28);border-radius:10px;padding:12px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;">' +
+          '<strong style="font-family:\'DM Sans\',sans-serif;font-size:14px;color:var(--color-cream);line-height:1.35;">' + title + '</strong>' +
+          '<span style="font-family:\'Josefin Slab\',serif;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(4,178,202,0.85);">' + type + '</span>' +
+        '</div>' +
+        (when ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:var(--color-cerulean);font-weight:700;margin-bottom:6px;">📅 ' + escapeHtmlStr(when) + '</div>' : '') +
+        (org ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:rgba(250,246,232,0.72);margin-bottom:4px;">' + org + '</div>' : '') +
+        (addr ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:rgba(250,246,232,0.68);margin-bottom:8px;">📍 ' + addr + '</div>' : '') +
+        (desc ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:rgba(250,246,232,0.62);line-height:1.45;margin-bottom:10px;">' + desc + '</div>' : '') +
+        '<a href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;color:var(--color-cream);font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;text-decoration:none;border:1px solid rgba(250,246,232,0.25);border-radius:999px;padding:6px 12px;">Event in Strava →</a>' +
+      '</article>'
+    );
+  }).join('');
+  block.style.display = 'block';
+  if (section) section.style.display = 'block';
+  return true;
+}
+
 function renderTrainingRides(data) {
   const section = document.getElementById('trainingRidesSection');
   const host = document.getElementById('trainingRidesFeed');
+  const ridesHead = document.getElementById('recentRidesHeading');
   if (!section || !host || !data || !Array.isArray(data.rides) || !data.rides.length) return;
 
+  if (ridesHead) ridesHead.style.display = 'block';
   host.innerHTML = data.rides.slice(0, 12).map(function (ride) {
     const matched = findRiderByExternalName(ride.athleteName);
     const riderJump = matched
@@ -3828,8 +3920,9 @@ Promise.all([
   fetchDonationsLiveFirst().catch(() => []),
   fetchParticipantsLiveFirst().catch(() => null),
   fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null),
-  fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null)
-]).then(([donations, parts, stravaData, stravaMembers]) => {
+  fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null),
+  fetch('/assets/data/strava-group-events.json').then(r => r.json()).catch(() => null)
+]).then(([donations, parts, stravaData, stravaMembers, stravaGroupEvents]) => {
   const liveSection = document.getElementById('liveSection');
 
   // Recent donations feed
@@ -3901,6 +3994,7 @@ Promise.all([
     });
   }
 
+  if (stravaGroupEvents) renderGroupEvents(stravaGroupEvents);
   if (stravaData) renderTrainingRides(stravaData);
 });
 
