@@ -38,24 +38,47 @@ jobs:
       - name: Fetch DonorDrive data
         run: python3 scripts/fetch_donordrive.py
 
-      - name: Fetch Strava club activities
+      - name: Refresh Strava token and fetch club data
         env:
-          STRAVA_ACCESS_TOKEN: ${{ secrets.STRAVA_ACCESS_TOKEN }}
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
         run: |
-          if [ -z "$STRAVA_ACCESS_TOKEN" ]; then
-            echo "No STRAVA_ACCESS_TOKEN set; writing empty Strava payload"
-            echo "[]" > /tmp/strava_activities.json
-            echo "[]" > /tmp/strava_members.json
+          set -eo pipefail
+          if [ -z "$STRAVA_CLIENT_ID" ] || [ -z "$STRAVA_CLIENT_SECRET" ] || [ -z "$STRAVA_REFRESH_TOKEN" ]; then
+            echo '::warning::Strava OAuth secrets missing (STRAVA_CLIENT_ID / STRAVA_CLIENT_SECRET / STRAVA_REFRESH_TOKEN). Skipping Strava.'
+            echo '[]' > /tmp/strava_activities.json
+            echo '[]' > /tmp/strava_members.json
             exit 0
           fi
+
+          TOK_JSON="$(curl -sf -X POST 'https://www.strava.com/api/v3/oauth/token' \
+            -d "client_id=${STRAVA_CLIENT_ID}" \
+            -d "client_secret=${STRAVA_CLIENT_SECRET}" \
+            -d "grant_type=refresh_token" \
+            -d "refresh_token=${STRAVA_REFRESH_TOKEN}")" || true
+
+          if [ -z "$TOK_JSON" ]; then
+            echo '::warning::Strava token refresh failed (check client id/secret/refresh token). Skipping Strava.'
+            echo '[]' > /tmp/strava_activities.json
+            echo '[]' > /tmp/strava_members.json
+            exit 0
+          fi
+
+          ACCESS_TOKEN="$(python3 -c 'import json,sys; print(json.loads(sys.stdin.read())["access_token"])' <<< "$TOK_JSON")"
+          NEW_REFRESH="$(python3 -c 'import json,sys; print(json.loads(sys.stdin.read()).get("refresh_token",""))' <<< "$TOK_JSON")"
+          if [ -n "$NEW_REFRESH" ] && [ "$NEW_REFRESH" != "$STRAVA_REFRESH_TOKEN" ]; then
+            echo '::notice::Strava returned a NEW refresh_token. Update GitHub secret STRAVA_REFRESH_TOKEN to this value in Strava (My API Application) or from the token response — the old refresh token is now invalid.'
+          fi
+
           echo "Fetching Strava club activities..."
-          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+          curl -sf -H "Authorization: Bearer ${ACCESS_TOKEN}" \
             "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=80&page=1" \
-            -o /tmp/strava_activities.json || echo "[]" > /tmp/strava_activities.json
+            -o /tmp/strava_activities.json || echo '[]' > /tmp/strava_activities.json
           echo "Fetching Strava club members..."
-          curl -sf -H "Authorization: Bearer ${STRAVA_ACCESS_TOKEN}" \
+          curl -sf -H "Authorization: Bearer ${ACCESS_TOKEN}" \
             "https://www.strava.com/api/v3/clubs/1302442/members?per_page=200&page=1" \
-            -o /tmp/strava_members.json || echo "[]" > /tmp/strava_members.json
+            -o /tmp/strava_members.json || echo '[]' > /tmp/strava_members.json
           echo "Strava fetch complete"
 
       - name: Process and write data files
