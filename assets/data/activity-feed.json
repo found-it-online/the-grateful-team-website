@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-05-02T03:28:01Z",
+  "updatedAt": "2026-05-02T07:52:17Z",
   "donations": [
+    {
+      "displayName": "A supporter",
+      "amount": 250.0,
+      "recipientName": "Lauren Sytsma",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-02T03:50:07.530+0000"
+    },
     {
       "displayName": "T Swizzy",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": true,
       "isRegFee": false,
       "createdDateUTC": "2025-11-11T16:20:29.380+0000"
-    },
-    {
-      "displayName": "Robert Schilling",
-      "amount": 100.0,
-      "recipientName": "Robert Schilling",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2025-11-11T12:11:39.847+0000"
     }
   ],
   "participants": [
