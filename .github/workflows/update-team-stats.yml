@@ -76,10 +76,10 @@ jobs:
             echo '::notice::Strava returned a NEW refresh_token. Update GitHub secret STRAVA_REFRESH_TOKEN to this value in Strava (My API Application) or from the token response — the old refresh token is now invalid.'
           fi
 
-          echo "Fetching Strava club activities..."
-          curl -sf -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=100&page=1" \
-            -o /tmp/strava_activities.json || echo '[]' > /tmp/strava_activities.json
+          echo "Fetching Strava club activities (multi-page)..."
+          export STRAVA_ACCESS_TOKEN="${ACCESS_TOKEN}"
+          python3 scripts/fetch_strava_club_activities_pages.py /tmp/strava_activities.json \
+            || (echo '::warning::Multi-page club activities fetch failed; falling back empty.' && echo '[]' > /tmp/strava_activities.json)
           echo "Fetching Strava club members..."
           curl -sf -H "Authorization: Bearer ${ACCESS_TOKEN}" \
             "https://www.strava.com/api/v3/clubs/1302442/members?per_page=200&page=1" \

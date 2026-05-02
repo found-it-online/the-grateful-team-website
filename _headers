@@ -1,0 +1,3 @@
+# Short TTL so roster picks up fresh Strava / DonorDrive JSON after Actions commits.
+/assets/data/*
+  Cache-Control: public, max-age=120, s-maxage=120, must-revalidate

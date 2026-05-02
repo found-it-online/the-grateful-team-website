@@ -1922,16 +1922,17 @@
     <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 18px;">Weekly Training Rides.</h2>
     <div class="weekly-training-intro" style="margin:0 0 26px;max-width:820px;font-family:'DM Sans',sans-serif;color:rgba(250,246,232,0.74);font-size:15px;line-height:1.6;">
       <p><strong style="color:rgba(250,246,232,0.92);">Official rides</strong> are posted as Strava club group events. Join the club to RSVP and see meet point, start time, and route as they’re set. Below: who’s logged miles in the club recently.</p>
-      <p class="training-rides-muted" style="margin-top:14px;"><strong style="color:rgba(250,246,232,0.82);">Strava + the schedule.</strong><br>Miles on rider cards refresh when our site syncs with the club. Upcoming club events also surface in this section after each sync.</p>
-      <p class="training-rides-muted"><strong style="color:rgba(250,246,232,0.82);">Who’s getting miles — and what’s next.</strong><br>Training rides on the calendar each map to an official club group event — open the club (or revisit here after sync) for the full meet notes and route links.</p>
+      <p class="training-rides-muted" style="margin-top:14px;"><strong style="color:rgba(250,246,232,0.82);">Strava + the schedule.</strong></p>
+      <p class="training-rides-muted"><strong style="color:rgba(250,246,232,0.82);">Who’s getting miles — and what’s next.</strong> Upcoming club events also surface on the roster when our site syncs Strava. This list shows who’s already logged rides in the last week — post yours after you roll so teammates can see.</p>
+      <p class="training-rides-muted"><strong style="color:rgba(250,246,232,0.82);">Training rides on the calendar:</strong> each one is a Strava club group event — open the club (or check the team roster after sync) for the next official meet.</p>
     </div>
     <div id="groupEventsBlock" style="display:none;margin:0 0 32px;">
       <h3 style="font-family:'Abril Fatface',serif;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--color-cream);margin:0 0 10px;">Upcoming official rides (club events)</h3>
       <p style="margin:0 0 14px;font-family:'DM Sans',sans-serif;color:rgba(250,246,232,0.65);font-size:13px;line-height:1.5;max-width:720px;">Synced from Strava · Open an event for RSVP and full details.</p>
       <div id="groupEventsFeed" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;"></div>
     </div>
-    <h3 id="recentRidesHeading" style="display:none;font-family:'Abril Fatface',serif;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--color-cream);margin:0 0 10px;">Recent club rides (last 7 days)</h3>
-    <p id="recentRidesBlurb" class="training-rides-muted" style="display:none;margin:0 0 14px;">From our site sync — not live tick-by-tick on Strava’s servers. Trainer and outdoor miles both land here.</p>
+    <h3 id="recentRidesHeading" style="font-family:'Abril Fatface',serif;font-size:clamp(1.15rem,2.2vw,1.45rem);color:var(--color-cream);margin:28px 0 10px;padding-top:8px;border-top:1px solid rgba(250,246,232,0.08);">Recent club rides</h3>
+    <p id="recentRidesBlurb" class="training-rides-muted" style="margin:0 0 14px;">Recent club rides (last 7 days, from our site sync). Not live-to-the-second — if this looks empty, check the club on Strava.</p>
     <div id="trainingRidesFeed" class="training-rides-feed-list"></div>
     <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
       <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost" style="border-color:rgba(4,178,202,0.45);color:var(--color-cerulean);">Open TGT Strava Club →</a>
@@ -3901,7 +3902,7 @@ function renderGroupEvents(data) {
         '<a href="' + url + '" target="_blank" rel="noopener" style="display:inline-block;color:var(--color-cream);font-family:\'DM Sans\',sans-serif;font-size:11px;font-weight:700;text-decoration:none;border:1px solid rgba(250,246,232,0.25);border-radius:999px;padding:6px 12px;">Event in Strava →</a>' +
       '</article>'
     );
-  }    ).join('');
+  }).join('');
   block.style.display = 'block';
   return true;
 }
@@ -3909,8 +3910,6 @@ function renderGroupEvents(data) {
 function renderTrainingRides(data) {
   const section = document.getElementById('trainingRidesSection');
   const host = document.getElementById('trainingRidesFeed');
-  const ridesHead = document.getElementById('recentRidesHeading');
-  const blurb = document.getElementById('recentRidesBlurb');
   if (!section || !host) return;
 
   const rides = data && Array.isArray(data.rides) ? data.rides : [];
@@ -3927,20 +3926,15 @@ function renderTrainingRides(data) {
       new Date(a.startDateUTC || a.startDateLocal || 0).getTime()
     );
   });
-  const cap = Math.min(recent.length, 40);
-
-  if (ridesHead) ridesHead.style.display = recent.length ? 'block' : 'none';
-  if (blurb) blurb.style.display = recent.length ? 'block' : 'none';
+  const cap = Math.min(recent.length, 80);
 
   if (!recent.length) {
     if (rides.length) {
       host.innerHTML =
-        '<p class="training-rides-empty-hint">No rides in our synced snapshot from the last 7 days yet (the club feed lists the newest uploads first — check Strava directly for yesterday’s uploads until the next sync).</p>';
-      if (ridesHead) ridesHead.style.display = 'block';
-      if (blurb) blurb.style.display = 'none';
+        '<p class="training-rides-empty-hint">Nothing in our snapshot from the <strong>last 7 days</strong> matches that window (we pull many pages of club activities, then filter here). Older rides drop off — check Strava now; the next Actions sync pulls fresh club data.</p>';
     } else {
       host.innerHTML =
-        '<p class="training-rides-empty-hint">Club ride data hasn’t synced yet — open the TGT club on Strava to see the latest uploads.</p>';
+        '<p class="training-rides-empty-hint">Club ride data hasn’t synced yet — open the TGT Strava club →</p>';
     }
     return;
   }
@@ -4128,7 +4122,7 @@ function loadParticipantOverlays() {
 }
 
 // Merge Google Form / CI riders, then paint grid + DonorDrive overlays
-fetch('/assets/data/rider-intake.json')
+fetch('/assets/data/rider-intake.json', { cache: 'no-store' })
   .then(r => (r.ok ? r.json() : { riders: [] }))
   .catch(() => ({ riders: [] }))
   .then(data => {
@@ -4149,14 +4143,22 @@ fetch('/assets/data/rider-intake.json')
   if (Object.keys(seen).length > 0) updateDiscoveredBar(seen);
 })();
 
+/** Avoid stale roster after GitHub commits new JSON — browsers/CDNs may cache aggressively. */
+function fetchDataJson(relPath) {
+  return fetch(relPath, { cache: 'no-store' }).then(function (r) {
+    if (!r.ok) throw new Error('bad response');
+    return r.json();
+  });
+}
+
 // Populate live activity + leaderboard sections
 Promise.all([
   fetchDonationsLiveFirst().catch(() => []),
   fetchParticipantsLiveFirst().catch(() => null),
-  fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null),
-  fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null),
-  fetch('/assets/data/strava-group-events.json').then(r => r.json()).catch(() => null),
-  fetch('/assets/data/rider-stats.json').then(r => r.json()).catch(() => null)
+  fetchDataJson('/assets/data/strava-rides.json').catch(() => null),
+  fetchDataJson('/assets/data/strava-members.json').catch(() => null),
+  fetchDataJson('/assets/data/strava-group-events.json').catch(() => null),
+  fetchDataJson('/assets/data/rider-stats.json').catch(() => null)
 ]).then(([donations, parts, stravaData, stravaMembers, stravaGroupEvents, riderStats]) => {
   const liveSection = document.getElementById('liveSection');
 
