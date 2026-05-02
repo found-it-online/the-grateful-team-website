@@ -1,9 +1,12 @@
 name: Update Team Stats & Activity Feed
 
+# Writes land on branch `jackson` only. Note: cron uses the workflow file revision on the
+# repository DEFAULT branch — keep this file merged to default (often `main`) or timers won’t fire.
+
 on:
   push:
     branches:
-      - main
+      - jackson
   schedule:
     - cron: '0 */6 * * *'   # Every 6 hours UTC — keeps repo JSON closer to DonorDrive between deploys
     - cron: '0 14 * * *'    # Daily at 9am ET (14:00 UTC)
@@ -11,7 +14,7 @@ on:
 
 # Avoid overlapping writers trampling each other when cron + dispatch coincide.
 concurrency:
-  group: tgt-stats-${{ github.ref_name }}
+  group: tgt-stats-jackson
   cancel-in-progress: false
 
 jobs:
@@ -31,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          ref: jackson
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
@@ -86,7 +89,7 @@ jobs:
 
       - name: Commit and push
         env:
-          BRANCH: ${{ github.ref_name }}
+          BRANCH: jackson
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

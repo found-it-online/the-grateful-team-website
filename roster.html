@@ -1940,7 +1940,7 @@
 /* ══════════════════════════════════════
    RIDER DATA
 ══════════════════════════════════════ */
-const RIDERS = [
+const RIDERS_CORE = [
   {
     id: 1,
     name: "Brad Johnson",
@@ -2657,6 +2657,8 @@ const RIDERS = [
   },
 ];
 
+let RIDERS = RIDERS_CORE.slice();
+
 /* ══════════════════════════════════════
    COMPUTED STATS — Fundraising/Experience/Spirit/Grit
    Fundraising: % of rider goal → /10 (e.g. $1k of $2k = 5/10; at or above goal = 10/10)
@@ -2788,6 +2790,8 @@ const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3 };
 
 function getComputedTier(rider) {
   if (rider.tier === 'legend') return 'legend';
+  // Form / automated intake riders stay “Rookie” on the trading card until merged into RIDERS_CORE by hand.
+  if (rider.source === 'google-form-intake') return 'rookie';
   const years = Number(rider.years) || 0;
   if (years >= 3) return 'veteran';
   if (years === 2) return 'rider';
@@ -3728,68 +3732,59 @@ document.getElementById('rosterSearch').addEventListener('input', e => {
   renderAll(currentFilter, currentQuery);
 });
 
-renderAll('all', '');
-renderChallengeHub();
-const requestedRiderId = getRequestedRiderIdFromUrl();
-if (requestedRiderId) {
-  setTimeout(() => openModal(requestedRiderId), 0);
+function finishRosterInit() {
+  renderAll('all', '');
+  renderChallengeHub();
+  const requestedRiderId = getRequestedRiderIdFromUrl();
+  if (requestedRiderId) {
+    setTimeout(() => openModal(requestedRiderId), 0);
+  }
 }
 
-// Restore discovered counter from localStorage
-(function() {
-  const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
-  if (Object.keys(seen).length > 0) updateDiscoveredBar(seen);
-})();
+function loadParticipantOverlays() {
+  return fetchParticipantsLiveFirst()
+    .then(parts => {
+      parts.forEach(p => {
+        const key = p.displayName.toLowerCase();
+        if (p.avatarImageURL) _photoMap[key] = p.avatarImageURL;
+        _fundMap[key] = p;
+      });
+      const photoMap = _photoMap;
+      const fundMap  = _fundMap;
 
-// Load real photos and fundraising data from DonorDrive (live first, local fallback)
-fetchParticipantsLiveFirst()
-  .then(parts => {
-    parts.forEach(p => {
-      const key = p.displayName.toLowerCase();
-      if (p.avatarImageURL) _photoMap[key] = p.avatarImageURL;
-      _fundMap[key] = p;
-    });
-    const photoMap = _photoMap;
-    const fundMap  = _fundMap;
+      renderAll(currentFilter, currentQuery);
 
-    /* Re-render the full grid so all four stat bars match live goal/raised (not only after opening a card). */
-    renderAll(currentFilter, currentQuery);
+      document.querySelectorAll('.tcard-wrap').forEach(wrap => {
+        const riderId = parseInt(wrap.dataset.id);
+        const rider = RIDERS.find(r => r.id === riderId);
+        if (!rider) return;
+        const key = rider.name.toLowerCase();
 
-    document.querySelectorAll('.tcard-wrap').forEach(wrap => {
-      const riderId = parseInt(wrap.dataset.id);
-      const rider = RIDERS.find(r => r.id === riderId);
-      if (!rider) return;
-      const key = rider.name.toLowerCase();
-
-      // Inject real photo
-      const url = photoMap[key];
-      if (url) {
-        const avatarEl = wrap.querySelector('.tcard-avatar');
-        if (avatarEl) {
-          avatarEl.innerHTML = `<img src="${url}" alt="${rider.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+        const url = photoMap[key];
+        if (url) {
+          const avatarEl = wrap.querySelector('.tcard-avatar');
+          if (avatarEl) {
+            avatarEl.innerHTML = `<img src="${url}" alt="${rider.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+          }
         }
-      }
 
-      // Inject fundraising on card FRONT (below name) and card BACK
-      const data = fundMap[key];
-      if (!data) return;
-      const raised = data.sumDonations || 0;
-      const goal = data.fundraisingGoal || 1200;
-      const pct = Math.min(100, Math.round((raised / goal) * 100));
-      const donors = data.numDonations || 0;
+        const data = fundMap[key];
+        if (!data) return;
+        const raised = data.sumDonations || 0;
+        const goal = data.fundraisingGoal || 1200;
+        const pct = Math.min(100, Math.round((raised / goal) * 100));
+        const donors = data.numDonations || 0;
 
-      // Front: large raised amount in hero slot
-      const heroEl = wrap.querySelector('.tcard-raised-hero');
-      if (heroEl) {
-        heroEl.innerHTML = `<div class="tcard-raised-hero-amt">$${Math.round(raised).toLocaleString()}</div><div class="tcard-raised-hero-label">raised this year</div>`;
-      }
+        const heroEl = wrap.querySelector('.tcard-raised-hero');
+        if (heroEl) {
+          heroEl.innerHTML = `<div class="tcard-raised-hero-amt">$${Math.round(raised).toLocaleString()}</div><div class="tcard-raised-hero-label">raised this year</div>`;
+        }
 
-      // Back: fundraising bar above bio
-      const bio = wrap.querySelector('.tcard-back-bio');
-      if (!bio || raised <= 0) return;
-      const div = document.createElement('div');
-      div.className = 'tcard-back-raised';
-      div.innerHTML = `
+        const bio = wrap.querySelector('.tcard-back-bio');
+        if (!bio || raised <= 0) return;
+        const div = document.createElement('div');
+        div.className = 'tcard-back-raised';
+        div.innerHTML = `
         <div class="tcard-back-raised-top">
           <span class="tcard-back-raised-label">Raised</span>
           <span class="tcard-back-raised-amt">$${Math.round(raised).toLocaleString()}</span>
@@ -3797,10 +3792,33 @@ fetchParticipantsLiveFirst()
         <div class="tcard-back-raised-track"><div class="tcard-back-raised-fill" style="width:${pct}%"></div></div>
         <div class="tcard-back-raised-meta">${pct}% of $${goal.toLocaleString()} goal · ${donors} donor${donors !== 1 ? 's' : ''}</div>
       `;
-      bio.parentNode.insertBefore(div, bio);
-    });
+        bio.parentNode.insertBefore(div, bio);
+      });
+    })
+    .catch(() => {});
+}
+
+// Merge Google Form / CI riders, then paint grid + DonorDrive overlays
+fetch('/assets/data/rider-intake.json')
+  .then(r => (r.ok ? r.json() : { riders: [] }))
+  .catch(() => ({ riders: [] }))
+  .then(data => {
+    const extra = (data && Array.isArray(data.riders)) ? data.riders : [];
+    RIDERS = RIDERS_CORE.concat(extra);
+    finishRosterInit();
+    return loadParticipantOverlays();
   })
-  .catch(() => {}); // graceful fallback
+  .catch(() => {
+    RIDERS = RIDERS_CORE.slice();
+    finishRosterInit();
+    return loadParticipantOverlays();
+  });
+
+// Restore discovered counter from localStorage
+(function() {
+  const seen = JSON.parse(localStorage.getItem('tgt-seen') || '{}');
+  if (Object.keys(seen).length > 0) updateDiscoveredBar(seen);
+})();
 
 // Populate live activity + leaderboard sections
 Promise.all([
