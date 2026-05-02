@@ -13,131 +13,100 @@
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/site.css">
   <style>
-    .training-strava-panel {
-      background: var(--color-tile-cream);
-      border: 1px solid var(--color-cream-dark);
-      border-radius: 14px;
-      padding: 24px 22px 20px;
-      margin: 0 0 28px;
+    /* Match roster.html #trainingRidesSection — dark band + cream event-cards */
+    #eventsStravaTraining .training-prose-lede {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: rgba(250,246,232,0.82);
       max-width: 720px;
+      margin: 0 0 28px;
     }
-    .training-strava-panel .training-strava-eyebrow {
-      font-family: 'Josefin Slab', serif;
-      font-size: 10px;
+    #eventsStravaTraining .training-prose-lede a {
+      color: var(--color-gold-light);
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--color-red);
-      margin: 0 0 8px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
-    .training-strava-panel h3 {
+    #eventsStravaTraining .training-subhead {
       font-family: 'Abril Fatface', serif;
-      font-size: 1.35rem;
-      color: var(--color-night);
-      margin: 0 0 10px;
+      font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+      color: var(--color-cream);
+      margin: 0 0 16px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(250,246,232,0.12);
       line-height: 1.15;
     }
-    .training-strava-panel .training-strava-lede {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: rgba(26,14,43,0.72);
-      line-height: 1.55;
-      margin: 0 0 16px;
+    #eventsStravaTraining .training-subhead.training-subhead--first {
+      border-top: none;
+      padding-top: 0;
     }
-    .training-strava-next {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      color: rgba(26,14,43,0.88);
-      line-height: 1.5;
-      padding: 14px 16px;
-      background: #fff;
-      border: 1px solid var(--color-cream-dark);
-      border-radius: 10px;
-      margin-bottom: 14px;
+    #eventsStravaTraining .training-strava-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+      align-items: stretch;
     }
-    .training-strava-next strong { color: var(--color-night); }
-    .training-strava-note {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      color: rgba(26,14,43,0.55);
-      line-height: 1.45;
-      margin: 0 0 12px;
+    #eventsStravaTraining .training-feed-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
     }
-    .strava-week-list {
-      list-style: none;
+    #eventsStravaTraining .training-strava-card.event-card {
       margin: 0;
-      padding: 0;
+      max-width: none;
+      padding: 28px 26px;
+      box-shadow: 0 10px 36px rgba(0,0,0,0.35);
+    }
+    #eventsStravaTraining .training-strava-card .event-card-title {
+      font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+      margin: 14px 0 18px;
+    }
+    #eventsStravaTraining .training-ride-mini.event-card {
+      margin: 0;
+      max-width: none;
+      padding: 22px 22px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.28);
+    }
+    #eventsStravaTraining .training-ride-mini .event-card-title {
+      font-size: 1.35rem;
+      margin: 10px 0 14px;
+    }
+    #eventsStravaTraining .training-ride-mini .event-card-meta {
+      margin-bottom: 14px;
+      gap: 8px;
+    }
+    #eventsStravaTraining .training-ride-mini .event-card-meta-row {
+      font-size: 14px;
+    }
+    #eventsStravaTraining .training-ride-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 14px;
       border-top: 1px solid var(--color-cream-dark);
     }
-    .strava-week-row a {
-      display: block;
-      padding: 12px 4px;
-      border-bottom: 1px solid rgba(26,14,43,0.08);
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.12s ease;
-    }
-    .strava-week-row a:hover { background: rgba(90,30,138,0.06); }
-    .strava-week-who {
-      font-family: 'Josefin Slab', serif;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--color-night);
-      display: block;
-    }
-    .strava-week-ride {
+    #eventsStravaTraining .training-rides-muted {
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
-      color: rgba(26,14,43,0.75);
-      display: block;
-      margin-top: 2px;
-    }
-    .strava-week-meta {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      color: rgba(26,14,43,0.5);
-      margin-top: 4px;
-      display: block;
-    }
-    .strava-week-empty {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: rgba(26,14,43,0.62);
       line-height: 1.5;
-      padding: 14px 0 6px;
+      color: rgba(250,246,232,0.58);
+      max-width: 720px;
+    }
+    #eventsStravaTraining .training-empty-card.event-card {
       margin: 0;
+      max-width: 720px;
+      padding: 26px 28px;
     }
-    .training-strava-foot {
-      margin-top: 14px;
-      text-align: left;
-    }
-    .strava-upcoming-wrap { margin: 0 0 16px; }
-    .strava-upcoming-title {
-      font-family: 'Abril Fatface', serif;
-      font-size: 1.2rem;
-      color: var(--color-night);
-      margin: 0 0 6px;
-      line-height: 1.2;
-    }
-    .strava-upcoming-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-    .strava-event-card {
-      background: #fff;
-      border: 1px solid var(--color-cream-dark);
-      border-radius: 10px;
-      padding: 12px 12px 14px;
-    }
-    .strava-event-card strong { color: var(--color-night); }
-    .strava-event-type {
-      font-family: 'Josefin Slab', serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-red);
+    #eventsStravaTraining .training-empty-card p {
+      margin: 0;
+      font-size: 15px;
+      color: rgba(26,14,43,0.72);
+      line-height: 1.55;
     }
   </style>
 </head>
@@ -192,35 +161,31 @@
       <a href="/#join" class="event-card-link">Join the team to ride with us →</a>
     </div>
 
-    <h2 class="section-h3">Weekly Training Rides.</h2>
-    <p style="font-family:'DM Sans',sans-serif; font-size:16px; color:rgba(26,14,43,0.65); margin:-8px 0 24px; line-height:1.6;">
-      Official rides are posted as <strong>Strava club group events</strong>. Join the club to RSVP and see meet point, start time, and route as they’re set. Below: who’s logged miles in the club recently.
-    </p>
+  </div>
+</section>
 
-    <div class="training-strava-panel" id="trainingStravaPanel">
-      <p class="training-strava-eyebrow">Strava + the schedule</p>
-      <h3>Who’s getting miles — and what’s next</h3>
-      <p class="training-strava-lede">
-        Upcoming club events also surface on the <a href="/roster.html" style="color:var(--color-purple); font-weight:700;">roster</a> when our site syncs Strava. This list shows who’s already logged rides in the last week — post yours after you roll so teammates can see.
-      </p>
-      <div id="stravaUpcomingBlock" class="strava-upcoming-wrap" style="display:none;" aria-live="polite">
-        <h4 class="strava-upcoming-title">Upcoming official rides (club events)</h4>
-        <p class="training-strava-note" style="margin-top:0;">Synced from Strava · Open an event for RSVP and full details.</p>
-        <div id="stravaGroupEventsFeed" class="strava-upcoming-grid"></div>
-      </div>
-      <div class="training-strava-next" id="stravaCalendarTip">
-        <strong>Training rides on the calendar:</strong> each one is a <strong>Strava club group event</strong> — open the club (or check the team <a href="/roster.html" style="color:var(--color-purple); font-weight:700;">roster</a> after sync) for the next official meet.
-      </div>
-      <p class="training-strava-note" id="stravaWeekNote">
-        Recent club rides (last 7 days, from our site sync). Not live-to-the-second — if this looks empty, check the club on Strava.
-      </p>
-      <ul class="strava-week-list" id="stravaWeekRidesList">
-        <li class="strava-week-empty">Loading recent club rides…</li>
-      </ul>
-      <div class="training-strava-foot">
-        <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost-dark">Open TGT Strava Club →</a>
-      </div>
+<section id="eventsStravaTraining" style="background:#100824;padding:clamp(36px,5vw,56px) 24px;border-top:1px solid rgba(201,148,58,0.14);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <p class="eyebrow" style="color:var(--color-cerulean);margin:0 0 8px;">Strava Club Training</p>
+    <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 18px;">Weekly Training Rides.</h2>
+    <p class="training-prose-lede">
+      Official training rides are Strava <strong style="color:rgba(250,246,232,0.95);">club group events</strong> — join the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener">TGT Strava club</a> to RSVP, see meet points, routes, and start times. Each sync lists <strong style="color:rgba(250,246,232,0.95);">upcoming club events</strong> below (same style as our Zoo kickoff cards) and <strong style="color:rgba(250,246,232,0.95);">recent miles</strong> from the club activity feed (last 7 days). Full rider cards &amp; grit live on the <a href="/roster.html">team roster</a>.
+    </p>
+    <div id="eventsGroupEventsBlock" style="display:none;margin:0 0 36px;">
+      <h3 class="training-subhead training-subhead--first">Upcoming official rides</h3>
+      <div id="eventsGroupEventsFeed" class="training-strava-grid"></div>
     </div>
+    <h3 class="training-subhead">Recent club rides</h3>
+    <p class="training-rides-muted" style="margin:0 0 18px;">Last 7 days from our Strava sync · Not live to the second — if this looks empty, open the club feed.</p>
+    <div id="eventsStravaRidesFeed" class="training-feed-grid"></div>
+    <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost" style="border-color:rgba(4,178,202,0.45);color:var(--color-cerulean);">Open TGT Strava Club →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-cream">
+  <div class="section-inner">
 
     <h2 class="section-h3">Social &amp; Fundraising Events.</h2>
     <div class="event-coming-soon">
@@ -258,7 +223,6 @@
     return d.innerHTML;
   }
 
-  /** Same rolling window as roster.html — activity started within the last 7 days. */
   function startedInLast7Days(isoUtcOrLocal) {
     var t = new Date(isoUtcOrLocal).getTime();
     if (Number.isNaN(t)) return false;
@@ -266,34 +230,38 @@
     return t >= cutoff;
   }
 
-  function miles(m) {
-    return ((Number(m) || 0) / 1609.34).toFixed(1);
+  function fmtMiles(meters) {
+    return ((Number(meters) || 0) * 0.000621371).toFixed(1) + ' mi';
   }
 
-  function fmtGroupEventWhen(ev) {
+  function fmtGroupEventDateRibbon(ev) {
     var occ = ev.upcomingOccurrences || [];
     var d;
-    if (occ.length) {
-      d = new Date(occ[0]);
-    } else if (ev.startDatetime) {
-      d = new Date(ev.startDatetime);
-    } else {
-      return '';
-    }
+    if (occ.length) d = new Date(occ[0]);
+    else if (ev.startDatetime) d = new Date(ev.startDatetime);
+    else return '';
     if (Number.isNaN(d.getTime())) return '';
     return d.toLocaleString(undefined, {
-      weekday: 'short',
-      month: 'short',
+      weekday: 'long',
+      month: 'long',
       day: 'numeric',
+      year: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
       timeZoneName: 'short'
     });
   }
 
+  function truncateClubText(s, maxLen) {
+    var t = String(s || '').trim();
+    if (!t.length) return '';
+    if (t.length <= maxLen) return t;
+    return t.slice(0, maxLen).trim() + '\u2026';
+  }
+
   function renderGroupEventsEventsPage(data) {
-    var block = document.getElementById('stravaUpcomingBlock');
-    var host = document.getElementById('stravaGroupEventsFeed');
+    var block = document.getElementById('eventsGroupEventsBlock');
+    var host = document.getElementById('eventsGroupEventsFeed');
     if (!block || !host) return;
     var events = data && Array.isArray(data.events) ? data.events : [];
     var now = Date.now() - 3 * 3600000;
@@ -319,31 +287,50 @@
       return;
     }
     host.innerHTML = upcoming.map(function (ev) {
-      var when = fmtGroupEventWhen(ev);
-      var org = ev.organizerName ? 'Hosted by ' + escapeHtml(ev.organizerName) : '';
-      var addr = ev.address ? escapeHtml(ev.address) : '';
-      var desc = ev.description ? escapeHtml(ev.description) : '';
+      var ribbon = fmtGroupEventDateRibbon(ev);
+      var orgLine = ev.organizerName
+        ? '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDC64</span><span>' +
+          escapeHtml('Hosted by ' + ev.organizerName) +
+          '</span></div>'
+        : '';
+      var addrLine = ev.address
+        ? '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDCCD</span><span>' +
+          escapeHtml(ev.address) +
+          '</span></div>'
+        : '';
+      var rawDesc = ev.description ? String(ev.description) : '';
+      var descPlain = truncateClubText(rawDesc.replace(/\s+/g, ' '), 320);
+      var descBlock = descPlain
+        ? '<div class="event-card-divider"></div><p>' + escapeHtml(descPlain) + '</p>'
+        : '';
       var title = escapeHtml(ev.title || 'Club ride');
       var type = escapeHtml(ev.activityType || 'Ride');
-      var url = ev.eventUrl || CLUB_URL;
+      var url = escapeHtml(ev.eventUrl || CLUB_URL);
+      var ribbonHtml = ribbon ? '<span class="event-card-date">' + escapeHtml(ribbon) + '</span>' : '';
       return (
-        '<article class="strava-event-card">' +
-          '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;">' +
-            '<strong style="font-family:\'DM Sans\',sans-serif;font-size:14px;line-height:1.35;">' + title + '</strong>' +
-            '<span class="strava-event-type">' + type + '</span>' +
-          '</div>' +
-          (when ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:var(--color-purple);font-weight:700;margin-bottom:6px;">📅 ' + escapeHtml(when) + '</div>' : '') +
-          (org ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:rgba(26,14,43,0.72);margin-bottom:4px;">' + org + '</div>' : '') +
-          (addr ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:12px;color:rgba(26,14,43,0.65);margin-bottom:8px;">📍 ' + addr + '</div>' : '') +
-          (desc ? '<div style="font-family:\'DM Sans\',sans-serif;font-size:11px;color:rgba(26,14,43,0.55);line-height:1.45;margin-bottom:10px;">' + desc + '</div>' : '') +
-          '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener" class="btn-ghost-dark" style="display:inline-block;font-size:11px;padding:6px 12px;">Event in Strava →</a>' +
+        '<article class="event-card training-strava-card">' +
+        ribbonHtml +
+        '<h3 class="event-card-title">' +
+        title +
+        '</h3>' +
+        '<div class="event-card-meta">' +
+        '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDEB4</span><span>' +
+        type +
+        '</span></div>' +
+        orgLine +
+        addrLine +
+        '</div>' +
+        descBlock +
+        '<a href="' +
+        url +
+        '" target="_blank" rel="noopener" class="event-card-link">Event in Strava \u2192</a>' +
         '</article>'
       );
     }).join('');
     block.style.display = 'block';
   }
 
-  var elList = document.getElementById('stravaWeekRidesList');
+  var elRides = document.getElementById('eventsStravaRidesFeed');
 
   function fetchJsonNoStore(path) {
     return fetch(path, { cache: 'no-store' }).then(function (r) {
@@ -368,47 +355,61 @@
     recent.sort(function (a, b) {
       return new Date(b.startDateUTC || b.startDateLocal) - new Date(a.startDateUTC || a.startDateLocal);
     });
-    if (!elList) return;
+    if (!elRides) return;
     if (!recent.length) {
-      elList.innerHTML =
-        '<li class="strava-week-empty">No club rides in our feed for the last 7 days. If you just rode, make sure you’re in the TGT club and the activity is visible there — this list updates when our site syncs Strava.</li>';
+      if (rides.length) {
+        elRides.innerHTML =
+          '<div class="event-card training-empty-card"><p><strong>Nothing in the last 7 days</strong> in our synced club snapshot (we merge many activity pages, then filter here). Post to the club feed or check Strava \u2014 the next sync picks it up.</p></div>';
+      } else {
+        elRides.innerHTML =
+          '<div class="event-card training-empty-card"><p>Club ride data hasn\u2019t synced yet. Open the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="event-card-link" style="font-style:normal;">TGT Strava club</a>.</p></div>';
+      }
       return;
     }
-    elList.innerHTML = recent.slice(0, 40).map(function (row) {
-      var when = new Date(row.startDateUTC || row.startDateLocal);
-      var whenStr = when.toLocaleString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit'
-      });
-      var badge = when.getDay() === 6
-        ? ' <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-orange);">Sat</span>'
-        : '';
-      var href = row.activityUrl || CLUB_URL;
+    elRides.innerHTML = recent.slice(0, 40).map(function (ride) {
+      var when = new Date(ride.startDateUTC || ride.startDateLocal || 0);
+      var ribbon = Number.isNaN(when.getTime())
+        ? ''
+        : when.toLocaleString(undefined, {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit'
+          });
+      var ribbonHtml = ribbon ? '<span class="event-card-date">' + escapeHtml(ribbon) + '</span>' : '';
+      var title = escapeHtml(ride.name || 'Ride');
+      var athlete = escapeHtml(ride.athleteName || 'Club rider');
+      var sport = escapeHtml(ride.sportType || 'Ride');
+      var href = escapeHtml(ride.activityUrl || ride.clubUrl || CLUB_URL);
       return (
-        '<li class="strava-week-row"><a href="' +
-        escapeHtml(href) +
-        '" target="_blank" rel="noopener">' +
-        '<span class="strava-week-who">' +
-        escapeHtml(row.athleteName || 'Rider') +
-        badge +
-        '</span>' +
-        '<span class="strava-week-ride">' +
-        escapeHtml(row.name || 'Ride') +
-        '</span>' +
-        '<span class="strava-week-meta">' +
-        miles(row.distanceMeters) +
-        ' mi · ' +
-        escapeHtml(whenStr) +
-        '</span></a></li>'
+        '<article class="event-card training-ride-mini">' +
+        ribbonHtml +
+        '<h3 class="event-card-title">' +
+        title +
+        '</h3>' +
+        '<div class="event-card-meta">' +
+        '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDEB4</span><span>' +
+        athlete +
+        '</span></div>' +
+        '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDCCF</span><span>' +
+        fmtMiles(ride.distanceMeters) +
+        ' \u00b7 ' +
+        sport +
+        '</span></div>' +
+        '</div>' +
+        '<div class="training-ride-actions">' +
+        '<a href="' +
+        href +
+        '" target="_blank" rel="noopener" class="event-card-link">View activity \u2192</a>' +
+        '</div>' +
+        '</article>'
       );
     }).join('');
   }).catch(function () {
-    if (elList) {
-      elList.innerHTML =
-        '<li class="strava-week-empty">Couldn’t load Strava data from this site. Open the Strava club to see the latest rides.</li>';
+    if (elRides) {
+      elRides.innerHTML =
+        '<div class="event-card training-empty-card"><p>Couldn\u2019t load Strava data. Open the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="event-card-link" style="font-style:normal;">Strava club</a>.</p></div>';
     }
   });
 })();
