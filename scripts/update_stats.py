@@ -1,6 +1,143 @@
 import json
-import sys
+import re
 from datetime import datetime, timezone
+from pathlib import Path
+
+MAX_SEEN_ACTIVITY_IDS = 8000
+
+
+def roster_override_athlete_ids(roster_path='roster.html'):
+    p = Path(roster_path)
+    if not p.exists():
+        return set()
+    text = p.read_text(encoding='utf-8')
+    i = text.find('const STRAVA_ATHLETE_OVERRIDES = {')
+    if i == -1:
+        return set()
+    brace0 = text.find('{', i)
+    depth = 0
+    end = brace0
+    for j in range(brace0, len(text)):
+        if text[j] == '{':
+            depth += 1
+        elif text[j] == '}':
+            depth -= 1
+            if depth == 0:
+                end = j + 1
+                break
+    block = text[brace0:end]
+    ids = set(re.findall(r'athleteId:\s*(\d+)', block))
+    return ids
+
+
+def _parse_activity_date_iso(s):
+    if not s or not isinstance(s, str):
+        return None
+    s = s.strip()
+    if not s:
+        return None
+    try:
+        if s.endswith('Z'):
+            dt = datetime.fromisoformat(s.replace('Z', '+00:00'))
+        else:
+            dt = datetime.fromisoformat(s)
+        return dt.astimezone(timezone.utc).date()
+    except ValueError:
+        return None
+
+
+def merge_rider_strava_grit(raw_activities, now_iso):
+    roster_ids = roster_override_athlete_ids()
+    stats_path = Path('assets/data/rider-stats.json')
+    stats_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if stats_path.exists():
+        with stats_path.open(encoding='utf-8') as fh:
+            data = json.load(fh)
+            if not isinstance(data, dict):
+                data = {}
+    else:
+        data = {}
+
+    if not isinstance(data.get('byAthleteId'), dict):
+        data['byAthleteId'] = {}
+
+    if not isinstance(data.get('seenActivityIds'), list):
+        data['seenActivityIds'] = []
+
+    utc_today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    if data.get('countsSince') is None:
+        data['countsSince'] = utc_today
+
+    counts_since_day = datetime.strptime(data['countsSince'][:10], '%Y-%m-%d').date()
+
+    seen_list = []
+    seen_set = set()
+    for sid in data['seenActivityIds']:
+        skey = str(sid)
+        if skey not in seen_set:
+            seen_set.add(skey)
+            seen_list.append(skey)
+
+    for aid in roster_ids:
+        aid_s = str(int(aid)) if str(aid).isdigit() else str(aid).strip()
+        if not aid_s:
+            continue
+        node = data['byAthleteId'].setdefault(aid_s, {})
+        if not isinstance(node, dict):
+            node = {}
+            data['byAthleteId'][aid_s] = node
+        node.setdefault('gritCount', int(node.get('gritCount', 0) or 0))
+        node.setdefault('lastFetched', now_iso)
+
+    activities = raw_activities if isinstance(raw_activities, list) else []
+
+    for a in activities:
+        if not isinstance(a, dict):
+            continue
+        athlete = a.get('athlete') or {}
+        aid_val = athlete.get('id')
+        act_id = a.get('id')
+        start_raw = a.get('start_date') or ''
+        if aid_val is None or act_id is None:
+            continue
+        aid_s = str(int(aid_val))
+        day = _parse_activity_date_iso(start_raw)
+        if day is None or day < counts_since_day:
+            continue
+        if aid_s not in data['byAthleteId']:
+            continue
+        ack = str(act_id)
+        if ack in seen_set:
+            continue
+        seen_set.add(ack)
+        seen_list.append(ack)
+        node = data['byAthleteId'][aid_s]
+        node['gritCount'] = int(node.get('gritCount', 0) or 0) + 1
+        node['lastFetched'] = now_iso
+
+    if len(seen_list) > MAX_SEEN_ACTIVITY_IDS:
+        trimmed = seen_list[-MAX_SEEN_ACTIVITY_IDS:]
+        seen_set = set(trimmed)
+        seen_list = trimmed
+
+    data['seenActivityIds'] = seen_list
+    data['updatedAt'] = now_iso
+
+    for aid_s, payload in list(data['byAthleteId'].items()):
+        if isinstance(payload, dict):
+            payload['lastFetched'] = now_iso
+
+    with stats_path.open('w', encoding='utf-8') as fh:
+        json.dump(data, fh, indent=2)
+
+    grit_total = sum(
+        int((v or {}).get('gritCount', 0) or 0)
+        for v in data['byAthleteId'].values()
+        if isinstance(v, dict)
+    )
+    print('rider-stats.json written ({} roster override ids, {} byAthlete keys, gritCount sum {}, seenActivityIds {})'.format(
+        len(roster_ids), len(data['byAthleteId']), grit_total, len(seen_list)))
 
 now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
@@ -184,6 +321,8 @@ with open('assets/data/strava-group-events.json', 'w') as f:
         'events': group_events_out,
     }, f, indent=2)
 print('strava-group-events.json written ({} events)'.format(len(group_events_out)))
+
+merge_rider_strava_grit(raw_strava_activities, now)
 
 print('Done: {} donations, {} riders, {} strava rides, {} strava members, {} group events'.format(
     len(donations), len(raw_parts), len(strava_rides), len(strava_members), len(group_events_out)))

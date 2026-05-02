@@ -99,7 +99,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json assets/data/strava-group-events.json
+          git add assets/data/team-stats.json assets/data/activity-feed.json assets/data/participants.json assets/data/strava-rides.json assets/data/strava-members.json assets/data/strava-group-events.json assets/data/rider-stats.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore(data): refresh DonorDrive + Strava JSON [tgt-data-sync]"
           git pull --rebase origin "${BRANCH}"
