@@ -107,18 +107,16 @@ def main():
     print()
 
     if event_id:
-        for path in (
-            f"https://www.strava.com/api/v3/group_events/{event_id}",
-            f"https://www.strava.com/api/v3/clubs/{club_id}/group_events/{event_id}",
-        ):
-            c2, d2 = get_json(path, token)
-            print(f"GET {path}")
-            print(f"  Status: {c2}")
-            if isinstance(d2, (dict, list)):
-                print(json.dumps(d2, indent=2)[:8000])
-            else:
-                print(f"  Body: {d2}")
-            print()
+        # Detail (resource_state 3). Note: /clubs/{id}/group_events/{id} returns 404 — not a valid path.
+        path = f"https://www.strava.com/api/v3/group_events/{event_id}"
+        c2, d2 = get_json(path, token)
+        print(f"GET {path}")
+        print(f"  Status: {c2}")
+        if isinstance(d2, (dict, list)):
+            print(json.dumps(d2, indent=2)[:8000])
+        else:
+            print(f"  Body: {d2}")
+        print()
 
 
 if __name__ == "__main__":

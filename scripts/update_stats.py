@@ -17,6 +17,11 @@ try:
         raw_strava_members = json.load(f)
 except FileNotFoundError:
     raw_strava_members = []
+try:
+    with open('/tmp/strava_group_events.json') as f:
+        raw_strava_group_events = json.load(f)
+except FileNotFoundError:
+    raw_strava_group_events = []
 
 # team-stats.json
 stats = {
@@ -134,5 +139,51 @@ with open('assets/data/strava-members.json', 'w') as f:
     }, f, indent=2)
 print('strava-members.json written')
 
-print('Done: {} donations, {} riders, {} strava rides, {} strava members'.format(
-    len(donations), len(raw_parts), len(strava_rides), len(strava_members)))
+# strava-group-events.json (scheduled club rides — GET /clubs/{id}/group_events)
+CLUB_NUM = 1302442
+CLUB_URL = 'https://www.strava.com/clubs/{}'.format(CLUB_NUM)
+group_events_out = []
+raw_ge = raw_strava_group_events if isinstance(raw_strava_group_events, list) else []
+for e in raw_ge:
+    if not isinstance(e, dict):
+        continue
+    eid = e.get('id')
+    if eid is None:
+        continue
+    org = e.get('organizing_athlete') or {}
+    org_name = ' '.join(
+        filter(None, [org.get('firstname'), org.get('lastname')])
+    ).strip()
+    group_events_out.append({
+        'id': eid,
+        'title': e.get('title') or 'Club ride',
+        'description': e.get('description'),
+        'activityType': e.get('activity_type'),
+        'upcomingOccurrences': e.get('upcoming_occurrences') or [],
+        'startDatetime': e.get('start_datetime'),
+        'timezone': e.get('zone'),
+        'address': e.get('address'),
+        'organizerName': org_name or None,
+        'eventUrl': '{}/group_events/{}'.format(CLUB_URL, eid),
+        'clubUrl': CLUB_URL,
+    })
+
+
+def _first_occurrence_iso(ev):
+    occ = ev.get('upcomingOccurrences') or []
+    return occ[0] if occ else '9999-12-31T23:59:59Z'
+
+
+group_events_out.sort(key=_first_occurrence_iso)
+
+with open('assets/data/strava-group-events.json', 'w') as f:
+    json.dump({
+        'updatedAt': now,
+        'clubId': CLUB_NUM,
+        'clubUrl': CLUB_URL,
+        'events': group_events_out,
+    }, f, indent=2)
+print('strava-group-events.json written ({} events)'.format(len(group_events_out)))
+
+print('Done: {} donations, {} riders, {} strava rides, {} strava members, {} group events'.format(
+    len(donations), len(raw_parts), len(strava_rides), len(strava_members), len(group_events_out)))
