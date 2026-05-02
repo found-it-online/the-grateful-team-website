@@ -1,7 +1,18 @@
 import json
+import os
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+
+def _env_int(name, default):
+    raw = os.environ.get(name)
+    if raw is None or str(raw).strip() == '':
+        return default
+    try:
+        return int(raw)
+    except ValueError:
+        return default
 
 MAX_SEEN_ACTIVITY_IDS = 8000
 
@@ -65,9 +76,20 @@ def merge_rider_strava_grit(raw_activities, now_iso):
     if not isinstance(data.get('seenActivityIds'), list):
         data['seenActivityIds'] = []
 
-    utc_today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    utc_now = datetime.now(timezone.utc)
+    default_lb = max(1, _env_int('STRAVA_GRIT_DEFAULT_LOOKBACK_DAYS', 21))
+    seed_lb = max(0, _env_int('STRAVA_GRIT_SEED_LOOKBACK_DAYS', 0))
+
     if data.get('countsSince') is None:
-        data['countsSince'] = utc_today
+        data['countsSince'] = (utc_now.date() - timedelta(days=default_lb)).strftime('%Y-%m-%d')
+    elif seed_lb > 0:
+        floor_date = utc_now.date() - timedelta(days=seed_lb)
+        try:
+            cur = datetime.strptime(data['countsSince'][:10], '%Y-%m-%d').date()
+            if cur > floor_date:
+                data['countsSince'] = floor_date.strftime('%Y-%m-%d')
+        except ValueError:
+            data['countsSince'] = floor_date.strftime('%Y-%m-%d')
 
     counts_since_day = datetime.strptime(data['countsSince'][:10], '%Y-%m-%d').date()
 

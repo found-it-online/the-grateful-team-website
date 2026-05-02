@@ -78,7 +78,7 @@ jobs:
 
           echo "Fetching Strava club activities..."
           curl -sf -H "Authorization: Bearer ${ACCESS_TOKEN}" \
-            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=80&page=1" \
+            "https://www.strava.com/api/v3/clubs/1302442/activities?per_page=100&page=1" \
             -o /tmp/strava_activities.json || echo '[]' > /tmp/strava_activities.json
           echo "Fetching Strava club members..."
           curl -sf -H "Authorization: Bearer ${ACCESS_TOKEN}" \
@@ -91,6 +91,10 @@ jobs:
           echo "Strava fetch complete"
 
       - name: Process and write data files
+        env:
+          # Widen grit window toward recent club activities (caps bar at /10 on site).
+          STRAVA_GRIT_SEED_LOOKBACK_DAYS: '28'
+          STRAVA_GRIT_DEFAULT_LOOKBACK_DAYS: '21'
         run: python3 scripts/update_stats.py
 
       - name: Commit and push
