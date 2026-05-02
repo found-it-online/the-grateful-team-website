@@ -1,6 +1,22 @@
 {
-  "updatedAt": "1970-01-01T00:00:00Z",
+  "updatedAt": "2026-05-02T21:54:14Z",
   "clubId": 1302442,
   "clubUrl": "https://www.strava.com/clubs/1302442",
-  "events": []
+  "events": [
+    {
+      "id": 3485775290960780042,
+      "title": "WAM Training Ride",
+      "description": "Meet at Veterans Park",
+      "activityType": "Ride",
+      "upcomingOccurrences": [
+        "2026-06-20T13:00:00Z"
+      ],
+      "startDatetime": null,
+      "timezone": "America/Detroit",
+      "address": "Veteran's Memorial Park, Grand Rapids, MI, USA",
+      "organizerName": "Jackson Maitner",
+      "eventUrl": "https://www.strava.com/clubs/1302442/group_events/3485775290960780042",
+      "clubUrl": "https://www.strava.com/clubs/1302442"
+    }
+  ]
 }
