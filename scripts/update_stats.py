@@ -115,7 +115,11 @@ def merge_rider_strava_grit(raw_activities, now_iso):
             aid_val = int(athlete)
         if aid_val is None:
             aid_val = a.get('athlete_id')
-        start_raw = a.get('start_date') or ''
+        start_raw = (
+            a.get('start_date')
+            or a.get('start_date_local')
+            or ''
+        )
         if aid_val is None:
             continue
         try:
@@ -127,7 +131,10 @@ def merge_rider_strava_grit(raw_activities, now_iso):
         if aid_s not in roster_set:
             continue
         day = _parse_activity_date_iso(start_raw)
-        if day is None or day < counts_since_day:
+        # Club feed sometimes omits dates; Strava still only returns "recent" rows — include for grit.
+        if day is None:
+            day = counts_since_day
+        if day < counts_since_day:
             continue
         dist = float(a.get('distance') or 0)
         if dist < 0:
@@ -249,19 +256,31 @@ print('participants.json written')
 # strava-rides.json (training rides from Strava club API)
 strava_rides = []
 for a in raw_strava_activities if isinstance(raw_strava_activities, list) else []:
-    athlete = a.get('athlete') or {}
-    athlete_name = ' '.join(filter(None, [athlete.get('firstname', ''), athlete.get('lastname', '')])).strip()
+    athlete = a.get('athlete')
+    aid_out = None
+    if isinstance(athlete, dict):
+        aid_out = athlete.get('id')
+        athlete_name = ' '.join(
+            filter(None, [athlete.get('firstname', ''), athlete.get('lastname', '')])
+        ).strip()
+    elif isinstance(athlete, (int, float)):
+        aid_out = int(athlete)
+        athlete_name = ''
+    else:
+        athlete_name = ''
+    if aid_out is None:
+        aid_out = a.get('athlete_id')
     strava_rides.append({
         'id': a.get('id'),
         'name': a.get('name', 'Untitled ride'),
         'athleteName': athlete_name or 'Club Rider',
-        'athleteId': athlete.get('id'),
+        'athleteId': aid_out,
         'distanceMeters': a.get('distance', 0),
         'movingTimeSec': a.get('moving_time', 0),
         'elevationGainMeters': a.get('total_elevation_gain', 0),
         'sportType': a.get('sport_type', a.get('type', 'Ride')),
-        'startDateUTC': a.get('start_date', now),
-        'startDateLocal': a.get('start_date_local', a.get('start_date', now)),
+        'startDateUTC': a.get('start_date') or a.get('start_date_local') or now,
+        'startDateLocal': a.get('start_date_local') or a.get('start_date') or now,
         'activityUrl': 'https://www.strava.com/activities/{}'.format(a.get('id')) if a.get('id') else 'https://www.strava.com/clubs/1302442',
         'clubUrl': 'https://www.strava.com/clubs/1302442',
     })

@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
-Fetch multiple pages of GET /clubs/{id}/activities, dedupe by activity id,
+Fetch multiple pages of GET /clubs/{id}/activities, dedupe activities,
 write JSON array for update_stats.py. Uses STRAVA_ACCESS_TOKEN or ACCESS_TOKEN.
+
+Strava sometimes omits activity `id` on club feed objects — use a stable fallback key
+so we do not drop every row (that produced empty strava-rides.json).
 """
+import hashlib
 import json
 import os
 import sys
@@ -12,6 +16,29 @@ import urllib.request
 CLUB_ID = '1302442'
 PER_PAGE = 100
 MAX_PAGES = int(os.environ.get('STRAVA_CLUB_ACTIVITY_PAGES', '8'))
+
+
+def _dedupe_key(activity, page, index_in_page):
+    """Stable key for deduping; Strava club activities may omit top-level id."""
+    aid = activity.get('id')
+    if aid is not None:
+        return ('id', str(aid))
+    athlete = activity.get('athlete') if isinstance(activity.get('athlete'), dict) else {}
+    blob = json.dumps(
+        {
+            'athlete_id': athlete.get('id'),
+            'name': activity.get('name'),
+            'distance': activity.get('distance'),
+            'moving_time': activity.get('moving_time'),
+            'elapsed_time': activity.get('elapsed_time'),
+            'sport_type': activity.get('sport_type'),
+            'page': page,
+            'idx': index_in_page,
+        },
+        sort_keys=True,
+        default=str,
+    )
+    return ('hash', hashlib.sha256(blob.encode('utf-8')).hexdigest()[:32])
 
 
 def main():
@@ -60,13 +87,13 @@ def main():
         if not isinstance(chunk, list):
             break
 
-        for a in chunk:
+        for idx, a in enumerate(chunk):
             if not isinstance(a, dict):
                 continue
-            aid = a.get('id')
-            if aid is None or aid in seen:
+            key = _dedupe_key(a, page, idx)
+            if key in seen:
                 continue
-            seen.add(aid)
+            seen.add(key)
             merged.append(a)
 
         if len(chunk) < PER_PAGE:
@@ -78,8 +105,9 @@ def main():
     print('wrote {} club activities ({})'.format(len(merged), out_path))
     if len(merged) == 0:
         print(
-            'warning: no club activities returned — OAuth athlete must be in club 1302442; '
-            'token needs activity:read (and refresh token valid).',
+            'warning: no club activities merged — if GET returned rows but ids were missing, '
+            'dedupe fallback should still capture them; otherwise OAuth athlete may not be in club '
+            '1302442 or Strava returned an empty list (see strava_ci_check.py logs).',
             file=sys.stderr,
         )
 
