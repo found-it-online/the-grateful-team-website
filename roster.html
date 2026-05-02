@@ -2142,13 +2142,13 @@ const RIDERS_CORE = [
     name: "Robert Grooters",
     nickname: "I Am Groot",
     donorSlug: "5129",
-    tier: "rookie",
+    tier: "rider",
     years: 1,
     song: "Bertha",
     initials: "RG",
     bio: "I Am Groot. Not just Groot — the full declaration. Robert Grooters doesn't half-commit to an identity. Big presence, quiet strength, and a last name that is literally a Marvel character. He also goes by Kyle, which raises an excellent and unresolved question: how many names does this guy actually have? However many it is, he answers all of them while still turning the pedals.",
     funFact: "Robert. Groot. Kyle. I Am Groot. At this point we're just collecting aliases and calling it branding.",
-    badges: ["🌱 WAM Rookie", "🌳 Groot Energy", "💪 Strong Debut", "🤝 Team Player"],
+    badges: ["🚴 Returning WAM", "🌳 Groot Energy", "💪 Strong Debut", "🤝 Team Player"],
     stats: { spirit: 8, grit: 7 },
   },
   {
@@ -2352,13 +2352,13 @@ const RIDERS_CORE = [
     name: "Andy Oconnor",
     nickname: "Andy O",
     donorSlug: "5135",
-    tier: "rookie",
+    tier: "rider",
     years: 1,
     song: "Deal",
     initials: "AO",
-    bio: "Andy O. Clean, classic, and to the point. Andy Oconnor doesn't need a long nickname — two syllables, maximum impact. The kind of name you yell across a parking lot when you're looking for your ride. First year on the WAM, already making the whole thing feel more fun just by being in it. Andy O. Say it. It works.",
-    funFact: "Andy O. Two syllables. Zero ambiguity. Rookie year done right.",
-    badges: ["🌱 WAM Rookie", "🤝 Super Connector", "💬 Social Glue", "👀 One to Watch"],
+    bio: "Andy O. Clean, classic, and to the point. Andy Oconnor doesn't need a long nickname — two syllables, maximum impact. The kind of name you yell across a parking lot when you're looking for your ride. Not his first WAM — already making the whole thing feel more fun just by being in it. Andy O. Say it. It works.",
+    funFact: "Andy O. Two syllables. Zero ambiguity. Back for another WAM.",
+    badges: ["🚴 Returning WAM", "🤝 Super Connector", "💬 Social Glue", "👀 One to Watch"],
     stats: { spirit: 9, grit: 7 },
   },
   {
@@ -2790,8 +2790,11 @@ const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3 };
 
 function getComputedTier(rider) {
   if (rider.tier === 'legend') return 'legend';
-  // Form / automated intake riders stay “Rookie” on the trading card until merged into RIDERS_CORE by hand.
+  // Form intake → always rookie card until promoted into RIDERS_CORE manually.
   if (rider.source === 'google-form-intake') return 'rookie';
+  // Respect roster author intent: returning WAM riders can be Veteran/Rider even when years: 1.
+  // Rookie tier on the trading card ≈ first WAM ever only when we omit explicit rider/veteran.
+  if (rider.tier === 'veteran' || rider.tier === 'rider') return rider.tier;
   const years = Number(rider.years) || 0;
   if (years >= 3) return 'veteran';
   if (years === 2) return 'rider';
