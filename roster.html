@@ -3830,14 +3830,54 @@ function getAthleteIdForRider(rider) {
   return null;
 }
 
-/** Meters summed from club activities since countsSince (mapped riders only); null = use share-based grit. */
+/**
+ * Sum distance (meters) from assets/data/strava-rides.json for this athlete on/after countsSince.
+ * Matches update_stats.py: UTC calendar day vs rider-stats countsSince.
+ */
+function sumClubRideMetersForAthleteSince(athleteId) {
+  const data = _stravaRidesBundle;
+  if (!athleteId || !data || !Array.isArray(data.rides)) return null;
+  const sinceRaw = _stravaRiderStats && _stravaRiderStats.countsSince;
+  const sinceDay =
+    sinceRaw && typeof sinceRaw === 'string' && sinceRaw.length >= 10
+      ? sinceRaw.slice(0, 10)
+      : '1970-01-01';
+  const sid = String(athleteId);
+  let sum = 0;
+  for (let i = 0; i < data.rides.length; i++) {
+    const r = data.rides[i];
+    if (!r || String(r.athleteId) !== sid) continue;
+    const startRaw = r.startDateUTC || r.startDateLocal;
+    if (!startRaw) continue;
+    const t = new Date(startRaw).getTime();
+    if (Number.isNaN(t)) continue;
+    const dayStr = new Date(startRaw).toISOString().slice(0, 10);
+    if (dayStr < sinceDay) continue;
+    sum += Number(r.distanceMeters) || 0;
+  }
+  return sum;
+}
+
+/** Meters for grit: max(rider-stats rollup, sum of club rides JSON). Null = unmapped rider → share-based grit. */
 function getStravaTrainingMetersForRider(rider) {
   const aid = getAthleteIdForRider(rider);
-  if (!aid || !_stravaRiderStats || !_stravaRiderStats.byAthleteId) return null;
-  const row = _stravaRiderStats.byAthleteId[aid];
-  if (row == null || typeof row !== 'object') return null;
-  const m = Number(row.totalDistanceMeters);
-  return Number.isNaN(m) ? 0 : m;
+  if (!aid) return null;
+
+  let statsMeters = null;
+  if (_stravaRiderStats && _stravaRiderStats.byAthleteId) {
+    const row = _stravaRiderStats.byAthleteId[aid];
+    if (row != null && typeof row === 'object') {
+      const m = Number(row.totalDistanceMeters);
+      statsMeters = Number.isNaN(m) ? 0 : m;
+    }
+  }
+
+  const ridesMeters = sumClubRideMetersForAthleteSince(aid);
+
+  if (ridesMeters != null && statsMeters != null) return Math.max(statsMeters, ridesMeters);
+  if (ridesMeters != null) return ridesMeters;
+  if (statsMeters != null) return statsMeters;
+  return null;
 }
 
 /** 500 mi (default) → 10/10 on the bar; driven by rider-stats gritMaxTrainingMiles + totalDistanceMeters. */

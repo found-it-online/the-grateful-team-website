@@ -107,12 +107,23 @@ def merge_rider_strava_grit(raw_activities, now_iso):
     for a in activities:
         if not isinstance(a, dict):
             continue
-        athlete = a.get('athlete') or {}
-        aid_val = athlete.get('id')
+        athlete = a.get('athlete')
+        aid_val = None
+        if isinstance(athlete, dict):
+            aid_val = athlete.get('id')
+        elif isinstance(athlete, (int, float)):
+            aid_val = int(athlete)
+        if aid_val is None:
+            aid_val = a.get('athlete_id')
         start_raw = a.get('start_date') or ''
         if aid_val is None:
             continue
-        aid_s = str(int(aid_val))
+        try:
+            aid_s = str(int(aid_val))
+        except (TypeError, ValueError):
+            aid_s = str(aid_val).strip()
+            if not aid_s:
+                continue
         if aid_s not in roster_set:
             continue
         day = _parse_activity_date_iso(start_raw)

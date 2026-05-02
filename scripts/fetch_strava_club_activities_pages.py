@@ -38,8 +38,22 @@ def main():
         )
         try:
             with urllib.request.urlopen(req, timeout=60) as resp:
-                chunk = json.loads(resp.read().decode('utf-8'))
-        except (urllib.error.URLError, urllib.error.HTTPError, ValueError) as e:
+                raw = resp.read().decode('utf-8')
+                chunk = json.loads(raw)
+        except urllib.error.HTTPError as e:
+            err_body = ''
+            try:
+                err_body = e.read().decode('utf-8', errors='replace')[:500]
+            except Exception:
+                pass
+            print(
+                'club activities page {} HTTP {}: {} {}'.format(
+                    page, e.code, e.reason, err_body
+                ),
+                file=sys.stderr,
+            )
+            break
+        except (urllib.error.URLError, ValueError) as e:
             print('club activities page {} error: {}'.format(page, e), file=sys.stderr)
             break
 
@@ -62,6 +76,12 @@ def main():
         json.dump(merged, fh)
 
     print('wrote {} club activities ({})'.format(len(merged), out_path))
+    if len(merged) == 0:
+        print(
+            'warning: no club activities returned — OAuth athlete must be in club 1302442; '
+            'token needs activity:read (and refresh token valid).',
+            file=sys.stderr,
+        )
 
 
 if __name__ == '__main__':
