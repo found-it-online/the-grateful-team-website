@@ -14,9 +14,6 @@ def _env_int(name, default):
     except ValueError:
         return default
 
-MAX_SEEN_ACTIVITY_IDS = 8000
-
-
 def roster_override_athlete_ids(roster_path='roster.html'):
     p = Path(roster_path)
     if not p.exists():
@@ -58,7 +55,18 @@ def _parse_activity_date_iso(s):
 
 
 def merge_rider_strava_grit(raw_activities, now_iso):
+    """
+    Per mapped athlete (STRAVA_ATHLETE_OVERRIDES), sum Strava club activity distance (meters)
+    for activities on/after countsSince. Grit on cards = miles / max_miles * 10 (cap 10), max_miles default 500.
+    Recomputed each run from the merged club activity JSON (no incremental ride counts).
+    """
     roster_ids = roster_override_athlete_ids()
+    roster_set = set()
+    for aid in roster_ids:
+        aid_s = str(int(aid)) if str(aid).isdigit() else str(aid).strip()
+        if aid_s:
+            roster_set.add(aid_s)
+
     stats_path = Path('assets/data/rider-stats.json')
     stats_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -72,9 +80,6 @@ def merge_rider_strava_grit(raw_activities, now_iso):
 
     if not isinstance(data.get('byAthleteId'), dict):
         data['byAthleteId'] = {}
-
-    if not isinstance(data.get('seenActivityIds'), list):
-        data['seenActivityIds'] = []
 
     utc_now = datetime.now(timezone.utc)
     default_lb = max(1, _env_int('STRAVA_GRIT_DEFAULT_LOOKBACK_DAYS', 21))
@@ -93,13 +98,30 @@ def merge_rider_strava_grit(raw_activities, now_iso):
 
     counts_since_day = datetime.strptime(data['countsSince'][:10], '%Y-%m-%d').date()
 
-    seen_list = []
-    seen_set = set()
-    for sid in data['seenActivityIds']:
-        skey = str(sid)
-        if skey not in seen_set:
-            seen_set.add(skey)
-            seen_list.append(skey)
+    max_miles = max(1.0, float(_env_int('STRAVA_GRIT_MAX_MILES', 500)))
+    data['gritMaxTrainingMiles'] = max_miles
+
+    totals_m = {}
+    activities = raw_activities if isinstance(raw_activities, list) else []
+
+    for a in activities:
+        if not isinstance(a, dict):
+            continue
+        athlete = a.get('athlete') or {}
+        aid_val = athlete.get('id')
+        start_raw = a.get('start_date') or ''
+        if aid_val is None:
+            continue
+        aid_s = str(int(aid_val))
+        if aid_s not in roster_set:
+            continue
+        day = _parse_activity_date_iso(start_raw)
+        if day is None or day < counts_since_day:
+            continue
+        dist = float(a.get('distance') or 0)
+        if dist < 0:
+            dist = 0.0
+        totals_m[aid_s] = totals_m.get(aid_s, 0.0) + dist
 
     for aid in roster_ids:
         aid_s = str(int(aid)) if str(aid).isdigit() else str(aid).strip()
@@ -109,41 +131,11 @@ def merge_rider_strava_grit(raw_activities, now_iso):
         if not isinstance(node, dict):
             node = {}
             data['byAthleteId'][aid_s] = node
-        node.setdefault('gritCount', int(node.get('gritCount', 0) or 0))
-        node.setdefault('lastFetched', now_iso)
-
-    activities = raw_activities if isinstance(raw_activities, list) else []
-
-    for a in activities:
-        if not isinstance(a, dict):
-            continue
-        athlete = a.get('athlete') or {}
-        aid_val = athlete.get('id')
-        act_id = a.get('id')
-        start_raw = a.get('start_date') or ''
-        if aid_val is None or act_id is None:
-            continue
-        aid_s = str(int(aid_val))
-        day = _parse_activity_date_iso(start_raw)
-        if day is None or day < counts_since_day:
-            continue
-        if aid_s not in data['byAthleteId']:
-            continue
-        ack = str(act_id)
-        if ack in seen_set:
-            continue
-        seen_set.add(ack)
-        seen_list.append(ack)
-        node = data['byAthleteId'][aid_s]
-        node['gritCount'] = int(node.get('gritCount', 0) or 0) + 1
+        node['totalDistanceMeters'] = round(totals_m.get(aid_s, 0.0), 2)
+        node.pop('gritCount', None)
         node['lastFetched'] = now_iso
 
-    if len(seen_list) > MAX_SEEN_ACTIVITY_IDS:
-        trimmed = seen_list[-MAX_SEEN_ACTIVITY_IDS:]
-        seen_set = set(trimmed)
-        seen_list = trimmed
-
-    data['seenActivityIds'] = seen_list
+    data['seenActivityIds'] = []
     data['updatedAt'] = now_iso
 
     for aid_s, payload in list(data['byAthleteId'].items()):
@@ -153,13 +145,13 @@ def merge_rider_strava_grit(raw_activities, now_iso):
     with stats_path.open('w', encoding='utf-8') as fh:
         json.dump(data, fh, indent=2)
 
-    grit_total = sum(
-        int((v or {}).get('gritCount', 0) or 0)
+    mi_total = sum(
+        float((v or {}).get('totalDistanceMeters', 0) or 0)
         for v in data['byAthleteId'].values()
         if isinstance(v, dict)
-    )
-    print('rider-stats.json written ({} roster override ids, {} byAthlete keys, gritCount sum {}, seenActivityIds {})'.format(
-        len(roster_ids), len(data['byAthleteId']), grit_total, len(seen_list)))
+    ) * 0.000621371
+    print('rider-stats.json written ({} roster ids, {} keys, ~{:.0f} mi summed club distance, grit max {} mi)'.format(
+        len(roster_ids), len(data['byAthleteId']), mi_total, int(max_miles)))
 
 now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 

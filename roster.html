@@ -2784,8 +2784,8 @@ let RIDERS = RIDERS_CORE.slice();
    Fundraising: % of rider goal → /10 (e.g. $1k of $2k = 5/10; at or above goal = 10/10)
    Experience:  1 point per WAM year (years), max 10
    Spirit:      DonorDrive participant numDonations → 0.1 per donation (10 donations = 1/10, 100 = 10/10), max 10
-   Grit:        starts 5/10; sharing this rider’s card from the site adds “grit points” in
-                this browser only (50 share actions → 10/10) — honor system, not global metrics
+   Grit:        Mapped Strava athletes: club training miles since countsSince → /10 (500 mi = 10 by default, see rider-stats gritMaxTrainingMiles).
+                Unmapped riders: share taps on this device only (50 taps → +5 from 5 base).
    Wish Granter: badge when raised ≥ goal (no longer changes the fundraising score)
 ══════════════════════════════════════ */
 const STATS_SPIRIT_BASE = 5;
@@ -2794,6 +2794,20 @@ function spiritFromDonationCount(numDonations) {
   const n = Math.max(0, Number(numDonations) || 0);
   return Math.round(Math.min(10, n * 0.1) * 10) / 10;
 }
+
+function getStravaGritMaxMiles() {
+  const raw = _stravaRiderStats && _stravaRiderStats.gritMaxTrainingMiles;
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? n : 500;
+}
+
+/** One decimal when needed (grit / spirit decimals). */
+function formatGritDisplay(val) {
+  const v = Math.round(Number(val) * 10) / 10;
+  if (Number.isNaN(v)) return '0';
+  return Number.isInteger(v) ? String(v) : v.toFixed(1);
+}
+
 /** Share taps from this browser toward max grit (per rider, localStorage). */
 const GRIT_SHARE_INCREMENTS_TOTAL = 50;
 const TGT_CHALLENGE_KEY = 'tgt-challenges-v1';
@@ -2894,13 +2908,16 @@ function computeStats(rider, fundMap) {
 
   const experience = Math.min(10, Math.max(0, Math.round(Number(rider.years) || 0)));
   const spirit = data ? spiritFromDonationCount(data.numDonations) : STATS_SPIRIT_BASE;
-  const rawStravaRides = getStravaGritCountForRider(rider);
+  const trainingMeters = getStravaTrainingMetersForRider(rider);
   const grit =
-    rawStravaRides != null
-      ? stravaGritBarScore(rawStravaRides)
+    trainingMeters != null
+      ? stravaGritBarFromMeters(trainingMeters)
       : gritFromShareTaps(rider.id);
 
   const isWishGranter = !!(data && data.sumDonations >= (data.fundraisingGoal || defaultGoal));
+
+  const stravaTrainingMiles =
+    trainingMeters != null ? (Number(trainingMeters) || 0) * 0.000621371 : null;
 
   return {
     fundraising,
@@ -2908,7 +2925,7 @@ function computeStats(rider, fundMap) {
     spirit,
     grit,
     isWishGranter,
-    stravaClubRideCount: rawStravaRides != null ? rawStravaRides : null,
+    stravaTrainingMiles,
   };
 }
 
@@ -3007,7 +3024,7 @@ function renderCard(r, index) {
             <div class="tcard-stat-row">
               <span class="tcard-stat-label">Grit</span>
               <div class="tcard-stat-bar"><div class="tcard-stat-fill" style="width:${computeStats(r,_fundMap).grit*10}%"></div></div>
-              <span class="tcard-stat-num">${computeStats(r,_fundMap).grit}/10</span>
+              <span class="tcard-stat-num">${formatGritDisplay(computeStats(r,_fundMap).grit)}/10</span>
             </div>
           </div>
 
@@ -3321,11 +3338,11 @@ function openModal(riderId, triggerEvent) {
     ? getRecentStravaRidesForAthlete(athleteIdPanel, 8)
     : [];
   const gritSub =
-    cs.stravaClubRideCount != null &&
+    cs.stravaTrainingMiles != null &&
     _stravaRiderStats &&
     _stravaRiderStats.countsSince != null &&
     athleteIdPanel
-      ? `<div class="modal-grit-note" style="margin:-6px 0 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.55);">${cs.stravaClubRideCount} club ride${cs.stravaClubRideCount !== 1 ? 's' : ''} since ${_stravaRiderStats.countsSince} · bar caps at 10</div>`
+      ? `<div class="modal-grit-note" style="margin:-6px 0 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.55);">${cs.stravaTrainingMiles.toFixed(1)} mi from synced club rides since ${_stravaRiderStats.countsSince} · ${getStravaGritMaxMiles()} mi = 10/10</div>`
       : '';
 
   let recentStravaSection = '';
@@ -3368,12 +3385,13 @@ function openModal(riderId, triggerEvent) {
   const spUrl = `https://open.spotify.com/search/Grateful%20Dead%20${encodeURIComponent(rider.song)}`;
   const amUrl = `https://music.apple.com/us/search?term=Grateful+Dead+${encodeURIComponent(rider.song)}`;
 
-  function statRowHTML(label, cls, val, boost) {
+  function statRowHTML(label, cls, val, boost, displayVal) {
     const boostIcon = boost ? '<span class="modal-stat-boost">⚡</span>' : '';
+    const shown = displayVal !== undefined && displayVal !== null ? String(displayVal) : String(val);
     return `<div class="modal-stat-row">
       <span class="modal-stat-label">${label}</span>
       <div class="modal-stat-track"><div class="modal-stat-fill modal-stat-fill-${cls}" data-target="${val*10}"></div></div>
-      <span class="modal-stat-val">${val}/10</span>${boostIcon}
+      <span class="modal-stat-val">${shown}/10</span>${boostIcon}
     </div>`;
   }
 
@@ -3391,7 +3409,7 @@ function openModal(riderId, triggerEvent) {
       ${statRowHTML('💰 Fundraising', 'fundraising', cs.fundraising, cs.isWishGranter)}
       ${statRowHTML('📅 Experience',  'experience',  cs.experience,  false)}
       ${statRowHTML('🎵 Spirit',      'spirit',      cs.spirit,      false)}
-      ${statRowHTML('💪 Grit',        'grit',        cs.grit,        false)}
+      ${statRowHTML('💪 Grit',        'grit',        cs.grit,        false, formatGritDisplay(cs.grit))}
       ${gritSub}
     </div>
     ${recentStravaSection}
@@ -3812,16 +3830,22 @@ function getAthleteIdForRider(rider) {
   return null;
 }
 
-function getStravaGritCountForRider(rider) {
+/** Meters summed from club activities since countsSince (mapped riders only); null = use share-based grit. */
+function getStravaTrainingMetersForRider(rider) {
   const aid = getAthleteIdForRider(rider);
   if (!aid || !_stravaRiderStats || !_stravaRiderStats.byAthleteId) return null;
   const row = _stravaRiderStats.byAthleteId[aid];
-  if (row == null) return null;
-  return Number(row.gritCount) || 0;
+  if (row == null || typeof row !== 'object') return null;
+  const m = Number(row.totalDistanceMeters);
+  return Number.isNaN(m) ? 0 : m;
 }
 
-function stravaGritBarScore(rideCount) {
-  return Math.min(10, Math.max(0, Number(rideCount) || 0));
+/** 500 mi (default) → 10/10 on the bar; driven by rider-stats gritMaxTrainingMiles + totalDistanceMeters. */
+function stravaGritBarFromMeters(meters) {
+  const mi = (Number(meters) || 0) * 0.000621371;
+  const capMi = getStravaGritMaxMiles();
+  const raw = capMi > 0 ? (mi / capMi) * 10 : 0;
+  return Math.round(Math.min(10, Math.max(0, raw)) * 10) / 10;
 }
 
 function getRecentStravaRidesForAthlete(athleteId, limit) {

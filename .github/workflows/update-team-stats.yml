@@ -95,6 +95,8 @@ jobs:
           # Widen grit window toward recent club activities (caps bar at /10 on site).
           STRAVA_GRIT_SEED_LOOKBACK_DAYS: '28'
           STRAVA_GRIT_DEFAULT_LOOKBACK_DAYS: '21'
+          # Grit bar: miles / this value × 10, capped at 10 (training distance from club sync).
+          STRAVA_GRIT_MAX_MILES: '500'
         run: python3 scripts/update_stats.py
 
       - name: Commit and push
