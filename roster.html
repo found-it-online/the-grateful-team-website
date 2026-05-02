@@ -2775,11 +2775,22 @@ function computeStats(rider, fundMap) {
 
   const experience = Math.min(10, Math.max(0, Math.round(Number(rider.years) || 0)));
   const spirit = STATS_SPIRIT_BASE;
-  const grit = gritFromShareTaps(rider.id);
+  const rawStravaRides = getStravaGritCountForRider(rider);
+  const grit =
+    rawStravaRides != null
+      ? stravaGritBarScore(rawStravaRides)
+      : gritFromShareTaps(rider.id);
 
   const isWishGranter = !!(data && data.sumDonations >= (data.fundraisingGoal || defaultGoal));
 
-  return { fundraising, experience, spirit, grit, isWishGranter };
+  return {
+    fundraising,
+    experience,
+    spirit,
+    grit,
+    isWishGranter,
+    stravaClubRideCount: rawStravaRides != null ? rawStravaRides : null,
+  };
 }
 
 /* ══════════════════════════════════════
@@ -2992,10 +3003,13 @@ const IS_TOUCH = window.matchMedia("(hover: none) and (pointer: coarse)").matche
 let _photoMap = {};
 let _fundMap  = {};
 let _stravaMap = {};
+let _stravaRiderStats = null;
+let _stravaRidesBundle = null;
 let _riderAliasMap = null;
 let _modalScrollHandler = null;
 const STRAVA_ATHLETE_OVERRIDES = {
   'luis vecchio': { athleteId: 52089356, profileUrl: 'https://www.strava.com/athletes/52089356' },
+  'ally austin': { athleteId: 1575775865, profileUrl: 'https://www.strava.com/athletes/1575775865' },
   'brad johnson': { athleteId: 31815516, profileUrl: 'https://www.strava.com/athletes/31815516' },
   'jason winchell': { athleteId: 20567387, profileUrl: 'https://www.strava.com/athletes/20567387' },
   'ethan pomfret': { athleteId: 188692144, profileUrl: 'https://www.strava.com/athletes/188692144' },
@@ -3183,6 +3197,48 @@ function openModal(riderId, triggerEvent) {
   if ((_fundMap[rider.name.toLowerCase()] || {}).numDonations >= 5) modalCampaignBadges.push('🤝 5 Donors Club');
   if (challengeState.rookieShares >= 1 && riderTier === 'rookie') modalCampaignBadges.push('🌟 First-Time Donor Champion');
   const badgesHTML = rider.badges.concat(modalCampaignBadges).map(b => `<span class="modal-badge-pill">${b}</span>`).join('');
+  const athleteIdPanel = getAthleteIdForRider(rider);
+  const recentStravaRides = athleteIdPanel
+    ? getRecentStravaRidesForAthlete(athleteIdPanel, 8)
+    : [];
+  const gritSub =
+    cs.stravaClubRideCount != null &&
+    _stravaRiderStats &&
+    _stravaRiderStats.countsSince != null &&
+    athleteIdPanel
+      ? `<div class="modal-grit-note" style="margin:-6px 0 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:rgba(250,246,232,0.55);">${cs.stravaClubRideCount} club ride${cs.stravaClubRideCount !== 1 ? 's' : ''} since ${_stravaRiderStats.countsSince} · bar caps at 10</div>`
+      : '';
+
+  let recentStravaSection = '';
+  if (recentStravaRides.length) {
+    recentStravaSection =
+      '<div style="margin:16px 0 14px;"><div class="modal-stats-heading" style="margin-bottom:10px;">Recent club rides</div><div style="display:flex;flex-direction:column;gap:8px;">' +
+      recentStravaRides
+        .map(function (rw) {
+          const when = new Date(rw.startDateUTC || rw.startDateLocal || 0);
+          const ws = Number.isNaN(when.getTime())
+            ? ''
+            : when.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          const miles = (((Number(rw.distanceMeters) || 0) / 1609.34)).toFixed(1);
+          const nm = escapeHtmlStr(rw.name || 'Ride');
+          const tl = ws ? ws + ' · ' + miles + ' mi · ' + (rw.sportType || 'Ride') : miles + ' mi';
+          const href =
+            rw.activityUrl || 'https://www.strava.com/clubs/1302442';
+          return (
+            '<a href="' +
+            href +
+            '" target="_blank" rel="noopener" style="display:block;padding:10px 12px;border-radius:8px;border:1px solid rgba(250,246,232,0.12);background:rgba(4,178,202,0.08);text-decoration:none;color:var(--color-cream);font-family:\'DM Sans\',sans-serif;font-size:12px;line-height:1.45;">' +
+            '<strong style="color:var(--color-cream);">' +
+            nm +
+            '</strong><br/><span style="font-size:11px;color:rgba(250,246,232,0.62);">' +
+            tl +
+            '</span></a>'
+          );
+        })
+        .join('') +
+      '</div></div>';
+  }
+
   const sharePack = getSharePack(rider, donorHref, cs);
   const shareCombinedEnc = encodeURIComponent(`${sharePack.text} ${sharePack.url}`);
   const donorHrefEnc = encodeURIComponent(donorHref);
@@ -3217,7 +3273,9 @@ function openModal(riderId, triggerEvent) {
       ${statRowHTML('📅 Experience',  'experience',  cs.experience,  false)}
       ${statRowHTML('🎵 Spirit',      'spirit',      cs.spirit,      false)}
       ${statRowHTML('💪 Grit',        'grit',        cs.grit,        false)}
+      ${gritSub}
     </div>
+    ${recentStravaSection}
     <div>
       <div class="modal-badges-heading">Badges & Honors</div>
       <div class="modal-badges-grid">${badgesHTML}</div>
@@ -3616,6 +3674,51 @@ function findRiderByExternalName(value) {
   return candidates.length === 1 ? candidates[0] : null;
 }
 
+function getAthleteIdForRider(rider) {
+  if (!rider) return null;
+  const keys = Object.keys(STRAVA_ATHLETE_OVERRIDES);
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i];
+    const m = findRiderByExternalName(k);
+    if (m && m.id === rider.id) {
+      const id = STRAVA_ATHLETE_OVERRIDES[k].athleteId;
+      return id != null ? String(id) : null;
+    }
+  }
+  const sm = _stravaMap[normalizeName(rider.name)];
+  if (sm && sm.profileUrl) {
+    const mx = sm.profileUrl.match(/athletes\/(\d+)/);
+    if (mx) return mx[1];
+  }
+  return null;
+}
+
+function getStravaGritCountForRider(rider) {
+  const aid = getAthleteIdForRider(rider);
+  if (!aid || !_stravaRiderStats || !_stravaRiderStats.byAthleteId) return null;
+  const row = _stravaRiderStats.byAthleteId[aid];
+  if (row == null) return null;
+  return Number(row.gritCount) || 0;
+}
+
+function stravaGritBarScore(rideCount) {
+  return Math.min(10, Math.max(0, Number(rideCount) || 0));
+}
+
+function getRecentStravaRidesForAthlete(athleteId, limit) {
+  const cap = limit || 6;
+  const data = _stravaRidesBundle;
+  if (!athleteId || !data || !Array.isArray(data.rides)) return [];
+  const sid = String(athleteId);
+  return data.rides
+    .filter(function (r) { return r && String(r.athleteId) === sid && r.activityUrl; })
+    .slice()
+    .sort(function (a, b) {
+      return new Date(b.startDateUTC || 0).getTime() - new Date(a.startDateUTC || 0).getTime();
+    })
+    .slice(0, cap);
+}
+
 function fmtMiles(meters) {
   return ((Number(meters) || 0) * 0.000621371).toFixed(1) + ' mi';
 }
@@ -3921,8 +4024,9 @@ Promise.all([
   fetchParticipantsLiveFirst().catch(() => null),
   fetch('/assets/data/strava-rides.json').then(r => r.json()).catch(() => null),
   fetch('/assets/data/strava-members.json').then(r => r.json()).catch(() => null),
-  fetch('/assets/data/strava-group-events.json').then(r => r.json()).catch(() => null)
-]).then(([donations, parts, stravaData, stravaMembers, stravaGroupEvents]) => {
+  fetch('/assets/data/strava-group-events.json').then(r => r.json()).catch(() => null),
+  fetch('/assets/data/rider-stats.json').then(r => r.json()).catch(() => null)
+]).then(([donations, parts, stravaData, stravaMembers, stravaGroupEvents, riderStats]) => {
   const liveSection = document.getElementById('liveSection');
 
   // Recent donations feed
@@ -3969,8 +4073,14 @@ Promise.all([
   }
 
 
+  _stravaRidesBundle = stravaData || null;
+  _stravaRiderStats =
+    riderStats && typeof riderStats === 'object' && riderStats.byAthleteId
+      ? riderStats
+      : null;
+
+  _stravaMap = {};
   if (stravaMembers && Array.isArray(stravaMembers.members)) {
-    _stravaMap = {};
     stravaMembers.members.forEach(function (m) {
       const rider = findRiderByExternalName(m.displayName);
       if (!rider) return;
@@ -3981,21 +4091,28 @@ Promise.all([
         clubUrl: m.clubUrl || 'https://www.strava.com/clubs/1302442'
       };
     });
-    Object.keys(STRAVA_ATHLETE_OVERRIDES).forEach(function (nameKey) {
-      const rider = findRiderByExternalName(nameKey);
-      if (!rider) return;
-      const riderKey = normalizeName(rider.name);
-      const override = STRAVA_ATHLETE_OVERRIDES[nameKey];
-      const existing = _stravaMap[riderKey] || { clubUrl: 'https://www.strava.com/clubs/1302442' };
-      _stravaMap[riderKey] = {
-        profileUrl: override.profileUrl || existing.profileUrl || null,
-        clubUrl: existing.clubUrl || 'https://www.strava.com/clubs/1302442'
-      };
-    });
   }
+  Object.keys(STRAVA_ATHLETE_OVERRIDES).forEach(function (nameKey) {
+    const rider = findRiderByExternalName(nameKey);
+    if (!rider) return;
+    const riderKey = normalizeName(rider.name);
+    const override = STRAVA_ATHLETE_OVERRIDES[nameKey];
+    const existing = _stravaMap[riderKey] || { clubUrl: 'https://www.strava.com/clubs/1302442' };
+    _stravaMap[riderKey] = {
+      profileUrl: override.profileUrl || existing.profileUrl || null,
+      clubUrl: existing.clubUrl || 'https://www.strava.com/clubs/1302442'
+    };
+  });
 
   if (stravaGroupEvents) renderGroupEvents(stravaGroupEvents);
   if (stravaData) renderTrainingRides(stravaData);
+
+  if (typeof renderAll === 'function') {
+    renderAll(
+      typeof currentFilter !== 'undefined' ? currentFilter : 'all',
+      typeof currentQuery !== 'undefined' ? currentQuery : ''
+    );
+  }
 });
 
 // WAM Countdown
