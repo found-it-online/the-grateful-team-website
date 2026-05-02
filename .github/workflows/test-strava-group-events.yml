@@ -1,0 +1,48 @@
+# Manual only: calls Strava club group_events endpoints and prints JSON to the Actions log.
+# Uses the same secrets as update-team-stats.yml. Does not write to the repo.
+
+name: Test Strava group events API
+
+on:
+  workflow_dispatch:
+    inputs:
+      club_id:
+        description: Strava club ID
+        required: true
+        default: "1302442"
+      event_id:
+        description: Group event ID (leave default to test list + detail tries)
+        required: true
+        default: "3485775290960780042"
+      list_only:
+        description: If true, only fetch /clubs/{id}/group_events (no single-event URLs)
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run test_strava_group_events.py
+        env:
+          STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+          STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+          STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+        run: |
+          set -euo pipefail
+          for v in STRAVA_CLIENT_ID STRAVA_CLIENT_SECRET STRAVA_REFRESH_TOKEN; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing secret $v — add it under repo Settings → Secrets and variables → Actions"
+              exit 1
+            fi
+          done
+          CLUB="${{ github.event.inputs.club_id }}"
+          EVT="${{ github.event.inputs.event_id }}"
+          if [ "${{ github.event.inputs.list_only }}" = "true" ]; then
+            python3 scripts/test_strava_group_events.py "$CLUB"
+          else
+            python3 scripts/test_strava_group_events.py "$CLUB" "$EVT"
+          fi
