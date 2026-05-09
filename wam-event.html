@@ -21,7 +21,20 @@
 <section class="page-hero">
   <div class="page-hero-inner">
     <p class="eyebrow" style="color:var(--color-gold);">The Wish-A-Mile Bicycle Tour</p>
-    <h1>Three days. Three hundred miles.<br>One pretty good reason.</h1>
+    <h1 class="hero-numerals" aria-label="Three days, three hundred miles, one pretty good reason.">
+      <span class="hero-pair">
+        <span class="hero-num">3</span>
+        <span class="hero-label">Days</span>
+      </span>
+      <span class="hero-pair">
+        <span class="hero-num">300</span>
+        <span class="hero-label">Miles</span>
+      </span>
+      <span class="hero-pair">
+        <span class="hero-num">1</span>
+        <span class="hero-label">Pretty good reason</span>
+      </span>
+    </h1>
     <p>WAM is Make-A-Wish Michigan's biggest fundraiser of the year — a fully supported ride across the state that turns a long weekend on a bike into wishes granted for kids fighting critical illnesses.</p>
   </div>
 </section>
@@ -37,9 +50,24 @@
 
 <section class="section-tile">
   <div class="section-narrow prose">
-    <p class="section-eyebrow">Dates</p>
+    <p class="section-eyebrow">
+      <svg class="eyebrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      Dates
+    </p>
     <h2 class="section-h2">July 24–26, 2026.</h2>
-    <p>The 39th annual ride, Friday through Sunday. Mark it now — we leave Grand Rapids together.</p>
+    <p>The 39th annual ride, Friday through Sunday. Mark it now. We'll set up carpools from Grand Rapids, the Muskegon area, and wherever else makes sense as we get closer to the event — final logistics will go out a few weeks before we roll out.</p>
+
+    <div class="calendar-add">
+      <p class="calendar-add-label">Add to calendar:</p>
+      <a class="calendar-btn" href="https://www.google.com/calendar/render?action=TEMPLATE&amp;text=Wish-A-Mile+Bicycle+Tour+2026&amp;dates=20260724/20260727&amp;details=The+39th+annual+WAM+%E2%80%94+three+days%2C+three+hundred+miles%2C+one+pretty+good+reason.+Make-A-Wish+Michigan%27s+biggest+fundraiser.+Riding+with+The+Grateful+Team+%E2%80%94+thegratefulteam.com&amp;location=Marshall+High+School%2C+Marshall%2C+MI" target="_blank" rel="noopener" aria-label="Add WAM 2026 to Google Calendar">Google</a>
+      <a class="calendar-btn" href="/assets/calendar/wam-2026.ics" download aria-label="Download WAM 2026 calendar file for Apple Calendar">Apple</a>
+      <a class="calendar-btn" href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&amp;rru=addevent&amp;subject=Wish-A-Mile+Bicycle+Tour+2026&amp;body=The+39th+annual+WAM+%E2%80%94+three+days%2C+three+hundred+miles%2C+one+pretty+good+reason.+Riding+with+The+Grateful+Team.&amp;startdt=2026-07-24T00%3A00%3A00&amp;enddt=2026-07-27T00%3A00%3A00&amp;allday=true&amp;location=Marshall+High+School%2C+Marshall%2C+MI" target="_blank" rel="noopener" aria-label="Add WAM 2026 to Outlook Calendar">Outlook</a>
+    </div>
   </div>
 </section>
 
@@ -48,6 +76,33 @@
     <p class="section-eyebrow">Location &amp; Route</p>
     <h2 class="section-h2">Start in Marshall. Loop the southwest. Finish in Marshall.</h2>
     <p>WAM starts and finishes at Marshall High School in Marshall, Michigan. From there, the 300-mile route loops through southwest Michigan — picture quiet country roads, lake breezes, and small towns that turn out to wave you through.</p>
+
+    <figure class="route-graphic">
+      <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="wam-route-title wam-route-desc">
+        <title id="wam-route-title">WAM 300 route map — three days through southwest Michigan</title>
+        <desc id="wam-route-desc">Stylized illustration of the three-day Wish-A-Mile bicycle tour route. Day 1 heads northwest from Marshall to Holland. Day 2 loops south from Holland to Kalamazoo. Day 3 returns east from Kalamazoo to Marshall.</desc>
+        <path d="M 60,90 Q 130,60 220,80 T 380,75 Q 470,75 530,110 T 555,260 Q 535,330 460,348 T 270,355 Q 165,345 100,300 T 55,180 Z" fill="rgba(74,31,107,0.05)" stroke="none"/>
+        <path d="M 480,250 C 460,200 380,180 320,170 S 240,135 200,118" fill="none" stroke="var(--color-orange)" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M 200,118 C 220,170 285,200 305,210 S 340,238 340,248" fill="none" stroke="var(--color-orange)" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M 340,248 C 380,260 420,265 460,258 S 478,250 480,250" fill="none" stroke="var(--color-orange)" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="320" y="152" font-family="'Josefin Slab', serif" font-size="11" font-weight="700" fill="var(--color-red)" letter-spacing="0.1em">DAY 1 · ~100 MI</text>
+        <text x="225" y="200" font-family="'Josefin Slab', serif" font-size="11" font-weight="700" fill="var(--color-red)" letter-spacing="0.1em">DAY 2 · ~100 MI</text>
+        <text x="380" y="282" font-family="'Josefin Slab', serif" font-size="11" font-weight="700" fill="var(--color-red)" letter-spacing="0.1em">DAY 3 · ~100 MI</text>
+        <circle cx="200" cy="118" r="7" fill="var(--color-orange)"/>
+        <circle cx="200" cy="118" r="3" fill="var(--color-cream)"/>
+        <text x="172" y="100" font-family="'Josefin Slab', serif" font-size="14" font-weight="700" fill="var(--color-night)">Holland</text>
+        <text x="172" y="86" font-family="'Lato', sans-serif" font-size="11" fill="rgba(30,10,25,0.6)">Day 1 stop</text>
+        <circle cx="340" cy="248" r="7" fill="var(--color-orange)"/>
+        <circle cx="340" cy="248" r="3" fill="var(--color-cream)"/>
+        <text x="305" y="272" font-family="'Josefin Slab', serif" font-size="14" font-weight="700" fill="var(--color-night)">Kalamazoo</text>
+        <text x="305" y="287" font-family="'Lato', sans-serif" font-size="11" fill="rgba(30,10,25,0.6)">Day 2 stop</text>
+        <circle cx="480" cy="250" r="10" fill="var(--color-night)"/>
+        <circle cx="480" cy="250" r="4" fill="var(--color-gold)"/>
+        <text x="497" y="247" font-family="'Josefin Slab', serif" font-size="14" font-weight="700" fill="var(--color-night)">Marshall</text>
+        <text x="497" y="262" font-family="'Lato', sans-serif" font-size="11" fill="rgba(30,10,25,0.6)">Start &amp; Finish</text>
+      </svg>
+      <figcaption>An indicative route — the real thing winds through more small towns than this can show.</figcaption>
+    </figure>
 
     <table style="width:100%; border-collapse:collapse; margin: 24px 0 8px; font-family:'Lato', sans-serif;">
       <thead>
@@ -79,20 +134,73 @@
     <p style="font-size:15px; color:rgba(26,14,43,0.65); font-style:italic; margin-top:16px;">
       Want a shorter taste? Try the 100-mile day (Saturday, Holland → Kalamazoo) or the 200-mile two-day option.
     </p>
+
+    <p class="gallery-intro">A few moments from past rides — real photos coming soon.</p>
+    <div class="photo-gallery" aria-label="Past WAM ride photos — placeholders, photos coming soon">
+      <div class="photo-tile" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Photo coming soon</span>
+      </div>
+      <div class="photo-tile" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Photo coming soon</span>
+      </div>
+      <div class="photo-tile" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Photo coming soon</span>
+      </div>
+      <div class="photo-tile" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Photo coming soon</span>
+      </div>
+      <div class="photo-tile" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Photo coming soon</span>
+      </div>
+      <div class="photo-tile" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <span>Photo coming soon</span>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="section-tile">
-  <div class="section-narrow prose">
+  <div class="section-narrow">
     <p class="section-eyebrow">What to Expect</p>
     <h2 class="section-h2">You ride. They handle the rest.</h2>
-    <ul>
-      <li><strong>Fully supported.</strong> SAG vehicles, medics, mechanics, and police escorts on the route.</li>
-      <li><strong>Rest stops every ~10–15 miles.</strong> Snacks, water, sunscreen, friendly faces.</li>
-      <li><strong>Catered meals.</strong> Breakfast, lunch, dinner — included. You will not go hungry.</li>
-      <li><strong>Overnight stops.</strong> Two nights at host high schools (Holland and Kalamazoo). Most riders camp on-site or grab a nearby hotel. Shuttles run between the two.</li>
-      <li><strong>The finish line.</strong> Wish kids and families lining the road into Marshall. This is the part nobody talks about ahead of time, because there's no way to oversell it. You'll see.</li>
-    </ul>
+    <div class="wam-features">
+      <article class="wam-feature">
+        <span class="wam-feature-emoji" aria-hidden="true">🚐</span>
+        <h3 class="wam-feature-title">SAG Van</h3>
+        <p class="wam-feature-desc">Support van rides sweep. Blow a tire, hit the wall, the SAG scoops you up. Nobody gets stranded.</p>
+      </article>
+      <article class="wam-feature">
+        <span class="wam-feature-emoji" aria-hidden="true">🩹</span>
+        <h3 class="wam-feature-title">Medics</h3>
+        <p class="wam-feature-desc">Trained medics on the route, most of them riding with us. They've seen everything by mile 200.</p>
+      </article>
+      <article class="wam-feature">
+        <span class="wam-feature-emoji" aria-hidden="true">🚲</span>
+        <h3 class="wam-feature-title">Bike Repair</h3>
+        <p class="wam-feature-desc">Mechanics at every rest stop. Flat? Chain? Mystery click? They'll fix it before your snack settles.</p>
+      </article>
+      <article class="wam-feature">
+        <span class="wam-feature-emoji" aria-hidden="true">🚓</span>
+        <h3 class="wam-feature-title">Police Escort</h3>
+        <p class="wam-feature-desc">Sheriffs and locals at intersections. Stopping safely isn't your problem — just keep pedaling.</p>
+      </article>
+      <article class="wam-feature">
+        <span class="wam-feature-emoji" aria-hidden="true">🥨</span>
+        <h3 class="wam-feature-title">Rest Stops</h3>
+        <p class="wam-feature-desc">Every 10–15 miles. Snacks, water, sunscreen, a bench, a friendly face. Catered meals at the overnights too — you will not go hungry.</p>
+      </article>
+      <article class="wam-feature">
+        <span class="wam-feature-emoji" aria-hidden="true">🏁</span>
+        <h3 class="wam-feature-title">The Finish Line</h3>
+        <p class="wam-feature-desc">Wish kids and families lining the road into Marshall. Nobody talks about this part ahead of time, because there's no way to oversell it. You'll see.</p>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -127,5 +235,6 @@
 <div id="footer-slot"></div>
 
 <script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/wam-features.js" defer></script>
 </body>
 </html>

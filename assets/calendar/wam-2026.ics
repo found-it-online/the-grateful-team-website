@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Grateful Team//WAM 2026//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:wam-2026@thegratefulteam.com
+DTSTAMP:20260509T112300Z
+DTSTART;VALUE=DATE:20260724
+DTEND;VALUE=DATE:20260727
+SUMMARY:Wish-A-Mile Bicycle Tour 2026
+DESCRIPTION:The 39th annual WAM — three days\, three hundred miles\, one pretty good reason. Make-A-Wish Michigan's biggest fundraiser. Riding with The Grateful Team — thegratefulteam.com
+LOCATION:Marshall High School\, Marshall\, MI
+URL:https://wish.org/michigan/39th-annual-wish-mile-bicycle-tour-july-24-26-2026
+CATEGORIES:Cycling,Fundraiser
+END:VEVENT
+END:VCALENDAR
