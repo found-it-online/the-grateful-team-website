@@ -2350,8 +2350,25 @@ button.btn-primary,
 .photo-tile {
   aspect-ratio: 4 / 3;
   background: rgba(74,31,107,0.06);
-  border: 1px solid rgba(74,31,107,0.14);
   border-radius: 6px;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+}
+.photo-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 400ms ease;
+}
+.photo-tile:hover img,
+.photo-tile:focus-within img {
+  transform: scale(1.03);
+}
+/* Placeholder fallback (only used if a tile has no image yet) */
+.photo-tile:not(:has(img)) {
+  border: 1px solid rgba(74,31,107,0.14);
   display: flex;
   flex-direction: column;
   align-items: center;
