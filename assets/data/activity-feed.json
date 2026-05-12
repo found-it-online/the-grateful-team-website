@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-05-12T14:09:34Z",
+  "updatedAt": "2026-05-12T16:16:41Z",
   "donations": [
+    {
+      "displayName": "Dan Vecchio",
+      "amount": 100.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-12T15:17:48.403+0000"
+    },
     {
       "displayName": "Aunt Deb and Kristie",
       "amount": 150.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-02-20T17:00:43.520+0000"
-    },
-    {
-      "displayName": "Pamela Dowd",
-      "amount": 25.0,
-      "recipientName": "Ally Austin",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-02-20T16:59:48.703+0000"
     }
   ],
   "participants": [
