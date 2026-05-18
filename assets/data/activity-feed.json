@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-05-18T09:52:15Z",
+  "updatedAt": "2026-05-18T15:18:58Z",
   "donations": [
+    {
+      "displayName": "Kendall Meijer Giving Fund",
+      "amount": 1000.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-18T14:11:19.807+0000"
+    },
     {
       "displayName": "Meant for Movement LLC",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-03-09T19:37:24.430+0000"
-    },
-    {
-      "displayName": "Lori Palluconi",
-      "amount": 25.0,
-      "recipientName": "Ally Austin",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-03-09T19:13:13.937+0000"
     }
   ],
   "participants": [
