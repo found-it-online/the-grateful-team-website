@@ -194,6 +194,8 @@
     .tcard-wrap[data-tier="veteran"] .tcard-front { border: 2.5px solid var(--color-purple-light); }
     .tcard-wrap[data-tier="rider"] .tcard-front { border: 2.5px solid var(--color-cerulean); }
     .tcard-wrap[data-tier="rookie"] .tcard-front { border: 2.5px solid rgba(250,246,232,0.3); }
+    .tcard-wrap[data-tier="retired"] .tcard-front { border: 2.5px solid rgba(180,180,180,0.35); opacity: 0.75; }
+    .tcard-wrap[data-tier="retired"] .tcard-front { border: 2.5px solid rgba(180,180,180,0.35); opacity: 0.75; }
     .tcard-back { border: 2px solid rgba(201,148,58,0.2); }
 
     /* Card front */
@@ -353,6 +355,8 @@
     [data-tier="veteran"] .tcard-avatar { background: linear-gradient(135deg, var(--color-purple-light) 0%, var(--color-purple) 100%); color: #fff; box-shadow: 0 0 16px rgba(123,59,177,0.4); }
     [data-tier="rider"] .tcard-avatar { background: linear-gradient(135deg, var(--color-cerulean) 0%, #0390a5 100%); box-shadow: 0 0 16px rgba(4,178,202,0.3); }
     [data-tier="rookie"] .tcard-avatar { background: rgba(250,246,232,0.12); color: var(--color-cream); border: 2px solid rgba(250,246,232,0.2); }
+    [data-tier="retired"] .tcard-avatar { background: rgba(150,150,150,0.12); color: rgba(250,246,232,0.6); border: 2px solid rgba(180,180,180,0.2); }
+    [data-tier="retired"] .tcard-avatar { background: rgba(150,150,150,0.12); color: rgba(250,246,232,0.6); border: 2px solid rgba(180,180,180,0.2); }
 
     /* Card body text */
     .tcard-body {
@@ -1932,6 +1936,7 @@
     <button class="filter-btn" data-filter="veteran">🔥 Veterans</button>
     <button class="filter-btn" data-filter="rider">🚴 Riders</button>
     <button class="filter-btn" data-filter="rookie">🌱 Rookies</button>
+    <button class="filter-btn" data-filter="retired">🏅 Retired</button>
     <button class="filter-btn" id="sortRaisedBtn" onclick="toggleSortByRaised(this)" title="Sort cards by amount raised">📊 Sort: Default</button>
     <button class="filter-btn" id="randomRiderBtn" onclick="openRandomRider()" title="Open a random rider card" style="background:rgba(249,241,8,0.07);border-color:rgba(249,241,8,0.25);color:rgba(249,241,8,0.7);">🎲 Surprise Me</button>
     <input class="roster-search" type="search" placeholder="Search riders…" id="rosterSearch" autocomplete="off">
@@ -2108,7 +2113,7 @@ const RIDERS_CORE = [
     name: "Jason Winchell",
     nickname: "Eaton Beacon",
     donorSlug: "4956",
-    tier: "legend",
+    tier: "retired",
     years: 4,
     song: "Ripple",
     initials: "JW",
@@ -2136,7 +2141,7 @@ const RIDERS_CORE = [
     name: "Benjamin Kulczewski",
     nickname: "Ben-Dana",
     donorSlug: "4940",
-    tier: "veteran",
+    tier: "rider",
     years: 1,
     song: "Truckin'",
     initials: "BK",
@@ -2164,7 +2169,7 @@ const RIDERS_CORE = [
     name: "Lauren Froman",
     nickname: "GoFro",
     donorSlug: "4821",
-    tier: "veteran",
+    tier: "rider",
     years: 3,
     song: "Shakedown Street",
     initials: "LF",
@@ -2178,7 +2183,7 @@ const RIDERS_CORE = [
     name: "Jackson Maitner",
     nickname: "Jaxon",
     donorSlug: "4941",
-    tier: "rider",
+    tier: "veteran",
     years: 3,
     song: "Althea",
     initials: "JM",
@@ -2206,7 +2211,7 @@ const RIDERS_CORE = [
     name: "Nicholas Milanowski",
     nickname: "Lax-Bro",
     donorSlug: "4853",
-    tier: "rider",
+    tier: "veteran",
     years: 1,
     song: "Sugar Magnolia",
     initials: "NM",
@@ -2220,7 +2225,7 @@ const RIDERS_CORE = [
     name: "Ally Austin",
     nickname: "All-In Ally",
     donorSlug: "4841",
-    tier: "veteran",
+    tier: "rider",
     years: 3,
     song: "Scarlet Begonias",
     initials: "AA",
@@ -2234,7 +2239,7 @@ const RIDERS_CORE = [
     name: "Stanislaw Krzyzanowski",
     nickname: "Stan the Man",
     donorSlug: "5121",
-    tier: "rookie",
+    tier: "rider",
     years: 2,
     song: "Dark Star",
     initials: "SK",
@@ -2304,7 +2309,7 @@ const RIDERS_CORE = [
     name: "Robert Schilling",
     nickname: "Bob the Builder",
     donorSlug: "Bob-Schilling-Make_a_Wish_page",
-    tier: "veteran",
+    tier: "rider",
     years: 3,
     song: "Box of Rain",
     initials: "RS",
@@ -2318,7 +2323,7 @@ const RIDERS_CORE = [
     name: "Sarah Joos",
     nickname: "The Juice",
     donorSlug: "5174",
-    tier: "rookie",
+    tier: "rider",
     years: 1,
     song: "Women Are Smarter",
     initials: "SJ",
@@ -2332,7 +2337,7 @@ const RIDERS_CORE = [
     name: "Nakayla Kosmerick",
     nickname: "Nananana! Batman!",
     donorSlug: "4830",
-    tier: "veteran",
+    tier: "rider",
     years: 2,
     song: "Estimated Prophet",
     initials: "NK",
@@ -2360,7 +2365,7 @@ const RIDERS_CORE = [
     name: "Lisa Marsh",
     nickname: "Spicy Salsa",
     donorSlug: "4820",
-    tier: "veteran",
+    tier: "rider",
     years: 2,
     song: "Dire Wolf",
     initials: "LM",
@@ -2374,7 +2379,7 @@ const RIDERS_CORE = [
     name: "Taylor Robson",
     nickname: "Kickstand",
     donorSlug: "5075",
-    tier: "rider",
+    tier: "veteran",
     years: 3,
     song: "Touch of Grey",
     initials: "TR",
@@ -2458,7 +2463,7 @@ const RIDERS_CORE = [
     name: "Andrew Kennedy",
     nickname: "AK-47",
     donorSlug: "4854",
-    tier: "veteran",
+    tier: "rider",
     years: 1,
     song: "Uncle John's Band",
     initials: "AK",
@@ -2486,7 +2491,7 @@ const RIDERS_CORE = [
     name: "Cami Mastenbrook",
     nickname: "Hollandaise",
     donorSlug: "4880",
-    tier: "veteran",
+    tier: "rider",
     years: 1,
     song: "Sugaree",
     initials: "CM",
@@ -2500,7 +2505,7 @@ const RIDERS_CORE = [
     name: "Cole Christians",
     nickname: "Apollo",
     donorSlug: "4950",
-    tier: "veteran",
+    tier: "rider",
     years: 3,
     song: "Fire on the Mountain",
     initials: "CC",
@@ -2528,7 +2533,7 @@ const RIDERS_CORE = [
     name: "David Dirksen",
     nickname: "Gummies",
     donorSlug: "4883",
-    tier: "veteran",
+    tier: "rider",
     years: 2,
     song: "Passenger",
     initials: "DD",
@@ -2556,7 +2561,7 @@ const RIDERS_CORE = [
     name: "Elizabeth Pomfret",
     nickname: "The Writer",
     donorSlug: "4904",
-    tier: "veteran",
+    tier: "rider",
     years: 3,
     song: "China Cat Sunflower",
     initials: "EP",
@@ -2612,7 +2617,7 @@ const RIDERS_CORE = [
     name: "Jason Agar",
     nickname: "The Blueprint",
     donorSlug: "5071",
-    tier: "legend",
+    tier: "retired",
     years: 3,
     song: "Ripple",
     initials: "JA",
@@ -2626,7 +2631,7 @@ const RIDERS_CORE = [
     name: "Jeffrey Steigerwald",
     nickname: "Art Van",
     donorSlug: "5120",
-    tier: "rookie",
+    tier: "rider",
     years: 4,
     song: "Samson and Delilah",
     initials: "JS",
@@ -2654,7 +2659,7 @@ const RIDERS_CORE = [
     name: "Jessica Barr",
     nickname: "Faster than Luis",
     donorSlug: "5055",
-    tier: "rider",
+    tier: "veteran",
     years: 3,
     song: "Dancin' in the Streets",
     initials: "JB",
@@ -2668,7 +2673,7 @@ const RIDERS_CORE = [
     name: "Nathan McGlinchey",
     nickname: "Pinchy McGlinchey",
     donorSlug: "4938",
-    tier: "veteran",
+    tier: "rider",
     years: 3,
     song: "Ramble On Rose",
     initials: "NM",
@@ -2682,7 +2687,7 @@ const RIDERS_CORE = [
     name: "Nathan Schilling",
     nickname: "N-Shill",
     donorSlug: "5123",
-    tier: "rookie",
+    tier: "rider",
     years: 1,
     song: "Mexicali Blues",
     initials: "NS",
@@ -2724,7 +2729,7 @@ const RIDERS_CORE = [
     name: "Ross Kraft",
     nickname: "Little Charlie Minion",
     donorSlug: "4953",
-    tier: "veteran",
+    tier: "rider",
     years: 1,
     song: "Cumberland Blues",
     initials: "RK",
@@ -2904,12 +2909,14 @@ const TIER_LABELS = {
   veteran: "Veteran",
   rider: "Rider",
   rookie: "Rookie",
+  retired: "Retired",
 };
 
-const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3 };
+const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3, retired: 4 };
 
 function getComputedTier(rider) {
   if (rider.tier === 'legend') return 'legend';
+  if (rider.tier === 'retired') return 'retired';
   // Form intake → always rookie card until promoted into RIDERS_CORE manually.
   if (rider.source === 'google-form-intake') return 'rookie';
   // Respect roster author intent: returning WAM riders can be Veteran/Rider even when years: 1.
