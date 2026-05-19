@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-05-19T09:56:47Z",
+  "updatedAt": "2026-05-19T15:40:25Z",
   "donations": [
+    {
+      "displayName": "Kovalik\u2019s",
+      "amount": 50.0,
+      "recipientName": "Ally Austin",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-19T13:36:30.790+0000"
+    },
+    {
+      "displayName": "Sylvia Geiman",
+      "amount": 50.0,
+      "recipientName": "Ally Austin",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-19T11:13:13.590+0000"
+    },
     {
       "displayName": "Mary and Brad DiCello",
       "amount": 100.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-03-31T11:03:14.237+0000"
-    },
-    {
-      "displayName": "Michael  Hodgkinson",
-      "amount": 50.0,
-      "recipientName": "Mary Tabanguil",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-03-31T01:37:05.987+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 20.0,
-      "recipientName": "Mary Tabanguil",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-03-30T22:04:18.763+0000"
     }
   ],
   "participants": [
