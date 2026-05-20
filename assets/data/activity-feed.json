@@ -1,6 +1,38 @@
 {
-  "updatedAt": "2026-05-19T20:46:08Z",
+  "updatedAt": "2026-05-20T02:46:31Z",
   "donations": [
+    {
+      "displayName": "Alicia Mata",
+      "amount": 50.0,
+      "recipientName": "Jess Mata",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-20T01:27:49.700+0000"
+    },
+    {
+      "displayName": "Sarah and Collin Cummings",
+      "amount": 25.0,
+      "recipientName": "Ally Austin",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-20T00:30:24.317+0000"
+    },
+    {
+      "displayName": "Todd Smith",
+      "amount": 10.0,
+      "recipientName": "Caleb Agar",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-19T20:52:13.450+0000"
+    },
+    {
+      "displayName": "RevEv",
+      "amount": 75.0,
+      "recipientName": "Caleb Agar",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-19T20:52:10.300+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 25.0,
@@ -768,38 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-04-15T19:29:12.233+0000"
-    },
-    {
-      "displayName": "Lasota Architects Inc.",
-      "amount": 1000.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-04-15T19:05:24.523+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 50.0,
-      "recipientName": "Mary Tabanguil",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-04-12T17:42:56.163+0000"
-    },
-    {
-      "displayName": "Patrick Sullivan",
-      "amount": 100.0,
-      "recipientName": "Robert Schilling",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-04-07T15:40:05.793+0000"
-    },
-    {
-      "displayName": "Jenny Scherer",
-      "amount": 20.0,
-      "recipientName": "Robert Schilling",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-04-02T21:15:42.647+0000"
     }
   ],
   "participants": [
