@@ -169,15 +169,12 @@
     <p class="eyebrow" style="color:var(--color-cerulean);margin:0 0 8px;">Strava Club Training</p>
     <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.2vw,2.2rem);color:var(--color-cream);margin:0 0 18px;">Weekly Training Rides.</h2>
     <p class="training-prose-lede">
-      Official training rides are Strava <strong style="color:rgba(250,246,232,0.95);">club group events</strong> — join the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener">TGT Strava club</a> to RSVP, see meet points, routes, and start times. Each sync lists <strong style="color:rgba(250,246,232,0.95);">upcoming club events</strong> below (same style as our Zoo kickoff cards) and <strong style="color:rgba(250,246,232,0.95);">recent miles</strong> from the club activity feed (last 7 days). Full rider cards &amp; grit live on the <a href="/roster.html">team roster</a>.
+      Official training rides are Strava <strong style="color:rgba(250,246,232,0.95);">club group events</strong> — join the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener">TGT Strava club</a> to RSVP, see meet points, routes, and start times. Upcoming club events are listed below. Full rider cards live on the <a href="/roster.html">team roster</a>.
     </p>
     <div id="eventsGroupEventsBlock" style="display:none;margin:0 0 36px;">
       <h3 class="training-subhead training-subhead--first">Upcoming official rides</h3>
       <div id="eventsGroupEventsFeed" class="training-strava-grid"></div>
     </div>
-    <h3 class="training-subhead">Recent club rides</h3>
-    <p class="training-rides-muted" style="margin:0 0 18px;">Last 7 days from our Strava sync · Not live to the second — if this looks empty, open the club feed.</p>
-    <div id="eventsStravaRidesFeed" class="training-feed-grid"></div>
     <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
       <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="btn-ghost" style="border-color:rgba(4,178,202,0.45);color:var(--color-cerulean);">Open TGT Strava Club →</a>
     </div>
@@ -330,8 +327,6 @@
     block.style.display = 'block';
   }
 
-  var elRides = document.getElementById('eventsStravaRidesFeed');
-
   function fetchJsonNoStore(path) {
     return fetch(path, { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('bad');
@@ -339,79 +334,11 @@
     });
   }
 
-  Promise.all([
-    fetchJsonNoStore('/assets/data/strava-rides.json').catch(function () { return null; }),
-    fetchJsonNoStore('/assets/data/strava-group-events.json').catch(function () { return null; })
-  ]).then(function (results) {
-    var ridesData = results[0];
-    var groupEventsData = results[1];
-
-    if (groupEventsData) renderGroupEventsEventsPage(groupEventsData);
-
-    var rides = ridesData && Array.isArray(ridesData.rides) ? ridesData.rides : [];
-    var recent = rides.filter(function (x) {
-      return startedInLast7Days(x.startDateUTC || x.startDateLocal);
-    });
-    recent.sort(function (a, b) {
-      return new Date(b.startDateUTC || b.startDateLocal) - new Date(a.startDateUTC || a.startDateLocal);
-    });
-    if (!elRides) return;
-    if (!recent.length) {
-      if (rides.length) {
-        elRides.innerHTML =
-          '<div class="event-card training-empty-card"><p><strong>Nothing in the last 7 days</strong> in our synced club snapshot (we merge many activity pages, then filter here). Post to the club feed or check Strava \u2014 the next sync picks it up.</p></div>';
-      } else {
-        elRides.innerHTML =
-          '<div class="event-card training-empty-card"><p>Club ride data hasn\u2019t synced yet. Open the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="event-card-link" style="font-style:normal;">TGT Strava club</a>.</p></div>';
-      }
-      return;
-    }
-    elRides.innerHTML = recent.slice(0, 40).map(function (ride) {
-      var when = new Date(ride.startDateUTC || ride.startDateLocal || 0);
-      var ribbon = Number.isNaN(when.getTime())
-        ? ''
-        : when.toLocaleString(undefined, {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit'
-          });
-      var ribbonHtml = ribbon ? '<span class="event-card-date">' + escapeHtml(ribbon) + '</span>' : '';
-      var title = escapeHtml(ride.name || 'Ride');
-      var athlete = escapeHtml(ride.athleteName || 'Club rider');
-      var sport = escapeHtml(ride.sportType || 'Ride');
-      var href = escapeHtml(ride.activityUrl || ride.clubUrl || CLUB_URL);
-      return (
-        '<article class="event-card training-ride-mini">' +
-        ribbonHtml +
-        '<h3 class="event-card-title">' +
-        title +
-        '</h3>' +
-        '<div class="event-card-meta">' +
-        '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDEB4</span><span>' +
-        athlete +
-        '</span></div>' +
-        '<div class="event-card-meta-row"><span class="icon" aria-hidden="true">\uD83D\uDCCF</span><span>' +
-        fmtMiles(ride.distanceMeters) +
-        ' \u00b7 ' +
-        sport +
-        '</span></div>' +
-        '</div>' +
-        '<div class="training-ride-actions">' +
-        '<a href="' +
-        href +
-        '" target="_blank" rel="noopener" class="event-card-link">View activity \u2192</a>' +
-        '</div>' +
-        '</article>'
-      );
-    }).join('');
-  }).catch(function () {
-    if (elRides) {
-      elRides.innerHTML =
-        '<div class="event-card training-empty-card"><p>Couldn\u2019t load Strava data. Open the <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="event-card-link" style="font-style:normal;">Strava club</a>.</p></div>';
-    }
-  });
+  fetchJsonNoStore('/assets/data/strava-group-events.json')
+    .then(function (groupEventsData) {
+      if (groupEventsData) renderGroupEventsEventsPage(groupEventsData);
+    })
+    .catch(function () {});
 })();
 
 function makeVEvent(summary, dateStart, dateEnd, location, description) {
