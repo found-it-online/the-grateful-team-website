@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-05-23T14:57:10Z",
+  "updatedAt": "2026-05-23T19:02:52Z",
   "donations": [
+    {
+      "displayName": "Stephanie Stull",
+      "amount": 50.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-23T15:07:49.280+0000"
+    },
     {
       "displayName": "Dad",
       "amount": 100.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-04-17T19:45:25.347+0000"
-    },
-    {
-      "displayName": "Laurie McGonigal",
-      "amount": 50.0,
-      "recipientName": "Brad Johnson",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-04-17T14:56:50.873+0000"
     }
   ],
   "participants": [

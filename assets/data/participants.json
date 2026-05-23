@@ -426,9 +426,9 @@
   {
     "participantID": 5125,
     "displayName": "Teodoro Vecchio",
-    "avatarImageURL": null,
-    "sumDonations": 0.0,
+    "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_29EF417B-0F4E-6A6B-29A57A98ACAE31B9.jpg?v=1779309863207",
+    "sumDonations": 50.0,
     "fundraisingGoal": 3000.0,
-    "numDonations": 0
+    "numDonations": 1
   }
 ]
