@@ -49,60 +49,26 @@
 <script src="/assets/js/nav.js" defer></script>
 
 <script>
-  // ─── Google Sheet (published as CSV) ─────────────────────────────────────────
-  // Sheet: TGT Gear Recommendations
-  // To update: File → Share → Publish to web → Sheet1 → CSV → Publish
-  // Paste the published CSV link here:
-  const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1K1g6Tx5pqWvvEhczpco94le_u2h3VIziPj79B8nP7O8/pub?output=csv';
+  // ─── Gear data ────────────────────────────────────────────────────────────────
+  // To add or update gear picks: edit /assets/data/gear.json and commit.
+  // Categories render in sort_order sequence; picks render in array order.
 
-  // ─── CSV parser (handles quoted fields with commas and newlines) ──────────────
-  function parseCSV(text) {
-    const rows = [];
-    let row = [], field = '', inQuotes = false;
-    for (let i = 0; i < text.length; i++) {
-      const ch = text[i], next = text[i + 1];
-      if (inQuotes) {
-        if (ch === '"' && next === '"') { field += '"'; i++; }
-        else if (ch === '"') { inQuotes = false; }
-        else { field += ch; }
-      } else {
-        if (ch === '"') { inQuotes = true; }
-        else if (ch === ',') { row.push(field.trim()); field = ''; }
-        else if (ch === '\r' && next === '\n') { row.push(field.trim()); rows.push(row); row = []; field = ''; i++; }
-        else if (ch === '\n' || ch === '\r') { row.push(field.trim()); rows.push(row); row = []; field = ''; }
-        else { field += ch; }
-      }
-    }
-    if (field || row.length) { row.push(field.trim()); rows.push(row); }
-    return rows;
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(s) {
+    return String(s).replace(/"/g,'&quot;');
   }
 
   // ─── Render ───────────────────────────────────────────────────────────────────
-  function renderGear(rows) {
-    const headers = rows[0].map(h => h.toLowerCase().replace(/\s+/g, '_'));
-    const picks = rows.slice(1).map(row => {
-      const obj = {};
-      headers.forEach((h, i) => obj[h] = row[i] || '');
-      return obj;
-    }).filter(p => p.active.toUpperCase() === 'TRUE');
-
-    // Group by category, preserving sort_order
-    const categoryMap = new Map();
-    picks.forEach(p => {
-      const key = p.category;
-      if (!categoryMap.has(key)) categoryMap.set(key, { sort: parseInt(p.sort_order, 10) || 99, picks: [] });
-      categoryMap.get(key).picks.push(p);
-    });
-
-    const categories = [...categoryMap.entries()]
-      .sort((a, b) => a[1].sort - b[1].sort);
-
+  function renderGear(categories) {
+    const sorted = [...categories].sort((a, b) => a.sort_order - b.sort_order);
     const container = document.getElementById('gear-container');
-    container.innerHTML = categories.map(([name, { sort, picks }], idx) => `
+    container.innerHTML = sorted.map((cat, idx) => `
       <div class="gear-category">
-        <div class="gear-category-header"><h2>${idx + 1}. ${escHtml(name)}</h2></div>
+        <div class="gear-category-header"><h2>${idx + 1}. ${escHtml(cat.category)}</h2></div>
         <div class="gear-picks">
-          ${picks.map(p => `
+          ${cat.picks.map(p => `
             <div class="gear-pick">
               <div class="gear-pick-head">
                 <span class="gear-pick-name">${escHtml(p.name)}</span>
@@ -117,22 +83,15 @@
     `).join('');
   }
 
-  function escHtml(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-  function escAttr(s) {
-    return String(s).replace(/"/g,'&quot;');
-  }
-
   // ─── Fetch ────────────────────────────────────────────────────────────────────
-  fetch(SHEET_CSV_URL)
+  fetch('/assets/data/gear.json')
     .then(r => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.text();
+      return r.json();
     })
-    .then(text => renderGear(parseCSV(text)))
+    .then(data => renderGear(data))
     .catch(err => {
-      console.error('Gear fetch failed:', err);
+      console.error('Gear load failed:', err);
       document.getElementById('gear-container').innerHTML =
         '<p style="text-align:center; color:var(--color-mid); padding:48px 0;">Gear picks temporarily unavailable — check back soon.</p>';
     });
