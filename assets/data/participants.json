@@ -91,9 +91,9 @@
     "participantID": 4950,
     "displayName": "Cole Christians",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_1836078B-F342-CB92-FE2632A63C79D964.jpg?v=1779309863207",
-    "sumDonations": 0.0,
+    "sumDonations": 100.0,
     "fundraisingGoal": 2500.0,
-    "numDonations": 0
+    "numDonations": 1
   },
   {
     "participantID": 5048,
@@ -275,9 +275,9 @@
     "participantID": 4818,
     "displayName": "Luis Vecchio",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_939DF099-9E15-71BA-827B5EF85610BE47.jpg?v=1779309863207",
-    "sumDonations": 1275.0,
+    "sumDonations": 1375.0,
     "fundraisingGoal": 4500.0,
-    "numDonations": 5
+    "numDonations": 6
   },
   {
     "participantID": 4795,
@@ -315,9 +315,9 @@
     "participantID": 4946,
     "displayName": "Nate Milanowski",
     "avatarImageURL": null,
-    "sumDonations": 1550.0,
+    "sumDonations": 1650.0,
     "fundraisingGoal": 1000.0,
-    "numDonations": 3
+    "numDonations": 4
   },
   {
     "participantID": 4899,
@@ -347,9 +347,9 @@
     "participantID": 4853,
     "displayName": "Nicholas Milanowski",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_CC121AAD-E60D-F6EF-C48D88E5FA1BABFA.jpg?v=1779309863207",
-    "sumDonations": 1550.0,
+    "sumDonations": 1650.0,
     "fundraisingGoal": 10000.0,
-    "numDonations": 3
+    "numDonations": 4
   },
   {
     "participantID": 5082,
@@ -427,8 +427,8 @@
     "participantID": 5125,
     "displayName": "Teodoro Vecchio",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_29EF417B-0F4E-6A6B-29A57A98ACAE31B9.jpg?v=1779309863207",
-    "sumDonations": 50.0,
+    "sumDonations": 150.0,
     "fundraisingGoal": 3000.0,
-    "numDonations": 1
+    "numDonations": 2
   }
 ]
