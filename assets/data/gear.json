@@ -1,0 +1,252 @@
+[
+  {
+    "category": "Bibs & Shorts",
+    "sort_order": 1,
+    "picks": [
+      {
+        "name": "Pearl Izumi Quest Bib Short",
+        "price": "$",
+        "blurb": "Solid entry-level bib that won't punish your wallet or your sit bones. Great if you're new to long days and not ready to drop premium money on something you'll find out you love or hate.",
+        "url": "https://www.pearlizumi.com/",
+        "display_url": "pearlizumi.com"
+      },
+      {
+        "name": "Castelli Endurance 3 Bib Shorts",
+        "price": "$$",
+        "blurb": "The reliable mid-tier workhorse. Castelli's pad is famously comfortable, and these hold up to repeat wash cycles all summer long.",
+        "url": "https://www.castelli-cycling.com/",
+        "display_url": "castelli-cycling.com"
+      },
+      {
+        "name": "Rapha Pro Team Bib Shorts",
+        "price": "$$$",
+        "blurb": "If you ride enough miles to know what you want, Rapha's Pro Team line is the move. Compressive, supportive, and the chamois holds up over multi-day rides.",
+        "url": "https://www.rapha.cc/us/en_US/shop/pro-team-bib-shorts/product/PTB",
+        "display_url": "rapha.cc"
+      },
+      {
+        "name": "The Black Bibs",
+        "price": "$",
+        "blurb": "Simple and beyond functional. Unlabeled. Unbranded. And the most affordable on the market. Personally recommended by Lauren M.",
+        "url": "https://theblackbibs.com/collections/mens-bibs/products/the-black-bibs",
+        "display_url": "theblackbibs.com"
+      }
+    ]
+  },
+  {
+    "category": "Helmets",
+    "sort_order": 2,
+    "picks": [
+      {
+        "name": "Giro Register MIPS",
+        "price": "$",
+        "blurb": "A great-fitting, MIPS-equipped helmet for under a hundred bucks. There's no reason to skip MIPS in 2026.",
+        "url": "https://www.giro.com/",
+        "display_url": "giro.com"
+      },
+      {
+        "name": "Specialized Align II MIPS",
+        "price": "$",
+        "blurb": "Another sub-$100 pick that punches well above its price. Comfortable on long days, plenty of vents.",
+        "url": "https://www.specialized.com/us/en/align-ii-mips/p/199461",
+        "display_url": "specialized.com"
+      },
+      {
+        "name": "Specialized S-Works Prevail 3",
+        "price": "$$$",
+        "blurb": "The race helmet a lot of pros wear. Light, ridiculously well-vented, and looks the part. Worth it if you're racking up serious miles.",
+        "url": "https://www.specialized.com/us/en/s-works-prevail-3/p/199474",
+        "display_url": "specialized.com"
+      }
+    ]
+  },
+  {
+    "category": "Shoes & Pedals",
+    "sort_order": 3,
+    "picks": [
+      {
+        "name": "Shimano RC3 Road Shoes",
+        "price": "$",
+        "blurb": "Stiff sole, BOA dial, plays nicely with most pedal systems. A great first pair of clipless shoes.",
+        "url": "https://bike.shimano.com/",
+        "display_url": "bike.shimano.com"
+      },
+      {
+        "name": "Shimano 105 SPD-SL Pedals (PD-R7000)",
+        "price": "$$",
+        "blurb": "The pedal that's been on more bikes than maybe any other. Reliable, serviceable, easy to clip in and out.",
+        "url": "https://bike.shimano.com/",
+        "display_url": "bike.shimano.com"
+      },
+      {
+        "name": "Specialized S-Works Torch Road Shoes",
+        "price": "$$$",
+        "blurb": "Stupid stiff, very light, dialed fit. If your feet have ever gone numb on a century, these are a real solution.",
+        "url": "https://www.specialized.com/us/en/s-works-torch-road-shoes/p/199720",
+        "display_url": "specialized.com"
+      }
+    ]
+  },
+  {
+    "category": "Lights (Front + Rear)",
+    "sort_order": 4,
+    "picks": [
+      {
+        "name": "Cygolite Metro Pro 1100 (front)",
+        "price": "$$",
+        "blurb": "Bright enough for early-morning WAM rollouts, with a beam pattern that doesn't blind oncoming riders. USB rechargeable.",
+        "url": "https://www.cygolite.com/",
+        "display_url": "cygolite.com"
+      },
+      {
+        "name": "Cygolite Hotrod 90 (rear)",
+        "price": "$",
+        "blurb": "A rear blinker that's actually visible in daylight. Tiny, light, lasts forever on a charge.",
+        "url": "https://www.cygolite.com/",
+        "display_url": "cygolite.com"
+      },
+      {
+        "name": "Bontrager Flare RT (rear)",
+        "price": "$$",
+        "blurb": "The gold standard for daytime visibility. If we could only pick one safety upgrade, it's this light.",
+        "url": "https://www.trekbikes.com/us/en_US/equipment/cycling-accessories/bike-lights/bike-rear-lights/bontrager-flare-rt-rear-bike-light/p/22420/",
+        "display_url": "trekbikes.com"
+      }
+    ]
+  },
+  {
+    "category": "Saddles & Comfort",
+    "sort_order": 5,
+    "picks": [
+      {
+        "name": "Specialized Power Comp with MIMIC",
+        "price": "$$",
+        "blurb": "The cutout saddle a lot of TGT riders swear by. The MIMIC version adds soft-tissue support that makes a real difference on long days.",
+        "url": "https://www.specialized.com/us/en/power-comp-with-mimic/p/154504",
+        "display_url": "specialized.com"
+      },
+      {
+        "name": "Selle Italia SLR Boost Superflow",
+        "price": "$$",
+        "blurb": "Short-nose, pressure-relieving, and light. A good pick if you want a racy fit without giving up comfort.",
+        "url": "https://www.selleitalia.com/",
+        "display_url": "selleitalia.com"
+      },
+      {
+        "name": "Brooks C17 Cambium",
+        "price": "$$",
+        "blurb": "Vulcanized rubber instead of leather, no break-in, surprisingly cushy on rough roads. The \"I just want to be comfortable\" pick.",
+        "url": "https://www.brooksengland.com/en_us/c17-saddle-71t1.html",
+        "display_url": "brooksengland.com"
+      }
+    ]
+  },
+  {
+    "category": "Hydration & Nutrition",
+    "sort_order": 6,
+    "picks": [
+      {
+        "name": "Camelbak Podium Chill 24oz",
+        "price": "$",
+        "blurb": "Insulated, leak-resistant, and the bite valve doesn't dribble down your jersey. Bring two.",
+        "url": "https://www.camelbak.com/en/bottles/cycling/podium-chill",
+        "display_url": "camelbak.com"
+      },
+      {
+        "name": "Skratch Labs Sport Hydration Mix",
+        "price": "$",
+        "blurb": "Tastes like real food (because it basically is). Dial in your bottles with this and you'll feel better at mile 80 than you do at mile 20 with sugar water.",
+        "url": "https://www.skratchlabs.com/products/sport-hydration-drink-mix",
+        "display_url": "skratchlabs.com"
+      },
+      {
+        "name": "Maurten Gel 100",
+        "price": "$$",
+        "blurb": "The hydrogel gel a lot of endurance athletes use. Sits easy on the stomach, no sticky aftermath. Keep a few in your jersey pocket.",
+        "url": "https://www.maurten.com/products/gel-100-box-of-12",
+        "display_url": "maurten.com"
+      }
+    ]
+  },
+  {
+    "category": "Tools & Repair",
+    "sort_order": 7,
+    "picks": [
+      {
+        "name": "Crankbrothers M17 Multi-Tool",
+        "price": "$",
+        "blurb": "Seventeen tools, fits in your jersey pocket, covers basically every roadside fix you'll need.",
+        "url": "https://www.crankbrothers.com/products/m17-multi-tool",
+        "display_url": "crankbrothers.com"
+      },
+      {
+        "name": "Lezyne Twin Speed Drive CO2 Inflator",
+        "price": "$",
+        "blurb": "Compact, dual-threaded, threads onto the cartridge nice and clean. Pair it with a couple 16g cartridges and you're set.",
+        "url": "https://www.lezyne.com/",
+        "display_url": "lezyne.com"
+      },
+      {
+        "name": "Topeak Mountain Morph Mini Pump",
+        "price": "$",
+        "blurb": "A backup pump for when you blow through your CO2 or want to top off a tube without using a cartridge. Folds out into a mini floor pump, which is a small miracle.",
+        "url": "https://www.topeak.com/global/en/",
+        "display_url": "topeak.com"
+      }
+    ]
+  },
+  {
+    "category": "Tech",
+    "sort_order": 8,
+    "picks": [
+      {
+        "name": "Wahoo Elemnt Bolt v2",
+        "price": "$$",
+        "blurb": "The bike computer half of TGT uses. Easy to set up, syncs with Strava, and the buttons work even when your hands are sweaty or gloved.",
+        "url": "https://www.wahoofitness.com/devices/bike-computers/gps-bike-computers/elemnt-bolt-buy",
+        "display_url": "wahoofitness.com"
+      },
+      {
+        "name": "Garmin Edge 540",
+        "price": "$$$",
+        "blurb": "The other half of TGT uses this one. More mapping power, longer battery, deep ecosystem if you're already in Garmin's world.",
+        "url": "https://www.garmin.com/en-US/p/780655",
+        "display_url": "garmin.com"
+      },
+      {
+        "name": "JBL Clip 5 Bluetooth Speaker",
+        "price": "$",
+        "blurb": "Small, loud enough, clips to a saddle bag or backpack strap. The TGT speaker situation is non-negotiable; pick one.",
+        "url": "https://www.jbl.com/portable-speakers/JBL+CLIP+5.html",
+        "display_url": "jbl.com"
+      }
+    ]
+  },
+  {
+    "category": "Sleep Setup",
+    "sort_order": 9,
+    "picks": [
+      {
+        "name": "Therm-a-Rest NeoAir XLite NXT",
+        "price": "$$$",
+        "blurb": "The pad most experienced bike-tourers carry. Light, packs small, genuinely comfortable. Worth every dollar after day one.",
+        "url": "https://www.thermarest.com/sleeping-pads/fast-and-light/neoair-xlite-nxt-sleeping-pad/neoair-xlite-nxt.html",
+        "display_url": "thermarest.com"
+      },
+      {
+        "name": "REI Co-op Camp Bed 3.5",
+        "price": "$$",
+        "blurb": "If you're sleeping in a high school gym (which most WAM riders do), a thicker self-inflating pad beats an ultralight one. Comfort > grams when you're not carrying it on the bike.",
+        "url": "https://www.rei.com/product/199481/rei-co-op-camp-bed-35-self-inflating-sleeping-pad",
+        "display_url": "rei.com"
+      },
+      {
+        "name": "Big Agnes Copper Spur HV UL2",
+        "price": "$$$",
+        "blurb": "If you're tenting it, this is the standard. Two-person, freestanding, easy to pitch in a parking lot or a field. Holds up.",
+        "url": "https://www.bigagnes.com/products/copper-spur-hv-ul2",
+        "display_url": "bigagnes.com"
+      }
+    ]
+  }
+]
