@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-05-26T14:57:07Z",
+  "updatedAt": "2026-05-26T17:23:42Z",
   "donations": [
+    {
+      "displayName": "A supporter",
+      "amount": 20.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-26T16:16:18.927+0000"
+    },
     {
       "displayName": "Cheri Dehaan",
       "amount": 100.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-04-27T22:36:18.627+0000"
-    },
-    {
-      "displayName": "Colby Targun",
-      "amount": 50.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-04-27T18:25:47.913+0000"
     }
   ],
   "participants": [
