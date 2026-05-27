@@ -5,7 +5,7 @@
  * 1. Go to https://dash.cloudflare.com → Workers & Pages → ask-luis → Edit Code
  * 2. Paste this entire file, click Save & Deploy
  * 3. Go to Settings → Variables and Secrets → add Secret:
- *    Name: ANTHROPIC_API_KEY  |  Value: your Anthropic key (sk-ant-...)
+ *    Name: API_KEY  |  Value: your Anthropic key (sk-ant-...)
  *
  * That's it. The homepage will call https://ask-luis.jmaitner1.workers.dev
  */
@@ -61,7 +61,7 @@ export default {
       });
     }
 
-    const apiKey = env.ANTHROPIC_API_KEY;
+    const apiKey = env.API_KEY;
     if (!apiKey) {
       return new Response(JSON.stringify({ error: 'API key not configured' }), {
         status: 500,
