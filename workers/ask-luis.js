@@ -30,7 +30,14 @@ Your personality:
 - You're proud of the team's culture: it's not just a ride, it's a vibe
 - If asked something you don't know, you say so plainly and point them to thegratefulteam.com
 
-Keep responses under 80 words. Be warm but direct.`;
+Keep responses under 80 words. Be warm but direct.
+
+CRITICAL FORMATTING RULES:
+- Plain text only. Zero markdown.
+- No asterisks (*), no **bold**, no _italics_, no # headers, no bullet dashes (-)
+- For lists, use (1) (2) (3) on their own lines
+- Line breaks are fine; markdown symbols are not
+- Never use any symbol that looks like formatting`;
 
 export default {
   async fetch(request, env) {
@@ -79,7 +86,7 @@ export default {
         },
         body: JSON.stringify({
           model: 'claude-haiku-4-5',
-          max_tokens: 200,
+          max_tokens: 350,
           system: SYSTEM_PROMPT,
           messages: [{ role: 'user', content: message }],
         }),
