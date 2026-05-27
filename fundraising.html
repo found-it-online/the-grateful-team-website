@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundraising Resources — The Grateful Team</title>
+  <meta name="description" content="Tools, templates, and tips to help Grateful Team riders hit their fundraising goals for Make-A-Wish Michigan.">
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+
+  <style>
+    /* ── Page-specific styles ── */
+    .fundraising-intro {
+      max-width: 700px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    /* Video embed */
+    .video-block {
+      margin: 0 auto 56px;
+      max-width: 800px;
+    }
+    .video-block h2 {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      color: var(--color-purple);
+      margin: 0 0 8px;
+    }
+    .video-block .video-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--color-night);
+      opacity: 0.7;
+      margin: 0 0 20px;
+      line-height: 1.5;
+    }
+    .video-ratio {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(26,14,43,0.15);
+    }
+    .video-ratio iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Sheet embed */
+    .sheet-block {
+      margin: 0 auto 56px;
+      max-width: 800px;
+    }
+    .sheet-block h2 {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      color: var(--color-purple);
+      margin: 0 0 8px;
+    }
+    .sheet-block .sheet-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--color-night);
+      opacity: 0.7;
+      margin: 0 0 20px;
+      line-height: 1.5;
+    }
+    .sheet-frame-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(26,14,43,0.15);
+      border: 1px solid rgba(26,14,43,0.08);
+    }
+    .sheet-frame-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 560px;
+      border: none;
+    }
+    .sheet-open-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 14px;
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-purple);
+      text-decoration: none;
+      transition: opacity 150ms;
+    }
+    .sheet-open-link:hover { opacity: 0.7; }
+
+    /* Tips grid */
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .tip-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(26,14,43,0.07);
+      border: 1px solid rgba(26,14,43,0.06);
+    }
+    .tip-card-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .tip-card h3 {
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-purple);
+      margin: 0 0 8px;
+    }
+    .tip-card p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--color-night);
+      opacity: 0.75;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* CTA band */
+    .fundraising-cta-band {
+      background: var(--color-purple);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .fundraising-cta-band h2 {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      color: var(--color-gold);
+      margin: 0 0 10px;
+    }
+    .fundraising-cta-band p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: rgba(250,246,232,0.8);
+      margin: 0 0 24px;
+      line-height: 1.5;
+    }
+    .fundraising-cta-band .btn-gold {
+      display: inline-block;
+      background: var(--color-gold);
+      color: var(--color-night);
+      font-family: 'Josefin Slab', serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: filter 150ms;
+    }
+    .fundraising-cta-band .btn-gold:hover { filter: brightness(1.1); }
+
+    @media (max-width: 640px) {
+      .sheet-frame-wrap iframe { height: 420px; }
+      .fundraising-cta-band { padding: 28px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="nav-slot"></div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <p class="eyebrow" style="color:var(--color-gold);">For Every Rider</p>
+    <h1>Fundraising Resources.</h1>
+    <p>You showed up to ride. Now let's make sure the donations show up too. Here are the tools and templates to help you hit your goal and grant more wishes.</p>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="section-cream">
+  <div class="section-narrow">
+
+    <!-- VIDEO WALKTHROUGH -->
+    <div class="video-block">
+      <h2>WAM Outreach Template — Walkthrough</h2>
+      <p class="video-desc">New to the outreach template? Watch this quick walkthrough. It covers how to load your contacts, customize your message, and send fundraising emails in bulk — no tech skills required.</p>
+      <div class="video-ratio">
+        <iframe
+          src="https://www.youtube.com/embed/XflfXiWsPTs"
+          title="WAM Outreach Template Walkthrough"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- GOOGLE SHEET EMBED -->
+    <div class="sheet-block">
+      <h2>WAM Outreach Email Template</h2>
+      <p class="sheet-desc">This Google Sheet lets you input your contacts and send personalized fundraising emails quickly and in bulk. Make a copy to your own Google Drive, fill in your info, and start reaching out to your network.</p>
+      <div class="sheet-frame-wrap">
+        <iframe
+          src="https://docs.google.com/spreadsheets/d/17XqKeXq_W8cj-xmeXR5cexdjxm0OVcBuebNhvLuBbKA/preview"
+          title="WAM Outreach Email Template"
+          loading="lazy">
+        </iframe>
+      </div>
+      <a
+        href="https://docs.google.com/spreadsheets/d/17XqKeXq_W8cj-xmeXR5cexdjxm0OVcBuebNhvLuBbKA/copy"
+        target="_blank"
+        rel="noopener"
+        class="sheet-open-link">
+        <svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 1h4v4M11 1L5 7M3 2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V9"/>
+        </svg>
+        Make a copy to your Google Drive →
+      </a>
+    </div>
+
+    <!-- QUICK TIPS -->
+    <h2 style="font-family:'Abril Fatface',serif;font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--color-purple);margin:0 0 6px;">Fundraising Tips That Actually Work</h2>
+    <p style="font-family:'DM Sans',sans-serif;font-size:15px;color:var(--color-night);opacity:.7;margin:0;line-height:1.5;">Straight from riders who've done it.</p>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-card-icon">📧</div>
+        <h3>Email First, Social Second</h3>
+        <p>Personal emails to people you know convert far better than social posts. Start with 20 people you actually talk to.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">📖</div>
+        <h3>Tell a Wish Story</h3>
+        <p>Donors give to kids, not miles. Share a Make-A-Wish story — check the WAM site or ask the team for one that moves you.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">🔁</div>
+        <h3>Follow Up Once</h3>
+        <p>Most donations come after the second ask. Send one follow-up about two weeks after your first email — keep it short and friendly.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">💼</div>
+        <h3>Ask Your Employer</h3>
+        <p>Many companies match charitable donations. Check with HR — a matching gift can double your total overnight.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">📱</div>
+        <h3>Post Your DonorDrive Link</h3>
+        <p>Put your personal fundraising link in your Instagram bio and stories. Even one post can pull in donors from your wider network.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-icon">🎯</div>
+        <h3>Set a Specific Goal</h3>
+        <p>"Help me hit $2,500" outperforms "any amount helps." People respond to a clear target they can visibly move.</p>
+      </div>
+    </div>
+
+    <!-- CTA BAND -->
+    <div class="fundraising-cta-band" style="margin-top:48px;">
+      <h2>Ready to Ride &amp; Raise?</h2>
+      <p>Your fundraising page is live on DonorDrive. Share it, email it, post it — every dollar grants a wish.</p>
+      <a href="https://makeawishmichigan.donordrive.com/index.cfm?fuseaction=donorDrive.team&teamID=9052" target="_blank" rel="noopener" class="btn-gold">View the Team Page →</a>
+    </div>
+
+  </div>
+</section>
+
+<div id="footer-slot"></div>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>
