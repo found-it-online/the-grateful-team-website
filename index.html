@@ -518,25 +518,89 @@
       line-height: 1.6;
     ">Group rides, training days, season kickoffs — this is where you'll find us.</p>
 
-    <!-- Coming Soon -->
-    <div style="
-      background: rgba(245,237,214,0.12);
-      border: 1px solid rgba(245,237,214,0.25);
-      border-radius: 8px;
-      padding: 40px;
-      max-width: 640px;
-      margin: 0 auto;
-      text-align: center;
-    ">
-      <p style="font-size:2rem; margin:0 0 12px;">🚲</p>
-      <h3 class="font-headline" style="font-size:1.5rem; color:var(--color-cream); margin:0 0 12px;">More rides coming soon.</h3>
-      <p class="font-body" style="font-size:16px; color:rgba(245,237,214,0.8); margin:0 0 20px; line-height:1.6;">
-        Zoo de Mack 2026 is in the books. New group ride dates are being finalized — check back soon or see the full event calendar.
-      </p>
-      <a href="/events.html" class="font-body" style="font-style:italic; font-size:16px; color:var(--color-cream); text-decoration:none;">
-        See full event calendar →
-      </a>
+    <!-- Group Events — dynamic from /assets/data/strava-group-events.json -->
+    <div id="group-events-list" style="max-width:640px; margin:0 auto;">
+      <!-- populated by JS below -->
     </div>
+
+    <script>
+    (function () {
+      const container = document.getElementById('group-events-list');
+
+      function formatOccurrence(isoUtc, timezone) {
+        try {
+          const d = new Date(isoUtc);
+          const dateStr = d.toLocaleDateString('en-US', {
+            timeZone: timezone,
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+          });
+          const timeStr = d.toLocaleTimeString('en-US', {
+            timeZone: timezone,
+            hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+          });
+          return dateStr + ' at ' + timeStr;
+        } catch (e) {
+          return isoUtc;
+        }
+      }
+
+      function renderEvents(events) {
+        const now = new Date();
+        // Only show events with at least one future occurrence
+        const upcoming = events.filter(ev =>
+          ev.upcomingOccurrences && ev.upcomingOccurrences.some(o => new Date(o) > now)
+        );
+
+        if (!upcoming.length) {
+          container.innerHTML = `
+            <div style="background:rgba(245,237,214,0.12);border:1px solid rgba(245,237,214,0.25);border-radius:8px;padding:40px;text-align:center;">
+              <p style="font-size:2rem;margin:0 0 12px;">🚲</p>
+              <h3 class="font-headline" style="font-size:1.5rem;color:var(--color-cream);margin:0 0 12px;">More rides coming soon.</h3>
+              <p class="font-body" style="font-size:16px;color:rgba(245,237,214,0.8);margin:0 0 20px;line-height:1.6;">
+                New group ride dates are being finalized — check back soon.
+              </p>
+              <a href="https://www.strava.com/clubs/1302442" target="_blank" rel="noopener" class="font-body"
+                style="font-style:italic;font-size:16px;color:var(--color-cream);text-decoration:none;">
+                View club on Strava →
+              </a>
+            </div>`;
+          return;
+        }
+
+        container.innerHTML = upcoming.map(ev => {
+          const futureDates = ev.upcomingOccurrences
+            .filter(o => new Date(o) > now)
+            .sort();
+          const nextDate = formatOccurrence(futureDates[0], ev.timezone || 'America/Detroit');
+          const activityEmoji = ev.activityType === 'Ride' ? '🚴' : '🏃';
+
+          return `
+            <div style="background:rgba(245,237,214,0.12);border:1px solid rgba(245,237,214,0.25);border-radius:8px;padding:28px 32px;margin-bottom:16px;text-align:left;">
+              <p style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(245,237,214,0.6);margin:0 0 10px;font-family:'DM Sans',sans-serif;">
+                ${nextDate}
+              </p>
+              <h3 class="font-headline" style="font-size:1.35rem;color:var(--color-cream);margin:0 0 14px;line-height:1.2;">
+                ${ev.title}
+              </h3>
+              <div class="font-body" style="font-size:15px;color:rgba(245,237,214,0.8);display:flex;flex-direction:column;gap:6px;margin-bottom:20px;">
+                <span>${activityEmoji}&nbsp; ${ev.activityType}</span>
+                ${ev.organizerName ? `<span>👤&nbsp; Hosted by ${ev.organizerName}</span>` : ''}
+                ${ev.address ? `<span>📍&nbsp; ${ev.address}</span>` : ''}
+              </div>
+              <a href="${ev.eventUrl}" target="_blank" rel="noopener" class="font-body"
+                style="font-style:italic;font-size:15px;color:var(--color-cream);text-decoration:none;">
+                Event in Strava →
+              </a>
+            </div>`;
+        }).join('');
+      }
+
+      fetch('/assets/data/strava-group-events.json')
+        .then(r => r.json())
+        .then(data => renderEvents(data.events || []))
+        .catch(() => renderEvents([]));
+    })();
+    </script>
   </div>
 </section>
 
