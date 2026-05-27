@@ -3849,13 +3849,25 @@ const DONORDRIVE_TEAM_ID = 5450;
 const DONORDRIVE_BASE = `https://makeawishmichigan.donordrive.com/api/teams/${DONORDRIVE_TEAM_ID}`;
 
 function fetchParticipantsLiveFirst() {
-  return fetch(`${DONORDRIVE_BASE}/participants?limit=200&orderBy=createdDateUTC&desc=true`)
-    .then(r => {
-      if (!r.ok) throw new Error('Live participants fetch failed');
-      return r.json();
-    })
-    .then(parts => Array.isArray(parts) ? parts : [])
-    .catch(() => fetch('/assets/data/participants.json').then(r => r.json()).catch(() => []));
+  // Load local JSON immediately so photos appear on first visit,
+  // then refresh from live API in the background.
+  return fetch('/assets/data/participants.json')
+    .then(r => r.json())
+    .catch(() => [])
+    .then(localParts => {
+      fetch(`${DONORDRIVE_BASE}/participants?limit=200&orderBy=createdDateUTC&desc=true`)
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(liveParts => {
+          if (!Array.isArray(liveParts)) return;
+          liveParts.forEach(p => {
+            const key = p.displayName.toLowerCase();
+            if (p.avatarImageURL) _photoMap[key] = p.avatarImageURL;
+            _fundMap[key] = p;
+          });
+        })
+        .catch(() => {});
+      return localParts;
+    });
 }
 
 /** Recent donations for the live section — DonorDrive API first, activity-feed.json fallback */

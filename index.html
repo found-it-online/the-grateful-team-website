@@ -752,6 +752,212 @@
 
 <div id="footer-slot"></div>
 
+<!-- ═══════════════════════════════════════════════════════
+     ASK EL CAPITAN — floating chat widget
+════════════════════════════════════════════════════════ -->
+<style>
+  #capitan-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 900;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #5a1e8a, #7b3bb1);
+    color: #f9f108; border: none; border-radius: 50px;
+    padding: 13px 20px 13px 8px;
+    font-family: 'Josefin Slab', serif; font-weight: 700;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: pointer; box-shadow: 0 4px 20px rgba(90,30,138,0.5);
+    transition: transform 200ms, box-shadow 200ms;
+  }
+  #capitan-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(90,30,138,0.65); }
+  #capitan-btn img {
+    width: 36px; height: 36px; border-radius: 50%;
+    object-fit: cover; border: 2px solid #f9f108; flex-shrink: 0;
+  }
+
+  #capitan-chat {
+    position: fixed; bottom: 88px; right: 24px; z-index: 901;
+    width: min(380px, calc(100vw - 32px));
+    background: #100824; border-radius: 18px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.6);
+    border: 1px solid rgba(249,241,8,0.2);
+    display: none; flex-direction: column; overflow: hidden;
+    font-family: 'DM Sans', sans-serif;
+  }
+  #capitan-chat.open { display: flex; }
+
+  .capitan-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 16px; background: rgba(90,30,138,0.6);
+    border-bottom: 1px solid rgba(249,241,8,0.12);
+  }
+  .capitan-header img {
+    width: 40px; height: 40px; border-radius: 50%;
+    object-fit: cover; border: 2px solid #f9f108; flex-shrink: 0;
+  }
+  .capitan-header-text { flex: 1; min-width: 0; }
+  .capitan-header-name {
+    font-family: 'Abril Fatface', serif; font-size: 15px;
+    color: #f9f108; line-height: 1;
+  }
+  .capitan-header-sub {
+    font-size: 10px; color: rgba(250,246,232,0.5);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;
+  }
+  #capitan-close {
+    background: none; border: none; color: rgba(250,246,232,0.5);
+    font-size: 18px; cursor: pointer; padding: 4px; line-height: 1;
+    transition: color 150ms;
+  }
+  #capitan-close:hover { color: #fff; }
+
+  #capitan-messages {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 10px;
+    max-height: 320px; min-height: 120px;
+  }
+  .capitan-msg {
+    max-width: 85%; font-size: 13.5px; line-height: 1.5;
+    padding: 10px 13px; border-radius: 14px; word-break: break-word;
+  }
+  .capitan-msg-luis {
+    background: rgba(90,30,138,0.45); color: rgba(250,246,232,0.92);
+    border-radius: 14px 14px 14px 4px; align-self: flex-start;
+  }
+  .capitan-msg-user {
+    background: #f9f108; color: #100824; font-weight: 600;
+    border-radius: 14px 14px 4px 14px; align-self: flex-end;
+  }
+  .capitan-typing {
+    font-size: 20px; letter-spacing: 4px; padding: 8px 13px;
+    color: rgba(250,246,232,0.4); align-self: flex-start;
+    animation: capitan-blink 1.2s infinite;
+  }
+  @keyframes capitan-blink { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  .capitan-input-row {
+    display: flex; gap: 8px; padding: 12px 14px;
+    border-top: 1px solid rgba(249,241,8,0.1);
+    background: rgba(255,255,255,0.03);
+  }
+  #capitan-input {
+    flex: 1; background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(249,241,8,0.15); border-radius: 8px;
+    color: rgba(250,246,232,0.9); font-family: 'DM Sans', sans-serif;
+    font-size: 13px; padding: 9px 12px; outline: none;
+    transition: border-color 150ms;
+  }
+  #capitan-input::placeholder { color: rgba(250,246,232,0.3); }
+  #capitan-input:focus { border-color: rgba(249,241,8,0.4); }
+  #capitan-send {
+    background: #f9f108; color: #100824; border: none;
+    border-radius: 8px; padding: 0 14px; font-size: 16px;
+    cursor: pointer; font-weight: 700; transition: filter 150ms;
+    flex-shrink: 0;
+  }
+  #capitan-send:hover { filter: brightness(1.1); }
+  #capitan-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  @media (max-width: 480px) {
+    #capitan-btn { bottom: 16px; right: 16px; padding: 11px 16px 11px 8px; font-size: 12px; }
+    #capitan-chat { bottom: 80px; right: 16px; }
+  }
+</style>
+
+<!-- Floating trigger button -->
+<button id="capitan-btn" aria-label="Ask El Capitan">
+  <img src="https://donordrivecontent.com/wishamile/images/$avatars$/constituent_939DF099-9E15-71BA-827B5EF85610BE47.jpg" alt="Luis" onerror="this.style.display='none'">
+  ⚓ Ask El Capitan
+</button>
+
+<!-- Chat window -->
+<div id="capitan-chat" role="dialog" aria-label="Ask El Capitan">
+  <div class="capitan-header">
+    <img src="https://donordrivecontent.com/wishamile/images/$avatars$/constituent_939DF099-9E15-71BA-827B5EF85610BE47.jpg" alt="Luis" onerror="this.style.display='none'">
+    <div class="capitan-header-text">
+      <div class="capitan-header-name">El Capitan</div>
+      <div class="capitan-header-sub">Luis Vecchio · TGT · WAM Veteran</div>
+    </div>
+    <button id="capitan-close" aria-label="Close">✕</button>
+  </div>
+  <div id="capitan-messages">
+    <div class="capitan-msg capitan-msg-luis">
+      Ahoy. I'm Luis — El Capitan. Real boat captain, real WAM rider, real TGT legend. What do you want to know?
+    </div>
+  </div>
+  <div class="capitan-input-row">
+    <input id="capitan-input" type="text" placeholder="Ask Luis anything about the ride…" maxlength="300" autocomplete="off">
+    <button id="capitan-send" aria-label="Send">↑</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const WORKER_URL = 'https://ask-luis.jmaitner1.workers.dev';
+  const btn    = document.getElementById('capitan-btn');
+  const chat   = document.getElementById('capitan-chat');
+  const close  = document.getElementById('capitan-close');
+  const input  = document.getElementById('capitan-input');
+  const send   = document.getElementById('capitan-send');
+  const msgs   = document.getElementById('capitan-messages');
+
+  btn.addEventListener('click', () => {
+    chat.classList.toggle('open');
+    if (chat.classList.contains('open')) input.focus();
+  });
+  close.addEventListener('click', () => chat.classList.remove('open'));
+
+  function addMsg(text, who) {
+    const el = document.createElement('div');
+    el.className = 'capitan-msg capitan-msg-' + who;
+    el.textContent = text;
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return el;
+  }
+
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'capitan-msg capitan-typing';
+    el.textContent = '• • •';
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return el;
+  }
+
+  async function askLuis(message) {
+    send.disabled = true;
+    const typing = showTyping();
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+      typing.remove();
+      if (!res.ok) throw new Error('Worker error');
+      const data = await res.json();
+      addMsg(data.reply || "Sorry, something's off on my end. Try again.", 'luis');
+    } catch(e) {
+      typing.remove();
+      addMsg("Lost the signal — try again in a sec, captain's orders.", 'luis');
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  }
+
+  function submit() {
+    const msg = input.value.trim();
+    if (!msg || send.disabled) return;
+    input.value = '';
+    addMsg(msg, 'user');
+    askLuis(msg);
+  }
+
+  send.addEventListener('click', submit);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submit(); } });
+})();
+</script>
+
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/team-stats.js" defer></script>
 <script src="/assets/js/riders.js" defer></script>
