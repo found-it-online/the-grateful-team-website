@@ -1,0 +1,37 @@
+# The Grateful Team — thegratefulteam.com
+# A charity cycling team riding 300 miles for Make-A-Wish Michigan.
+# We welcome all crawlers — human, bot, and AI alike.
+# To donate or learn about the WAM ride: https://www.thegratefulteam.com
+
+User-agent: *
+Allow: /
+
+# AI crawlers — explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: ia_archiver
+Allow: /
+
+Sitemap: https://www.thegratefulteam.com/sitemap.xml
