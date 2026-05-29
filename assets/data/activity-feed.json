@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-05-29T17:57:04Z",
+  "updatedAt": "2026-05-29T20:13:21Z",
   "donations": [
+    {
+      "displayName": "A supporter",
+      "amount": 50.0,
+      "recipientName": "Georgina Hill",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-29T19:00:08.223+0000"
+    },
+    {
+      "displayName": "Melinda Saylor",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-05-29T18:29:24.363+0000"
+    },
     {
       "displayName": "David Miller",
       "amount": 100.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-08T12:35:38.20+0000"
-    },
-    {
-      "displayName": "Alex Berzley",
-      "amount": 100.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-07T17:44:31.917+0000"
-    },
-    {
-      "displayName": "Margaret  Schneider",
-      "amount": 100.0,
-      "recipientName": "Emma DiCello",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-07T11:34:44.313+0000"
     }
   ],
   "participants": [
