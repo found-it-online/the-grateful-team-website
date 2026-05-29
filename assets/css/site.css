@@ -126,6 +126,8 @@ body {
   padding: 0;
 }
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
   color: rgba(250,246,232,0.88);
   font-family: 'DM Sans', sans-serif;
   font-weight: 600;
