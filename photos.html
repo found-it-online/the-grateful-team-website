@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photos & Videos — The Grateful Team</title>
+  <meta name="description" content="Photos and videos from The Grateful Team — WAM rides, training days, and team moments.">
+
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Josefin+Slab:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+
+  <style>
+    /* ── Filter bar ── */
+    .gallery-controls {
+      background: var(--color-cream);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: sticky;
+      top: 60px;
+      z-index: 50;
+    }
+    .filter-label {
+      font-family: 'Josefin Slab', serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(15,8,32,0.45);
+      margin-right: 4px;
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      flex: 1;
+    }
+    .filter-pill {
+      background: transparent;
+      border: 1.5px solid rgba(90,30,138,0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-night);
+      cursor: pointer;
+      transition: all 140ms;
+    }
+    .filter-pill:hover { border-color: var(--color-purple); color: var(--color-purple); }
+    .filter-pill.active {
+      background: var(--color-purple);
+      border-color: var(--color-purple);
+      color: #fff;
+    }
+    .sort-select {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-night);
+      background: transparent;
+      border: 1.5px solid rgba(90,30,138,0.25);
+      border-radius: 20px;
+      padding: 5px 12px;
+      cursor: pointer;
+      outline: none;
+      margin-left: auto;
+    }
+    .sort-select:focus { border-color: var(--color-purple); }
+
+    /* ── Gallery grid ── */
+    .gallery-section {
+      background: #f7f4ff;
+      min-height: 60vh;
+      padding: 32px 24px 64px;
+    }
+    .gallery-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      columns: 4 240px;
+      column-gap: 14px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #e0d8f0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: transform 160ms, box-shadow 160ms;
+    }
+    .gallery-item:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(90,30,138,0.18); }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,8,32,0.7) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 160ms;
+      display: flex;
+      align-items: flex-end;
+      padding: 12px;
+      gap: 8px;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-name {
+      flex: 1;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .btn-download-card {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      padding: 5px 9px;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 120ms;
+      flex-shrink: 0;
+    }
+    .btn-download-card:hover { background: rgba(255,255,255,0.28); }
+
+    /* Video badge */
+    .video-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(15,8,32,0.7);
+      color: #fff;
+      font-size: 11px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .video-thumb-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 62%;
+      background: #1a0e2b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-play-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-play-icon svg { margin-left: 3px; }
+
+    /* ── Empty / loading states ── */
+    .gallery-state {
+      max-width: 1280px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .gallery-state-icon { font-size: 3rem; margin-bottom: 16px; }
+    .gallery-state h3 {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.6rem;
+      color: var(--color-purple);
+      margin: 0 0 8px;
+    }
+    .gallery-state p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: rgba(15,8,32,0.55);
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(90,30,138,0.15);
+      border-top-color: var(--color-purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(10,5,20,0.95);
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 200ms;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 1100px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .lightbox-media {
+      max-width: 100%;
+      max-height: 78vh;
+      border-radius: 10px;
+      object-fit: contain;
+      display: block;
+    }
+    .lightbox-video-frame {
+      width: 100%;
+      max-width: 960px;
+      aspect-ratio: 16/9;
+      border-radius: 10px;
+      border: none;
+    }
+    .lightbox-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 960px;
+    }
+    .lightbox-name {
+      flex: 1;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lightbox-date {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+    }
+    .btn-lb {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 140ms;
+      flex-shrink: 0;
+    }
+    .btn-lb:hover { background: rgba(255,255,255,0.2); }
+    .btn-lb-close {
+      position: absolute;
+      top: -48px; right: 0;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+    }
+    .btn-lb-close:hover { color: #fff; }
+    .btn-lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #fff;
+      transition: background 140ms;
+    }
+    .btn-lb-nav:hover { background: rgba(255,255,255,0.18); }
+    .btn-lb-prev { left: 12px; }
+    .btn-lb-next { right: 12px; }
+
+    /* ── Count badge ── */
+    .gallery-count {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: rgba(15,8,32,0.45);
+      max-width: 1280px;
+      margin: 0 auto 16px;
+    }
+
+    @media (max-width: 600px) {
+      .gallery-grid { columns: 2 140px; column-gap: 10px; }
+      .gallery-controls { top: 54px; padding: 10px 14px; }
+      .btn-lb-nav { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="nav-slot"></div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <p class="eyebrow" style="color:var(--color-gold);">The Grateful Team</p>
+    <h1>Photos &amp; Videos.</h1>
+    <p>Miles logged, wishes granted, memories made. Browse the full archive — filter by year, click to view full size, download whatever you want.</p>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="gallery-controls" id="gallery-controls">
+  <span class="filter-label">Year</span>
+  <div class="filter-pills" id="year-filters">
+    <button class="filter-pill active" data-year="all">All</button>
+  </div>
+  <select class="sort-select" id="sort-select" aria-label="Sort order">
+    <option value="newest">Newest First</option>
+    <option value="oldest">Oldest First</option>
+    <option value="name">Name A–Z</option>
+  </select>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-section">
+  <p class="gallery-count" id="gallery-count" style="display:none;"></p>
+  <div id="gallery-state" class="gallery-state">
+    <div class="spinner"></div>
+    <p>Loading photos &amp; videos…</p>
+  </div>
+  <div class="gallery-grid" id="gallery-grid" style="display:none;"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <button class="btn-lb-nav btn-lb-prev" id="lb-prev" aria-label="Previous">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="13 4 7 10 13 16"/></svg>
+  </button>
+  <div class="lightbox-inner">
+    <button class="btn-lb-close" id="lb-close" aria-label="Close">✕</button>
+    <div id="lb-media"></div>
+    <div class="lightbox-bar">
+      <span class="lightbox-name" id="lb-name"></span>
+      <span class="lightbox-date" id="lb-date"></span>
+      <a class="btn-lb" id="lb-download" href="#" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1v8M4 6l3 3 3-3M1 11h12"/></svg>
+        Download
+      </a>
+    </div>
+  </div>
+  <button class="btn-lb-nav btn-lb-next" id="lb-next" aria-label="Next">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="7 4 13 10 7 16"/></svg>
+  </button>
+</div>
+
+<div id="footer-slot"></div>
+<script src="/assets/js/nav.js" defer></script>
+
+<script>
+(function () {
+  // ── Config ────────────────────────────────────────────────────
+  const FOLDER_ID = '15MnSyF7OGzPkoZEtVyhDyxtM8QH5nQzh';
+  const API_KEY   = 'YOUR_GOOGLE_API_KEY'; // ← replace this
+
+  const FIELDS    = 'id,name,mimeType,createdTime,size,parents';
+  const API_BASE  = 'https://www.googleapis.com/drive/v3/files';
+
+  // ── State ─────────────────────────────────────────────────────
+  let allFiles    = [];
+  let filtered    = [];
+  let activeYear  = 'all';
+  let activeSort  = 'newest';
+  let lbIndex     = 0;
+
+  // ── Elements ──────────────────────────────────────────────────
+  const grid       = document.getElementById('gallery-grid');
+  const stateEl    = document.getElementById('gallery-state');
+  const countEl    = document.getElementById('gallery-count');
+  const yearFilters= document.getElementById('year-filters');
+  const sortSel    = document.getElementById('sort-select');
+  const lightbox   = document.getElementById('lightbox');
+  const lbMedia    = document.getElementById('lb-media');
+  const lbName     = document.getElementById('lb-name');
+  const lbDate     = document.getElementById('lb-date');
+  const lbDl       = document.getElementById('lb-download');
+
+  // ── Fetch all media files from folder (+ subfolders 1 level) ──
+  async function loadAll() {
+    try {
+      const topItems = await fetchFolder(FOLDER_ID);
+      const subfolders = topItems.filter(f => f.mimeType === 'application/vnd.google-apps.folder');
+      const directFiles = topItems.filter(f => isMedia(f));
+
+      const subResults = await Promise.all(
+        subfolders.map(sf => fetchFolder(sf.id, sf.name))
+      );
+
+      allFiles = [...directFiles, ...subResults.flat()]
+        .filter(f => isMedia(f));
+
+      if (!allFiles.length) {
+        showState('📷', 'No photos yet.', 'Check back after the next ride.');
+        return;
+      }
+
+      buildYearFilters();
+      applyFilters();
+    } catch (e) {
+      showState('⚠️', 'Couldn\'t load photos.', 'Check that the API key is set and the folder is public.');
+      console.error(e);
+    }
+  }
+
+  async function fetchFolder(folderId, folderName) {
+    const q   = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
+    const url = `${API_BASE}?q=${q}&fields=files(${FIELDS})&pageSize=1000&key=${API_KEY}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Drive API error ${res.status}`);
+    const data = await res.json();
+    const files = data.files || [];
+    // Tag files with the subfolder year if the folder name looks like a year
+    if (folderName && /^\d{4}$/.test(folderName.trim())) {
+      files.forEach(f => f._folderYear = folderName.trim());
+    }
+    return files;
+  }
+
+  function isMedia(f) {
+    return f.mimeType && (
+      f.mimeType.startsWith('image/') ||
+      f.mimeType.startsWith('video/')
+    );
+  }
+
+  // ── Year filters ───────────────────────────────────────────────
+  function getYear(f) {
+    if (f._folderYear) return f._folderYear;
+    if (f.createdTime) return f.createdTime.slice(0, 4);
+    return 'Unknown';
+  }
+
+  function buildYearFilters() {
+    const years = [...new Set(allFiles.map(getYear))].sort().reverse();
+    years.forEach(yr => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-pill';
+      btn.dataset.year = yr;
+      btn.textContent = yr;
+      btn.addEventListener('click', () => setYear(yr));
+      yearFilters.appendChild(btn);
+    });
+  }
+
+  function setYear(yr) {
+    activeYear = yr;
+    yearFilters.querySelectorAll('.filter-pill').forEach(b => {
+      b.classList.toggle('active', b.dataset.year === yr);
+    });
+    applyFilters();
+  }
+
+  // ── Sort + filter ──────────────────────────────────────────────
+  sortSel.addEventListener('change', () => {
+    activeSort = sortSel.value;
+    applyFilters();
+  });
+
+  function applyFilters() {
+    let files = activeYear === 'all'
+      ? [...allFiles]
+      : allFiles.filter(f => getYear(f) === activeYear);
+
+    if (activeSort === 'newest') {
+      files.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+    } else if (activeSort === 'oldest') {
+      files.sort((a, b) => new Date(a.createdTime) - new Date(b.createdTime));
+    } else {
+      files.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    filtered = files;
+    renderGrid();
+  }
+
+  // ── Render ─────────────────────────────────────────────────────
+  function renderGrid() {
+    stateEl.style.display = 'none';
+    grid.style.display    = filtered.length ? '' : 'none';
+    countEl.style.display = filtered.length ? '' : 'none';
+    grid.innerHTML = '';
+
+    if (!filtered.length) {
+      showState('🔍', 'No results.', 'Try a different year filter.');
+      return;
+    }
+
+    countEl.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+
+    filtered.forEach((file, idx) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+
+      const isVideo = file.mimeType.startsWith('video/');
+      const thumbSrc = `https://drive.google.com/thumbnail?id=${file.id}&sz=w600`;
+      const dlUrl    = `https://drive.google.com/uc?export=download&id=${file.id}`;
+      const dateStr  = file.createdTime ? formatDate(new Date(file.createdTime)) : '';
+      const cleanName = stripExtension(file.name);
+
+      if (isVideo) {
+        item.innerHTML = `
+          <div class="video-thumb-wrap">
+            <div class="video-play-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="6,3 17,10 6,17"/></svg>
+            </div>
+          </div>
+          <div class="video-badge">▶ Video</div>
+          <div class="gallery-item-overlay">
+            <span class="gallery-item-name">${cleanName}</span>
+            <a class="btn-download-card" href="${dlUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 1v8M4 6l3 3 3-3M1 11h12"/></svg>
+              Save
+            </a>
+          </div>`;
+      } else {
+        item.innerHTML = `
+          <img src="${thumbSrc}" alt="${cleanName}" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'">
+          <div class="gallery-item-overlay">
+            <span class="gallery-item-name">${cleanName}</span>
+            <a class="btn-download-card" href="${dlUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 1v8M4 6l3 3 3-3M1 11h12"/></svg>
+              Save
+            </a>
+          </div>`;
+      }
+
+      item.addEventListener('click', () => openLightbox(idx));
+      grid.appendChild(item);
+    });
+  }
+
+  // ── Lightbox ───────────────────────────────────────────────────
+  function openLightbox(idx) {
+    lbIndex = idx;
+    renderLightbox();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lbMedia.innerHTML = ''; // stop video playback
+  }
+
+  function renderLightbox() {
+    const file = filtered[lbIndex];
+    const isVideo = file.mimeType.startsWith('video/');
+    const dlUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
+    const dateStr = file.createdTime ? formatDate(new Date(file.createdTime)) : '';
+
+    lbName.textContent = stripExtension(file.name);
+    lbDate.textContent = dateStr;
+    lbDl.href = dlUrl;
+
+    lbMedia.innerHTML = isVideo
+      ? `<iframe class="lightbox-video-frame"
+           src="https://drive.google.com/file/d/${file.id}/preview"
+           allow="autoplay" allowfullscreen></iframe>`
+      : `<img class="lightbox-media"
+           src="https://lh3.googleusercontent.com/d/${file.id}=w1600"
+           alt="${stripExtension(file.name)}"
+           onerror="this.src='https://drive.google.com/thumbnail?id=${file.id}&sz=w1200'">`;
+
+    document.getElementById('lb-prev').style.opacity = lbIndex > 0 ? '1' : '0.25';
+    document.getElementById('lb-next').style.opacity = lbIndex < filtered.length - 1 ? '1' : '0.25';
+  }
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev').addEventListener('click', () => {
+    if (lbIndex > 0) { lbIndex--; renderLightbox(); }
+  });
+  document.getElementById('lb-next').addEventListener('click', () => {
+    if (lbIndex < filtered.length - 1) { lbIndex++; renderLightbox(); }
+  });
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft'  && lbIndex > 0)                  { lbIndex--; renderLightbox(); }
+    if (e.key === 'ArrowRight' && lbIndex < filtered.length - 1) { lbIndex++; renderLightbox(); }
+  });
+
+  // ── Helpers ────────────────────────────────────────────────────
+  function showState(icon, heading, body) {
+    stateEl.style.display = '';
+    grid.style.display    = 'none';
+    countEl.style.display = 'none';
+    stateEl.innerHTML = `
+      <div class="gallery-state-icon">${icon}</div>
+      <h3>${heading}</h3>
+      <p>${body}</p>`;
+  }
+
+  function formatDate(d) {
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function stripExtension(name) {
+    return name.replace(/\.[^/.]+$/, '');
+  }
+
+  // ── Init ───────────────────────────────────────────────────────
+  if (API_KEY === 'YOUR_GOOGLE_API_KEY') {
+    showState('🔑', 'API key not set.', 'Add your Google API key to photos.html to load the gallery.');
+  } else {
+    loadAll();
+  }
+})();
+</script>
+</body>
+</html>
