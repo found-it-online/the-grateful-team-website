@@ -88,20 +88,27 @@
       border: none;
     }
     .sheet-open-link {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 7px;
-      margin-top: 14px;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 18px 24px;
+      background: var(--color-purple);
+      border-radius: 10px;
       font-family: 'Josefin Slab', serif;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 18px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--color-purple);
+      letter-spacing: 0.06em;
+      color: #fff;
       text-decoration: none;
-      transition: opacity 150ms;
+      transition: filter 150ms, transform 100ms;
+      box-shadow: 0 4px 18px rgba(90,30,138,0.25);
     }
-    .sheet-open-link:hover { opacity: 0.7; }
+    .sheet-open-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .sheet-open-link:hover { filter: brightness(1.12); transform: translateY(-1px); }
+    .sheet-open-link:active { transform: translateY(0); }
 
     /* Tips grid */
     .tips-grid {
