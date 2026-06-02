@@ -438,5 +438,13 @@
     "sumDonations": 175.0,
     "fundraisingGoal": 3000.0,
     "numDonations": 3
+  },
+  {
+    "participantID": 5275,
+    "displayName": "Tristan Kosmerick",
+    "avatarImageURL": null,
+    "sumDonations": 0.0,
+    "fundraisingGoal": 500.0,
+    "numDonations": 0
   }
 ]
