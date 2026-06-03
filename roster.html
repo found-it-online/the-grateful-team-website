@@ -4058,15 +4058,52 @@ function loadParticipantOverlays() {
     .catch(() => {});
 }
 
-// Merge Google Form / CI riders, then paint grid + DonorDrive overlays
+// Merge intake riders + auto-generate cards for any new DonorDrive participants
+function autoGenerateRider(p, idx) {
+  const parts = (p.displayName || '').trim().split(/\s+/);
+  const first  = parts[0] || '';
+  const last   = parts[parts.length - 1] || '';
+  const initials = ((first[0] || '') + (last[0] || '')).toUpperCase();
+  return {
+    id: 10000 + (p.participantID || idx),
+    name: p.displayName || 'New Rider',
+    nickname: first || 'Rider',
+    donorSlug: String(p.participantID || ''),
+    tier: 'rider',
+    years: 1,
+    song: 'Truckin\'',
+    initials: initials || '??',
+    bio: `${first} is riding 300 miles for Make-A-Wish Michigan with The Grateful Team. Their card is coming soon — check back after WAM.`,
+    funFact: 'New to the roster. Their story is still being written.',
+    badges: ['🐣 Rookie Rider'],
+    stats: { spirit: 1 },
+  };
+}
+
 fetch('/assets/data/rider-intake.json', { cache: 'no-store' })
   .then(r => (r.ok ? r.json() : { riders: [] }))
   .catch(() => ({ riders: [] }))
   .then(data => {
     const extra = (data && Array.isArray(data.riders)) ? data.riders : [];
     RIDERS = RIDERS_CORE.concat(extra);
-    finishRosterInit();
-    return loadParticipantOverlays();
+
+    // Auto-add any DonorDrive participants not already on the roster
+    return fetch('/assets/data/participants.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : [])
+      .catch(() => [])
+      .then(participants => {
+        const knownNames = new Set(RIDERS.map(r => r.name.trim().toLowerCase()));
+        let nextIdx = 0;
+        (participants || []).forEach(p => {
+          const name = (p.displayName || '').trim();
+          if (name && !knownNames.has(name.toLowerCase())) {
+            RIDERS.push(autoGenerateRider(p, nextIdx++));
+            knownNames.add(name.toLowerCase());
+          }
+        });
+        finishRosterInit();
+        return loadParticipantOverlays();
+      });
   })
   .catch(() => {
     RIDERS = RIDERS_CORE.slice();
