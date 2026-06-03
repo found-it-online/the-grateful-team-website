@@ -2698,20 +2698,6 @@ const RIDERS_CORE = [
     stats: { spirit: 10 },
   },
   {
-    id: 54,
-    name: "Jason Winchell",
-    nickname: "The Winch",
-    donorSlug: "4956",
-    tier: "rider",
-    years: 1,
-    song: "Truckin'",
-    initials: "JW",
-    bio: "The Winch. As in: he pulls. Jason Winchell shows up, locks into the pace line, and does the work without needing anyone to notice. Eight donors and $1,600 raised is not a rookie number — that's someone who picks up the phone, makes the ask, and follows through. The Winch doesn't do halfway. He just does it.",
-    funFact: "Already cleared $1,600 raised before his card even hit the roster. The Winch doesn't wait.",
-    badges: ["💪 Pulls Hard", "📞 Makes the Ask", "🎯 Fundraising Starter"],
-    stats: { spirit: 8 },
-  },
-  {
     id: 55,
     name: "Mark Webber",
     nickname: "The Mark",
@@ -2724,20 +2710,6 @@ const RIDERS_CORE = [
     funFact: "Set a $5,000 fundraising goal — one of the highest on the roster. The Mark doesn't aim small.",
     badges: ["🎯 High Ambition", "💰 Big Goal Energy", "🚀 Goes Big"],
     stats: { spirit: 8 },
-  },
-  {
-    id: 56,
-    name: "Nakayla Miller",
-    nickname: "NK",
-    donorSlug: "4830",
-    tier: "rider",
-    years: 1,
-    song: "Friend of the Devil",
-    initials: "NM",
-    bio: "NK. Four donors in and already making it count. Nakayla Miller arrived on this roster with quiet purpose — the kind of rider who doesn't announce herself but shows up in the data. Four people believed in her enough to give. That's four wishes in motion. NK is just getting started.",
-    funFact: "Four donors, zero fanfare. NK lets the fundraising do the talking.",
-    badges: ["🐣 Rookie Rider", "💙 Wish Starter", "🌟 Just Getting Started"],
-    stats: { spirit: 7 },
   },
   {
     id: 57,
@@ -4093,13 +4065,18 @@ fetch('/assets/data/rider-intake.json', { cache: 'no-store' })
       .catch(() => [])
       .then(participants => {
         const knownNames = new Set(RIDERS.map(r => r.name.trim().toLowerCase()));
+        const knownSlugs = new Set(RIDERS.map(r => String(r.donorSlug || '').trim()).filter(Boolean));
         let nextIdx = 0;
         (participants || []).forEach(p => {
           const name = (p.displayName || '').trim();
-          if (name && !knownNames.has(name.toLowerCase())) {
-            RIDERS.push(autoGenerateRider(p, nextIdx++));
-            knownNames.add(name.toLowerCase());
-          }
+          const pid  = String(p.participantID || '');
+          // Skip if already on roster by name OR by participantID slug
+          if (!name) return;
+          if (knownNames.has(name.toLowerCase())) return;
+          if (pid && knownSlugs.has(pid)) return;
+          RIDERS.push(autoGenerateRider(p, nextIdx++));
+          knownNames.add(name.toLowerCase());
+          if (pid) knownSlugs.add(pid);
         });
         finishRosterInit();
         return loadParticipantOverlays();
