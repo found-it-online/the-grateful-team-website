@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-03T02:16:22Z",
+  "updatedAt": "2026-06-03T03:36:22Z",
   "donations": [
+    {
+      "displayName": "A supporter",
+      "amount": 100.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-03T03:10:58.843+0000"
+    },
+    {
+      "displayName": "Susan Kraft",
+      "amount": 50.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-03T03:01:50.547+0000"
+    },
     {
       "displayName": "Austin Santoro",
       "amount": 100.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-19T20:38:03.200+0000"
-    },
-    {
-      "displayName": "Aspen Surgical",
-      "amount": 1000.0,
-      "recipientName": "Charlie Wondergem",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-19T20:24:08.380+0000"
-    },
-    {
-      "displayName": "TA Caretaker",
-      "amount": 100.0,
-      "recipientName": "Caleb Agar",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-19T18:24:26.267+0000"
     }
   ],
   "participants": [
@@ -1014,6 +1014,10 @@
     {
       "displayName": "Stanislaw Krzyzanowski",
       "createdDateUTC": "2025-11-11T02:49:00.53+0000"
+    },
+    {
+      "displayName": "Susan Kraft",
+      "createdDateUTC": "2026-06-03T03:01:50.547+0000"
     },
     {
       "displayName": "Taylor Hill",
