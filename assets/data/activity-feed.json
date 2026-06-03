@@ -1,6 +1,30 @@
 {
-  "updatedAt": "2026-06-03T03:36:22Z",
+  "updatedAt": "2026-06-03T10:50:10Z",
   "donations": [
+    {
+      "displayName": "Katherine Roth",
+      "amount": 100.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-03T10:17:59.853+0000"
+    },
+    {
+      "displayName": "Katherine Roth",
+      "amount": 100.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-03T10:13:14.133+0000"
+    },
+    {
+      "displayName": "A&H Roth",
+      "amount": 100.0,
+      "recipientName": "Sawyer Roth",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-03T09:34:24.90+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 100.0,
@@ -776,30 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-20T00:30:24.317+0000"
-    },
-    {
-      "displayName": "Todd Smith",
-      "amount": 10.0,
-      "recipientName": "Caleb Agar",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-19T20:52:13.450+0000"
-    },
-    {
-      "displayName": "RevEv",
-      "amount": 75.0,
-      "recipientName": "Caleb Agar",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-19T20:52:10.300+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 25.0,
-      "recipientName": "Caleb Agar",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-19T20:38:03.200+0000"
     }
   ],
   "participants": [
