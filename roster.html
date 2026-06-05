@@ -2939,6 +2939,14 @@ function renderCard(r, index) {
   const num = String(index + 1).padStart(2, '0');
   const total = RIDERS.length;
 
+  // Bake the avatar photo into the card markup so it survives every re-render
+  // (filter, search, leaderboard refresh). Falls back to initials if no photo
+  // is loaded yet or the image fails to load.
+  const _avatarUrl = (typeof _photoMap !== 'undefined' && _photoMap) ? _photoMap[r.name.toLowerCase()] : null;
+  const avatarInner = _avatarUrl
+    ? `<img src="${_avatarUrl}" alt="${r.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.outerHTML='${r.initials}'">`
+    : r.initials;
+
   return `
   <div class="tcard-wrap" data-tier="${tier}" data-name="${r.name.toLowerCase()}" data-id="${r.id}">
     <div class="tcard-inner">
@@ -2953,7 +2961,7 @@ function renderCard(r, index) {
         <div class="tcard-tap-top">Tap to Flip →</div>
 
         <div class="tcard-avatar-area">
-          <div class="tcard-avatar">${r.initials}</div>
+          <div class="tcard-avatar">${avatarInner}</div>
         </div>
 
         <div class="tcard-body">
@@ -4172,6 +4180,18 @@ Promise.all([
       </div>
     `).join('');
     liveSection.style.display = 'block';
+  }
+
+  // Populate avatar/fund maps from this chain's participants too, so the
+  // final renderAll() below always has photos baked in (independent of the
+  // roster-init chain's timing — prevents avatars reverting to initials).
+  if (Array.isArray(parts)) {
+    parts.forEach(p => {
+      if (!p || !p.displayName) return;
+      const key = p.displayName.toLowerCase();
+      if (p.avatarImageURL) _photoMap[key] = p.avatarImageURL;
+      _fundMap[key] = p;
+    });
   }
 
   // Tabbed leaderboard — populate _lbParts and render
