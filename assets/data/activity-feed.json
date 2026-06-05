@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-05T09:37:39Z",
+  "updatedAt": "2026-06-05T14:37:47Z",
   "donations": [
+    {
+      "displayName": "Ken Johnson ",
+      "amount": 61.04,
+      "recipientName": "Brad Johnson",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-05T12:53:30.657+0000"
+    },
+    {
+      "displayName": "G M Minnhaar-Tomatis",
+      "amount": 1000.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-05T12:32:42.227+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 160.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-26T18:27:49.97+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 20.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-26T16:16:18.927+0000"
-    },
-    {
-      "displayName": "Cheri Dehaan",
-      "amount": 100.0,
-      "recipientName": "Caleb Agar",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-26T12:34:13.630+0000"
     }
   ],
   "participants": [
