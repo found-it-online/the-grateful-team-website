@@ -213,7 +213,7 @@
     .tcard-wrap[data-tier="rider"] .tcard-front { border: 2.5px solid var(--color-cerulean); }
     .tcard-wrap[data-tier="rookie"] .tcard-front { border: 2.5px solid rgba(250,246,232,0.3); }
     .tcard-wrap[data-tier="retired"] .tcard-front { border: 2.5px solid rgba(180,180,180,0.35); opacity: 0.75; }
-    .tcard-wrap[data-tier="retired"] .tcard-front { border: 2.5px solid rgba(180,180,180,0.35); opacity: 0.75; }
+    .tcard-wrap[data-tier="volunteer"] .tcard-front { border: 2.5px solid #c8455a; box-shadow: 0 0 16px rgba(155,37,53,0.25); }
     .tcard-back { border: 2px solid rgba(201,148,58,0.2); }
 
     /* Card front */
@@ -347,6 +347,7 @@
     [data-tier="veteran"] .tcard-tier-badge { background: var(--color-purple-light); color: #fff; }
     [data-tier="rider"] .tcard-tier-badge { background: var(--color-cerulean); color: var(--color-night); }
     [data-tier="rookie"] .tcard-tier-badge { background: rgba(250,246,232,0.15); color: rgba(250,246,232,0.7); }
+    [data-tier="volunteer"] .tcard-tier-badge { background: #9b2535; color: #fff; }
 
     /* Avatar ring */
     .tcard-avatar-area {
@@ -374,7 +375,7 @@
     [data-tier="rider"] .tcard-avatar { background: linear-gradient(135deg, var(--color-cerulean) 0%, #0390a5 100%); box-shadow: 0 0 16px rgba(4,178,202,0.3); }
     [data-tier="rookie"] .tcard-avatar { background: rgba(250,246,232,0.12); color: var(--color-cream); border: 2px solid rgba(250,246,232,0.2); }
     [data-tier="retired"] .tcard-avatar { background: rgba(150,150,150,0.12); color: rgba(250,246,232,0.6); border: 2px solid rgba(180,180,180,0.2); }
-    [data-tier="retired"] .tcard-avatar { background: rgba(150,150,150,0.12); color: rgba(250,246,232,0.6); border: 2px solid rgba(180,180,180,0.2); }
+    [data-tier="volunteer"] .tcard-avatar { background: linear-gradient(135deg, #c8455a 0%, #9b2535 100%); color: #fff; box-shadow: 0 0 16px rgba(155,37,53,0.35); }
 
     /* Card body text */
     .tcard-body {
@@ -440,6 +441,8 @@
     [data-tier="veteran"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-purple) 0%, var(--color-purple-light) 100%); }
     [data-tier="rider"] .tcard-stat-fill { background: linear-gradient(90deg, var(--color-cerulean-dark) 0%, var(--color-cerulean) 100%); }
     [data-tier="rookie"] .tcard-stat-fill { background: rgba(250,246,232,0.3); }
+    [data-tier="volunteer"] .tcard-stat-fill { background: linear-gradient(90deg, #9b2535 0%, #c8455a 100%); }
+    [data-tier="volunteer"] .tcard-nickname { color: #e8788a; }
     .tcard-stat-num {
       font-family: 'Josefin Slab', serif;
       font-size: 8px;
@@ -643,6 +646,7 @@
     }
     [data-tier="legend"] .tcard-back::before { content: '⭐'; opacity: 0.07; }
     [data-tier="rookie"] .tcard-back::before { content: '🌱'; opacity: 0.07; }
+    [data-tier="volunteer"] .tcard-back::before { content: '🙌'; opacity: 0.07; }
     .tcard-back-header {
       display: flex;
       align-items: center;
@@ -1285,6 +1289,7 @@
     [data-tier="veteran"] .tcard-raised-hero-amt { color: var(--color-purple-light); }
     [data-tier="rider"] .tcard-raised-hero-amt { color: var(--color-cerulean); }
     [data-tier="rookie"] .tcard-raised-hero-amt { color: rgba(250,246,232,0.7); }
+    [data-tier="volunteer"] .tcard-raised-hero-amt { color: #e8788a; }
     .tcard-raised-hero-label {
       font-family: 'Josefin Slab', serif;
       font-weight: 700;
@@ -1846,6 +1851,7 @@
     <button class="filter-btn" data-filter="rider">🚴 Riders</button>
     <button class="filter-btn" data-filter="rookie">🌱 Rookies</button>
     <button class="filter-btn" data-filter="retired">🏅 Retired</button>
+    <button class="filter-btn" data-filter="volunteer">🙌 Volunteers</button>
     <button class="filter-btn" id="sortRaisedBtn" onclick="toggleSortByRaised(this)" title="Sort cards by amount raised">📊 Sort: Default</button>
     <button class="filter-btn" id="randomRiderBtn" onclick="openRandomRider()" title="Open a random rider card" style="background:rgba(249,241,8,0.07);border-color:rgba(249,241,8,0.25);color:rgba(249,241,8,0.7);">🎲 Surprise Me</button>
     <input class="roster-search" type="search" placeholder="Search riders…" id="rosterSearch" autocomplete="off">
@@ -2380,13 +2386,13 @@ const RIDERS_CORE = [
     name: "Cami Mastenbrook",
     nickname: "Hollandaise",
     donorSlug: "4880",
-    tier: "rider",
+    tier: "volunteer",
     years: 1,
     song: "Sugaree",
     initials: "CM",
-    bio: "Hollandaise. Rich, smooth, and makes everything it touches better. Cami Mastenbrook is the secret sauce of TGT — the element that elevates the whole dish. Three years in and still pouring generously at every ride, every event, every group chat check-in. Hollandaise doesn't show up halfway. Hollandaise shows up fully emulsified and ready to go.",
-    funFact: "Hollandaise — the sauce that makes everything better. Three WAM seasons of elevating the whole team.",
-    badges: ["🎬 The Cam Show", "🔥 Energy Bringer", "🚴 Consistent Rider", "💙 Ride or Die"],
+    bio: "Hollandaise. Rich, smooth, and makes everything it touches better. Cami Mastenbrook is the secret sauce of TGT — the element that elevates the whole dish. Not on the bike this year, but make no mistake: Hollandaise is still everywhere the team needs her — every event, every group chat check-in, every behind-the-scenes assist. Some people ride. Some people make the ride possible. Hollandaise does the second thing, fully emulsified and ready to go.",
+    funFact: "Hollandaise — the sauce that makes everything better. Trading the saddle for the support crew, and the team is better for it.",
+    badges: ["🙌 Team Volunteer", "🎬 The Cam Show", "🔥 Energy Bringer", "💙 Ride or Die"],
     stats: { spirit: 9 },
   },
   {
@@ -2883,11 +2889,13 @@ const TIER_LABELS = {
   rider: "Rider",
   rookie: "Rookie",
   retired: "Retired",
+  volunteer: "Volunteer",
 };
 
-const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3, retired: 4 };
+const TIER_ORDER = { legend: 0, veteran: 1, rider: 2, rookie: 3, retired: 4, volunteer: 5 };
 
 function getComputedTier(rider) {
+  if (rider.tier === 'volunteer') return 'volunteer';
   if (rider.tier === 'legend') return 'legend';
   if (rider.tier === 'retired') return 'retired';
   // Form intake → always rookie card until promoted into RIDERS_CORE manually.
@@ -3050,7 +3058,18 @@ function renderAll(filter, query) {
     return;
   }
 
-  grid.innerHTML = filtered.map((r, i) => renderCard(r, i)).join('');
+  // Build grid, inserting a "Volunteers" section divider before the first
+  // volunteer card (default sort only — sort-by-raised intentionally ignores tiers)
+  let gridHTML = '';
+  let volunteerDividerDone = false;
+  filtered.forEach((r, i) => {
+    if (!_sortByRaised && getComputedTier(r) === 'volunteer' && !volunteerDividerDone) {
+      gridHTML += `<div class="tier-section-label"><div class="tier-section-line"></div><span>🙌 Volunteers</span><div class="tier-section-line"></div></div>`;
+      volunteerDividerDone = true;
+    }
+    gridHTML += renderCard(r, i);
+  });
+  grid.innerHTML = gridHTML;
 
   // Wire grid cards: click = open modal; tilt + shimmer stay
   grid.querySelectorAll('.tcard-wrap').forEach(card => {
