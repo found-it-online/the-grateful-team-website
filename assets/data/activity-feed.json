@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-05T16:27:59Z",
+  "updatedAt": "2026-06-05T19:47:35Z",
   "donations": [
+    {
+      "displayName": "Kristen Sytsma",
+      "amount": 50.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-05T18:15:41.90+0000"
+    },
     {
       "displayName": "Daniel Smith",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-26T19:35:07.113+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 100.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-26T19:34:28.490+0000"
     }
   ],
   "participants": [
