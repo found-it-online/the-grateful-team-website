@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-07T08:49:12Z",
+  "updatedAt": "2026-06-07T13:41:32Z",
   "donations": [
+    {
+      "displayName": "Meredith Kauffman",
+      "amount": 50.0,
+      "recipientName": "Jackson Maitner",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-07T13:10:31.993+0000"
+    },
     {
       "displayName": "Mariah Pino",
       "amount": 25.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-27T02:09:13.663+0000"
-    },
-    {
-      "displayName": "R & A",
-      "amount": 100.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-27T00:48:40.507+0000"
     }
   ],
   "participants": [
