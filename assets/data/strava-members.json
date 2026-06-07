@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-07T15:21:06Z",
+  "updatedAt": "2026-06-07T19:14:23Z",
   "clubId": 1302442,
   "clubUrl": "https://www.strava.com/clubs/1302442",
   "members": [
@@ -224,6 +224,14 @@
       "firstName": "Bishop",
       "lastName": "G.",
       "displayName": "Bishop G.",
+      "profileUrl": null,
+      "clubUrl": "https://www.strava.com/clubs/1302442"
+    },
+    {
+      "athleteId": null,
+      "firstName": "Brett",
+      "lastName": "N.",
+      "displayName": "Brett N.",
       "profileUrl": null,
       "clubUrl": "https://www.strava.com/clubs/1302442"
     },
