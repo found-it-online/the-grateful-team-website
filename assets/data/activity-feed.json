@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-08T20:07:09Z",
+  "updatedAt": "2026-06-09T02:39:33Z",
   "donations": [
+    {
+      "displayName": "William Prout",
+      "amount": 100.0,
+      "recipientName": "Jessica Barr",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-08T23:21:18.123+0000"
+    },
     {
       "displayName": "Ellen Collins",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-29T00:38:10.10+0000"
-    },
-    {
-      "displayName": "Laurie Moran",
-      "amount": 25.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-29T00:28:21.837+0000"
     }
   ],
   "participants": [
