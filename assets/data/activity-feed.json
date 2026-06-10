@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-10T16:55:33Z",
+  "updatedAt": "2026-06-10T20:22:43Z",
   "donations": [
+    {
+      "displayName": "Nick Jansen",
+      "amount": 40.0,
+      "recipientName": "Caleb Agar",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-10T18:40:04.423+0000"
+    },
+    {
+      "displayName": "Pulsar Experience LTD",
+      "amount": 300.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-10T17:57:57.783+0000"
+    },
     {
       "displayName": "Carol Lindsey",
       "amount": 50.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-29T11:58:42.333+0000"
-    },
-    {
-      "displayName": "shelly clark",
-      "amount": 25.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-29T11:32:43.290+0000"
-    },
-    {
-      "displayName": "Lo Dog \ud83d\udc36",
-      "amount": 25.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-29T08:43:58.657+0000"
     }
   ],
   "participants": [
