@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-10T20:22:43Z",
+  "updatedAt": "2026-06-11T03:26:41Z",
   "donations": [
+    {
+      "displayName": "Patrick McKearney",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-11T01:23:25.183+0000"
+    },
+    {
+      "displayName": "Anne  Korte",
+      "amount": 50.0,
+      "recipientName": "Jackson Maitner",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-11T00:32:39.887+0000"
+    },
     {
       "displayName": "Nick Jansen",
       "amount": 40.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-29T12:18:36.257+0000"
-    },
-    {
-      "displayName": "Kristine Barry",
-      "amount": 25.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-29T12:13:04.107+0000"
-    },
-    {
-      "displayName": "Jenn and Dave Kippen",
-      "amount": 25.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-29T11:58:42.333+0000"
     }
   ],
   "participants": [
