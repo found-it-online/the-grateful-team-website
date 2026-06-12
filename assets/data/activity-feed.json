@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-12T16:41:30Z",
+  "updatedAt": "2026-06-12T20:02:58Z",
   "donations": [
+    {
+      "displayName": "Margo Williams",
+      "amount": 500.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-12T20:02:25.267+0000"
+    },
     {
       "displayName": "Raquel Huber",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-30T00:24:47.633+0000"
-    },
-    {
-      "displayName": "Dave and Britt Campbell",
-      "amount": 25.0,
-      "recipientName": "Teodoro Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-30T00:23:46.140+0000"
     }
   ],
   "participants": [
