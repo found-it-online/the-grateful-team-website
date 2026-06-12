@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-11T20:14:01Z",
+  "updatedAt": "2026-06-12T03:25:25Z",
   "donations": [
+    {
+      "displayName": "The Rider Family",
+      "amount": 100.0,
+      "recipientName": "Ally Austin",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-11T22:26:12.417+0000"
+    },
     {
       "displayName": "Nicole Jacobs",
       "amount": 300.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-29T19:00:08.223+0000"
-    },
-    {
-      "displayName": "Melinda Saylor",
-      "amount": 50.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-29T18:29:24.363+0000"
     }
   ],
   "participants": [
