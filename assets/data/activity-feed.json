@@ -1,6 +1,38 @@
 {
-  "updatedAt": "2026-06-13T13:49:04Z",
+  "updatedAt": "2026-06-13T15:40:34Z",
   "donations": [
+    {
+      "displayName": "Mandi Hyson",
+      "amount": 50.0,
+      "recipientName": "Elizabeth Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-13T14:53:52.390+0000"
+    },
+    {
+      "displayName": "Barbara Stoffer",
+      "amount": 15.0,
+      "recipientName": "Ethan Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-13T14:44:54.533+0000"
+    },
+    {
+      "displayName": "The USMC",
+      "amount": 33.0,
+      "recipientName": "Ethan Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-13T14:37:51.277+0000"
+    },
+    {
+      "displayName": "Karen Ambs",
+      "amount": 20.0,
+      "recipientName": "Ethan Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-13T14:27:23.33+0000"
+    },
     {
       "displayName": "Denise Bajema",
       "amount": 15.0,
@@ -768,38 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-05-31T15:11:47.447+0000"
-    },
-    {
-      "displayName": "Justin Grenell",
-      "amount": 10.0,
-      "recipientName": "Justin Grenell",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-30T23:50:55.580+0000"
-    },
-    {
-      "displayName": "Paul Krieg",
-      "amount": 30.0,
-      "recipientName": "Nate Conroy",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-30T23:07:18.897+0000"
-    },
-    {
-      "displayName": "Kate Prominski",
-      "amount": 20.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-30T17:58:16.650+0000"
-    },
-    {
-      "displayName": "Mom & Dad",
-      "amount": 300.0,
-      "recipientName": "Cole Christians",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-05-30T16:21:11.360+0000"
     }
   ],
   "participants": [
