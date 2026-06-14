@@ -1,6 +1,30 @@
 {
-  "updatedAt": "2026-06-13T19:17:22Z",
+  "updatedAt": "2026-06-14T03:29:38Z",
   "donations": [
+    {
+      "displayName": "Stephanie Hogan",
+      "amount": 25.0,
+      "recipientName": "Ethan Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-14T01:10:02.897+0000"
+    },
+    {
+      "displayName": "A supporter",
+      "amount": 25.0,
+      "recipientName": "Elizabeth Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-13T21:15:09.130+0000"
+    },
+    {
+      "displayName": "Steffany Dunker",
+      "amount": 50.0,
+      "recipientName": "Elizabeth Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-13T20:46:12.650+0000"
+    },
     {
       "displayName": "Mandi Hyson",
       "amount": 15.0,
@@ -776,30 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-01T16:05:31.380+0000"
-    },
-    {
-      "displayName": "Carrie DiCello",
-      "amount": 20.0,
-      "recipientName": "Emma DiCello",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-01T13:48:27.700+0000"
-    },
-    {
-      "displayName": "Jeremy Foy",
-      "amount": 150.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-01T12:32:41.697+0000"
-    },
-    {
-      "displayName": "SUSAN Johnson",
-      "amount": 50.0,
-      "recipientName": "Luis Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-01T10:32:25.670+0000"
     }
   ],
   "participants": [
