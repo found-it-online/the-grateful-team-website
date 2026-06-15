@@ -1,3 +1,14 @@
+<style>
+  .nav-tracker-link{display:inline-flex;align-items:center;gap:7px;}
+  .nav-live-dot{width:8px;height:8px;border-radius:50%;background:#04b2ca;flex-shrink:0;
+    box-shadow:0 0 0 0 rgba(4,178,202,0.7);animation:navLivePulse 1.9s infinite;}
+  @keyframes navLivePulse{
+    0%{box-shadow:0 0 0 0 rgba(4,178,202,0.6);}
+    70%{box-shadow:0 0 0 7px rgba(4,178,202,0);}
+    100%{box-shadow:0 0 0 0 rgba(4,178,202,0);}
+  }
+  @media (prefers-reduced-motion: reduce){ .nav-live-dot{animation:none;} }
+</style>
 <nav class="site-nav" aria-label="Primary">
   <div class="site-nav-inner">
 
@@ -25,6 +36,12 @@
       <li><a href="/faq.html" data-nav-key="faq">FAQ</a></li>
       <li><a href="/roster.html" data-nav-key="roster">Roster</a></li>
       <li><a href="/photos.html" data-nav-key="photos">Photos</a></li>
+      <li>
+        <a href="https://grateful-tracker.pages.dev" target="_blank" rel="noopener" data-nav-key="tracker" class="nav-tracker-link">
+          <span class="nav-live-dot" aria-hidden="true"></span>
+          Live Tracker
+        </a>
+      </li>
       <li>
         <a href="https://merch.thegratefulteam.com" target="_blank" rel="noopener" class="nav-merch-link">
           Merch
@@ -64,6 +81,12 @@
       <li><a href="/fundraising.html" data-nav-key="fundraising">Fundraising Resources</a></li>
     </ul>
     <ul class="nav-drawer-list">
+      <li>
+        <a href="https://grateful-tracker.pages.dev" target="_blank" rel="noopener" data-nav-key="tracker" style="display:flex;align-items:center;gap:8px;">
+          <span class="nav-live-dot" aria-hidden="true"></span>
+          Live Tracker
+        </a>
+      </li>
       <li><a href="/faq.html" data-nav-key="faq">FAQ</a></li>
       <li><a href="/roster.html" data-nav-key="roster">Roster</a></li>
       <li><a href="/photos.html" data-nav-key="photos">Photos</a></li>
