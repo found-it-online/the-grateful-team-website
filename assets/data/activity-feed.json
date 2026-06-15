@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-15T11:54:05Z",
+  "updatedAt": "2026-06-15T17:07:44Z",
   "donations": [
+    {
+      "displayName": "Aunt Sarah",
+      "amount": 50.0,
+      "recipientName": "Jackson Maitner",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-15T15:16:57.53+0000"
+    },
+    {
+      "displayName": "Samantha Herrema",
+      "amount": 10.0,
+      "recipientName": "Elizabeth Pomfret",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-15T13:35:46.313+0000"
+    },
     {
       "displayName": "Carolyn Buccellato",
       "amount": 50.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-02T19:45:55.480+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 250.0,
-      "recipientName": "Sawyer Roth",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-02T19:45:48.103+0000"
-    },
-    {
-      "displayName": "Sawyer Roth",
-      "amount": 500.0,
-      "recipientName": "Sawyer Roth",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-02T18:39:59.80+0000"
     }
   ],
   "participants": [
