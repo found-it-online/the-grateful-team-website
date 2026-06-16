@@ -1,6 +1,46 @@
 {
-  "updatedAt": "2026-06-15T20:50:06Z",
+  "updatedAt": "2026-06-16T03:34:55Z",
   "donations": [
+    {
+      "displayName": "Rick & Connie Fuller",
+      "amount": 200.0,
+      "recipientName": "Brad Johnson",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-16T01:20:41.133+0000"
+    },
+    {
+      "displayName": "Melissa Marsh",
+      "amount": 100.0,
+      "recipientName": "Nicholas Milanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-16T00:57:38.230+0000"
+    },
+    {
+      "displayName": "Michelle & Bobby Spiller",
+      "amount": 50.0,
+      "recipientName": "Andrew Kennedy",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-16T00:57:08.113+0000"
+    },
+    {
+      "displayName": "Melanie and Tim Russcher ",
+      "amount": 50.0,
+      "recipientName": "Caleb Agar",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-16T00:40:28.13+0000"
+    },
+    {
+      "displayName": "Terrence Endres",
+      "amount": 100.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-16T00:01:20.350+0000"
+    },
     {
       "displayName": "McGlinchey Family",
       "amount": 50.0,
@@ -760,46 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-03T09:34:24.90+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 100.0,
-      "recipientName": "Susan Kraft",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-03T03:10:58.843+0000"
-    },
-    {
-      "displayName": "Susan Kraft",
-      "amount": 50.0,
-      "recipientName": "Susan Kraft",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-03T03:01:50.547+0000"
-    },
-    {
-      "displayName": "Austin Santoro",
-      "amount": 100.0,
-      "recipientName": "Charlie Wondergem",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-03T01:56:52.257+0000"
-    },
-    {
-      "displayName": "Nina Abraham",
-      "amount": 28.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-03T00:17:52.773+0000"
-    },
-    {
-      "displayName": "Sutherland",
-      "amount": 50.0,
-      "recipientName": "Nathan Grenell",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-03T00:12:25.867+0000"
     }
   ],
   "participants": [
