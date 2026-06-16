@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-16T16:41:02Z",
+  "updatedAt": "2026-06-16T18:25:39Z",
   "donations": [
+    {
+      "displayName": "Mary Hoffius",
+      "amount": 50.0,
+      "recipientName": "Nicholas Milanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-16T17:37:25.370+0000"
+    },
     {
       "displayName": "Nicole Thompson",
       "amount": 377.3,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-03T20:28:02.697+0000"
-    },
-    {
-      "displayName": "Kelly Roe",
-      "amount": 25.0,
-      "recipientName": "Georgina Hill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-03T19:31:03.213+0000"
     }
   ],
   "participants": [
