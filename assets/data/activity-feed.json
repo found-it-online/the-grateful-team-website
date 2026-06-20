@@ -1,6 +1,38 @@
 {
-  "updatedAt": "2026-06-19T19:42:02Z",
+  "updatedAt": "2026-06-20T02:51:08Z",
   "donations": [
+    {
+      "displayName": "Jacob MacDonald",
+      "amount": 100.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-20T02:28:56.80+0000"
+    },
+    {
+      "displayName": "A supporter",
+      "amount": 500.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-20T01:06:37.573+0000"
+    },
+    {
+      "displayName": "The Ben & Lauryn Cok Family",
+      "amount": 50.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-20T00:08:48.437+0000"
+    },
+    {
+      "displayName": "Terrance Meredith",
+      "amount": 50.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-19T20:27:29.940+0000"
+    },
     {
       "displayName": "Garrett Majdic",
       "amount": 100.0,
@@ -768,38 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-08T13:40:40.817+0000"
-    },
-    {
-      "displayName": "Taylor Sims",
-      "amount": 75.0,
-      "recipientName": "Nakayla Miller",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-08T12:16:04.223+0000"
-    },
-    {
-      "displayName": "Caroline  Koustis ",
-      "amount": 100.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-08T00:48:59.170+0000"
-    },
-    {
-      "displayName": "Steven Barr",
-      "amount": 100.0,
-      "recipientName": "Jessica Barr",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-07T22:07:18.997+0000"
-    },
-    {
-      "displayName": "Kelly Bonewell",
-      "amount": 250.0,
-      "recipientName": "Nate Conroy",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-07T20:05:44.437+0000"
     }
   ],
   "participants": [
