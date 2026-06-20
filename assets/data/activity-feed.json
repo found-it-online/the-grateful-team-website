@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-20T08:47:01Z",
+  "updatedAt": "2026-06-20T13:50:05Z",
   "donations": [
+    {
+      "displayName": "Jennifer Roe",
+      "amount": 1000.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-20T13:19:46.83+0000"
+    },
     {
       "displayName": "Nick Jaros",
       "amount": 75.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-08T14:26:57.453+0000"
-    },
-    {
-      "displayName": "Marilyn & John Werstein",
-      "amount": 100.0,
-      "recipientName": "Kiersten Schulte",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-08T13:43:59.100+0000"
     }
   ],
   "participants": [
