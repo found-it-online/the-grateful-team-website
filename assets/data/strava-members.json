@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-22T11:43:34Z",
+  "updatedAt": "2026-06-22T16:45:50Z",
   "clubId": 1302442,
   "clubUrl": "https://www.strava.com/clubs/1302442",
   "members": [
@@ -72,6 +72,14 @@
       "firstName": "Cami",
       "lastName": "M.",
       "displayName": "Cami M.",
+      "profileUrl": null,
+      "clubUrl": "https://www.strava.com/clubs/1302442"
+    },
+    {
+      "athleteId": null,
+      "firstName": "Cole",
+      "lastName": "C.",
+      "displayName": "Cole C.",
       "profileUrl": null,
       "clubUrl": "https://www.strava.com/clubs/1302442"
     },
@@ -256,6 +264,14 @@
       "firstName": "Don",
       "lastName": "R.",
       "displayName": "Don R.",
+      "profileUrl": null,
+      "clubUrl": "https://www.strava.com/clubs/1302442"
+    },
+    {
+      "athleteId": null,
+      "firstName": "Elizabeth",
+      "lastName": "P.",
+      "displayName": "Elizabeth P.",
       "profileUrl": null,
       "clubUrl": "https://www.strava.com/clubs/1302442"
     },
