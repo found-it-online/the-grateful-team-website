@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-22T16:45:50Z",
+  "updatedAt": "2026-06-22T18:10:42Z",
   "donations": [
+    {
+      "displayName": "Marlin WINCHELL",
+      "amount": 500.0,
+      "recipientName": "JASON WINCHELL",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-22T17:19:16.530+0000"
+    },
     {
       "displayName": "Lauren Froman",
       "amount": 20.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-13T11:28:36.987+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 100.0,
-      "recipientName": "Lisa Marsh",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T02:39:08.147+0000"
     }
   ],
   "participants": [
