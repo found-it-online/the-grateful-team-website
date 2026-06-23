@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-22T20:38:22Z",
+  "updatedAt": "2026-06-23T02:44:49Z",
   "donations": [
+    {
+      "displayName": "Wiesia  Benedict ",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-23T00:46:02.97+0000"
+    },
     {
       "displayName": "Marlin WINCHELL",
       "amount": 500.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-13T11:56:00.810+0000"
-    },
-    {
-      "displayName": "Michelle DeVries",
-      "amount": 10.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T11:28:36.987+0000"
     }
   ],
   "participants": [
