@@ -1,6 +1,54 @@
 {
-  "updatedAt": "2026-06-23T19:53:55Z",
+  "updatedAt": "2026-06-24T02:45:28Z",
   "donations": [
+    {
+      "displayName": "Scott Vogel",
+      "amount": 50.0,
+      "recipientName": "JASON WINCHELL",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T02:29:50.963+0000"
+    },
+    {
+      "displayName": "Luis Vecchio",
+      "amount": 11.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T00:07:43.117+0000"
+    },
+    {
+      "displayName": "Luis Vecchio",
+      "amount": 11.0,
+      "recipientName": "Cole Christians",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T00:06:22.167+0000"
+    },
+    {
+      "displayName": "Luis Vecchio",
+      "amount": 11.0,
+      "recipientName": "Nate Milanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T00:04:44.717+0000"
+    },
+    {
+      "displayName": "Luis Vecchio",
+      "amount": 11.0,
+      "recipientName": "Nicholas Milanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T00:04:15.763+0000"
+    },
+    {
+      "displayName": "Luis Vecchio",
+      "amount": 11.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T00:03:31.773+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 54.0,
@@ -752,54 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-13T19:02:32.100+0000"
-    },
-    {
-      "displayName": "Rachel Kamps",
-      "amount": 10.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T17:15:32.137+0000"
-    },
-    {
-      "displayName": "Rachel Kamps",
-      "amount": 15.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T17:14:27.807+0000"
-    },
-    {
-      "displayName": "Kari Lacny",
-      "amount": 10.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T16:43:40.137+0000"
-    },
-    {
-      "displayName": "Mandi Hyson",
-      "amount": 50.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T14:53:52.390+0000"
-    },
-    {
-      "displayName": "Barbara Stoffer",
-      "amount": 15.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T14:44:54.533+0000"
-    },
-    {
-      "displayName": "The USMC",
-      "amount": 33.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T14:37:51.277+0000"
     }
   ],
   "participants": [
