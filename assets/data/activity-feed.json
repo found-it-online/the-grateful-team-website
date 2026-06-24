@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-24T16:14:40Z",
+  "updatedAt": "2026-06-24T19:38:40Z",
   "donations": [
+    {
+      "displayName": "Amelia Antes",
+      "amount": 50.0,
+      "recipientName": "Lauren Froman",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T17:09:11.203+0000"
+    },
     {
       "displayName": "Beth Stefanchik",
       "amount": 500.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-14T16:32:08.410+0000"
-    },
-    {
-      "displayName": "Stephanie Hogan",
-      "amount": 25.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-14T01:10:02.897+0000"
     }
   ],
   "participants": [
