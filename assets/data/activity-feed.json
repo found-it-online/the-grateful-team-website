@@ -1,6 +1,30 @@
 {
-  "updatedAt": "2026-06-24T14:17:33Z",
+  "updatedAt": "2026-06-24T16:14:40Z",
   "donations": [
+    {
+      "displayName": "Beth Stefanchik",
+      "amount": 500.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T15:38:08.197+0000"
+    },
+    {
+      "displayName": "Denise",
+      "amount": 50.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T15:16:41.187+0000"
+    },
+    {
+      "displayName": "Connor Bernhard",
+      "amount": 100.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T14:37:32.137+0000"
+    },
     {
       "displayName": "Charles Layden",
       "amount": 100.0,
@@ -776,30 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-14T01:10:02.897+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 25.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T21:15:09.130+0000"
-    },
-    {
-      "displayName": "Steffany Dunker",
-      "amount": 50.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T20:46:12.650+0000"
-    },
-    {
-      "displayName": "Mandi Hyson",
-      "amount": 15.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-13T19:11:10.970+0000"
     }
   ],
   "participants": [
