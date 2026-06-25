@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-24T19:38:40Z",
+  "updatedAt": "2026-06-25T02:45:45Z",
   "donations": [
+    {
+      "displayName": "Brad Walters",
+      "amount": 75.0,
+      "recipientName": "Nathan Grenell",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-24T21:22:27.247+0000"
+    },
     {
       "displayName": "Amelia Antes",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-14T18:25:05.190+0000"
-    },
-    {
-      "displayName": "Luanne and Craig Datema",
-      "amount": 250.0,
-      "recipientName": "Charlie Wondergem",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-14T16:32:08.410+0000"
     }
   ],
   "participants": [
