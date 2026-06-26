@@ -160,6 +160,14 @@
     "numDonations": 15
   },
   {
+    "participantID": 5289,
+    "displayName": "Gabriela Minnhaar-Tomatis",
+    "avatarImageURL": null,
+    "sumDonations": 0.0,
+    "fundraisingGoal": 0.0,
+    "numDonations": 0
+  },
+  {
     "participantID": 5091,
     "displayName": "Georgina Hill",
     "avatarImageURL": null,
@@ -291,9 +299,9 @@
     "participantID": 4795,
     "displayName": "Mark Webber",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_14282897-B8C9-6BDA-26770B115AFEB04F.jpg?v=1782399334445",
-    "sumDonations": 150.0,
+    "sumDonations": 4150.0,
     "fundraisingGoal": 5000.0,
-    "numDonations": 2
+    "numDonations": 4
   },
   {
     "participantID": 5198,
