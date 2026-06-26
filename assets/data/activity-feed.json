@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-26T02:50:31Z",
+  "updatedAt": "2026-06-26T08:55:40Z",
   "donations": [
+    {
+      "displayName": "Billy Parks",
+      "amount": 250.0,
+      "recipientName": "The Grateful Team",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-26T04:52:44.267+0000"
+    },
     {
       "displayName": "Valeria De la garza",
       "amount": 25.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-16T00:57:08.113+0000"
-    },
-    {
-      "displayName": "Melanie and Tim Russcher ",
-      "amount": 50.0,
-      "recipientName": "Caleb Agar",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-16T00:40:28.13+0000"
     }
   ],
   "participants": [
