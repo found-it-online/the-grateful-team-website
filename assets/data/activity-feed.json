@@ -1,6 +1,30 @@
 {
-  "updatedAt": "2026-06-26T08:55:40Z",
+  "updatedAt": "2026-06-26T14:12:49Z",
   "donations": [
+    {
+      "displayName": "Emma Schmalz",
+      "amount": 500.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-26T14:07:19.213+0000"
+    },
+    {
+      "displayName": "Kim Cooke",
+      "amount": 100.0,
+      "recipientName": "Cameron McGill",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-26T13:55:33.3+0000"
+    },
+    {
+      "displayName": "Karen King",
+      "amount": 25.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-26T12:36:56.697+0000"
+    },
     {
       "displayName": "Billy Parks",
       "amount": 250.0,
@@ -776,30 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-16T12:17:49.247+0000"
-    },
-    {
-      "displayName": "Rick & Connie Fuller",
-      "amount": 200.0,
-      "recipientName": "Brad Johnson",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-16T01:20:41.133+0000"
-    },
-    {
-      "displayName": "Melissa Marsh",
-      "amount": 100.0,
-      "recipientName": "Nicholas Milanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-16T00:57:38.230+0000"
-    },
-    {
-      "displayName": "Michelle & Bobby Spiller",
-      "amount": 50.0,
-      "recipientName": "Andrew Kennedy",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-16T00:57:08.113+0000"
     }
   ],
   "participants": [
