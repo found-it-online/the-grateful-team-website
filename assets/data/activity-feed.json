@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-27T15:12:48Z",
+  "updatedAt": "2026-06-27T19:12:49Z",
   "donations": [
+    {
+      "displayName": "Ross Festenstein",
+      "amount": 40.0,
+      "recipientName": "Anthony Lazzaro",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-27T17:08:22.647+0000"
+    },
     {
       "displayName": "Maximus Okoye",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-17T15:01:59.797+0000"
-    },
-    {
-      "displayName": "MIMI &BUMPA",
-      "amount": 100.0,
-      "recipientName": "Ethan Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-17T10:32:57.377+0000"
     }
   ],
   "participants": [
