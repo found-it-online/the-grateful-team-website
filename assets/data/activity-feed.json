@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-06-29T02:56:21Z",
+  "updatedAt": "2026-06-29T10:46:44Z",
   "donations": [
+    {
+      "displayName": "Lori H. Zeller",
+      "amount": 100.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T03:15:58.767+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 250.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-18T12:42:08.83+0000"
-    },
-    {
-      "displayName": "Krissy and Patrick Kernan",
-      "amount": 50.0,
-      "recipientName": "Cole Christians",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-18T01:47:56.57+0000"
     }
   ],
   "participants": [
