@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-29T10:46:44Z",
+  "updatedAt": "2026-06-29T15:37:40Z",
   "donations": [
+    {
+      "displayName": "Gretchen Schneider-Karslake",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T13:41:19.47+0000"
+    },
+    {
+      "displayName": "Scott & Colleen Bennett",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T13:39:59.777+0000"
+    },
     {
       "displayName": "Lori H. Zeller",
       "amount": 100.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-18T14:30:11.467+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 5.0,
-      "recipientName": "Jackson Maitner",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-18T13:13:37.297+0000"
-    },
-    {
-      "displayName": "Natalie DeRousse",
-      "amount": 100.0,
-      "recipientName": "JASON WINCHELL",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-18T12:42:08.83+0000"
     }
   ],
   "participants": [
