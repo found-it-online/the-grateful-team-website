@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-06-30T02:50:26Z",
+  "updatedAt": "2026-06-30T09:24:47Z",
   "donations": [
+    {
+      "displayName": "Nikoe Oliver",
+      "amount": 30.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T04:10:48.323+0000"
+    },
+    {
+      "displayName": "Marc Esquenet",
+      "amount": 500.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T03:12:49.823+0000"
+    },
     {
       "displayName": "Rachel Rose",
       "amount": 75.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-20T19:38:45.797+0000"
-    },
-    {
-      "displayName": "Jennifer Roe",
-      "amount": 1000.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-20T13:19:46.83+0000"
-    },
-    {
-      "displayName": "Nick Jaros",
-      "amount": 75.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-20T04:25:44.217+0000"
     }
   ],
   "participants": [
