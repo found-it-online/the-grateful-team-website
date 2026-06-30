@@ -1,6 +1,86 @@
 {
-  "updatedAt": "2026-06-29T19:49:38Z",
+  "updatedAt": "2026-06-30T02:50:26Z",
   "donations": [
+    {
+      "displayName": "Rachel Rose",
+      "amount": 75.0,
+      "recipientName": "Lauren Milligan",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T02:15:00.893+0000"
+    },
+    {
+      "displayName": "Kathleen Whitney",
+      "amount": 150.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T01:27:48.393+0000"
+    },
+    {
+      "displayName": "Kathleen Guzman",
+      "amount": 25.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T00:55:57.330+0000"
+    },
+    {
+      "displayName": "Cindy Peters",
+      "amount": 75.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T23:37:12.50+0000"
+    },
+    {
+      "displayName": "Kristie Dejong",
+      "amount": 100.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T23:00:38.987+0000"
+    },
+    {
+      "displayName": "ANITA PUTTI",
+      "amount": 100.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T22:58:38.673+0000"
+    },
+    {
+      "displayName": "The Ganch Ranch",
+      "amount": 100.0,
+      "recipientName": "Nakayla Miller",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T22:44:41.120+0000"
+    },
+    {
+      "displayName": "Rebecca Christensen",
+      "amount": 50.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T22:40:21.150+0000"
+    },
+    {
+      "displayName": "Brian Singer",
+      "amount": 100.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T22:16:53.263+0000"
+    },
+    {
+      "displayName": "Frankie and Erin",
+      "amount": 25.0,
+      "recipientName": "Andrew Kennedy",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-29T21:12:08.637+0000"
+    },
     {
       "displayName": "Martha Froman",
       "amount": 50.0,
@@ -720,86 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-20T04:25:44.217+0000"
-    },
-    {
-      "displayName": "Thomas Lorentzen",
-      "amount": 100.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-20T03:09:25.257+0000"
-    },
-    {
-      "displayName": "Jacob MacDonald",
-      "amount": 100.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-20T02:28:56.80+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 500.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-20T01:06:37.573+0000"
-    },
-    {
-      "displayName": "The Ben & Lauryn Cok Family",
-      "amount": 50.0,
-      "recipientName": "Charlie Wondergem",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-20T00:08:48.437+0000"
-    },
-    {
-      "displayName": "Terrance Meredith",
-      "amount": 50.0,
-      "recipientName": "Charlie Wondergem",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-19T20:27:29.940+0000"
-    },
-    {
-      "displayName": "Garrett Majdic",
-      "amount": 100.0,
-      "recipientName": "Taylor Robson",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-19T13:11:58.537+0000"
-    },
-    {
-      "displayName": "Amy Simon",
-      "amount": 25.0,
-      "recipientName": "Brad Johnson",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-19T13:10:14.170+0000"
-    },
-    {
-      "displayName": "Melinda Eberhart",
-      "amount": 100.0,
-      "recipientName": "JASON WINCHELL",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-19T01:04:44.543+0000"
-    },
-    {
-      "displayName": "Max Wagner",
-      "amount": 100.0,
-      "recipientName": "Benjamin Kulczewski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-18T20:06:17.300+0000"
-    },
-    {
-      "displayName": "Cinda Quilitzsch",
-      "amount": 50.0,
-      "recipientName": "Cole Christians",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-18T19:48:26.487+0000"
     }
   ],
   "participants": [
