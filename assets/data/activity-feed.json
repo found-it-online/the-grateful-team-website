@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-01T16:22:49Z",
+  "updatedAt": "2026-07-01T19:45:51Z",
   "donations": [
+    {
+      "displayName": "Aunt Pam",
+      "amount": 50.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T17:59:49.460+0000"
+    },
+    {
+      "displayName": "Tomasz Kociolek",
+      "amount": 100.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T17:47:45.713+0000"
+    },
     {
       "displayName": "Gail Sparks",
       "amount": 100.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-24T00:04:15.763+0000"
-    },
-    {
-      "displayName": "Luis Vecchio",
-      "amount": 11.0,
-      "recipientName": "Luis Vecchio",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-24T00:03:31.773+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 54.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-23T19:29:33.457+0000"
     }
   ],
   "participants": [
