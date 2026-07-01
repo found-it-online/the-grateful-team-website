@@ -1,6 +1,94 @@
 {
-  "updatedAt": "2026-06-30T19:47:14Z",
+  "updatedAt": "2026-07-01T02:55:45Z",
   "donations": [
+    {
+      "displayName": "Ken kanif",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T02:13:41.3+0000"
+    },
+    {
+      "displayName": "Connor Foy",
+      "amount": 250.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T02:05:18.350+0000"
+    },
+    {
+      "displayName": "James & Megan Cooke",
+      "amount": 200.0,
+      "recipientName": "Cameron McGill",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T02:01:59.680+0000"
+    },
+    {
+      "displayName": "Charlie Juell",
+      "amount": 250.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T02:00:27.360+0000"
+    },
+    {
+      "displayName": "Charlie Wondergem",
+      "amount": 100.0,
+      "recipientName": "Nathan Grenell",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T01:36:47.513+0000"
+    },
+    {
+      "displayName": "David Siegel",
+      "amount": 100.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T01:31:38.400+0000"
+    },
+    {
+      "displayName": "Deepa Ramaswamy",
+      "amount": 100.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T01:14:57.367+0000"
+    },
+    {
+      "displayName": "Dan Commer",
+      "amount": 50.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T23:19:48.433+0000"
+    },
+    {
+      "displayName": "Gian Bonello",
+      "amount": 25.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T23:04:40.230+0000"
+    },
+    {
+      "displayName": "Matthew Perrin",
+      "amount": 50.0,
+      "recipientName": "Nathan Grenell",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T20:47:21.587+0000"
+    },
+    {
+      "displayName": "Mary Jo Clemens-Harris",
+      "amount": 25.0,
+      "recipientName": "Nathan Grenell",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-06-30T20:08:39.623+0000"
+    },
     {
       "displayName": "Dr. Charlie",
       "amount": 100.0,
@@ -712,94 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-22T15:35:37.853+0000"
-    },
-    {
-      "displayName": "Katie & Elliott Holzman",
-      "amount": 100.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T15:05:16.710+0000"
-    },
-    {
-      "displayName": "rhea klap",
-      "amount": 40.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T15:02:42.333+0000"
-    },
-    {
-      "displayName": "Acacia",
-      "amount": 20.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T15:00:34.910+0000"
-    },
-    {
-      "displayName": "GraceAnne Laituri",
-      "amount": 20.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T14:46:05.493+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 15.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T14:43:43.267+0000"
-    },
-    {
-      "displayName": "Abbi Lochmandy",
-      "amount": 50.0,
-      "recipientName": "Kiersten Schulte",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T14:20:30.663+0000"
-    },
-    {
-      "displayName": "Megan Thurow",
-      "amount": 20.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T13:59:27.970+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 25.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T12:03:40.117+0000"
-    },
-    {
-      "displayName": "Jake McCorkle",
-      "amount": 51.0,
-      "recipientName": "Luis Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-21T21:14:02.147+0000"
-    },
-    {
-      "displayName": "Mitzi Dupre",
-      "amount": 250.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-21T19:21:48.923+0000"
-    },
-    {
-      "displayName": "Brad Johnson",
-      "amount": 25.0,
-      "recipientName": "Justin Grenell",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-21T18:41:51.163+0000"
     }
   ],
   "participants": [
