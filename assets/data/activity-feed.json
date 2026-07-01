@@ -1,6 +1,38 @@
 {
-  "updatedAt": "2026-07-01T09:36:59Z",
+  "updatedAt": "2026-07-01T14:23:41Z",
   "donations": [
+    {
+      "displayName": "John Powell",
+      "amount": 75.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T13:31:46.670+0000"
+    },
+    {
+      "displayName": "Amy Fleming",
+      "amount": 50.0,
+      "recipientName": "Lauren Milligan",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T13:25:56.743+0000"
+    },
+    {
+      "displayName": "A supporter",
+      "amount": 500.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T11:45:21.837+0000"
+    },
+    {
+      "displayName": "Andy McKearney",
+      "amount": 200.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-01T10:11:41.397+0000"
+    },
     {
       "displayName": "KwangHo Lee",
       "amount": 500.0,
@@ -768,38 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-23T14:33:26.693+0000"
-    },
-    {
-      "displayName": "Georgia's Grandma",
-      "amount": 75.0,
-      "recipientName": "Cole Christians",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-23T14:18:22.663+0000"
-    },
-    {
-      "displayName": "Rachel Cuyler",
-      "amount": 75.0,
-      "recipientName": "Benjamin Kulczewski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-23T13:11:14.100+0000"
-    },
-    {
-      "displayName": "Wiesia  Benedict ",
-      "amount": 50.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-23T00:46:02.97+0000"
-    },
-    {
-      "displayName": "Marlin WINCHELL",
-      "amount": 500.0,
-      "recipientName": "JASON WINCHELL",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-22T17:19:16.530+0000"
     }
   ],
   "participants": [
