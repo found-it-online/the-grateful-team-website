@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-02T16:02:39Z",
+  "updatedAt": "2026-07-02T19:16:34Z",
   "donations": [
+    {
+      "displayName": "Karen Taylor",
+      "amount": 50.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-02T17:50:20.53+0000"
+    },
     {
       "displayName": "Billy Meszynski",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-26T04:52:44.267+0000"
-    },
-    {
-      "displayName": "Valeria De la garza",
-      "amount": 25.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-26T00:29:55.7+0000"
     }
   ],
   "participants": [
