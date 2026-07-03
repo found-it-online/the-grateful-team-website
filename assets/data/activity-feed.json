@@ -1,6 +1,30 @@
 {
-  "updatedAt": "2026-07-02T19:16:34Z",
+  "updatedAt": "2026-07-03T02:28:09Z",
   "donations": [
+    {
+      "displayName": "Tonya Wells",
+      "amount": 50.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-03T02:23:49.430+0000"
+    },
+    {
+      "displayName": "Michael Guadara",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-03T00:11:00.320+0000"
+    },
+    {
+      "displayName": "Diane & Branko",
+      "amount": 50.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-02T20:43:28.750+0000"
+    },
     {
       "displayName": "Karen Taylor",
       "amount": 50.0,
@@ -776,30 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-26T14:07:19.213+0000"
-    },
-    {
-      "displayName": "Kim Cooke",
-      "amount": 100.0,
-      "recipientName": "Cameron McGill",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-26T13:55:33.3+0000"
-    },
-    {
-      "displayName": "Karen King",
-      "amount": 25.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-26T12:36:56.697+0000"
-    },
-    {
-      "displayName": "Billy Parks",
-      "amount": 250.0,
-      "recipientName": "Anthony Lazzaro",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-26T04:52:44.267+0000"
     }
   ],
   "participants": [
