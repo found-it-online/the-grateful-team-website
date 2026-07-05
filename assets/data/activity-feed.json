@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-05T08:46:00Z",
+  "updatedAt": "2026-07-05T13:20:21Z",
   "donations": [
+    {
+      "displayName": "Joni & Roger Ganger",
+      "amount": 100.0,
+      "recipientName": "Jackson Maitner",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-05T12:50:22.963+0000"
+    },
+    {
+      "displayName": "Angela Bloor",
+      "amount": 25.0,
+      "recipientName": "Cameron McGill",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-05T09:52:05.177+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 250.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-26T23:56:40.357+0000"
-    },
-    {
-      "displayName": "Guggs",
-      "amount": 250.0,
-      "recipientName": "Teodoro Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-26T23:07:48.413+0000"
-    },
-    {
-      "displayName": "Grand Rapids Wellness",
-      "amount": 50.0,
-      "recipientName": "Jess Mata",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-26T23:01:57.297+0000"
     }
   ],
   "participants": [
