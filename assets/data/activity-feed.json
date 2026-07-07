@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-07T14:19:18Z",
+  "updatedAt": "2026-07-07T16:26:34Z",
   "donations": [
+    {
+      "displayName": "Nana & Aunt Janet",
+      "amount": 100.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-07T14:42:10.443+0000"
+    },
     {
       "displayName": "Jeff & Laurie Ryan",
       "amount": 150.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-29T03:15:58.767+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 250.0,
-      "recipientName": "Susan Kraft",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-29T01:53:59.420+0000"
     }
   ],
   "participants": [
