@@ -1,6 +1,46 @@
 {
-  "updatedAt": "2026-07-08T19:16:44Z",
+  "updatedAt": "2026-07-09T02:28:16Z",
   "donations": [
+    {
+      "displayName": "Chris Delwiche",
+      "amount": 75.0,
+      "recipientName": "Nick Carlisle",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-09T01:34:01.227+0000"
+    },
+    {
+      "displayName": "F\u00e1tima Nieves",
+      "amount": 50.0,
+      "recipientName": "Luis Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-09T01:10:58.527+0000"
+    },
+    {
+      "displayName": "Robin Emineth",
+      "amount": 75.0,
+      "recipientName": "Jessica Barr",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-09T00:54:48.843+0000"
+    },
+    {
+      "displayName": "Liv & Nick",
+      "amount": 100.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-09T00:53:23.177+0000"
+    },
+    {
+      "displayName": "Consuelo Shank",
+      "amount": 100.0,
+      "recipientName": "Ally Austin",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-08T19:40:34.993+0000"
+    },
     {
       "displayName": "A supporter",
       "amount": 25.0,
@@ -760,46 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-06-30T12:35:48.923+0000"
-    },
-    {
-      "displayName": "Joe Novaco",
-      "amount": 15.0,
-      "recipientName": "Lauren Milligan",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-30T12:32:37.573+0000"
-    },
-    {
-      "displayName": "Shawn Weiss",
-      "amount": 50.0,
-      "recipientName": "Lauren Milligan",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-30T11:49:08.890+0000"
-    },
-    {
-      "displayName": "The Laurette Family \ud83e\ude77",
-      "amount": 30.0,
-      "recipientName": "Susan Kraft",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-30T10:21:47.733+0000"
-    },
-    {
-      "displayName": "Nikoe Oliver",
-      "amount": 30.0,
-      "recipientName": "Susan Kraft",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-30T04:10:48.323+0000"
-    },
-    {
-      "displayName": "Marc Esquenet",
-      "amount": 500.0,
-      "recipientName": "Charlie Wondergem",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-06-30T03:12:49.823+0000"
     }
   ],
   "participants": [
