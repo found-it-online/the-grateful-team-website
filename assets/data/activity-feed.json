@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-12T14:51:50Z",
+  "updatedAt": "2026-07-12T18:58:10Z",
   "donations": [
+    {
+      "displayName": "A supporter",
+      "amount": 1000.0,
+      "recipientName": "Charlie Wondergem",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-12T18:27:36.980+0000"
+    },
+    {
+      "displayName": "Rebecca Kugele",
+      "amount": 100.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-12T17:42:02.613+0000"
+    },
     {
       "displayName": "Lea",
       "amount": 20.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-01T21:11:29.760+0000"
-    },
-    {
-      "displayName": "kyle wanchalk",
-      "amount": 130.0,
-      "recipientName": "Stanislaw Krzyzanowski",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-01T20:58:50.77+0000"
-    },
-    {
-      "displayName": "Nanna",
-      "amount": 50.0,
-      "recipientName": "Lisa Marsh",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-01T20:47:53.463+0000"
     }
   ],
   "participants": [
