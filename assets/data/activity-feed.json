@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-14T01:58:45Z",
+  "updatedAt": "2026-07-14T07:53:31Z",
   "donations": [
+    {
+      "displayName": "Stop dodging my calls",
+      "amount": 5.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-14T02:05:00.680+0000"
+    },
     {
       "displayName": "Nathan Barber",
       "amount": 20.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-05T14:53:10.67+0000"
-    },
-    {
-      "displayName": "Joni & Roger Ganger",
-      "amount": 100.0,
-      "recipientName": "Jackson Maitner",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-05T12:50:22.963+0000"
     }
   ],
   "participants": [
