@@ -83,9 +83,9 @@
     "participantID": 4888,
     "displayName": "Charlie Wondergem",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_5B8163B9-CB7C-A482-E71CAFBA617BCF1B.jpg?v=1783953819074",
-    "sumDonations": 8300.0,
+    "sumDonations": 8400.0,
     "fundraisingGoal": 12000.0,
-    "numDonations": 38
+    "numDonations": 39
   },
   {
     "participantID": 4950,
@@ -147,9 +147,9 @@
     "participantID": 5109,
     "displayName": "Emma DiCello",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_07016FF0-9A60-8581-5C9BCA21BA94ED5D.jpg?v=1783953819074",
-    "sumDonations": 2220.0,
+    "sumDonations": 2270.0,
     "fundraisingGoal": 2500.0,
-    "numDonations": 17
+    "numDonations": 18
   },
   {
     "participantID": 4886,
@@ -475,8 +475,8 @@
     "participantID": 5275,
     "displayName": "Tristan Kosmerick",
     "avatarImageURL": "https://donordrivecontent.com/wishamile/images/$avatars$/constituent_04361ADA-E6C2-ECDD-D9DB3F9469362EE1.jpg?v=1783953819074",
-    "sumDonations": 85.0,
+    "sumDonations": 185.0,
     "fundraisingGoal": 500.0,
-    "numDonations": 3
+    "numDonations": 4
   }
 ]
