@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-07-15T07:58:05Z",
+  "updatedAt": "2026-07-15T13:24:34Z",
   "clubId": 1302442,
   "clubUrl": "https://www.strava.com/clubs/1302442",
   "events": [
     {
       "id": 3510012897638858748,
       "title": "Pre-WAM Ride",
-      "description": "Starting Location TBD",
+      "description": "Meet at the Boat Launch at Riverside Park in Grand Rapids at 8am. This will be a no drop ride, but please be able to ride at a moderate pace of 13mph average and be ready for up to a 70 mile ride. The route will be somewhere in length between 50-70 miles. Leave a comment if you have a preference on length. ",
       "activityType": "Ride",
       "upcomingOccurrences": [
         "2026-07-18T12:00:00Z"
       ],
       "startDatetime": null,
       "timezone": "America/Detroit",
-      "address": "",
+      "address": "Riverside Park, Grand Rapids, MI, USA",
       "organizerName": "Eli Luke",
       "eventUrl": "https://www.strava.com/clubs/1302442/group_events/3510012897638858748",
       "clubUrl": "https://www.strava.com/clubs/1302442"
