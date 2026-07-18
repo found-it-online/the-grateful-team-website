@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-18T01:58:13Z",
+  "updatedAt": "2026-07-18T07:40:06Z",
   "donations": [
+    {
+      "displayName": "Your Bestie",
+      "amount": 50.0,
+      "recipientName": "Lauren Froman",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-18T05:12:31.413+0000"
+    },
     {
       "displayName": "Adrienne Pyeatt",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-14T12:17:55.817+0000"
-    },
-    {
-      "displayName": "Stop dodging my calls",
-      "amount": 5.0,
-      "recipientName": "Teodoro Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-14T02:05:00.680+0000"
     }
   ],
   "participants": [
