@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-19T13:04:43Z",
+  "updatedAt": "2026-07-19T14:50:50Z",
   "donations": [
+    {
+      "displayName": "Mike Mullins",
+      "amount": 50.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-19T13:08:50.520+0000"
+    },
     {
       "displayName": "Nikki",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-14T21:39:28.613+0000"
-    },
-    {
-      "displayName": "A supporter",
-      "amount": 250.0,
-      "recipientName": "Teodoro Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-14T20:56:57.393+0000"
     }
   ],
   "participants": [
