@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-21T02:08:02Z",
+  "updatedAt": "2026-07-21T08:16:56Z",
   "donations": [
+    {
+      "displayName": "Kenny Kruse",
+      "amount": 75.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-21T02:30:08.307+0000"
+    },
     {
       "displayName": "Daniel Fredricks",
       "amount": 250.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-17T15:23:01.790+0000"
-    },
-    {
-      "displayName": "Lauren Parsil",
-      "amount": 15.0,
-      "recipientName": "Tristan Kosmerick",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-17T15:19:44.540+0000"
     }
   ],
   "participants": [
