@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-27T02:26:42Z",
+  "updatedAt": "2026-07-27T09:39:59Z",
   "donations": [
+    {
+      "displayName": "Jeff and Sheila Coppinger",
+      "amount": 317.0,
+      "recipientName": "Ally Austin",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-27T03:31:47.270+0000"
+    },
+    {
+      "displayName": "Laurie McGonigal",
+      "amount": 50.0,
+      "recipientName": "Brad Johnson",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-27T03:03:35.193+0000"
+    },
     {
       "displayName": "Rachael Sefton",
       "amount": 50.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T16:09:13.330+0000"
-    },
-    {
-      "displayName": "Kenzie Miller",
-      "amount": 200.0,
-      "recipientName": "Kenzie Miller",
-      "donorIsRecipient": true,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T15:58:15.437+0000"
-    },
-    {
-      "displayName": "Charlie Koules",
-      "amount": 25.0,
-      "recipientName": "Luis Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T15:50:19.267+0000"
     }
   ],
   "participants": [
