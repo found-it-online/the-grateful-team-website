@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-28T16:02:48Z",
+  "updatedAt": "2026-07-28T19:15:09Z",
   "donations": [
+    {
+      "displayName": "Jane Kosmerick",
+      "amount": 50.0,
+      "recipientName": "Tristan Kosmerick",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-28T16:32:56.147+0000"
+    },
     {
       "displayName": "Calvin van Eyk",
       "amount": 200.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T18:52:17.27+0000"
-    },
-    {
-      "displayName": "Sam & Maddie",
-      "amount": 100.0,
-      "recipientName": "Teodoro Vecchio",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T18:51:19.620+0000"
     }
   ],
   "participants": [
