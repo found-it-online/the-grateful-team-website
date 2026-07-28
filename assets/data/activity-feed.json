@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-27T19:18:46Z",
+  "updatedAt": "2026-07-28T02:01:55Z",
   "donations": [
+    {
+      "displayName": "Ronda Devries",
+      "amount": 50.0,
+      "recipientName": "Lisa Marsh",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-28T00:37:02.967+0000"
+    },
+    {
+      "displayName": "Rose Family",
+      "amount": 50.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-27T21:02:14.823+0000"
+    },
     {
       "displayName": "Kristen Kurtz",
       "amount": 30.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T18:36:24.983+0000"
-    },
-    {
-      "displayName": "The Tuckers",
-      "amount": 50.0,
-      "recipientName": "Ross Kraft",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T18:34:58.560+0000"
-    },
-    {
-      "displayName": "Samuel Denman",
-      "amount": 50.0,
-      "recipientName": "Lisa Marsh",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T18:03:42.827+0000"
     }
   ],
   "participants": [
