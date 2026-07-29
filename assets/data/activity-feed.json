@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-28T19:15:09Z",
+  "updatedAt": "2026-07-29T02:05:01Z",
   "donations": [
+    {
+      "displayName": "Maddie Dalagiannis",
+      "amount": 100.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-29T01:04:18.617+0000"
+    },
     {
       "displayName": "Jane Kosmerick",
       "amount": 50.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T18:53:24.430+0000"
-    },
-    {
-      "displayName": "Gail Park",
-      "amount": 40.0,
-      "recipientName": "Cole Christians",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T18:52:17.27+0000"
     }
   ],
   "participants": [
