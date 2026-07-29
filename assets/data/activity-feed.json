@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-29T08:30:11Z",
+  "updatedAt": "2026-07-29T13:56:41Z",
   "donations": [
+    {
+      "displayName": "Ellie Cowden",
+      "amount": 25.0,
+      "recipientName": "Teodoro Vecchio",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-29T13:40:28.970+0000"
+    },
     {
       "displayName": "Maddie Dalagiannis",
       "amount": 100.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T18:54:31.360+0000"
-    },
-    {
-      "displayName": "Judy Christians",
-      "amount": 25.0,
-      "recipientName": "Cole Christians",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T18:53:24.430+0000"
     }
   ],
   "participants": [
