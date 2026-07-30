@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-30T08:15:01Z",
+  "updatedAt": "2026-07-30T13:46:17Z",
   "donations": [
+    {
+      "displayName": "The Laurette Family \ud83e\ude77",
+      "amount": 30.0,
+      "recipientName": "Susan Kraft",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-30T12:06:19.973+0000"
+    },
     {
       "displayName": "Shelf Conscious Team",
       "amount": 100.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T20:20:26.337+0000"
-    },
-    {
-      "displayName": "Sarah and Jason",
-      "amount": 250.0,
-      "recipientName": "Jeffrey Steigerwald",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T20:06:06.270+0000"
     }
   ],
   "participants": [
