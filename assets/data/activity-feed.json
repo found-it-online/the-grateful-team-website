@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-07-30T01:54:48Z",
+  "updatedAt": "2026-07-30T08:15:01Z",
   "donations": [
+    {
+      "displayName": "Shelf Conscious Team",
+      "amount": 100.0,
+      "recipientName": "Lauren Milligan",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-30T07:15:28.843+0000"
+    },
     {
       "displayName": "The Holtsberry Family",
       "amount": 100.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T20:06:06.270+0000"
-    },
-    {
-      "displayName": "Hannah Ezinga",
-      "amount": 100.0,
-      "recipientName": "Elizabeth Pomfret",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T19:43:56.817+0000"
     }
   ],
   "participants": [
