@@ -1,6 +1,22 @@
 {
-  "updatedAt": "2026-07-29T19:05:36Z",
+  "updatedAt": "2026-07-30T01:54:48Z",
   "donations": [
+    {
+      "displayName": "The Holtsberry Family",
+      "amount": 100.0,
+      "recipientName": "Lauren Sytsma",
+      "donorIsRecipient": false,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-30T00:15:43.983+0000"
+    },
+    {
+      "displayName": "Stanislaw Krzyzanowski",
+      "amount": 126.0,
+      "recipientName": "Stanislaw Krzyzanowski",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-07-29T22:51:21.913+0000"
+    },
     {
       "displayName": "Randy Shanks",
       "amount": 100.0,
@@ -784,22 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-24T19:43:56.817+0000"
-    },
-    {
-      "displayName": "Farm Bureau Insurance",
-      "amount": 150.0,
-      "recipientName": "Brad Johnson",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T19:06:14.663+0000"
-    },
-    {
-      "displayName": "Michelle Rader",
-      "amount": 50.0,
-      "recipientName": "David Dirksen",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-24T19:02:59.637+0000"
     }
   ],
   "participants": [
