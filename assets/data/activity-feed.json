@@ -1,6 +1,14 @@
 {
-  "updatedAt": "2026-08-10T14:53:05Z",
+  "updatedAt": "2026-08-10T18:48:46Z",
   "donations": [
+    {
+      "displayName": "Lauren Froman",
+      "amount": 100.0,
+      "recipientName": "Lauren Froman",
+      "donorIsRecipient": true,
+      "isRegFee": false,
+      "createdDateUTC": "2026-08-10T16:21:24.357+0000"
+    },
     {
       "displayName": "Chris Sheeren",
       "amount": 250.0,
@@ -792,14 +800,6 @@
       "donorIsRecipient": false,
       "isRegFee": false,
       "createdDateUTC": "2026-07-25T12:25:50.660+0000"
-    },
-    {
-      "displayName": "Joseph Hedge",
-      "amount": 50.0,
-      "recipientName": "Susan Kraft",
-      "donorIsRecipient": false,
-      "isRegFee": false,
-      "createdDateUTC": "2026-07-25T08:49:12.133+0000"
     }
   ],
   "participants": [
